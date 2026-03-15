@@ -1,189 +1,172 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import { Rocket, Users, BookOpen, CheckCircle } from 'lucide-react';
 
-interface BridgeMapping {
-  web2Role: string;
-  web3Equivalent: string;
-  whereToStart: string;
+interface GuideData {
+  landingTips: {
+    title: string;
+    intro: string;
+    tips: Array<{
+      title: string;
+      description: string;
+    }>;
+  };
+  hiringProcess: {
+    title: string;
+    intro: string;
+    steps: Array<{
+      title: string;
+      description: string;
+    }>;
+    conclusion: string;
+  };
 }
 
 export default function BridgePage() {
-  const [mappings, setMappings] = useState<BridgeMapping[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
+  const [guides, setGuides] = useState<GuideData | null>(null);
+  const [activeTab, setActiveTab] = useState<'landing' | 'hiring'>('landing');
 
   useEffect(() => {
-    fetch("/data/bridge.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setMappings(data);
-        setLoading(false);
-      });
+    fetch('/data/guides.json')
+      .then(res => res.json())
+      .then(data => setGuides(data));
   }, []);
 
-  const filtered = mappings.filter(
-    (m) =>
-      search === "" ||
-      m.web2Role.toLowerCase().includes(search.toLowerCase()) ||
-      m.web3Equivalent.toLowerCase().includes(search.toLowerCase())
-  );
+  if (!guides) return <div>Loading...</div>;
+
+  const currentGuide = activeTab === 'landing' ? guides.landingTips : guides.hiringProcess;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <div className="mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Web2 → Web3 Bridge</h1>
-        <p className="text-lg text-gray-400 mb-8">
-          Your web2 skills are valuable. See how your current role maps to web3.
-        </p>
-      </div>
+    <main className="min-h-screen bg-gradient-to-br from-[#f8f7f3] via-[#fef9e7] to-[#f8f7f3] pt-24">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Header */}
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold text-[#1a237e] mb-4">Your Path to a Web3 Job</h1>
+          <p className="text-gray-700 text-lg">Learn the strategies that actually work and navigate the hiring process with confidence.</p>
+        </div>
 
-      {/* Search */}
-      <div className="mb-8">
-        <input
-          type="text"
-          placeholder="Search your web2 role..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full px-4 py-3 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a] focus:border-[#a855f7] outline-none transition"
-        />
-      </div>
+        {/* Tab Navigation */}
+        <div className="flex gap-4 mb-12 bg-white rounded-lg p-2 border border-[#e0ddd8]">
+          <button
+            onClick={() => setActiveTab('landing')}
+            className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
+              activeTab === 'landing'
+                ? 'bg-gradient-to-r from-[#f4d03f] to-[#f5a8d8] text-[#1a237e]'
+                : 'text-[#1a237e] hover:bg-gray-100'
+            }`}
+          >
+            <Rocket className="w-5 h-5 inline mr-2" />
+            Landing Tips
+          </button>
+          <button
+            onClick={() => setActiveTab('hiring')}
+            className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
+              activeTab === 'hiring'
+                ? 'bg-gradient-to-r from-[#f4d03f] to-[#f5a8d8] text-[#1a237e]'
+                : 'text-[#1a237e] hover:bg-gray-100'
+            }`}
+          >
+            <Users className="w-5 h-5 inline mr-2" />
+            Hiring Process
+          </button>
+        </div>
 
-      {loading ? (
-        <div className="text-center py-20">Loading...</div>
-      ) : (
-        <>
-          {/* Desktop Table */}
-          <div className="hidden md:block overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-[#2a2a2a]">
-                  <th className="text-left py-4 px-4 font-semibold">Web2 Role</th>
-                  <th className="text-center py-4 px-4 text-[#a855f7]">↓</th>
-                  <th className="text-left py-4 px-4 font-semibold">Web3 Equivalent</th>
-                  <th className="text-left py-4 px-4 font-semibold">Where to Start</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((mapping, i) => (
-                  <tr
-                    key={i}
-                    className="border-b border-[#2a2a2a] hover:bg-[#1a1a1a] transition"
-                  >
-                    <td className="py-4 px-4 text-gray-300">{mapping.web2Role}</td>
-                    <td className="text-center py-4 px-4 text-[#a855f7] font-bold">→</td>
-                    <td className="py-4 px-4">
-                      <span className="font-semibold text-[#10b981]">
-                        {mapping.web3Equivalent}
-                      </span>
-                    </td>
-                    <td className="py-4 px-4 text-gray-400 text-sm">
-                      {mapping.whereToStart}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        {/* Content */}
+        <div className="bg-white rounded-lg border border-[#e0ddd8] overflow-hidden">
+          <div className="p-8">
+            <h2 className="text-3xl font-bold text-[#1a237e] mb-4">{currentGuide.title}</h2>
+            <p className="text-gray-700 text-lg mb-8">{currentGuide.intro}</p>
 
-          {/* Mobile Cards */}
-          <div className="md:hidden space-y-4">
-            {filtered.map((mapping, i) => (
-              <div
-                key={i}
-                className="p-6 rounded-lg border border-[#2a2a2a] hover:border-[#a855f7] transition"
-              >
-                <div className="mb-4">
-                  <p className="text-xs text-gray-400 mb-1">Web2 Role</p>
-                  <p className="font-semibold text-lg">{mapping.web2Role}</p>
-                </div>
-
-                <div className="text-center text-[#a855f7] mb-4 font-bold">↓</div>
-
-                <div className="mb-4">
-                  <p className="text-xs text-gray-400 mb-1">Web3 Equivalent</p>
-                  <p className="font-semibold text-[#10b981] text-lg">
-                    {mapping.web3Equivalent}
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-[#2a2a2a]">
-                  <p className="text-xs text-gray-400 mb-2">Where to Start</p>
-                  <p className="text-sm text-gray-400">{mapping.whereToStart}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {filtered.length === 0 && (
-            <div className="text-center py-20">
-              <p className="text-gray-400">
-                No roles found. Try adjusting your search.
-              </p>
+            <div className="space-y-6">
+              {activeTab === 'landing'
+                ? guides.landingTips.tips.map((tip, idx) => (
+                    <div key={idx} className="p-6 bg-gradient-to-r from-[#f4d03f]/10 to-[#f5a8d8]/10 rounded-lg border-l-4 border-[#f4d03f] hover:shadow-md transition-all">
+                      <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#f4d03f] to-[#f5a8d8] flex items-center justify-center text-white font-bold">
+                            {idx + 1}
+                          </div>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold text-[#1a237e] mb-2">{tip.title}</h3>
+                          <p className="text-gray-700 leading-relaxed">{tip.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                : guides.hiringProcess.steps.map((step, idx) => (
+                    <div key={idx} className="p-6 bg-gradient-to-r from-[#d8b5e8]/10 to-[#f5a8d8]/10 rounded-lg border-l-4 border-[#d8b5e8] hover:shadow-md transition-all">
+                      <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#d8b5e8] to-[#f5a8d8] flex items-center justify-center text-white font-bold">
+                            {idx + 1}
+                          </div>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold text-[#1a237e] mb-2">{step.title}</h3>
+                          <p className="text-gray-700 leading-relaxed">{step.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
             </div>
-          )}
-        </>
-      )}
 
-      {/* Key Insights */}
-      <div className="mt-20 pt-12 border-t border-[#2a2a2a]">
-        <h2 className="text-2xl font-bold mb-8">Key Insights</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
-            <div className="text-2xl font-bold text-[#a855f7] mb-2">🎯</div>
-            <h3 className="font-semibold mb-2">Your Skills Transfer</h3>
-            <p className="text-sm text-gray-400">
-              Web2 expertise in building systems, working with APIs, and solving problems
-              directly applies to web3 development.
-            </p>
+            {activeTab === 'hiring' && (
+              <div className="mt-12 p-6 bg-[#d8b5e8]/10 rounded-lg border border-[#d8b5e8]">
+                <p className="text-gray-800 text-center font-semibold">
+                  {guides.hiringProcess.conclusion}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Key Insights */}
+        <div className="mt-12 grid md:grid-cols-2 gap-6">
+          <div className="bg-gradient-to-br from-[#f4d03f]/20 to-transparent rounded-lg p-8 border border-[#f4d03f]">
+            <h3 className="text-lg font-bold text-[#1a237e] mb-4 flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-[#f4d03f]" />
+              Pro Tips for Success
+            </h3>
+            <ul className="space-y-3 text-gray-700 text-sm">
+              <li>✓ Build in public—share your work on Twitter/X</li>
+              <li>✓ Contribute to open-source projects on GitHub</li>
+              <li>✓ Network actively in Discord/Twitter communities</li>
+              <li>✓ Post consistently about Web3 topics</li>
+              <li>✓ Participate in bounties and hackathons</li>
+            </ul>
           </div>
 
-          <div className="p-6 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
-            <div className="text-2xl font-bold text-[#10b981] mb-2">📚</div>
-            <h3 className="font-semibold mb-2">New Concepts to Learn</h3>
-            <p className="text-sm text-gray-400">
-              While skills transfer, you'll need to understand blockchain, smart contracts,
-              and crypto-specific patterns.
-            </p>
+          <div className="bg-gradient-to-br from-[#f5a8d8]/20 to-transparent rounded-lg p-8 border border-[#f5a8d8]">
+            <h3 className="text-lg font-bold text-[#1a237e] mb-4 flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-[#f5a8d8]" />
+              Red Flags to Avoid
+            </h3>
+            <ul className="space-y-3 text-gray-700 text-sm">
+              <li>❌ Jobs asking for payment upfront</li>
+              <li>❌ Requests to share seed phrases or private keys</li>
+              <li>❌ Unrealistic earnings promises with minimal work</li>
+              <li>❌ No official website or social media presence</li>
+              <li>❌ Pressure to move fast without due diligence</li>
+            </ul>
           </div>
+        </div>
 
-          <div className="p-6 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
-            <div className="text-2xl font-bold text--purple-400 mb-2">🚀</div>
-            <h3 className="font-semibold mb-2">Move Quickly</h3>
-            <p className="text-sm text-gray-400">
-              Web3 moves fast. Your web2 experience + willingness to learn can get you hired
-              quickly.
-            </p>
+        {/* CTA */}
+        <div className="mt-12 bg-gradient-to-r from-[#f4d03f] to-[#f5a8d8] rounded-lg p-8 text-center text-white">
+          <h3 className="text-2xl font-bold mb-4">Ready to Land Your Web3 Job?</h3>
+          <p className="mb-6 text-lg">Check out our job boards and role guides to find your perfect opportunity.</p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <a href="/roles" className="px-6 py-2 bg-white text-[#f4d03f] font-semibold rounded-lg hover:bg-gray-100 transition-all">
+              Explore Roles
+            </a>
+            <a href="/resources" className="px-6 py-2 bg-white/20 hover:bg-white/30 font-semibold rounded-lg transition-all border border-white">
+              View Job Boards
+            </a>
           </div>
         </div>
       </div>
-
-      {/* Next Steps */}
-      <div className="mt-12 p-8 rounded-lg bg-gradient-to-r from-[#a855f7]/10 to-[#10b981]/10 border border-[#2a2a2a]">
-        <h2 className="text-2xl font-bold mb-4">Next Steps</h2>
-        <ol className="space-y-3 text-gray-300">
-          <li className="flex gap-4">
-            <span className="text-[#a855f7] font-semibold min-w-6">1.</span>
-            <span>Find your web2 role in the bridge above</span>
-          </li>
-          <li className="flex gap-4">
-            <span className="text-[#a855f7] font-semibold min-w-6">2.</span>
-            <span>Read the "Where to Start" guidance for your specific path</span>
-          </li>
-          <li className="flex gap-4">
-            <span className="text-[#a855f7] font-semibold min-w-6">3.</span>
-            <span>
-              Explore the corresponding web3 role to learn full details about responsibilities
-              and compensation
-            </span>
-          </li>
-          <li className="flex gap-4">
-            <span className="text-[#a855f7] font-semibold min-w-6">4.</span>
-            <span>Start building proof of work and applying to positions</span>
-          </li>
-        </ol>
-      </div>
-    </div>
+    </main>
   );
 }

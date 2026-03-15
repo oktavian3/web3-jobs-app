@@ -1,154 +1,272 @@
 [
   {
-    "term": "Airdrop",
-    "definition": "Free distribution of cryptocurrency tokens to a group of users. Often used to launch tokens or reward community members."
-  },
-  {
-    "term": "AMM (Automated Market Maker)",
-    "definition": "A DEX mechanism where users trade against a liquidity pool rather than an order book. Prices determined by smart contract formula."
-  },
-  {
-    "term": "APY (Annual Percentage Yield)",
-    "definition": "The annual return on an investment, accounting for compound interest. Shows true earning potential vs simple interest (APR)."
-  },
-  {
-    "term": "Arbitrage",
-    "definition": "Profiting from price differences of the same asset across different markets. Requires buying low in one market and selling high in another."
-  },
-  {
-    "term": "Audit (Security)",
-    "definition": "Professional review of smart contract code to identify vulnerabilities and security issues before deployment."
-  },
-  {
     "term": "Blockchain",
-    "definition": "Distributed ledger technology using cryptography. Records transactions in linked blocks verified by network participants."
+    "category": "Basics & Blockchain Fundamentals",
+    "definition": "A decentralized, distributed ledger that records transactions across many computers in a secure, immutable way. It's the underlying technology for cryptocurrencies like Bitcoin."
   },
   {
-    "term": "Bridging",
-    "definition": "Transferring assets from one blockchain to another. Enables cross-chain interoperability but introduces smart contract risk."
+    "term": "Decentralization",
+    "category": "Basics & Blockchain Fundamentals",
+    "definition": "The process of distributing control away from a central authority (e.g., banks or governments) to a network of participants, enhancing security and censorship resistance."
   },
   {
     "term": "Consensus Mechanism",
-    "definition": "The protocol by which network participants agree on the current state. Proof of Work and Proof of Stake are common examples."
+    "category": "Basics & Blockchain Fundamentals",
+    "definition": "A protocol that ensures all nodes in a blockchain network agree on the state of the ledger. Common types include Proof of Work (PoW) and Proof of Stake (PoS)."
   },
   {
-    "term": "DAO (Decentralized Autonomous Organization)",
-    "definition": "Organization governed by smart contracts and token holders voting on proposals. No central authority."
+    "term": "Proof of Work (PoW)",
+    "category": "Basics & Blockchain Fundamentals",
+    "definition": "A consensus method where miners solve complex puzzles to validate transactions and add blocks, used by Bitcoin; it's energy-intensive."
   },
   {
-    "term": "DeFi (Decentralized Finance)",
-    "definition": "Financial protocols and applications built on blockchain. Replaces traditional finance intermediaries with smart contracts."
+    "term": "Proof of Stake (PoS)",
+    "category": "Basics & Blockchain Fundamentals",
+    "definition": "A more energy-efficient consensus where validators are chosen based on the amount of cryptocurrency they 'stake' as collateral, used by Ethereum 2.0."
   },
   {
-    "term": "DEX (Decentralized Exchange)",
-    "definition": "Peer-to-peer trading protocol for swapping tokens without central intermediary. Examples: Uniswap, Curve, Balancer."
-  },
-  {
-    "term": "dApp (Decentralized Application)",
-    "definition": "Application built on blockchain backend. Frontend looks like normal apps but backend uses smart contracts."
-  },
-  {
-    "term": "Emission",
-    "definition": "The rate at which new tokens are created and distributed in a protocol. Critical to token economics and inflation."
-  },
-  {
-    "term": "ERC-20",
-    "definition": "Ethereum token standard. Defines how fungible tokens (like currency) work and interact with other contracts."
-  },
-  {
-    "term": "ERC-721 (NFT Standard)",
-    "definition": "Ethereum standard for non-fungible tokens. Each token is unique and non-interchangeable."
-  },
-  {
-    "term": "EVM (Ethereum Virtual Machine)",
-    "definition": "The computational engine that executes smart contracts on Ethereum and compatible chains. Bytecode sandbox."
-  },
-  {
-    "term": "Gas",
-    "definition": "Unit measuring computational cost on blockchain. Higher complexity = higher gas cost. Paid in native token."
-  },
-  {
-    "term": "Governance Token",
-    "definition": "Token that gives holders voting rights on protocol changes. Critical for DAOs and decentralized decisions."
-  },
-  {
-    "term": "Impermanent Loss",
-    "definition": "Loss liquidity providers face when depositing in AMMs. Occurs when asset prices change significantly from deposit time."
-  },
-  {
-    "term": "Liquidity Pool",
-    "definition": "Smart contract holding equal value of token pairs. Users trade against the pool; liquidity providers earn fees."
-  },
-  {
-    "term": "MEV (Maximal Extractable Value)",
-    "definition": "Profit miners/validators can extract by reordering transactions. Includes front-running and sandwich attacks."
-  },
-  {
-    "term": "Mint",
-    "definition": "Creation of new tokens or NFTs on the blockchain. Increases total supply and transfers new asset to user."
-  },
-  {
-    "term": "NFT (Non-Fungible Token)",
-    "definition": "Unique digital asset on blockchain. Each NFT has distinct properties and cannot be directly exchanged for another."
-  },
-  {
-    "term": "Oracles",
-    "definition": "Smart contracts that feed external real-world data onto the blockchain. Critical for DeFi but introduce trust assumptions."
-  },
-  {
-    "term": "Proof of Stake",
-    "definition": "Consensus mechanism where validators are chosen based on stake held. More energy efficient than Proof of Work."
-  },
-  {
-    "term": "Proof of Work",
-    "definition": "Consensus mechanism requiring computational work to validate blocks. Used by Bitcoin. Energy intensive but very secure."
-  },
-  {
-    "term": "Protocol",
-    "definition": "Core smart contract system defining how a blockchain application works. The 'rules of the game'."
-  },
-  {
-    "term": "Reentrancy",
-    "definition": "Smart contract vulnerability where function calls back into themselves before state updates complete. Causes fund theft."
-  },
-  {
-    "term": "Royalties",
-    "definition": "Percentage of sale price creator receives each time NFT is resold. Built into smart contract."
-  },
-  {
-    "term": "Slashing",
-    "definition": "Penalty where validator loses stake for malicious behavior or downtime. Incentivizes honest participation in Proof of Stake."
-  },
-  {
-    "term": "Smart Contract",
-    "definition": "Self-executing code deployed on blockchain. Runs automatically when conditions are met. No intermediary needed."
-  },
-  {
-    "term": "Slippage",
-    "definition": "Difference between expected and actual price when executing large trades. Higher slippage = worse prices."
-  },
-  {
-    "term": "Staking",
-    "definition": "Depositing tokens to secure network and earn rewards. Validator in Proof of Stake systems."
-  },
-  {
-    "term": "Token Economics (Tokenomics)",
-    "definition": "Design of token supply, distribution, and incentives. Critical to project success and sustainability."
-  },
-  {
-    "term": "TVL (Total Value Locked)",
-    "definition": "Aggregate USD value of all assets in a protocol. Key metric for DeFi protocol size and success."
-  },
-  {
-    "term": "Vesting",
-    "definition": "Schedule releasing tokens over time. Prevents early dumping and aligns incentives over long term."
+    "term": "Node",
+    "category": "Basics & Blockchain Fundamentals",
+    "definition": "A computer that participates in a blockchain network, maintaining a copy of the ledger and validating transactions."
   },
   {
     "term": "Wallet",
-    "definition": "Software managing cryptographic keys. Stores, sends, and receives cryptocurrency. Examples: MetaMask, Ledger, Phantom."
+    "category": "Basics & Blockchain Fundamentals",
+    "definition": "A digital tool (software or hardware) that stores private keys to access and manage cryptocurrencies and interact with blockchains."
+  },
+  {
+    "term": "Private Key",
+    "category": "Basics & Blockchain Fundamentals",
+    "definition": "A secret cryptographic code that proves ownership of a wallet and allows signing transactions; never share it."
+  },
+  {
+    "term": "Public Key",
+    "category": "Basics & Blockchain Fundamentals",
+    "definition": "A cryptographic address derived from a private key, used to receive funds or verify signatures."
+  },
+  {
+    "term": "Hash",
+    "category": "Basics & Blockchain Fundamentals",
+    "definition": "A unique fixed-size string generated from data via a hashing algorithm (e.g., SHA-256), used for security and data integrity in blockchains."
+  },
+  {
+    "term": "Smart Contract",
+    "category": "Smart Contracts & Development",
+    "definition": "Self-executing code on a blockchain that automatically enforces agreements when conditions are met, without intermediaries (e.g., via Solidity on Ethereum)."
+  },
+  {
+    "term": "Solidity",
+    "category": "Smart Contracts & Development",
+    "definition": "The primary programming language for writing smart contracts on Ethereum and EVM-compatible chains."
+  },
+  {
+    "term": "EVM (Ethereum Virtual Machine)",
+    "category": "Smart Contracts & Development",
+    "definition": "A runtime environment that executes smart contracts on the Ethereum network, ensuring consistent behavior across nodes."
+  },
+  {
+    "term": "Gas",
+    "category": "Smart Contracts & Development",
+    "definition": "A unit measuring computational effort required for Ethereum transactions; users pay gas fees to miners/validators to process operations."
+  },
+  {
+    "term": "DApp (Decentralized Application)",
+    "category": "Smart Contracts & Development",
+    "definition": "An application that runs on a blockchain network, leveraging smart contracts for backend logic, like Uniswap for trading."
+  },
+  {
+    "term": "Oracle",
+    "category": "Smart Contracts & Development",
+    "definition": "A service that feeds external data (e.g., stock prices) into smart contracts, since blockchains can't access off-chain info natively (e.g., Chainlink)."
+  },
+  {
+    "term": "DeFi (Decentralized Finance)",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "Financial services built on blockchains, offering lending, borrowing, trading, etc., without traditional banks (e.g., Aave for loans)."
+  },
+  {
+    "term": "Liquidity Pool",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "A smart contract holding funds from users to facilitate decentralized trading on exchanges like Uniswap; providers earn fees."
   },
   {
     "term": "Yield Farming",
-    "definition": "Depositing crypto to earn returns. Often through liquidity provision or staking in DeFi protocols."
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "Earning rewards by providing liquidity or staking tokens in DeFi protocols, often involving high risks like impermanent loss."
+  },
+  {
+    "term": "Impermanent Loss",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "A temporary loss in value for liquidity providers when asset prices diverge in a pool, compared to just holding the assets."
+  },
+  {
+    "term": "Flash Loan",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "An uncollateralized loan borrowed and repaid in the same transaction, used for arbitrage or other instant strategies in DeFi."
+  },
+  {
+    "term": "Tokenomics",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "The economic design of a cryptocurrency, including supply, distribution, incentives, and utility within its ecosystem."
+  },
+  {
+    "term": "NFT (Non-Fungible Token)",
+    "category": "NFTs & Digital Assets",
+    "definition": "A unique digital asset on a blockchain representing ownership of items like art, music, or collectibles (e.g., ERC-721 standard)."
+  },
+  {
+    "term": "Minting",
+    "category": "NFTs & Digital Assets",
+    "definition": "The process of creating and issuing a new NFT or token on a blockchain, often requiring gas fees."
+  },
+  {
+    "term": "Metaverse",
+    "category": "NFTs & Digital Assets",
+    "definition": "A virtual world where users interact via avatars, often integrating NFTs, crypto, and social features (e.g., Decentraland)."
+  },
+  {
+    "term": "Web3",
+    "category": "NFTs & Digital Assets",
+    "definition": "The next evolution of the internet, emphasizing decentralization, user ownership of data, and blockchain integration (beyond Web2's centralized platforms)."
+  },
+  {
+    "term": "DAO (Decentralized Autonomous Organization)",
+    "category": "Governance & Advanced Concepts",
+    "definition": "A community-led entity governed by smart contracts and token holders' votes, without central leadership (e.g., MakerDAO)."
+  },
+  {
+    "term": "Staking",
+    "category": "Governance & Advanced Concepts",
+    "definition": "Locking up cryptocurrencies to support network operations (e.g., in PoS) and earn rewards."
+  },
+  {
+    "term": "Layer 1 / Layer 2",
+    "category": "Governance & Advanced Concepts",
+    "definition": "Layer 1: Base blockchain (e.g., Ethereum). Layer 2: Scaling solutions built on top (e.g., Polygon or Optimism) to reduce fees and speed."
+  },
+  {
+    "term": "Zero-Knowledge Proof (ZK-Proof)",
+    "category": "Governance & Advanced Concepts",
+    "definition": "A cryptographic method proving knowledge of information without revealing it, used for privacy and scalability (e.g., zk-SNARKs)."
+  },
+  {
+    "term": "Interoperability",
+    "category": "Governance & Advanced Concepts",
+    "definition": "The ability of different blockchains to communicate and transfer assets seamlessly (e.g., via bridges like Wormhole)."
+  },
+  {
+    "term": "Rug Pull",
+    "category": "Governance & Advanced Concepts",
+    "definition": "A scam where developers abandon a project after raising funds, often by draining liquidity pools."
+  },
+  {
+    "term": "Cryptocurrency",
+    "category": "Basics & Blockchain Fundamentals",
+    "definition": "Digital money secured by cryptography, operating on blockchain networks (e.g., Bitcoin, Ethereum)."
+  },
+  {
+    "term": "Bitcoin",
+    "category": "Basics & Blockchain Fundamentals",
+    "definition": "The first and most well-known cryptocurrency, created in 2009, using Proof of Work consensus."
+  },
+  {
+    "term": "Ethereum",
+    "category": "Smart Contracts & Development",
+    "definition": "A blockchain platform that supports smart contracts and dApps, using Ether (ETH) as its native cryptocurrency."
+  },
+  {
+    "term": "Altcoin",
+    "category": "NFTs & Digital Assets",
+    "definition": "Any cryptocurrency other than Bitcoin; refers to alternative coins like Ethereum, Solana, etc."
+  },
+  {
+    "term": "Token",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "A digital asset issued on a blockchain, often representing value, ownership, or utility within a protocol."
+  },
+  {
+    "term": "Airdrop",
+    "category": "Governance & Advanced Concepts",
+    "definition": "Free distribution of tokens or NFTs to eligible users, often as a promotional or community building strategy."
+  },
+  {
+    "term": "ICO (Initial Coin Offering)",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "A fundraising method where projects issue new tokens to raise capital from the public."
+  },
+  {
+    "term": "Whale",
+    "category": "Governance & Advanced Concepts",
+    "definition": "A person or entity holding a large amount of a cryptocurrency, with potential influence on markets."
+  },
+  {
+    "term": "Hodl",
+    "category": "Governance & Advanced Concepts",
+    "definition": "A strategy of holding cryptocurrency long-term rather than selling, regardless of market fluctuations."
+  },
+  {
+    "term": "FOMO (Fear of Missing Out)",
+    "category": "Governance & Advanced Concepts",
+    "definition": "The psychological pressure to invest in a trending asset to avoid missing potential gains."
+  },
+  {
+    "term": "FUD (Fear, Uncertainty, and Doubt)",
+    "category": "Governance & Advanced Concepts",
+    "definition": "Negative or unverified information spread to create panic and lower asset prices."
+  },
+  {
+    "term": "Bull Market",
+    "category": "Governance & Advanced Concepts",
+    "definition": "A market condition where prices are rising and investor sentiment is positive."
+  },
+  {
+    "term": "Bear Market",
+    "category": "Governance & Advanced Concepts",
+    "definition": "A market condition where prices are falling and investor sentiment is negative."
+  },
+  {
+    "term": "Volatility",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "The rapid and unpredictable price fluctuations of assets, common in crypto markets."
+  },
+  {
+    "term": "Slippage",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "The difference between expected and actual transaction prices, often due to liquidity or market movement."
+  },
+  {
+    "term": "Arbitrage",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "Profiting from price differences of the same asset across different markets or exchanges."
+  },
+  {
+    "term": "Leverage",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "Using borrowed funds to amplify trading positions, increasing both potential gains and losses."
+  },
+  {
+    "term": "Liquidation",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "Forced closure of a position when collateral falls below a required threshold in leveraged trading."
+  },
+  {
+    "term": "AMM (Automated Market Maker)",
+    "category": "DeFi (Decentralized Finance)",
+    "definition": "A protocol using liquidity pools and algorithms to facilitate decentralized trading (e.g., Uniswap)."
+  },
+  {
+    "term": "Bridge",
+    "category": "Governance & Advanced Concepts",
+    "definition": "A protocol enabling asset transfers between different blockchains or networks."
+  },
+  {
+    "term": "Fork",
+    "category": "Smart Contracts & Development",
+    "definition": "A change to blockchain protocol rules, either backward-compatible (soft fork) or requiring all upgrades (hard fork)."
+  },
+  {
+    "term": "Sidechain",
+    "category": "Governance & Advanced Concepts",
+    "definition": "A separate blockchain running parallel to a main chain, often for scaling or testing purposes."
   }
 ]

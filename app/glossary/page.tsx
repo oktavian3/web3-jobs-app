@@ -1,144 +1,143 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from 'react';
+import { Search, BookMarked, Filter } from 'lucide-react';
 
 interface GlossaryTerm {
   term: string;
+  category: string;
   definition: string;
 }
 
 export default function GlossaryPage() {
   const [terms, setTerms] = useState<GlossaryTerm[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
+  const [filteredTerms, setFilteredTerms] = useState<GlossaryTerm[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    fetch("/data/glossary.json")
-      .then((res) => res.json())
-      .then((data) => {
+    fetch('/data/glossary.json')
+      .then(res => res.json())
+      .then(data => {
         setTerms(data);
-        setLoading(false);
+        setFilteredTerms(data);
       });
   }, []);
 
-  const filteredTerms = useMemo(() => {
-    return terms.filter(
-      (t) =>
-        search === "" ||
-        t.term.toLowerCase().includes(search.toLowerCase()) ||
-        t.definition.toLowerCase().includes(search.toLowerCase())
-    );
-  }, [terms, search]);
+  useEffect(() => {
+    let filtered = terms;
 
-  // Group by first letter
-  const groupedTerms = useMemo(() => {
-    const groups: Record<string, GlossaryTerm[]> = {};
-    filteredTerms.forEach((term) => {
-      const firstLetter = term.term[0].toUpperCase();
-      if (!groups[firstLetter]) {
-        groups[firstLetter] = [];
-      }
-      groups[firstLetter].push(term);
-    });
-    return groups;
-  }, [filteredTerms]);
-
-  const alphabet = Object.keys(groupedTerms).sort();
-
-  const scrollToLetter = (letter: string) => {
-    const element = document.getElementById(`letter-${letter}`);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    if (selectedCategory !== 'all') {
+      filtered = filtered.filter(term => term.category === selectedCategory);
     }
+
+    if (searchTerm) {
+      filtered = filtered.filter(term =>
+        term.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        term.definition.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    setFilteredTerms(filtered);
+  }, [selectedCategory, searchTerm, terms]);
+
+  const categories = ['all', ...new Set(terms.map(t => t.category))];
+
+  const getCategoryColor = (category: string) => {
+    const colors: { [key: string]: string } = {
+      'Basics & Blockchain Fundamentals': 'bg-[#f4d03f]/20 border-[#f4d03f]',
+      'Smart Contracts & Development': 'bg-[#f5a8d8]/20 border-[#f5a8d8]',
+      'DeFi (Decentralized Finance)': 'bg-[#d8b5e8]/20 border-[#d8b5e8]',
+      'NFTs & Digital Assets': 'bg-[#1a237e]/10 border-[#1a237e]',
+      'Governance & Advanced Concepts': 'bg-[#f4d03f]/10 border-[#f4d03f]/50',
+    };
+    return colors[category] || 'bg-gray-50 border-gray-300';
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <div className="mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Web3 Glossary</h1>
-        <p className="text-lg text-gray-400">
-          {terms.length}+ essential terms to understand web3
-        </p>
-      </div>
+    <main className="min-h-screen bg-gradient-to-br from-[#f8f7f3] via-[#fef9e7] to-[#f8f7f3] pt-24">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Header */}
+        <div className="mb-12">
+          <div className="flex items-center gap-3 mb-4">
+            <BookMarked className="w-8 h-8 text-[#f4d03f]" />
+            <h1 className="text-4xl font-bold text-[#1a237e]">Web3 Glossary</h1>
+          </div>
+          <p className="text-gray-700 text-lg">Master 50+ essential Web3 terms. From blockchain basics to advanced DeFi concepts.</p>
+        </div>
 
-      {/* Search */}
-      <div className="mb-8">
-        <input
-          type="text"
-          placeholder="Search glossary..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full px-4 py-3 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a] focus:border-[#a855f7] outline-none transition"
-        />
-      </div>
-
-      {loading ? (
-        <div className="text-center py-20">Loading...</div>
-      ) : (
-        <>
-          {/* Alphabet Jump Nav */}
-          <div className="mb-8">
-            <p className="text-xs text-gray-400 mb-3">Jump to letter:</p>
-            <div className="flex flex-wrap gap-2">
-              {alphabet.map((letter) => (
-                <button
-                  key={letter}
-                  onClick={() => scrollToLetter(letter)}
-                  className="w-8 h-8 rounded bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#a855f7] hover:text-[#a855f7] transition text-sm font-semibold"
-                >
-                  {letter}
-                </button>
-              ))}
-            </div>
+        {/* Search and Filter */}
+        <div className="bg-white rounded-lg p-6 mb-8 border border-[#e0ddd8]">
+          <div className="relative mb-6">
+            <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search glossary..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 border border-[#e0ddd8] rounded-lg focus:outline-none focus:border-[#d8b5e8] text-base"
+            />
           </div>
 
-          {/* Terms */}
-          <div className="space-y-12">
-            {alphabet.map((letter) => (
-              <div key={letter}>
-                <h2
-                  id={`letter-${letter}`}
-                  className="text-2xl font-bold text-[#a855f7] mb-6 sticky top-16 bg-[#0f0f0f] py-2"
-                >
-                  {letter}
-                </h2>
-
-                <div className="space-y-6 ml-4">
-                  {groupedTerms[letter].map((term, i) => (
-                    <div key={i} className="border-l-2 border-[#a855f7] pl-6">
-                      <h3 className="text-lg font-semibold mb-2">{term.term}</h3>
-                      <p className="text-gray-400 leading-relaxed">
-                        {term.definition}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          <div className="flex flex-wrap gap-2">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-lg font-semibold transition-all text-sm ${
+                  selectedCategory === cat
+                    ? 'bg-[#1a237e] text-white'
+                    : 'bg-gray-100 text-[#1a237e] hover:bg-gray-200'
+                }`}
+              >
+                {cat === 'all' ? 'All Terms' : cat}
+              </button>
             ))}
           </div>
+        </div>
 
-          {filteredTerms.length === 0 && (
-            <div className="text-center py-20">
-              <p className="text-gray-400">
-                No terms found. Try adjusting your search.
-              </p>
+        {/* Terms Grid */}
+        <div className="space-y-3">
+          {filteredTerms.map((term, idx) => (
+            <div 
+              key={idx}
+              className={`p-6 rounded-lg border-2 transition-all hover:shadow-lg ${getCategoryColor(term.category)}`}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-[#1a237e] mb-2">{term.term}</h3>
+                  <p className="text-gray-700 leading-relaxed">{term.definition}</p>
+                </div>
+                <span className="text-xs font-semibold text-[#1a237e] bg-white px-3 py-1 rounded-full whitespace-nowrap">
+                  {term.category.split('&')[0].trim()}
+                </span>
+              </div>
             </div>
-          )}
-        </>
-      )}
+          ))}
+        </div>
 
-      {/* Learning Tip */}
-      <div className="mt-20 pt-12 border-t border-[#2a2a2a]">
-        <div className="p-8 rounded-lg bg-gradient-to-r from-[#a855f7]/10 to-[#10b981]/10 border border-[#2a2a2a]">
-          <h3 className="font-semibold mb-2">💡 Learning Tip</h3>
-          <p className="text-gray-400 text-sm">
-            Web3 has its own language. Rather than trying to memorize everything at once,
-            focus on the core concepts (blockchain, smart contract, DeFi, DAO) and learn
-            others as you encounter them.
-          </p>
+        {filteredTerms.length === 0 && (
+          <div className="text-center py-16">
+            <p className="text-gray-600 text-lg">No terms found matching your search.</p>
+          </div>
+        )}
+
+        {/* Stats */}
+        <div className="mt-16 bg-white rounded-lg p-8 border border-[#e0ddd8] text-center">
+          <h3 className="text-2xl font-bold text-[#1a237e] mb-4">Master Web3 Fundamentals</h3>
+          <p className="text-gray-600 mb-6">Our comprehensive glossary covers everything from blockchain basics to advanced DeFi concepts, helping you understand the Web3 landscape.</p>
+          <div className="flex justify-center gap-8 flex-wrap">
+            <div>
+              <div className="text-3xl font-bold text-[#f4d03f]">{filteredTerms.length}</div>
+              <div className="text-sm text-gray-600">Total Terms</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-[#f5a8d8]">{categories.length - 1}</div>
+              <div className="text-sm text-gray-600">Categories</div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

@@ -1,454 +1,504 @@
 [
   {
+    "id": "blockchain-developer",
+    "category": "Development & Engineering",
+    "title": "Blockchain Developer",
+    "description": "Build and maintain blockchain protocols, dApps, and integrations.",
+    "responsibilities": [
+      "Design and maintain blockchain protocols",
+      "Build decentralized applications (dApps)",
+      "Integrate blockchain technology into existing systems",
+      "Collaborate with cross-functional teams"
+    ],
+    "resources": [
+      {
+        "title": "Ethereum Developer Tutorials",
+        "url": "https://ethereum.org/en/developers/tutorials/",
+        "description": "100+ free lessons on blockchain basics"
+      },
+      {
+        "title": "BuildSpace",
+        "url": "https://buildspace.so",
+        "description": "Hands-on projects for Ethereum/Polygon"
+      },
+      {
+        "title": "Alchemy University",
+        "url": "https://university.alchemy.com/",
+        "description": "Free courses on blockchain dev"
+      }
+    ]
+  },
+  {
     "id": "smart-contract-developer",
-    "name": "Smart Contract Developer",
-    "category": "technical",
-    "oneLiner": "Write, test, and deploy the code that runs on blockchain networks",
-    "mustHaveSkills": [
-      "Solidity or Rust (depending on chain)",
-      "Understanding of gas optimization",
-      "Smart contract security principles",
-      "Testing frameworks (Hardhat, Foundry, Anchor)"
+    "category": "Development & Engineering",
+    "title": "Smart Contract Developer (Solidity)",
+    "description": "Write, test, and deploy smart contracts on Ethereum/EVM chains.",
+    "responsibilities": [
+      "Write secure smart contracts in Solidity",
+      "Conduct thorough testing and auditing",
+      "Deploy contracts on EVM chains",
+      "Optimize gas efficiency"
     ],
-    "niceToHaveSkills": [
-      "DeFi protocol mechanics",
-      "Formal verification",
-      "Layer 2 architectures",
-      "Assembly-level optimization"
-    ],
-    "toolsAndProtocols": [
-      "Solidity",
-      "Hardhat",
-      "Foundry",
-      "Truffle",
-      "OpenZeppelin",
-      "Slither",
-      "MythX"
-    ],
-    "web2Equivalent": "Backend/Systems Developer",
-    "dayInTheLife": "Your day starts by reviewing a PR for a new token standard implementation. After unit tests pass, you dive into gas optimization — every byte matters. Then it's a deep work session implementing a new AMM feature. You end the day running a testnet deployment and reviewing security audit findings with the team.",
-    "juniorToSenior": {
-      "junior": "Write basic smart contracts from templates. Understand function calls and state changes. Can deploy to testnet. Needs code review for security.",
-      "mid": "Design contract architecture. Optimize for gas. Implement complex DeFi logic. Mentor juniors. Participate in security reviews.",
-      "senior": "Lead protocol design. Make architecture decisions for multiple contracts. Conduct security audits. Advise on protocol-level economics and incentives."
-    },
-    "proofOfWorkTips": [
-      "Deploy a simple ERC-20 or ERC-721 contract on Ethereum testnet",
-      "Build a basic DEX or lending protocol",
-      "Contribute to open-source contracts (OpenZeppelin, Aave, etc.)",
-      "Publish a security audit or findings report",
-      "Build a complex DeFi protocol with multiple interacting contracts"
-    ],
-    "avgCompRange": {
-      "junior": "$80k - $120k",
-      "mid": "$150k - $250k",
-      "senior": "$300k - $500k+",
-      "note": "Token grants (5-30% of ask) common at later-stage projects. Very variable based on location and project funding."
-    },
-    "interviewQuestions": [
-      "Explain reentrancy attacks and how you'd prevent them",
-      "Walk us through your approach to optimizing gas costs in a complex contract",
-      "How would you design a staking system with variable APY based on protocol revenue?",
-      "What's the difference between delegatecall and call, and when would you use each?",
-      "Describe a complex contract you've built and the security considerations you made"
-    ],
-    "whoToFollowOnCT": [
+    "resources": [
       {
-        "handle": "@transmissions11",
-        "why": "Core Solidity dev, explains complex contract patterns"
+        "title": "CryptoZombies",
+        "url": "https://cryptozombies.io",
+        "description": "Gamified Solidity tutorials"
       },
       {
-        "handle": "@samczsun",
-        "why": "Security researcher, DeFi audits and exploits"
+        "title": "Solidity by Example",
+        "url": "https://solidity-by-example.org/",
+        "description": "Code examples and explanations"
       },
       {
-        "handle": "@FrankieIsLost",
-        "why": "Gas optimization wizard"
+        "title": "Solidity Language",
+        "url": "https://soliditylang.org/",
+        "description": "Free reference guide"
       },
       {
-        "handle": "@AustinGriffith",
-        "why": "Scaffold-ETH creator, great for learning"
+        "title": "Full Solidity Course",
+        "url": "https://www.youtube.com/watch?v=gyMwXuJrbJQ",
+        "description": "32-hour full course with JS integration"
       }
-    ],
-    "whereToFindJobs": [
-      "Crypto.jobs",
-      "Angel List (Wellfound)",
-      "Polygon/Ethereum official job boards",
-      "Protocol Discord #jobs channels",
-      "LinkedIn (filter by 'web3' or 'blockchain')"
     ]
   },
   {
-    "id": "web3-frontend-engineer",
-    "name": "Web3 Frontend Engineer",
-    "category": "technical",
-    "oneLiner": "Build beautiful, fast interfaces that connect users to blockchain dapps",
-    "mustHaveSkills": [
-      "React or Vue.js",
-      "TypeScript",
-      "Web3.js or Ethers.js",
-      "Wallet integration (MetaMask, WalletConnect, etc.)"
+    "id": "rust-developer",
+    "category": "Development & Engineering",
+    "title": "Rust Developer (e.g., for Solana)",
+    "description": "Develop on non-EVM chains like Solana, focusing on performance and security.",
+    "responsibilities": [
+      "Develop smart programs on Solana",
+      "Focus on performance and security",
+      "Implement efficient algorithms",
+      "Collaborate on ecosystem projects"
     ],
-    "niceToHaveSkills": [
-      "Next.js or Nuxt",
-      "Tailwind CSS or styled-components",
-      "GraphQL and subgraphs",
-      "Mobile-first design"
-    ],
-    "toolsAndProtocols": [
-      "React",
-      "Next.js",
-      "Ethers.js",
-      "Web3.js",
-      "Wagmi",
-      "RainbowKit",
-      "Hardhat",
-      "The Graph"
-    ],
-    "web2Equivalent": "Full Stack / Frontend Developer",
-    "dayInTheLife": "Start with Figma designs for a new token swap interface. Integrate wallet connection and test on mainnet fork. Debug a gas estimation issue with the smart contract team. Deploy to IPFS and verify testnet deployment works end-to-end. End with code review and accessibility pass.",
-    "juniorToSenior": {
-      "junior": "Implement UI from designs. Integrate wallet connectivity. Display blockchain data. Basic transaction flows. Needs support on architecture.",
-      "mid": "Design component systems. Optimize rendering for frequent state changes. Build complex user flows. Mentoring. Performance optimization.",
-      "senior": "Lead product direction. Architect scalable dapp interfaces. Make decisions on Web3UX patterns. Drive user research. Scale to millions of transactions."
-    },
-    "proofOfWorkTips": [
-      "Build a simple NFT minter or viewer app",
-      "Create a token swap interface (fork of Uniswap UI)",
-      "Build a wallet dashboard showing portfolios",
-      "Create a governance dapp with voting",
-      "Contribute to open-source dapp projects"
-    ],
-    "avgCompRange": {
-      "junior": "$70k - $100k",
-      "mid": "$120k - $200k",
-      "senior": "$250k - $400k+",
-      "note": "Token allocations typical. Startups offer 0.1-1% of projects."
-    },
-    "interviewQuestions": [
-      "Walk us through integrating MetaMask wallet connection",
-      "How would you handle transaction state and user feedback (pending/success/error)?",
-      "Describe your approach to optimizing re-renders in a React dapp",
-      "How do you manage private keys securely in a frontend application?",
-      "What's the difference between on-chain and off-chain data, and how would you display both?"
-    ],
-    "whoToFollowOnCT": [
+    "resources": [
       {
-        "handle": "@wagmi_sh",
-        "why": "Wagmi library creator, best Web3 React hooks"
+        "title": "The Rust Programming Language",
+        "url": "https://doc.rust-lang.org/book/",
+        "description": "Official free guide"
       },
       {
-        "handle": "@natemccormick",
-        "why": "RainbowKit creator, wallet UX expert"
+        "title": "Solana Development Guide",
+        "url": "https://docs.solana.com/developing/programming-model",
+        "description": "Tutorials on Rust for Solana"
       },
       {
-        "handle": "@FrankieIsLost",
-        "why": "Web3 UX and dapp design insights"
+        "title": "BuildSpace Projects",
+        "url": "https://buildspace.so/projects",
+        "description": "Free project-based learning"
       }
-    ],
-    "whereToFindJobs": [
-      "Crypto.jobs",
-      "Angel List (Wellfound)",
-      "Protocol job boards",
-      "OpenZeppelin careers",
-      "ConsenSys job portal"
     ]
   },
   {
-    "id": "blockchain-researcher",
-    "name": "Blockchain Researcher",
-    "category": "research",
-    "oneLiner": "Study protocol mechanics, analyze networks, and propose improvements",
-    "mustHaveSkills": [
-      "Academic writing and research",
-      "Understanding of consensus mechanisms",
-      "Basic economics (supply/demand, incentives)",
-      "Coding ability (Python or similar)"
+    "id": "fullstack-web3",
+    "category": "Development & Engineering",
+    "title": "Full Stack Web3 Developer",
+    "description": "Handle frontend (React/JS), backend, and blockchain integration (e.g., Web3.js).",
+    "responsibilities": [
+      "Develop frontend interfaces for dApps",
+      "Build and maintain backend systems",
+      "Integrate blockchain connectivity",
+      "Ensure seamless user experience"
     ],
-    "niceToHaveSkills": [
-      "Game theory",
-      "Cryptography basics",
-      "Data analysis and visualization",
-      "Published research papers"
-    ],
-    "toolsAndProtocols": [
-      "Python",
-      "Pandas/NumPy",
-      "Jupyter Notebooks",
-      "The Graph (subgraphs)",
-      "Dune Analytics",
-      "Nansen",
-      "Glassnode"
-    ],
-    "web2Equivalent": "Data Scientist / Research Analyst",
-    "dayInTheLife": "Morning: analyze on-chain data using Dune to understand liquidity patterns. Afternoon: write a proposal for protocol parameter changes based on research. Evening: review literature on MEV and prepare slides for team discussion.",
-    "juniorToSenior": {
-      "junior": "Analyze public data. Write blog posts explaining protocol mechanics. Basic data visualization. Needs guidance on research direction.",
-      "mid": "Design experiments to test hypotheses. Publish research findings. Present at conferences. Identify protocol improvements.",
-      "senior": "Set research agenda. Lead multi-person research initiatives. Influence protocol governance. Publish peer-reviewed work."
-    },
-    "proofOfWorkTips": [
-      "Publish analysis on Substack or Medium explaining DeFi mechanics",
-      "Create Dune dashboards analyzing protocol metrics",
-      "Contribute to protocol governance with data-driven proposals",
-      "Publish a research paper on a blockchain topic",
-      "Build a data tool for analyzing on-chain metrics"
-    ],
-    "avgCompRange": {
-      "junior": "$80k - $120k",
-      "mid": "$140k - $220k",
-      "senior": "$250k - $400k+",
-      "note": "Highly dependent on protocol backing. Grants more common than salaries for independent research."
-    },
-    "interviewQuestions": [
-      "Describe a research question you'd want to answer about any blockchain",
-      "How would you approach analyzing the economic incentives in a new protocol?",
-      "Walk us through your process for identifying and validating a protocol optimization",
-      "How do you stay current with blockchain research developments?",
-      "Describe a complex analysis you've done and your findings"
-    ],
-    "whoToFollowOnCT": [
+    "resources": [
       {
-        "handle": "@hasufl",
-        "why": "Legendary researcher, game theory and DeFi"
+        "title": "DappUniversity",
+        "url": "https://www.youtube.com/c/DappUniversity",
+        "description": "Free tutorials on full-stack dApps"
       },
       {
-        "handle": "@MessariCrypto",
-        "why": "High-quality on-chain analysis"
+        "title": "UseWeb3",
+        "url": "https://www.useweb3.xyz/",
+        "description": "Curated resources for Web3.js/Ethers.js"
       },
       {
-        "handle": "@punk9059",
-        "why": "Deep MEV and protocol research"
+        "title": "ChainShot",
+        "url": "https://www.chainshot.com/",
+        "description": "Free Ethereum-focused courses"
       }
-    ],
-    "whereToFindJobs": [
-      "Protocol treasuries (Ethereum Foundation, etc.)",
-      "Research DAOs (Paradigm, Electric Capital)",
-      "Crypto research platforms",
-      "Academic conferences and grants"
     ]
   },
   {
-    "id": "nft-designer",
-    "name": "NFT Designer",
-    "category": "design",
-    "oneLiner": "Create digital art, collections, and visual identities for blockchain projects",
-    "mustHaveSkills": [
-      "Digital art and design",
-      "UI/UX understanding",
-      "Portfolio of visual work",
-      "Ability to create multiple iterations"
+    "id": "devops-engineer",
+    "category": "Development & Engineering",
+    "title": "DevOps Engineer",
+    "description": "Manage infrastructure, CI/CD, and node operations for blockchain systems.",
+    "responsibilities": [
+      "Manage blockchain infrastructure",
+      "Implement CI/CD pipelines",
+      "Operate and maintain nodes",
+      "Ensure system reliability"
     ],
-    "niceToHaveSkills": [
-      "Animation/motion design",
-      "3D modeling",
-      "Generative art",
-      "Community engagement"
-    ],
-    "toolsAndProtocols": [
-      "Figma",
-      "Adobe Creative Suite",
-      "Blender",
-      "Processing",
-      "p5.js",
-      "Procreate",
-      "Cinema 4D"
-    ],
-    "web2Equivalent": "Graphic Designer / Concept Artist",
-    "dayInTheLife": "Begin with client kickoff discussing brand guidelines and target community. Create 20 NFT variations exploring different aesthetics. Get feedback and iterate. Design metadata and trait systems. Mint test collection and deploy. Network with community.",
-    "juniorToSenior": {
-      "junior": "Execute design briefs. Create NFT artwork. Understand trait systems. Needs direction on creative choices.",
-      "mid": "Design full collections. Art direction for teams. Define visual identity. Community collaboration. Lead creative decisions.",
-      "senior": "Establish design trends. Advise on collection strategy. Lead large creative initiatives. Build recognizable brands."
-    },
-    "proofOfWorkTips": [
-      "Design and mint your own NFT collection",
-      "Create art for an open-source NFT project",
-      "Design NFTs for a cause or community",
-      "Build a generative art NFT project",
-      "Create a complete visual identity for a blockchain project"
-    ],
-    "avgCompRange": {
-      "junior": "$40k - $80k",
-      "mid": "$80k - $150k",
-      "senior": "$200k - $350k+",
-      "note": "Highly variable. Success depends on collection sales. Royalties critical to income."
-    },
-    "interviewQuestions": [
-      "Walk us through your design process for a new NFT collection",
-      "How do you approach creating utility in visual design?",
-      "Tell us about a project you're proud of and why",
-      "How do you stay inspired and current with design trends?",
-      "Describe your experience with community feedback and iteration"
-    ],
-    "whoToFollowOnCT": [
+    "resources": [
       {
-        "handle": "@beeple",
-        "why": "Legendary digital artist in crypto"
+        "title": "Web3 DevOps Guide",
+        "url": "https://web3.career/learn-web3/devops",
+        "description": "Free articles and videos"
       },
       {
-        "handle": "@tylerxhobbs",
-        "why": "Generative art master"
+        "title": "Hardhat Documentation",
+        "url": "https://hardhat.org/docs",
+        "description": "Free tool for testing/deploying; includes tutorials"
       },
       {
-        "handle": "@DavidHolz",
-        "why": "NFT collection design and strategy"
+        "title": "Truffle Suite",
+        "url": "https://trufflesuite.com/docs/",
+        "description": "Free framework for devops in Solidity"
       }
+    ]
+  },
+  {
+    "id": "smart-contract-auditor",
+    "category": "Security & Auditing",
+    "title": "Smart Contract Auditor",
+    "description": "Review code for vulnerabilities, security, and optimizations.",
+    "responsibilities": [
+      "Audit smart contracts for vulnerabilities",
+      "Identify security risks",
+      "Recommend optimizations",
+      "Document findings and fixes"
     ],
-    "whereToFindJobs": [
-      "Behance, Dribbble",
-      "Twitter/X (portfolio tweets)",
-      "NFT project Discord communities",
-      "Crypto design agencies",
-      "Open Sea collections needing designers"
+    "resources": [
+      {
+        "title": "Cyfrin Updraft",
+        "url": "https://updraft.cyfrin.io/",
+        "description": "Free Solidity security courses"
+      },
+      {
+        "title": "RareSkills",
+        "url": "https://rareskills.io/learn-solidity",
+        "description": "In-depth free auditing modules"
+      },
+      {
+        "title": "OpenZeppelin",
+        "url": "https://docs.openzeppelin.com/",
+        "description": "Free secure contract libraries and guides"
+      }
+    ]
+  },
+  {
+    "id": "blockchain-security",
+    "category": "Security & Auditing",
+    "title": "Blockchain Security Engineer",
+    "description": "Focus on cryptography, zero-knowledge proofs, and threat mitigation.",
+    "responsibilities": [
+      "Implement cryptographic solutions",
+      "Research zero-knowledge proofs",
+      "Mitigate security threats",
+      "Design secure systems"
+    ],
+    "resources": [
+      {
+        "title": "Web3 Security Guide",
+        "url": "https://web3.career/learn-web3/security",
+        "description": "Free videos on zk-SNARKs"
+      },
+      {
+        "title": "Ethereum Security",
+        "url": "https://ethereum.org/en/developers/docs/security/",
+        "description": "Free resources on common vulnerabilities"
+      },
+      {
+        "title": "Foundry",
+        "url": "https://book.getfoundry.sh/",
+        "description": "Free tool for advanced testing"
+      }
+    ]
+  },
+  {
+    "id": "onchain-analyst",
+    "category": "Analysis & Research",
+    "title": "Crypto/On-Chain Analyst",
+    "description": "Analyze market trends, on-chain data, and tokenomics.",
+    "responsibilities": [
+      "Analyze on-chain data and trends",
+      "Research market movements",
+      "Study tokenomics",
+      "Produce insights and reports"
+    ],
+    "resources": [
+      {
+        "title": "Dune Analytics",
+        "url": "https://dune.com/docs/",
+        "description": "Free SQL-based on-chain analysis"
+      },
+      {
+        "title": "Messari Research",
+        "url": "https://messari.io/research",
+        "description": "Free intro articles; advanced via community"
+      },
+      {
+        "title": "Web3 Data Science",
+        "url": "https://web3.career/learn-web3/data-science",
+        "description": "Free guides on crypto analytics"
+      }
+    ]
+  },
+  {
+    "id": "defi-analyst",
+    "category": "Analysis & Research",
+    "title": "DeFi Analyst/Token Researcher",
+    "description": "Evaluate DeFi protocols, risks, and investment opportunities.",
+    "responsibilities": [
+      "Evaluate DeFi protocols",
+      "Assess investment opportunities",
+      "Analyze protocol risks",
+      "Create research reports"
+    ],
+    "resources": [
+      {
+        "title": "DefiLlama",
+        "url": "https://defillama.com/docs",
+        "description": "Free DeFi data tools"
+      },
+      {
+        "title": "Bankless Academy",
+        "url": "https://academy.bankless.com/",
+        "description": "Free DeFi courses"
+      },
+      {
+        "title": "Alchemy DeFi Path",
+        "url": "https://university.alchemy.com/path/defi",
+        "description": "Interactive lessons"
+      }
     ]
   },
   {
     "id": "community-manager",
-    "name": "Community Manager",
-    "category": "non-tech",
-    "oneLiner": "Build and nurture engaged communities around blockchain projects",
-    "mustHaveSkills": [
-      "Community building experience",
-      "Clear communication",
-      "Social media fluency",
-      "Crisis management"
+    "category": "Marketing & Community",
+    "title": "Community Manager",
+    "description": "Build and engage communities via Discord, Twitter/X, events.",
+    "responsibilities": [
+      "Build and manage communities",
+      "Engage members on Discord/Twitter",
+      "Organize and host events",
+      "Create community initiatives"
     ],
-    "niceToHaveSkills": [
-      "Analytics and metrics tracking",
-      "Event organization",
-      "Content creation",
-      "Multiple language fluency"
-    ],
-    "toolsAndProtocols": [
-      "Discord",
-      "Telegram",
-      "Twitter/X",
-      "Notion",
-      "Dune Analytics",
-      "Metric tracking tools"
-    ],
-    "web2Equivalent": "Community Manager / Social Media Manager",
-    "dayInTheLife": "Monitor Discord for questions and escalate technical issues. Post daily updates on Twitter. Review analytics on engagement metrics. Host a community AMA. Moderate heated discussion about protocol governance. Plan next month's community event.",
-    "juniorToSenior": {
-      "junior": "Monitor channels. Respond to questions. Enforce rules. Create basic content. Needs guidance on strategy.",
-      "mid": "Set community strategy. Create engagement programs. Analyze metrics. Lead events. Build partnerships.",
-      "senior": "Own community vision and growth. Direct multi-channel strategy. Represent to governance. Identify trends early."
-    },
-    "proofOfWorkTips": [
-      "Build and grow an active Discord or Telegram community",
-      "Create viral Twitter content about a protocol",
-      "Organize community events or AMAs",
-      "Build community tools or dashboards",
-      "Document community insights and trends"
-    ],
-    "avgCompRange": {
-      "junior": "$40k - $70k",
-      "mid": "$80k - $130k",
-      "senior": "$150k - $250k+",
-      "note": "Often supplemented with tokens. Bounties and retroactive airdrops common."
-    },
-    "interviewQuestions": [
-      "Describe a community challenge you've faced and how you solved it",
-      "What metrics do you track to measure community health?",
-      "How do you handle misinformation or FUD in community channels?",
-      "Tell us about a successful community event or initiative you led",
-      "How do you balance growth with community quality?"
-    ],
-    "whoToFollowOnCT": [
+    "resources": [
       {
-        "handle": "@ljxie",
-        "why": "Community building expert"
+        "title": "Web3 Community Manager Guide",
+        "url": "https://web3.career/learn-web3/community-manager",
+        "description": "Free tips and videos"
       },
       {
-        "handle": "@jackbutcher",
-        "why": "Content and community strategy"
+        "title": "Developer DAO Blog",
+        "url": "https://blog.developerdao.com/",
+        "description": "Free guides on DAO community building"
       },
       {
-        "handle": "@gregisenberg",
-        "why": "Community economics and incentives"
+        "title": "Discord Moderation",
+        "url": "https://discord.com/moderation",
+        "description": "Free resources for mod tools"
       }
-    ],
-    "whereToFindJobs": [
-      "Crypto.jobs",
-      "Protocol Discords (#jobs)",
-      "Twitter/X job search",
-      "Superteam (Solana)",
-      "DAOs and community organizations"
     ]
   },
   {
-    "id": "web3-product-manager",
-    "name": "Web3 Product Manager",
-    "category": "business",
-    "oneLiner": "Shape product strategy for blockchain applications",
-    "mustHaveSkills": [
-      "Product strategy and vision",
-      "User research and empathy",
-      "Data-driven decision making",
-      "Technical literacy (not coding)"
+    "id": "marketing-specialist",
+    "category": "Marketing & Community",
+    "title": "Marketing Specialist",
+    "description": "Promote projects, handle SEO, content, and growth hacking.",
+    "responsibilities": [
+      "Develop marketing strategies",
+      "Manage content creation",
+      "Optimize SEO and growth",
+      "Coordinate marketing campaigns"
     ],
-    "niceToHaveSkills": [
-      "DeFi mechanics understanding",
-      "Growth experimentation",
-      "Community engagement",
-      "Token economics design"
-    ],
-    "toolsAndProtocols": [
-      "Figma",
-      "Amplitude",
-      "Mixpanel",
-      "Dune Analytics",
-      "User research tools",
-      "Roadmap tools"
-    ],
-    "web2Equivalent": "Product Manager",
-    "dayInTheLife": "Analyze user behavior data from Dune and Amplitude. Interview power users about pain points. Write product specs for new features. Prioritize roadmap with engineering. Present product direction to the board. Review competitive landscape.",
-    "juniorToSenior": {
-      "junior": "Own specific features. Gather user feedback. Basic roadmap planning. Needs mentorship on strategy.",
-      "mid": "Own product area. Define strategy and roadmap. Lead cross-functional work. Analyze metrics.",
-      "senior": "Define product vision. Set company direction. Make key strategic bets. Lead fundraising narrative."
-    },
-    "proofOfWorkTips": [
-      "Write detailed product case studies on Substack",
-      "Contribute to protocol governance with product insights",
-      "Build a small product from concept to launch",
-      "Create product teardowns of successful dapps",
-      "Show growth and engagement metrics you've driven"
-    ],
-    "avgCompRange": {
-      "junior": "$100k - $150k",
-      "mid": "$180k - $300k",
-      "senior": "$350k - $600k+",
-      "note": "Token grants (1-5%) very standard. Heavily equity-weighted at startups."
-    },
-    "interviewQuestions": [
-      "What's a product you love in crypto and why?",
-      "How would you approach finding product-market fit for a new protocol?",
-      "Walk us through your process for prioritizing features",
-      "Describe a product decision you made based on data",
-      "How do you balance short-term growth with long-term vision?"
-    ],
-    "whoToFollowOnCT": [
+    "resources": [
       {
-        "handle": "@AriaNeustadter",
-        "why": "Web3 product and growth strategy"
+        "title": "Web3 Marketing Strategies",
+        "url": "https://web3.career/learn-web3/marketing",
+        "description": "Free strategies for Web3"
       },
       {
-        "handle": "@hosseeb",
-        "why": "DeFi product and protocol design"
+        "title": "a16z Crypto School",
+        "url": "https://a16zcrypto.com/content/series/crypto-startup-school/",
+        "description": "Free videos on Web3 marketing"
       },
       {
-        "handle": "@balajis",
-        "why": "Vision for crypto products and networks"
+        "title": "Web3 Marketing Resources",
+        "url": "https://www.youtube.com/results?search_query=web3+marketing+free+course",
+        "description": "Channels like EatTheBlocks"
       }
+    ]
+  },
+  {
+    "id": "ux-designer",
+    "category": "Design & Creative",
+    "title": "UI/UX Designer",
+    "description": "Design interfaces for dApps, NFTs, and metaverse experiences.",
+    "responsibilities": [
+      "Design dApp interfaces",
+      "Create NFT experiences",
+      "Design metaverse UX",
+      "Conduct user research"
     ],
-    "whereToFindJobs": [
-      "Angel List (Wellfound)",
-      "Crypto.jobs",
-      "LinkedIn (filter web3)",
-      "Protocol careers pages",
-      "VC firm portfolio companies"
+    "resources": [
+      {
+        "title": "Figma Web3 Community",
+        "url": "https://www.figma.com/community/search?query=web3",
+        "description": "Free tools and templates"
+      },
+      {
+        "title": "Web3 Design Guide",
+        "url": "https://www.useweb3.xyz/guides/design",
+        "description": "Curated free tutorials"
+      },
+      {
+        "title": "Adobe XD",
+        "url": "https://www.adobe.com/products/xd.html",
+        "description": "With Web3-focused YouTube guides"
+      }
+    ]
+  },
+  {
+    "id": "nft-artist",
+    "category": "Design & Creative",
+    "title": "NFT Artist/Designer",
+    "description": "Create digital art, economies, and game assets for NFTs/Web3 gaming.",
+    "responsibilities": [
+      "Create digital art for NFTs",
+      "Design game assets",
+      "Develop economies and mechanics",
+      "Build interactive experiences"
+    ],
+    "resources": [
+      {
+        "title": "OpenSea Learn",
+        "url": "https://opensea.io/learn",
+        "description": "Free NFT creation guides"
+      },
+      {
+        "title": "Blender Tutorials",
+        "url": "https://www.blender.org/support/tutorials/",
+        "description": "Free for 3D NFT art"
+      },
+      {
+        "title": "BuildSpace Projects",
+        "url": "https://buildspace.so/projects",
+        "description": "Hands-on minting tutorials"
+      }
+    ]
+  },
+  {
+    "id": "product-manager",
+    "category": "Operations & Management",
+    "title": "Product Manager",
+    "description": "Define roadmaps, user needs, and project strategy for Web3 products.",
+    "responsibilities": [
+      "Define product roadmaps",
+      "Understand user needs",
+      "Drive project strategy",
+      "Lead cross-functional teams"
+    ],
+    "resources": [
+      {
+        "title": "ProductSchool Web3 PM",
+        "url": "https://www.productschool.com/courses/web3-product-management",
+        "description": "Free intro webinars"
+      },
+      {
+        "title": "Web3 PM Guide",
+        "url": "https://web3.career/learn-web3/product-manager",
+        "description": "Free articles on DAOs/DeFi PM"
+      }
+    ]
+  },
+  {
+    "id": "bd-sales",
+    "category": "Operations & Management",
+    "title": "Business Development/Sales",
+    "description": "Forge partnerships, sales in crypto, and ecosystem growth.",
+    "responsibilities": [
+      "Develop strategic partnerships",
+      "Drive sales growth",
+      "Build ecosystem relationships",
+      "Identify new opportunities"
+    ],
+    "resources": [
+      {
+        "title": "LinkedIn Learning Web3",
+        "url": "https://www.linkedin.com/learning/topics/web3",
+        "description": "With Web3 sales focus"
+      },
+      {
+        "title": "CryptoJobsList Blog",
+        "url": "https://cryptojobslist.com/blog",
+        "description": "Free BD tips"
+      }
+    ]
+  },
+  {
+    "id": "operations-legal",
+    "category": "Operations & Management",
+    "title": "Operations/Legal/Compliance",
+    "description": "Handle ops, regulatory compliance, and risk in Web3 firms.",
+    "responsibilities": [
+      "Ensure regulatory compliance",
+      "Manage operational risks",
+      "Handle legal matters",
+      "Implement policies and procedures"
+    ],
+    "resources": [
+      {
+        "title": "CoinDesk Learn",
+        "url": "https://www.coindesk.com/learn/",
+        "description": "Free compliance articles"
+      },
+      {
+        "title": "Web3Bridge",
+        "url": "https://www.web3bridge.com/",
+        "description": "Free African-focused ops training"
+      }
+    ]
+  },
+  {
+    "id": "economy-designer",
+    "category": "Other Specialized Roles",
+    "title": "Economy Designer",
+    "description": "Design tokenomics, game economies, and DAO governance.",
+    "responsibilities": [
+      "Design tokenomics",
+      "Create game economies",
+      "Plan DAO governance",
+      "Model economic incentives"
+    ],
+    "resources": [
+      {
+        "title": "Tokenomics DAO",
+        "url": "https://tokenomicsdao.com/resources",
+        "description": "Free guides"
+      },
+      {
+        "title": "Economy Designer Guide",
+        "url": "https://web3.career/learn-web3/economy-designer",
+        "description": "Videos and articles"
+      }
+    ]
+  },
+  {
+    "id": "content-creator",
+    "category": "Other Specialized Roles",
+    "title": "Content Creator/Copywriter",
+    "description": "Produce blogs, videos, and social content for Web3 projects.",
+    "responsibilities": [
+      "Create blog content",
+      "Produce videos",
+      "Write social media content",
+      "Develop marketing narratives"
+    ],
+    "resources": [
+      {
+        "title": "Medium Web3",
+        "url": "https://medium.com/tag/web3",
+        "description": "Free publishing tips"
+      },
+      {
+        "title": "We Teach Blockchain",
+        "url": "https://weteachblockchain.org/",
+        "description": "Free content creation modules"
+      }
     ]
   }
 ]

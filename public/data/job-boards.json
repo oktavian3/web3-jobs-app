@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Web3.career",
+    "rating": 5,
+    "description": "#1 board with 72k+ jobs in blockchain, smart contracts, and crypto. Filters by skills, location, and salary; great for devs and non-tech.",
+    "url": "https://web3.career/",
+    "jobCount": "72,000+",
+    "features": ["Advanced filters", "Salary info", "Skill-based search", "Global roles"]
+  },
+  {
+    "id": 2,
+    "name": "CryptoJobsList",
+    "rating": 5,
+    "description": "400+ Web3 jobs updated daily; strong for remote, entry-level, and high-pay roles. Includes surveys on market trends.",
+    "url": "https://cryptojobslist.com/",
+    "jobCount": "400+",
+    "features": ["Daily updates", "Market trends", "Entry-level roles", "High-pay positions"]
+  },
+  {
+    "id": 3,
+    "name": "Cryptocurrency Jobs",
+    "rating": 4,
+    "description": "Dedicated to blockchain/crypto; lists from top firms, with global focus.",
+    "url": "https://cryptocurrencyjobs.co/",
+    "jobCount": "1,000+",
+    "features": ["Top companies", "Global focus", "Blockchain-specific", "Crypto roles"]
+  },
+  {
+    "id": 4,
+    "name": "Crypto.Jobs",
+    "rating": 4,
+    "description": "Profiles top talent; connects companies with devs, marketers, etc. 3k+ listings.",
+    "url": "https://crypto.jobs/",
+    "jobCount": "3,000+",
+    "features": ["Talent profiles", "Developer roles", "Marketing positions", "3k+ listings"]
+  },
+  {
+    "id": 5,
+    "name": "Remote3",
+    "rating": 4,
+    "description": "Specializes in remote Web3 roles; includes internships and bounties.",
+    "url": "https://remote3.co/",
+    "jobCount": "500+",
+    "features": ["Remote-first", "Internships", "Bounties", "Flexible work"]
+  },
+  {
+    "id": 6,
+    "name": "BeInCrypto Jobs",
+    "rating": 4,
+    "description": "Curated for crypto/Web3; includes news-integrated listings.",
+    "url": "https://beincrypto.com/jobs/",
+    "jobCount": "600+",
+    "features": ["Curated listings", "News integration", "Latest crypto jobs", "Quality focused"]
+  },
+  {
+    "id": 7,
+    "name": "Solana Jobs",
+    "rating": 4,
+    "description": "Chain-specific for Solana devs and ecosystem roles.",
+    "url": "https://jobs.solana.com/",
+    "jobCount": "200+",
+    "features": ["Solana ecosystem", "Developer roles", "Chain-specific", "Ecosystem jobs"]
+  },
+  {
+    "id": 8,
+    "name": "HireOnChain",
+    "rating": 4,
+    "description": "Verified talent for builders; focuses on high-signal hires.",
+    "url": "https://hireonchain.xyz/",
+    "jobCount": "300+",
+    "features": ["Verified talent", "High-signal hires", "Builder focused", "Quality matches"]
+  },
+  {
+    "id": 9,
+    "name": "JobStash",
+    "rating": 4,
+    "description": "Niche for Web3 startups; easy filters.",
+    "url": "https://jobstash.xyz/",
+    "jobCount": "800+",
+    "features": ["Web3 startups", "Easy navigation", "Startup focus", "Growth roles"]
+  },
+  {
+    "id": 10,
+    "name": "Built In (Web3 Section)",
+    "rating": 4,
+    "description": "Aggregates from major firms like Coinbase; tech-focused.",
+    "url": "https://builtin.com/jobs/web3",
+    "jobCount": "1,500+",
+    "features": ["Major firms", "Tech roles", "Coinbase jobs", "Enterprise focus"]
+  },
+  {
+    "id": 11,
+    "name": "Avalanche Jobs",
+    "rating": 4,
+    "description": "Chain-specific for Avalanche ecosystem roles.",
+    "url": "https://jobs.avax.network/",
+    "jobCount": "150+",
+    "features": ["Avalanche ecosystem", "Chain-specific", "Ecosystem jobs"]
+  },
+  {
+    "id": 12,
+    "name": "Ethereum Job Board",
+    "rating": 4,
+    "description": "Official Ethereum ecosystem jobs.",
+    "url": "https://jobs.ethereum.org/",
+    "jobCount": "300+",
+    "features": ["Ethereum ecosystem", "Official jobs", "Protocol roles"]
+  }
+]

@@ -1,145 +1,186 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import { ExternalLink, Star, Filter, Search } from 'lucide-react';
 
-interface ResourceItem {
+interface JobBoard {
+  id: number;
   name: string;
-  type: string;
-  isPaid: boolean;
+  rating: number;
   description: string;
-  link: string;
-}
-
-interface ResourceSection {
-  category: string;
-  items: ResourceItem[];
+  url: string;
+  jobCount: string;
+  features: string[];
 }
 
 export default function ResourcesPage() {
-  const [resources, setResources] = useState<ResourceSection[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [boards, setBoards] = useState<JobBoard[]>([]);
+  const [filteredBoards, setFilteredBoards] = useState<JobBoard[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState<'rating' | 'jobs'>('rating');
 
   useEffect(() => {
-    fetch("/data/resources.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setResources(data);
-        setLoading(false);
+    fetch('/data/job-boards.json')
+      .then(res => res.json())
+      .then(data => {
+        setBoards(data);
+        setFilteredBoards(data);
       });
   }, []);
 
-  if (loading) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-        Loading resources...
-      </div>
-    );
-  }
+  useEffect(() => {
+    let filtered = boards;
 
-  const getTypeBadgeColor = (type: string) => {
-    const colors: Record<string, string> = {
-      video: "bg-red-500/20 text-red-300",
-      article: "bg-blue-500/20 text-blue-300",
-      course: "bg-purple-500/20 text-purple-300",
-      guide: "bg-green-500/20 text-green-300",
-      documentation: "bg-yellow-500/20 text-yellow-300",
-      tool: "bg-cyan-500/20 text-cyan-300",
-      library: "bg-pink-500/20 text-pink-300",
-      community: "bg-indigo-500/20 text-indigo-300",
-      newsletter: "bg-orange-500/20 text-orange-300",
-      default: "bg-gray-500/20 text-gray-300",
-    };
-    return colors[type] || colors.default;
-  };
+    if (searchTerm) {
+      filtered = filtered.filter(board =>
+        board.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        board.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Sort
+    if (sortBy === 'rating') {
+      filtered = [...filtered].sort((a, b) => b.rating - a.rating);
+    } else {
+      filtered = [...filtered].sort((a, b) => {
+        const aNum = parseInt(b.jobCount.replace(/\D/g, '')) || 0;
+        const bNum = parseInt(a.jobCount.replace(/\D/g, '')) || 0;
+        return aNum - bNum;
+      });
+    }
+
+    setFilteredBoards(filtered);
+  }, [searchTerm, sortBy, boards]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <div className="mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Resources</h1>
-        <p className="text-lg text-gray-400">
-          Curated links to learn web3, from basics to advanced topics
-        </p>
-      </div>
+    <main className="min-h-screen bg-gradient-to-br from-[#f8f7f3] via-[#fef9e7] to-[#f8f7f3] pt-24">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Header */}
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold text-[#1a237e] mb-4">Top Web3 Job Boards</h1>
+          <p className="text-gray-700 text-lg">Access the most active job boards with thousands of opportunities across all Web3 roles and experience levels.</p>
+        </div>
 
-      {/* Resources by Category */}
-      <div className="space-y-16">
-        {resources.map((section, i) => (
-          <div key={i}>
-            <h2 className="text-2xl font-bold text-[#a855f7] mb-6">
-              {section.category}
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {section.items.map((item, j) => (
-                <a
-                  key={j}
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-6 rounded-lg border border-[#2a2a2a] hover:border-[#a855f7] hover:bg-[#1a1a1a]/50 transition group"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-semibold text-lg group-hover:text-[#a855f7] transition flex-1">
-                      {item.name}
-                    </h3>
-                    {item.isPaid && (
-                      <span className="text-xs font-semibold px-2 py-1 rounded-full bg-[#10b981]/20 text-[#10b981] ml-2 whitespace-nowrap">
-                        Paid
-                      </span>
-                    )}
-                  </div>
-
-                  <span
-                    className={`inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3 capitalize ${getTypeBadgeColor(
-                      item.type
-                    )}`}
-                  >
-                    {item.type}
-                  </span>
-
-                  <p className="text-sm text-gray-400 mb-4">{item.description}</p>
-
-                  <span className="text-[#a855f7] text-sm group-hover:translate-x-1 transition inline-block">
-                    Visit →
-                  </span>
-                </a>
-              ))}
+        {/* Search and Filter */}
+        <div className="bg-white rounded-lg p-6 mb-8 border border-[#e0ddd8]">
+          <div className="flex flex-col md:flex-row gap-4 mb-6">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search job boards..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-[#e0ddd8] rounded-lg focus:outline-none focus:border-[#d8b5e8]"
+              />
             </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Tips Section */}
-      <div className="mt-20 pt-12 border-t border-[#2a2a2a]">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
-            <div className="text-2xl font-bold text-[#a855f7] mb-3">📖</div>
-            <h3 className="font-semibold mb-2">Learn By Doing</h3>
-            <p className="text-sm text-gray-400">
-              Don't just read - deploy contracts, build dapps, and create portfolios
-            </p>
-          </div>
-
-          <div className="p-6 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
-            <div className="text-2xl font-bold text-[#10b981] mb-3">🔍</div>
-            <h3 className="font-semibold mb-2">Read Code</h3>
-            <p className="text-sm text-gray-400">
-              Study successful projects on GitHub. Understanding existing code teaches
-              you patterns and best practices
-            </p>
-          </div>
-
-          <div className="p-6 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
-            <div className="text-2xl font-bold text-[#a855f7] mb-3">🤝</div>
-            <h3 className="font-semibold mb-2">Join Communities</h3>
-            <p className="text-sm text-gray-400">
-              Discord servers and Twitter spaces are where you'll find help and
-              opportunities
-            </p>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'rating' | 'jobs')}
+              className="px-4 py-2 border border-[#e0ddd8] rounded-lg focus:outline-none focus:border-[#d8b5e8] bg-white"
+            >
+              <option value="rating">Sort by Rating</option>
+              <option value="jobs">Sort by Job Count</option>
+            </select>
           </div>
         </div>
+
+        {/* Job Boards Grid */}
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
+          {filteredBoards.map(board => (
+            <a 
+              key={board.id}
+              href={board.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-white rounded-lg p-6 border border-[#e0ddd8] hover:shadow-xl hover:border-[#d8b5e8] transition-all"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <h3 className="text-xl font-bold text-[#1a237e] group-hover:text-[#f4d03f] transition-colors">{board.name}</h3>
+                <ExternalLink className="w-5 h-5 text-[#d8b5e8] group-hover:text-[#f4d03f] transition-colors flex-shrink-0" />
+              </div>
+
+              <div className="flex items-center gap-2 mb-3">
+                <div className="flex">
+                  {Array.from({ length: board.rating }).map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-[#f4d03f] text-[#f4d03f]" />
+                  ))}
+                </div>
+                <span className="text-sm text-gray-600">{board.rating}/5</span>
+              </div>
+
+              <p className="text-gray-700 mb-4">{board.description}</p>
+
+              <div className="mb-4">
+                <div className="text-sm font-semibold text-[#f5a8d8] mb-2">{board.jobCount} active jobs</div>
+                <div className="flex flex-wrap gap-2">
+                  {board.features.slice(0, 2).map((feature, idx) => (
+                    <span key={idx} className="text-xs px-2 py-1 bg-[#f4d03f]/10 border border-[#f4d03f] text-[#1a237e] rounded">
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="text-[#d8b5e8] font-semibold text-sm group-hover:translate-x-2 transition-transform inline-flex items-center">
+                Visit Board <ExternalLink className="w-4 h-4 ml-2" />
+              </div>
+            </a>
+          ))}
+        </div>
+
+        {filteredBoards.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-600 text-lg">No job boards found matching your search.</p>
+          </div>
+        )}
+
+        {/* Stats Section */}
+        <div className="bg-white rounded-lg p-8 border border-[#e0ddd8] mb-12">
+          <h3 className="text-2xl font-bold text-[#1a237e] mb-8 text-center">Top Platforms by Numbers</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="p-6 bg-gradient-to-br from-[#f4d03f]/10 to-transparent rounded-lg border border-[#f4d03f]">
+              <div className="text-4xl font-bold text-[#f4d03f] mb-2">72,000+</div>
+              <p className="text-gray-600">Total jobs on Web3.career (largest board)</p>
+            </div>
+            <div className="p-6 bg-gradient-to-br from-[#f5a8d8]/10 to-transparent rounded-lg border border-[#f5a8d8]">
+              <div className="text-4xl font-bold text-[#f5a8d8] mb-2">12</div>
+              <p className="text-gray-600">Top curated job boards</p>
+            </div>
+            <div className="p-6 bg-gradient-to-br from-[#d8b5e8]/10 to-transparent rounded-lg border border-[#d8b5e8]">
+              <div className="text-4xl font-bold text-[#d8b5e8] mb-2">1000+</div>
+              <p className="text-gray-600">New roles posted daily</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Tips Section */}
+        <div className="bg-gradient-to-r from-[#f4d03f]/20 via-[#f5a8d8]/20 to-[#d8b5e8]/20 rounded-lg p-8 border-2 border-[#d8b5e8]">
+          <h3 className="text-2xl font-bold text-[#1a237e] mb-4">💡 How to Find the Best Opportunities</h3>
+          <ul className="space-y-3 text-gray-800">
+            <li className="flex gap-3">
+              <span className="text-[#f4d03f] font-bold">1.</span>
+              <span><strong>Check multiple boards:</strong> Don't rely on just one. Different companies post on different platforms.</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-[#f5a8d8] font-bold">2.</span>
+              <span><strong>Use filters:</strong> Most boards let you filter by experience level, salary, location (for timezone requirements), and skills.</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-[#d8b5e8] font-bold">3.</span>
+              <span><strong>Set up alerts:</strong> Many boards have email alerts for new postings matching your criteria.</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-[#1a237e] font-bold">4.</span>
+              <span><strong>Research companies:</strong> Before applying, check the company's on-chain activity, GitHub repos, and community presence.</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-[#f4d03f] font-bold">5.</span>
+              <span><strong>Apply consistently:</strong> High demand means high competition. Apply to multiple roles and build your network.</span>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
