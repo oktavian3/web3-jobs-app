@@ -1,0 +1,154 @@
+[
+  {
+    "term": "Airdrop",
+    "definition": "Free distribution of cryptocurrency tokens to a group of users. Often used to launch tokens or reward community members."
+  },
+  {
+    "term": "AMM (Automated Market Maker)",
+    "definition": "A DEX mechanism where users trade against a liquidity pool rather than an order book. Prices determined by smart contract formula."
+  },
+  {
+    "term": "APY (Annual Percentage Yield)",
+    "definition": "The annual return on an investment, accounting for compound interest. Shows true earning potential vs simple interest (APR)."
+  },
+  {
+    "term": "Arbitrage",
+    "definition": "Profiting from price differences of the same asset across different markets. Requires buying low in one market and selling high in another."
+  },
+  {
+    "term": "Audit (Security)",
+    "definition": "Professional review of smart contract code to identify vulnerabilities and security issues before deployment."
+  },
+  {
+    "term": "Blockchain",
+    "definition": "Distributed ledger technology using cryptography. Records transactions in linked blocks verified by network participants."
+  },
+  {
+    "term": "Bridging",
+    "definition": "Transferring assets from one blockchain to another. Enables cross-chain interoperability but introduces smart contract risk."
+  },
+  {
+    "term": "Consensus Mechanism",
+    "definition": "The protocol by which network participants agree on the current state. Proof of Work and Proof of Stake are common examples."
+  },
+  {
+    "term": "DAO (Decentralized Autonomous Organization)",
+    "definition": "Organization governed by smart contracts and token holders voting on proposals. No central authority."
+  },
+  {
+    "term": "DeFi (Decentralized Finance)",
+    "definition": "Financial protocols and applications built on blockchain. Replaces traditional finance intermediaries with smart contracts."
+  },
+  {
+    "term": "DEX (Decentralized Exchange)",
+    "definition": "Peer-to-peer trading protocol for swapping tokens without central intermediary. Examples: Uniswap, Curve, Balancer."
+  },
+  {
+    "term": "dApp (Decentralized Application)",
+    "definition": "Application built on blockchain backend. Frontend looks like normal apps but backend uses smart contracts."
+  },
+  {
+    "term": "Emission",
+    "definition": "The rate at which new tokens are created and distributed in a protocol. Critical to token economics and inflation."
+  },
+  {
+    "term": "ERC-20",
+    "definition": "Ethereum token standard. Defines how fungible tokens (like currency) work and interact with other contracts."
+  },
+  {
+    "term": "ERC-721 (NFT Standard)",
+    "definition": "Ethereum standard for non-fungible tokens. Each token is unique and non-interchangeable."
+  },
+  {
+    "term": "EVM (Ethereum Virtual Machine)",
+    "definition": "The computational engine that executes smart contracts on Ethereum and compatible chains. Bytecode sandbox."
+  },
+  {
+    "term": "Gas",
+    "definition": "Unit measuring computational cost on blockchain. Higher complexity = higher gas cost. Paid in native token."
+  },
+  {
+    "term": "Governance Token",
+    "definition": "Token that gives holders voting rights on protocol changes. Critical for DAOs and decentralized decisions."
+  },
+  {
+    "term": "Impermanent Loss",
+    "definition": "Loss liquidity providers face when depositing in AMMs. Occurs when asset prices change significantly from deposit time."
+  },
+  {
+    "term": "Liquidity Pool",
+    "definition": "Smart contract holding equal value of token pairs. Users trade against the pool; liquidity providers earn fees."
+  },
+  {
+    "term": "MEV (Maximal Extractable Value)",
+    "definition": "Profit miners/validators can extract by reordering transactions. Includes front-running and sandwich attacks."
+  },
+  {
+    "term": "Mint",
+    "definition": "Creation of new tokens or NFTs on the blockchain. Increases total supply and transfers new asset to user."
+  },
+  {
+    "term": "NFT (Non-Fungible Token)",
+    "definition": "Unique digital asset on blockchain. Each NFT has distinct properties and cannot be directly exchanged for another."
+  },
+  {
+    "term": "Oracles",
+    "definition": "Smart contracts that feed external real-world data onto the blockchain. Critical for DeFi but introduce trust assumptions."
+  },
+  {
+    "term": "Proof of Stake",
+    "definition": "Consensus mechanism where validators are chosen based on stake held. More energy efficient than Proof of Work."
+  },
+  {
+    "term": "Proof of Work",
+    "definition": "Consensus mechanism requiring computational work to validate blocks. Used by Bitcoin. Energy intensive but very secure."
+  },
+  {
+    "term": "Protocol",
+    "definition": "Core smart contract system defining how a blockchain application works. The 'rules of the game'."
+  },
+  {
+    "term": "Reentrancy",
+    "definition": "Smart contract vulnerability where function calls back into themselves before state updates complete. Causes fund theft."
+  },
+  {
+    "term": "Royalties",
+    "definition": "Percentage of sale price creator receives each time NFT is resold. Built into smart contract."
+  },
+  {
+    "term": "Slashing",
+    "definition": "Penalty where validator loses stake for malicious behavior or downtime. Incentivizes honest participation in Proof of Stake."
+  },
+  {
+    "term": "Smart Contract",
+    "definition": "Self-executing code deployed on blockchain. Runs automatically when conditions are met. No intermediary needed."
+  },
+  {
+    "term": "Slippage",
+    "definition": "Difference between expected and actual price when executing large trades. Higher slippage = worse prices."
+  },
+  {
+    "term": "Staking",
+    "definition": "Depositing tokens to secure network and earn rewards. Validator in Proof of Stake systems."
+  },
+  {
+    "term": "Token Economics (Tokenomics)",
+    "definition": "Design of token supply, distribution, and incentives. Critical to project success and sustainability."
+  },
+  {
+    "term": "TVL (Total Value Locked)",
+    "definition": "Aggregate USD value of all assets in a protocol. Key metric for DeFi protocol size and success."
+  },
+  {
+    "term": "Vesting",
+    "definition": "Schedule releasing tokens over time. Prevents early dumping and aligns incentives over long term."
+  },
+  {
+    "term": "Wallet",
+    "definition": "Software managing cryptographic keys. Stores, sends, and receives cryptocurrency. Examples: MetaMask, Ledger, Phantom."
+  },
+  {
+    "term": "Yield Farming",
+    "definition": "Depositing crypto to earn returns. Often through liquidity provision or staking in DeFi protocols."
+  }
+]

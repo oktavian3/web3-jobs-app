@@ -1,0 +1,454 @@
+[
+  {
+    "id": "smart-contract-developer",
+    "name": "Smart Contract Developer",
+    "category": "technical",
+    "oneLiner": "Write, test, and deploy the code that runs on blockchain networks",
+    "mustHaveSkills": [
+      "Solidity or Rust (depending on chain)",
+      "Understanding of gas optimization",
+      "Smart contract security principles",
+      "Testing frameworks (Hardhat, Foundry, Anchor)"
+    ],
+    "niceToHaveSkills": [
+      "DeFi protocol mechanics",
+      "Formal verification",
+      "Layer 2 architectures",
+      "Assembly-level optimization"
+    ],
+    "toolsAndProtocols": [
+      "Solidity",
+      "Hardhat",
+      "Foundry",
+      "Truffle",
+      "OpenZeppelin",
+      "Slither",
+      "MythX"
+    ],
+    "web2Equivalent": "Backend/Systems Developer",
+    "dayInTheLife": "Your day starts by reviewing a PR for a new token standard implementation. After unit tests pass, you dive into gas optimization — every byte matters. Then it's a deep work session implementing a new AMM feature. You end the day running a testnet deployment and reviewing security audit findings with the team.",
+    "juniorToSenior": {
+      "junior": "Write basic smart contracts from templates. Understand function calls and state changes. Can deploy to testnet. Needs code review for security.",
+      "mid": "Design contract architecture. Optimize for gas. Implement complex DeFi logic. Mentor juniors. Participate in security reviews.",
+      "senior": "Lead protocol design. Make architecture decisions for multiple contracts. Conduct security audits. Advise on protocol-level economics and incentives."
+    },
+    "proofOfWorkTips": [
+      "Deploy a simple ERC-20 or ERC-721 contract on Ethereum testnet",
+      "Build a basic DEX or lending protocol",
+      "Contribute to open-source contracts (OpenZeppelin, Aave, etc.)",
+      "Publish a security audit or findings report",
+      "Build a complex DeFi protocol with multiple interacting contracts"
+    ],
+    "avgCompRange": {
+      "junior": "$80k - $120k",
+      "mid": "$150k - $250k",
+      "senior": "$300k - $500k+",
+      "note": "Token grants (5-30% of ask) common at later-stage projects. Very variable based on location and project funding."
+    },
+    "interviewQuestions": [
+      "Explain reentrancy attacks and how you'd prevent them",
+      "Walk us through your approach to optimizing gas costs in a complex contract",
+      "How would you design a staking system with variable APY based on protocol revenue?",
+      "What's the difference between delegatecall and call, and when would you use each?",
+      "Describe a complex contract you've built and the security considerations you made"
+    ],
+    "whoToFollowOnCT": [
+      {
+        "handle": "@transmissions11",
+        "why": "Core Solidity dev, explains complex contract patterns"
+      },
+      {
+        "handle": "@samczsun",
+        "why": "Security researcher, DeFi audits and exploits"
+      },
+      {
+        "handle": "@FrankieIsLost",
+        "why": "Gas optimization wizard"
+      },
+      {
+        "handle": "@AustinGriffith",
+        "why": "Scaffold-ETH creator, great for learning"
+      }
+    ],
+    "whereToFindJobs": [
+      "Crypto.jobs",
+      "Angel List (Wellfound)",
+      "Polygon/Ethereum official job boards",
+      "Protocol Discord #jobs channels",
+      "LinkedIn (filter by 'web3' or 'blockchain')"
+    ]
+  },
+  {
+    "id": "web3-frontend-engineer",
+    "name": "Web3 Frontend Engineer",
+    "category": "technical",
+    "oneLiner": "Build beautiful, fast interfaces that connect users to blockchain dapps",
+    "mustHaveSkills": [
+      "React or Vue.js",
+      "TypeScript",
+      "Web3.js or Ethers.js",
+      "Wallet integration (MetaMask, WalletConnect, etc.)"
+    ],
+    "niceToHaveSkills": [
+      "Next.js or Nuxt",
+      "Tailwind CSS or styled-components",
+      "GraphQL and subgraphs",
+      "Mobile-first design"
+    ],
+    "toolsAndProtocols": [
+      "React",
+      "Next.js",
+      "Ethers.js",
+      "Web3.js",
+      "Wagmi",
+      "RainbowKit",
+      "Hardhat",
+      "The Graph"
+    ],
+    "web2Equivalent": "Full Stack / Frontend Developer",
+    "dayInTheLife": "Start with Figma designs for a new token swap interface. Integrate wallet connection and test on mainnet fork. Debug a gas estimation issue with the smart contract team. Deploy to IPFS and verify testnet deployment works end-to-end. End with code review and accessibility pass.",
+    "juniorToSenior": {
+      "junior": "Implement UI from designs. Integrate wallet connectivity. Display blockchain data. Basic transaction flows. Needs support on architecture.",
+      "mid": "Design component systems. Optimize rendering for frequent state changes. Build complex user flows. Mentoring. Performance optimization.",
+      "senior": "Lead product direction. Architect scalable dapp interfaces. Make decisions on Web3UX patterns. Drive user research. Scale to millions of transactions."
+    },
+    "proofOfWorkTips": [
+      "Build a simple NFT minter or viewer app",
+      "Create a token swap interface (fork of Uniswap UI)",
+      "Build a wallet dashboard showing portfolios",
+      "Create a governance dapp with voting",
+      "Contribute to open-source dapp projects"
+    ],
+    "avgCompRange": {
+      "junior": "$70k - $100k",
+      "mid": "$120k - $200k",
+      "senior": "$250k - $400k+",
+      "note": "Token allocations typical. Startups offer 0.1-1% of projects."
+    },
+    "interviewQuestions": [
+      "Walk us through integrating MetaMask wallet connection",
+      "How would you handle transaction state and user feedback (pending/success/error)?",
+      "Describe your approach to optimizing re-renders in a React dapp",
+      "How do you manage private keys securely in a frontend application?",
+      "What's the difference between on-chain and off-chain data, and how would you display both?"
+    ],
+    "whoToFollowOnCT": [
+      {
+        "handle": "@wagmi_sh",
+        "why": "Wagmi library creator, best Web3 React hooks"
+      },
+      {
+        "handle": "@natemccormick",
+        "why": "RainbowKit creator, wallet UX expert"
+      },
+      {
+        "handle": "@FrankieIsLost",
+        "why": "Web3 UX and dapp design insights"
+      }
+    ],
+    "whereToFindJobs": [
+      "Crypto.jobs",
+      "Angel List (Wellfound)",
+      "Protocol job boards",
+      "OpenZeppelin careers",
+      "ConsenSys job portal"
+    ]
+  },
+  {
+    "id": "blockchain-researcher",
+    "name": "Blockchain Researcher",
+    "category": "research",
+    "oneLiner": "Study protocol mechanics, analyze networks, and propose improvements",
+    "mustHaveSkills": [
+      "Academic writing and research",
+      "Understanding of consensus mechanisms",
+      "Basic economics (supply/demand, incentives)",
+      "Coding ability (Python or similar)"
+    ],
+    "niceToHaveSkills": [
+      "Game theory",
+      "Cryptography basics",
+      "Data analysis and visualization",
+      "Published research papers"
+    ],
+    "toolsAndProtocols": [
+      "Python",
+      "Pandas/NumPy",
+      "Jupyter Notebooks",
+      "The Graph (subgraphs)",
+      "Dune Analytics",
+      "Nansen",
+      "Glassnode"
+    ],
+    "web2Equivalent": "Data Scientist / Research Analyst",
+    "dayInTheLife": "Morning: analyze on-chain data using Dune to understand liquidity patterns. Afternoon: write a proposal for protocol parameter changes based on research. Evening: review literature on MEV and prepare slides for team discussion.",
+    "juniorToSenior": {
+      "junior": "Analyze public data. Write blog posts explaining protocol mechanics. Basic data visualization. Needs guidance on research direction.",
+      "mid": "Design experiments to test hypotheses. Publish research findings. Present at conferences. Identify protocol improvements.",
+      "senior": "Set research agenda. Lead multi-person research initiatives. Influence protocol governance. Publish peer-reviewed work."
+    },
+    "proofOfWorkTips": [
+      "Publish analysis on Substack or Medium explaining DeFi mechanics",
+      "Create Dune dashboards analyzing protocol metrics",
+      "Contribute to protocol governance with data-driven proposals",
+      "Publish a research paper on a blockchain topic",
+      "Build a data tool for analyzing on-chain metrics"
+    ],
+    "avgCompRange": {
+      "junior": "$80k - $120k",
+      "mid": "$140k - $220k",
+      "senior": "$250k - $400k+",
+      "note": "Highly dependent on protocol backing. Grants more common than salaries for independent research."
+    },
+    "interviewQuestions": [
+      "Describe a research question you'd want to answer about any blockchain",
+      "How would you approach analyzing the economic incentives in a new protocol?",
+      "Walk us through your process for identifying and validating a protocol optimization",
+      "How do you stay current with blockchain research developments?",
+      "Describe a complex analysis you've done and your findings"
+    ],
+    "whoToFollowOnCT": [
+      {
+        "handle": "@hasufl",
+        "why": "Legendary researcher, game theory and DeFi"
+      },
+      {
+        "handle": "@MessariCrypto",
+        "why": "High-quality on-chain analysis"
+      },
+      {
+        "handle": "@punk9059",
+        "why": "Deep MEV and protocol research"
+      }
+    ],
+    "whereToFindJobs": [
+      "Protocol treasuries (Ethereum Foundation, etc.)",
+      "Research DAOs (Paradigm, Electric Capital)",
+      "Crypto research platforms",
+      "Academic conferences and grants"
+    ]
+  },
+  {
+    "id": "nft-designer",
+    "name": "NFT Designer",
+    "category": "design",
+    "oneLiner": "Create digital art, collections, and visual identities for blockchain projects",
+    "mustHaveSkills": [
+      "Digital art and design",
+      "UI/UX understanding",
+      "Portfolio of visual work",
+      "Ability to create multiple iterations"
+    ],
+    "niceToHaveSkills": [
+      "Animation/motion design",
+      "3D modeling",
+      "Generative art",
+      "Community engagement"
+    ],
+    "toolsAndProtocols": [
+      "Figma",
+      "Adobe Creative Suite",
+      "Blender",
+      "Processing",
+      "p5.js",
+      "Procreate",
+      "Cinema 4D"
+    ],
+    "web2Equivalent": "Graphic Designer / Concept Artist",
+    "dayInTheLife": "Begin with client kickoff discussing brand guidelines and target community. Create 20 NFT variations exploring different aesthetics. Get feedback and iterate. Design metadata and trait systems. Mint test collection and deploy. Network with community.",
+    "juniorToSenior": {
+      "junior": "Execute design briefs. Create NFT artwork. Understand trait systems. Needs direction on creative choices.",
+      "mid": "Design full collections. Art direction for teams. Define visual identity. Community collaboration. Lead creative decisions.",
+      "senior": "Establish design trends. Advise on collection strategy. Lead large creative initiatives. Build recognizable brands."
+    },
+    "proofOfWorkTips": [
+      "Design and mint your own NFT collection",
+      "Create art for an open-source NFT project",
+      "Design NFTs for a cause or community",
+      "Build a generative art NFT project",
+      "Create a complete visual identity for a blockchain project"
+    ],
+    "avgCompRange": {
+      "junior": "$40k - $80k",
+      "mid": "$80k - $150k",
+      "senior": "$200k - $350k+",
+      "note": "Highly variable. Success depends on collection sales. Royalties critical to income."
+    },
+    "interviewQuestions": [
+      "Walk us through your design process for a new NFT collection",
+      "How do you approach creating utility in visual design?",
+      "Tell us about a project you're proud of and why",
+      "How do you stay inspired and current with design trends?",
+      "Describe your experience with community feedback and iteration"
+    ],
+    "whoToFollowOnCT": [
+      {
+        "handle": "@beeple",
+        "why": "Legendary digital artist in crypto"
+      },
+      {
+        "handle": "@tylerxhobbs",
+        "why": "Generative art master"
+      },
+      {
+        "handle": "@DavidHolz",
+        "why": "NFT collection design and strategy"
+      }
+    ],
+    "whereToFindJobs": [
+      "Behance, Dribbble",
+      "Twitter/X (portfolio tweets)",
+      "NFT project Discord communities",
+      "Crypto design agencies",
+      "Open Sea collections needing designers"
+    ]
+  },
+  {
+    "id": "community-manager",
+    "name": "Community Manager",
+    "category": "non-tech",
+    "oneLiner": "Build and nurture engaged communities around blockchain projects",
+    "mustHaveSkills": [
+      "Community building experience",
+      "Clear communication",
+      "Social media fluency",
+      "Crisis management"
+    ],
+    "niceToHaveSkills": [
+      "Analytics and metrics tracking",
+      "Event organization",
+      "Content creation",
+      "Multiple language fluency"
+    ],
+    "toolsAndProtocols": [
+      "Discord",
+      "Telegram",
+      "Twitter/X",
+      "Notion",
+      "Dune Analytics",
+      "Metric tracking tools"
+    ],
+    "web2Equivalent": "Community Manager / Social Media Manager",
+    "dayInTheLife": "Monitor Discord for questions and escalate technical issues. Post daily updates on Twitter. Review analytics on engagement metrics. Host a community AMA. Moderate heated discussion about protocol governance. Plan next month's community event.",
+    "juniorToSenior": {
+      "junior": "Monitor channels. Respond to questions. Enforce rules. Create basic content. Needs guidance on strategy.",
+      "mid": "Set community strategy. Create engagement programs. Analyze metrics. Lead events. Build partnerships.",
+      "senior": "Own community vision and growth. Direct multi-channel strategy. Represent to governance. Identify trends early."
+    },
+    "proofOfWorkTips": [
+      "Build and grow an active Discord or Telegram community",
+      "Create viral Twitter content about a protocol",
+      "Organize community events or AMAs",
+      "Build community tools or dashboards",
+      "Document community insights and trends"
+    ],
+    "avgCompRange": {
+      "junior": "$40k - $70k",
+      "mid": "$80k - $130k",
+      "senior": "$150k - $250k+",
+      "note": "Often supplemented with tokens. Bounties and retroactive airdrops common."
+    },
+    "interviewQuestions": [
+      "Describe a community challenge you've faced and how you solved it",
+      "What metrics do you track to measure community health?",
+      "How do you handle misinformation or FUD in community channels?",
+      "Tell us about a successful community event or initiative you led",
+      "How do you balance growth with community quality?"
+    ],
+    "whoToFollowOnCT": [
+      {
+        "handle": "@ljxie",
+        "why": "Community building expert"
+      },
+      {
+        "handle": "@jackbutcher",
+        "why": "Content and community strategy"
+      },
+      {
+        "handle": "@gregisenberg",
+        "why": "Community economics and incentives"
+      }
+    ],
+    "whereToFindJobs": [
+      "Crypto.jobs",
+      "Protocol Discords (#jobs)",
+      "Twitter/X job search",
+      "Superteam (Solana)",
+      "DAOs and community organizations"
+    ]
+  },
+  {
+    "id": "web3-product-manager",
+    "name": "Web3 Product Manager",
+    "category": "business",
+    "oneLiner": "Shape product strategy for blockchain applications",
+    "mustHaveSkills": [
+      "Product strategy and vision",
+      "User research and empathy",
+      "Data-driven decision making",
+      "Technical literacy (not coding)"
+    ],
+    "niceToHaveSkills": [
+      "DeFi mechanics understanding",
+      "Growth experimentation",
+      "Community engagement",
+      "Token economics design"
+    ],
+    "toolsAndProtocols": [
+      "Figma",
+      "Amplitude",
+      "Mixpanel",
+      "Dune Analytics",
+      "User research tools",
+      "Roadmap tools"
+    ],
+    "web2Equivalent": "Product Manager",
+    "dayInTheLife": "Analyze user behavior data from Dune and Amplitude. Interview power users about pain points. Write product specs for new features. Prioritize roadmap with engineering. Present product direction to the board. Review competitive landscape.",
+    "juniorToSenior": {
+      "junior": "Own specific features. Gather user feedback. Basic roadmap planning. Needs mentorship on strategy.",
+      "mid": "Own product area. Define strategy and roadmap. Lead cross-functional work. Analyze metrics.",
+      "senior": "Define product vision. Set company direction. Make key strategic bets. Lead fundraising narrative."
+    },
+    "proofOfWorkTips": [
+      "Write detailed product case studies on Substack",
+      "Contribute to protocol governance with product insights",
+      "Build a small product from concept to launch",
+      "Create product teardowns of successful dapps",
+      "Show growth and engagement metrics you've driven"
+    ],
+    "avgCompRange": {
+      "junior": "$100k - $150k",
+      "mid": "$180k - $300k",
+      "senior": "$350k - $600k+",
+      "note": "Token grants (1-5%) very standard. Heavily equity-weighted at startups."
+    },
+    "interviewQuestions": [
+      "What's a product you love in crypto and why?",
+      "How would you approach finding product-market fit for a new protocol?",
+      "Walk us through your process for prioritizing features",
+      "Describe a product decision you made based on data",
+      "How do you balance short-term growth with long-term vision?"
+    ],
+    "whoToFollowOnCT": [
+      {
+        "handle": "@AriaNeustadter",
+        "why": "Web3 product and growth strategy"
+      },
+      {
+        "handle": "@hosseeb",
+        "why": "DeFi product and protocol design"
+      },
+      {
+        "handle": "@balajis",
+        "why": "Vision for crypto products and networks"
+      }
+    ],
+    "whereToFindJobs": [
+      "Angel List (Wellfound)",
+      "Crypto.jobs",
+      "LinkedIn (filter web3)",
+      "Protocol careers pages",
+      "VC firm portfolio companies"
+    ]
+  }
+]

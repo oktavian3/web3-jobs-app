@@ -1,0 +1,42 @@
+[
+  {
+    "question": "What do I need to start a career in web3?",
+    "answer": "Your primary needs depend on the role, but here's what helps: 1) Strong understanding of blockchain basics and the protocol you want to work on, 2) For technical roles: solid programming skills, 3) For all roles: genuine interest and willingness to learn quickly, 4) Portfolio of work (even small projects count), 5) Active presence on crypto Twitter and relevant Discord communities."
+  },
+  {
+    "question": "Can I transition from web2 to web3?",
+    "answer": "Absolutely! Most web3 developers come from web2. Your existing skills in programming, design, product management, etc. are directly valuable. You'll need to learn blockchain-specific concepts (smart contracts, tokenomics, etc.), but the fundamentals transfer. The learning curve is usually 2-6 months depending on the role and your commitment."
+  },
+  {
+    "question": "Which programming language should I learn?",
+    "answer": "It depends on the blockchain: Ethereum uses Solidity, Solana uses Rust, and other chains have different requirements. For web3 frontend, JavaScript/TypeScript is essential. Start with the chain/ecosystem that interests you most. Most people learning web3 start with Solidity because Ethereum has the largest ecosystem and best learning resources."
+  },
+  {
+    "question": "How much do web3 jobs pay?",
+    "answer": "Compensation varies widely based on role, seniority, and project funding. Generally: Junior salaries start at $40-100k, Mid-level ranges from $120-250k, Senior roles $250k-500k+. Most compensation includes token grants (5-30% of base salary at later stages). Startups often offer equity. Compensation depends heavily on project stage and your negotiation."
+  },
+  {
+    "question": "Where do I find web3 job listings?",
+    "answer": "Major platforms include: Crypto.jobs, Angel List (Wellfound), Protocol Discord #jobs channels, Twitter/X job search, LinkedIn with 'web3' filter, ConsenSys job board, and individual project career pages. Networking and referrals are often more effective than applying cold - build relationships in communities first."
+  },
+  {
+    "question": "Is it too late to get into web3?",
+    "answer": "Not at all. Web3 is still very early - we're probably in the 1st-2nd inning. New opportunities emerge constantly as technology evolves and new use cases are discovered. The best time to start is whenever you decide to commit. Being early and dedicated beats being late and casual."
+  },
+  {
+    "question": "What's the difference between web2 and web3 development?",
+    "answer": "Core difference: web3 is about building systems where users have true ownership of assets and data. You'll work with smart contracts, decentralization, token economics, and trustlessness. Web3 has different security considerations (permanent transactions, no undo button), different scaling challenges, and different user interaction patterns. The fundamentals of good code still apply."
+  },
+  {
+    "question": "Do I need to know crypto markets to work in web3?",
+    "answer": "Not necessarily. If you're a developer, you can focus purely on building. For product and business roles, understanding market dynamics, tokenomics, and incentive mechanisms matters more. That said, basic literacy in how markets work helps everyone in web3 understand context and constraints."
+  },
+  {
+    "question": "What should my portfolio include?",
+    "answer": "Your portfolio should show working knowledge of the role: Smart contract devs: deployed contracts on testnet/mainnet, GitHub repos, security audits or findings. Frontend devs: working dapps, GitHub code, Figma designs. Designers: 3-5 NFT collections or UI/UX projects. Community: metrics from communities you've built. Quality > quantity - 3 excellent projects beats 10 mediocre ones."
+  },
+  {
+    "question": "How do I stay current with web3?",
+    "answer": "Follow these sources: Twitter/X crypto accounts, crypto newsletters (Bankless, The Block), YouTube channels, protocol governance forums, and Discord communities. Attend conferences (ETH Denver, Token2049, etc.). Read whitepapers and governance proposals. The key is staying curious and consuming information actively, not passively scrolling."
+  }
+]

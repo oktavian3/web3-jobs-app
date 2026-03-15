@@ -1,0 +1,186 @@
+[
+  {
+    "category": "Getting Started",
+    "items": [
+      {
+        "name": "Ethereum.org Learn",
+        "type": "guide",
+        "isPaid": false,
+        "description": "Official Ethereum learning platform with comprehensive guides",
+        "link": "https://ethereum.org/learn"
+      },
+      {
+        "name": "CryptoZombies",
+        "type": "course",
+        "isPaid": false,
+        "description": "Learn Solidity by building a game. Fun and interactive.",
+        "link": "https://cryptozombies.io"
+      },
+      {
+        "name": "Web3 by Example",
+        "type": "article",
+        "isPaid": false,
+        "description": "Practical examples of web3 concepts in code",
+        "link": "https://web3byexample.com"
+      }
+    ]
+  },
+  {
+    "category": "Smart Contract Development",
+    "items": [
+      {
+        "name": "Solidity Documentation",
+        "type": "documentation",
+        "isPaid": false,
+        "description": "Official Solidity language documentation",
+        "link": "https://docs.soliditylang.org"
+      },
+      {
+        "name": "Hardhat",
+        "type": "tool",
+        "isPaid": false,
+        "description": "Ethereum development framework for testing and deployment",
+        "link": "https://hardhat.org"
+      },
+      {
+        "name": "OpenZeppelin Contracts",
+        "type": "library",
+        "isPaid": false,
+        "description": "Battle-tested smart contract library",
+        "link": "https://docs.openzeppelin.com/contracts"
+      },
+      {
+        "name": "Foundry Book",
+        "type": "guide",
+        "isPaid": false,
+        "description": "Modern Solidity development framework",
+        "link": "https://book.getfoundry.sh"
+      }
+    ]
+  },
+  {
+    "category": "Frontend & Web3",
+    "items": [
+      {
+        "name": "Wagmi Documentation",
+        "type": "documentation",
+        "isPaid": false,
+        "description": "React hooks for Ethereum - essential for web3 frontend",
+        "link": "https://wagmi.sh"
+      },
+      {
+        "name": "Ethers.js",
+        "type": "library",
+        "isPaid": false,
+        "description": "Complete Ethereum library for JavaScript",
+        "link": "https://docs.ethers.org"
+      },
+      {
+        "name": "Web3.js",
+        "type": "library",
+        "isPaid": false,
+        "description": "JavaScript library for interacting with Ethereum",
+        "link": "https://web3js.org"
+      },
+      {
+        "name": "RainbowKit",
+        "type": "library",
+        "isPaid": false,
+        "description": "Wallet connection library for React",
+        "link": "https://www.rainbowkit.com"
+      }
+    ]
+  },
+  {
+    "category": "Data & Analytics",
+    "items": [
+      {
+        "name": "Dune Analytics",
+        "type": "tool",
+        "isPaid": false,
+        "description": "Query blockchain data and create dashboards",
+        "link": "https://dune.com"
+      },
+      {
+        "name": "The Graph",
+        "type": "tool",
+        "isPaid": false,
+        "description": "Query blockchain data with GraphQL",
+        "link": "https://thegraph.com"
+      },
+      {
+        "name": "Nansen",
+        "type": "tool",
+        "isPaid": true,
+        "description": "Advanced on-chain analytics platform",
+        "link": "https://nansen.ai"
+      },
+      {
+        "name": "Glassnode",
+        "type": "tool",
+        "isPaid": true,
+        "description": "On-chain intelligence and monitoring",
+        "link": "https://glassnode.com"
+      }
+    ]
+  },
+  {
+    "category": "Security & Auditing",
+    "items": [
+      {
+        "name": "Slither",
+        "type": "tool",
+        "isPaid": false,
+        "description": "Static analysis tool for finding smart contract bugs",
+        "link": "https://github.com/crytic/slither"
+      },
+      {
+        "name": "MythX",
+        "type": "tool",
+        "isPaid": true,
+        "description": "Automated smart contract security analysis",
+        "link": "https://mythx.io"
+      },
+      {
+        "name": "OpenZeppelin Security",
+        "type": "guide",
+        "isPaid": false,
+        "description": "Best practices and security guidelines",
+        "link": "https://docs.openzeppelin.com/contracts/4.x/security"
+      }
+    ]
+  },
+  {
+    "category": "Communities & News",
+    "items": [
+      {
+        "name": "Crypto Twitter",
+        "type": "community",
+        "isPaid": false,
+        "description": "Follow builders, researchers, and thought leaders",
+        "link": "https://twitter.com"
+      },
+      {
+        "name": "The Block Research",
+        "type": "newsletter",
+        "isPaid": false,
+        "description": "Industry insights and research",
+        "link": "https://www.theblockresearch.com"
+      },
+      {
+        "name": "Messari",
+        "type": "tool",
+        "isPaid": false,
+        "description": "Comprehensive crypto intelligence platform",
+        "link": "https://messari.io"
+      },
+      {
+        "name": "Bankless",
+        "type": "newsletter",
+        "isPaid": false,
+        "description": "Weekly newsletter about DeFi and web3",
+        "link": "https://bankless.com"
+      }
+    ]
+  }
+]

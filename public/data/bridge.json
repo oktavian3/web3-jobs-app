@@ -1,0 +1,62 @@
+[
+  {
+    "web2Role": "Backend Developer",
+    "web3Equivalent": "Smart Contract Developer",
+    "whereToStart": "Learn Solidity basics, deploy contracts to testnet, understand gas and EVM fundamentals"
+  },
+  {
+    "web2Role": "Full Stack Engineer",
+    "web3Equivalent": "Web3 Frontend Engineer",
+    "whereToStart": "Learn Ethers.js or Web3.js, integrate MetaMask, build simple dapp for token transfer"
+  },
+  {
+    "web2Role": "Data Scientist",
+    "web3Equivalent": "Blockchain Researcher",
+    "whereToStart": "Learn Dune Analytics, analyze on-chain data, publish findings on protocol mechanics"
+  },
+  {
+    "web2Role": "DevOps Engineer",
+    "web3Equivalent": "Protocol Operations / DevRel",
+    "whereToStart": "Learn node operations, set up validator infrastructure, contribute to protocol docs"
+  },
+  {
+    "web2Role": "Frontend Developer",
+    "web3Equivalent": "Web3 Frontend Engineer",
+    "whereToStart": "Same as full stack - learn Web3 libraries and wallet integration"
+  },
+  {
+    "web2Role": "Graphic Designer",
+    "web3Equivalent": "NFT Designer",
+    "whereToStart": "Learn generative art, create first NFT collection, understand on-chain assets"
+  },
+  {
+    "web2Role": "Community Manager",
+    "web3Equivalent": "Community Manager",
+    "whereToStart": "Join crypto Discord communities, learn about token incentives, moderate channels"
+  },
+  {
+    "web2Role": "Product Manager",
+    "web3Equivalent": "Web3 Product Manager",
+    "whereToStart": "Learn DeFi mechanics, study successful dapps, understand tokenomics"
+  },
+  {
+    "web2Role": "Security Engineer",
+    "web3Equivalent": "Smart Contract Auditor",
+    "whereToStart": "Learn Solidity and common vulnerabilities, audit open-source contracts, use Slither"
+  },
+  {
+    "web2Role": "Growth Marketer",
+    "web3Equivalent": "Crypto Marketing Lead",
+    "whereToStart": "Understand token incentives, learn about airdrops, build distribution on Twitter"
+  },
+  {
+    "web2Role": "Business Analyst",
+    "web3Equivalent": "Crypto Analyst / Research",
+    "whereToStart": "Learn on-chain data analysis, understand protocol economics, publish research"
+  },
+  {
+    "web2Role": "Systems Architect",
+    "web3Equivalent": "Protocol Architect",
+    "whereToStart": "Study layer 2s and scaling solutions, understand consensus mechanisms"
+  }
+]
