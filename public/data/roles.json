@@ -1,14 +1,36 @@
 [
   {
     "id": "blockchain-developer",
-    "category": "Development & Engineering",
-    "title": "Blockchain Developer",
-    "description": "Build and maintain blockchain protocols, dApps, and integrations.",
-    "responsibilities": [
-      "Design and maintain blockchain protocols",
-      "Build decentralized applications (dApps)",
-      "Integrate blockchain technology into existing systems",
-      "Collaborate with cross-functional teams"
+    "name": "Blockchain Developer",
+    "category": "technical",
+    "oneLiner": "Build and deploy blockchain protocols and decentralized applications (dApps) that run trustlessly on-chain.",
+    "mustHaveSkills": ["Blockchain fundamentals", "Smart contract basics", "Cryptography 101", "Git & CLI", "Problem-solving"],
+    "niceToHaveSkills": ["Consensus mechanisms", "Token economics", "Protocol design", "Multi-chain experience"],
+    "toolsAndProtocols": ["Ethereum", "Solana", "Polygon", "Hardhat", "Foundry", "Truffle"],
+    "web2Equivalent": "Full Stack / Backend Developer",
+    "dayInTheLife": "You wake up, check GitHub for code reviews. Deploy a new contract feature to testnet. Debug a gas optimization issue via Hardhat. Attend a protocol meeting. Code a new feature in Rust for Solana. By evening, you've submitted 3 PRs and fixed 2 critical bugs.",
+    "juniorToSenior": {
+      "junior": "Can write basic smart contracts, understand EVM opcodes, deploy to testnet. Learning production best practices.",
+      "mid": "Architecting DeFi protocols, optimizing gas, leading code reviews. Comfortable with multiple chains.",
+      "senior": "Designing novel blockchain mechanisms, mentoring teams, contributing to protocol specifications. Authority in the space."
+    },
+    "proofOfWorkTips": [
+      "Deploy smart contracts on mainnet (even small ones) - show on-chain work",
+      "Contribute to open-source blockchain projects (Ethereum, Solana repos)",
+      "Build and ship a full dApp (frontend + contracts) - share on Twitter",
+      "Write technical blog posts explaining complex concepts",
+      "Participate in hackathons and submit winning projects"
+    ],
+    "avgCompRange": {
+      "usd": "$120k - $300k",
+      "note": "Senior roles often include token grants (highly volatile, can be 50%+ of comp)"
+    },
+    "interviewQuestions": [
+      "Explain the EVM and how gas optimization works. Walk us through a real optimization you made.",
+      "Design a simple DEX. What are the security considerations?",
+      "How would you handle reentrancy attacks? Show code examples.",
+      "Describe your experience with Solidity. What common pitfalls have you encountered?",
+      "Tell us about a blockchain project you built. What was the hardest part?"
     ],
     "resources": [
       {
@@ -20,24 +42,41 @@
         "title": "BuildSpace",
         "url": "https://buildspace.so",
         "description": "Hands-on projects for Ethereum/Polygon"
-      },
-      {
-        "title": "Alchemy University",
-        "url": "https://university.alchemy.com/",
-        "description": "Free courses on blockchain dev"
       }
     ]
   },
   {
     "id": "smart-contract-developer",
-    "category": "Development & Engineering",
-    "title": "Smart Contract Developer (Solidity)",
-    "description": "Write, test, and deploy smart contracts on Ethereum/EVM chains.",
-    "responsibilities": [
-      "Write secure smart contracts in Solidity",
-      "Conduct thorough testing and auditing",
-      "Deploy contracts on EVM chains",
-      "Optimize gas efficiency"
+    "name": "Smart Contract Developer (Solidity)",
+    "category": "technical",
+    "oneLiner": "Write, test, audit, and deploy secure smart contracts that handle millions in value.",
+    "mustHaveSkills": ["Solidity", "Smart contract security", "Testing frameworks", "Gas optimization", "Security mindset"],
+    "niceToHaveSkills": ["Formal verification", "Assembly (Yul)", "DeFi protocols", "Contract upgrades", "Token standards"],
+    "toolsAndProtocols": ["Solidity", "Hardhat", "Foundry", "OpenZeppelin", "Etherscan", "Slither"],
+    "web2Equivalent": "Backend Engineer / Security Engineer",
+    "dayInTheLife": "Review security audit report for your contracts. Optimize a function's gas by 40%. Write 15 new tests in Foundry. Debug a complex reentrancy scenario. Deploy to mainnet after 5 rounds of auditing. Check gas metrics and celebrate saving users $50k/month in fees.",
+    "juniorToSenior": {
+      "junior": "Writing basic Solidity, understanding ERC standards, can write tests. Learning security best practices.",
+      "mid": "Architecting complex protocols, leading audits, teaching junior devs. Comfortable with multiple token standards.",
+      "senior": "Designing DeFi primitives, formal verification, advising on protocol design. Published research-level work."
+    },
+    "proofOfWorkTips": [
+      "Deploy audited smart contracts on mainnet - link them on Twitter",
+      "Pass a formal security audit (even small contracts)",
+      "Contribute to Solidity language development or OpenZeppelin libraries",
+      "Write detailed technical posts on contract vulnerabilities you found",
+      "Win smart contract auditing competitions (e.g., Code4rena, Sherlock)"
+    ],
+    "avgCompRange": {
+      "usd": "$150k - $400k+",
+      "note": "Top auditors and protocol architects command premium. Token comp is significant."
+    },
+    "interviewQuestions": [
+      "What are the top 5 Solidity security vulnerabilities? How do you mitigate them?",
+      "Explain reentrancy. Show how to fix a vulnerable contract.",
+      "Design an ERC-20 token. What edge cases matter?",
+      "How do you optimize gas? Walk us through a complex optimization.",
+      "Tell us about a critical bug you found. How did you discover and fix it?"
     ],
     "resources": [
       {
@@ -46,119 +85,90 @@
         "description": "Gamified Solidity tutorials"
       },
       {
-        "title": "Solidity by Example",
-        "url": "https://solidity-by-example.org/",
-        "description": "Code examples and explanations"
-      },
-      {
-        "title": "Solidity Language",
-        "url": "https://soliditylang.org/",
-        "description": "Free reference guide"
-      },
-      {
-        "title": "Full Solidity Course",
-        "url": "https://www.youtube.com/watch?v=gyMwXuJrbJQ",
-        "description": "32-hour full course with JS integration"
+        "title": "Cyfrin Updraft",
+        "url": "https://updraft.cyfrin.io/",
+        "description": "Free Solidity security courses"
       }
     ]
   },
   {
     "id": "rust-developer",
-    "category": "Development & Engineering",
-    "title": "Rust Developer (e.g., for Solana)",
-    "description": "Develop on non-EVM chains like Solana, focusing on performance and security.",
-    "responsibilities": [
-      "Develop smart programs on Solana",
-      "Focus on performance and security",
-      "Implement efficient algorithms",
-      "Collaborate on ecosystem projects"
+    "name": "Rust Developer (e.g., for Solana)",
+    "category": "technical",
+    "oneLiner": "Build high-performance blockchain programs on non-EVM chains like Solana using Rust.",
+    "mustHaveSkills": ["Rust", "Memory safety", "Systems programming", "Solana program model", "CLI tools"],
+    "niceToHaveSkills": ["WebAssembly", "C interop", "Performance tuning", "Distributed systems"],
+    "toolsAndProtocols": ["Rust", "Solana", "Anchor", "Cargo", "NEAR"],
+    "web2Equivalent": "Systems Engineer / Performance Engineer",
+    "dayInTheLife": "Write a new instruction for your Solana program. Optimize memory usage and reduce compute units. Test on localnet. Debug a tricky borrow checker issue. Deploy to devnet. Code review PRs from team. Profile performance. Ship to mainnet. Check cluster stats.",
+    "juniorToSenior": {
+      "junior": "Learning Rust syntax, understanding Solana's model, writing basic programs. Hitting borrow checker errors.",
+      "mid": "Architecting efficient programs, optimizing compute, teaching others Rust. Comfortable with Solana internals.",
+      "senior": "Designing novel program architectures, mentoring, contributing to Anchor framework. Recognized expert."
+    },
+    "proofOfWorkTips": [
+      "Deploy Solana programs on mainnet - share on Twitter with code",
+      "Contribute to Solana ecosystem projects (Anchor, Pyth, Magic Eden)",
+      "Write Rust code that's public on GitHub - show clean, optimized code",
+      "Build a complete Solana dApp and ship it",
+      "Win Solana hackathons"
+    ],
+    "avgCompRange": {
+      "usd": "$130k - $320k",
+      "note": "Rust devs are in high demand. Non-EVM chains pay competitively."
+    },
+    "interviewQuestions": [
+      "Explain Solana's architecture vs Ethereum. Why use Rust?",
+      "How do PDAs (Program Derived Addresses) work? Why are they important?",
+      "Write a simple Anchor program. What security considerations exist?",
+      "Tell us about a Rust bug you hit. How'd you debug it?",
+      "Design a Solana program for a lending protocol. Walk us through it."
     ],
     "resources": [
       {
-        "title": "The Rust Programming Language",
+        "title": "The Rust Book",
         "url": "https://doc.rust-lang.org/book/",
-        "description": "Official free guide"
+        "description": "Official free Rust guide"
       },
       {
-        "title": "Solana Development Guide",
+        "title": "Solana Dev Docs",
         "url": "https://docs.solana.com/developing/programming-model",
-        "description": "Tutorials on Rust for Solana"
-      },
-      {
-        "title": "BuildSpace Projects",
-        "url": "https://buildspace.so/projects",
-        "description": "Free project-based learning"
-      }
-    ]
-  },
-  {
-    "id": "fullstack-web3",
-    "category": "Development & Engineering",
-    "title": "Full Stack Web3 Developer",
-    "description": "Handle frontend (React/JS), backend, and blockchain integration (e.g., Web3.js).",
-    "responsibilities": [
-      "Develop frontend interfaces for dApps",
-      "Build and maintain backend systems",
-      "Integrate blockchain connectivity",
-      "Ensure seamless user experience"
-    ],
-    "resources": [
-      {
-        "title": "DappUniversity",
-        "url": "https://www.youtube.com/c/DappUniversity",
-        "description": "Free tutorials on full-stack dApps"
-      },
-      {
-        "title": "UseWeb3",
-        "url": "https://www.useweb3.xyz/",
-        "description": "Curated resources for Web3.js/Ethers.js"
-      },
-      {
-        "title": "ChainShot",
-        "url": "https://www.chainshot.com/",
-        "description": "Free Ethereum-focused courses"
-      }
-    ]
-  },
-  {
-    "id": "devops-engineer",
-    "category": "Development & Engineering",
-    "title": "DevOps Engineer",
-    "description": "Manage infrastructure, CI/CD, and node operations for blockchain systems.",
-    "responsibilities": [
-      "Manage blockchain infrastructure",
-      "Implement CI/CD pipelines",
-      "Operate and maintain nodes",
-      "Ensure system reliability"
-    ],
-    "resources": [
-      {
-        "title": "Web3 DevOps Guide",
-        "url": "https://web3.career/learn-web3/devops",
-        "description": "Free articles and videos"
-      },
-      {
-        "title": "Hardhat Documentation",
-        "url": "https://hardhat.org/docs",
-        "description": "Free tool for testing/deploying; includes tutorials"
-      },
-      {
-        "title": "Truffle Suite",
-        "url": "https://trufflesuite.com/docs/",
-        "description": "Free framework for devops in Solidity"
+        "description": "Solana program model tutorials"
       }
     ]
   },
   {
     "id": "smart-contract-auditor",
-    "category": "Security & Auditing",
-    "title": "Smart Contract Auditor",
-    "description": "Review code for vulnerabilities, security, and optimizations.",
-    "responsibilities": [
-      "Audit smart contracts for vulnerabilities",
-      "Identify security risks",
-      "Recommend optimizations",
-      "Document findings and fixes"
+    "name": "Smart Contract Auditor",
+    "category": "technical",
+    "oneLiner": "Review code for critical vulnerabilities, security risks, and optimizations. Gate-keepers of safety.",
+    "mustHaveSkills": ["Security mindset", "Solidity mastery", "Vulnerability knowledge", "Code reading", "Communication"],
+    "niceToHaveSkills": ["Formal verification", "Assembly", "Multiple chains", "Cryptography", "Game theory"],
+    "toolsAndProtocols": ["Slither", "Hardhat", "Foundry", "MythX", "Trail of Bits tools"],
+    "web2Equivalent": "Security Engineer / Code Reviewer",
+    "dayInTheLife": "Review 2,000 lines of smart contract code. Find 3 critical vulnerabilities and document them. Discuss fixes with dev team. Verify patches. Write detailed audit report. Review another project. Check bug bounty submissions. Help junior auditors level up.",
+    "juniorToSenior": {
+      "junior": "Finding known vulnerabilities, writing test cases, learning audit methodology. Supervised work.",
+      "mid": "Leading audits, finding novel vulnerabilities, advising on design. 100+ audits under belt.",
+      "senior": "Industry authority, publishing research, advising on protocol design, mentoring teams. Known name in the space."
+    },
+    "proofOfWorkTips": [
+      "Find bugs in live protocols and responsibly disclose - bounties pay well",
+      "Win Code4rena / Sherlock contests - public track record matters",
+      "Write detailed security analysis posts on found vulnerabilities",
+      "Contribute to Slither or other security tools",
+      "Pass formal security certifications (OSCP-related)"
+    ],
+    "avgCompRange": {
+      "usd": "$180k - $500k+",
+      "note": "Top auditors and security leads earn premium. Bounties can add $100k+/year."
+    },
+    "interviewQuestions": [
+      "What are the 10 most critical Solidity vulnerabilities? How do you find them?",
+      "Describe a complex vulnerability you found and how you discovered it.",
+      "How would you audit a DeFi lending protocol? Walk through your methodology.",
+      "Can you explain formal verification? When is it necessary?",
+      "Tell us about a time you found a vulnerability before the team knew. What was it?"
     ],
     "resources": [
       {
@@ -167,56 +177,44 @@
         "description": "Free Solidity security courses"
       },
       {
-        "title": "RareSkills",
-        "url": "https://rareskills.io/learn-solidity",
-        "description": "In-depth free auditing modules"
-      },
-      {
-        "title": "OpenZeppelin",
+        "title": "OpenZeppelin Docs",
         "url": "https://docs.openzeppelin.com/",
-        "description": "Free secure contract libraries and guides"
-      }
-    ]
-  },
-  {
-    "id": "blockchain-security",
-    "category": "Security & Auditing",
-    "title": "Blockchain Security Engineer",
-    "description": "Focus on cryptography, zero-knowledge proofs, and threat mitigation.",
-    "responsibilities": [
-      "Implement cryptographic solutions",
-      "Research zero-knowledge proofs",
-      "Mitigate security threats",
-      "Design secure systems"
-    ],
-    "resources": [
-      {
-        "title": "Web3 Security Guide",
-        "url": "https://web3.career/learn-web3/security",
-        "description": "Free videos on zk-SNARKs"
-      },
-      {
-        "title": "Ethereum Security",
-        "url": "https://ethereum.org/en/developers/docs/security/",
-        "description": "Free resources on common vulnerabilities"
-      },
-      {
-        "title": "Foundry",
-        "url": "https://book.getfoundry.sh/",
-        "description": "Free tool for advanced testing"
+        "description": "Secure contract libraries and guides"
       }
     ]
   },
   {
     "id": "onchain-analyst",
-    "category": "Analysis & Research",
-    "title": "Crypto/On-Chain Analyst",
-    "description": "Analyze market trends, on-chain data, and tokenomics.",
-    "responsibilities": [
-      "Analyze on-chain data and trends",
-      "Research market movements",
-      "Study tokenomics",
-      "Produce insights and reports"
+    "name": "Crypto/On-Chain Analyst",
+    "category": "research",
+    "oneLiner": "Analyze blockchain data to uncover market trends, on-chain signals, and investment opportunities.",
+    "mustHaveSkills": ["SQL", "Data analysis", "Blockchain fundamentals", "Statistical thinking", "Communication"],
+    "niceToHaveSkills": ["Python/R", "Visualization tools", "Domain knowledge", "Token economics", "DeFi protocols"],
+    "toolsAndProtocols": ["Dune Analytics", "Nansen", "Glassnode", "Messari", "On-chain data APIs"],
+    "web2Equivalent": "Data Analyst / Business Analyst",
+    "dayInTheLife": "Write SQL query on Dune to track daily DEX volume. Find an emerging token pattern. Research its tokenomics. Publish findings on Twitter. Get 5k likes. Meet with trading team about the signal. Refine the query. Publish a detailed report. Present to stakeholders.",
+    "juniorToSenior": {
+      "junior": "Writing basic SQL queries, understanding blockchain metrics, learning on-chain analysis. Building dashboards.",
+      "mid": "Creating novel metrics, discovering alpha signals, advising trading desks. Published research.",
+      "senior": "Thought leader in on-chain analysis, publishing research, speaking at conferences. Authority in crypto."
+    },
+    "proofOfWorkTips": [
+      "Build public Dune dashboards - share them constantly on Twitter",
+      "Publish on-chain analysis threads with actionable insights",
+      "Share alpha signals and be right - build a following",
+      "Create novel metrics nobody else is tracking",
+      "Contribute to token research databases"
+    ],
+    "avgCompRange": {
+      "usd": "$100k - $250k",
+      "note": "Top analysts get trading firm bounties + salary. Consulting pays extra."
+    },
+    "interviewQuestions": [
+      "Show us your best on-chain analysis. How did you discover it?",
+      "Design a Dune dashboard to track [specific metric]. Walk us through.",
+      "What on-chain signal do you think is misunderstood? Why?",
+      "Tell us about a trading signal you spotted. Was it right?",
+      "How do you stay on top of on-chain trends?"
     ],
     "resources": [
       {
@@ -227,25 +225,88 @@
       {
         "title": "Messari Research",
         "url": "https://messari.io/research",
-        "description": "Free intro articles; advanced via community"
+        "description": "Free crypto research and insights"
+      }
+    ]
+  },
+  {
+    "id": "community-manager",
+    "name": "Community Manager",
+    "category": "non-tech",
+    "oneLiner": "Build and nurture engaged communities on Discord, Twitter, and events. You're the vibe keeper.",
+    "mustHaveSkills": ["Communication", "Community building", "Conflict resolution", "Authentic engagement", "Moderation"],
+    "niceToHaveSkills": ["Event planning", "Content creation", "Analytics", "Psychology", "Multiple languages"],
+    "toolsAndProtocols": ["Discord", "Twitter/X", "Telegram", "Notion", "Google Analytics"],
+    "web2Equivalent": "Community Manager / Social Media Manager",
+    "dayInTheLife": "Start community standup. Moderate Discord for 2 hours - ban 3 bots, answer questions. Plan weekly Twitter Space. Meet with core community members. Create memes. Moderate drama respectfully. Host AMA with founder. Analyze sentiment. Plan next month's events.",
+    "juniorToSenior": {
+      "junior": "Managing Discord, answering questions, enforcing rules. Building relationships with members.",
+      "mid": "Leading community strategy, hosting events, building sub-communities. 10k+ active members.",
+      "senior": "Building global community, influencing product decisions, mentoring. Community is a moat."
+    },
+    "proofOfWorkTips": [
+      "Build a thriving Discord from scratch - show growth and engagement metrics",
+      "Create viral Twitter threads about your project - engagement proof",
+      "Host successful events (AMAs, calls, competitions) - show attendance",
+      "Manage community during crisis - show maturity and skill",
+      "Document your community strategy and results"
+    ],
+    "avgCompRange": {
+      "usd": "$80k - $180k",
+      "note": "Often includes community treasury allocation. Engagement bonuses common."
+    },
+    "interviewQuestions": [
+      "Tell us about a community crisis you managed. How did you handle it?",
+      "How do you measure community health? What metrics matter?",
+      "Design a community onboarding experience. Walk us through.",
+      "What's your philosophy on moderation? How do you balance freedom and safety?",
+      "Show us a community you built or managed. What are you proud of?"
+    ],
+    "resources": [
+      {
+        "title": "Web3 Community Guide",
+        "url": "https://web3.career/learn-web3/community-manager",
+        "description": "Free tips and best practices"
       },
       {
-        "title": "Web3 Data Science",
-        "url": "https://web3.career/learn-web3/data-science",
-        "description": "Free guides on crypto analytics"
+        "title": "Developer DAO",
+        "url": "https://blog.developerdao.com/",
+        "description": "DAO community building guides"
       }
     ]
   },
   {
     "id": "defi-analyst",
-    "category": "Analysis & Research",
-    "title": "DeFi Analyst/Token Researcher",
-    "description": "Evaluate DeFi protocols, risks, and investment opportunities.",
-    "responsibilities": [
-      "Evaluate DeFi protocols",
-      "Assess investment opportunities",
-      "Analyze protocol risks",
-      "Create research reports"
+    "name": "DeFi Analyst/Token Researcher",
+    "category": "research",
+    "oneLiner": "Deep dive into DeFi protocols, tokenomics, and investment opportunities. Find alpha in the plumbing.",
+    "mustHaveSkills": ["DeFi fundamentals", "Financial analysis", "Tokenomics", "Research skills", "Writing"],
+    "niceToHaveSkills": ["Coding", "Smart contract understanding", "Game theory", "Accounting"],
+    "toolsAndProtocols": ["DefiLlama", "Aave", "Curve", "MakerDAO", "Uniswap", "Messari"],
+    "web2Equivalent": "Equity Analyst / Investment Analyst",
+    "dayInTheLife": "Analyze new DeFi protocol's smart contracts. Run tokenomics models. Check GitHub activity. Assess team credentials. Research governance risks. Write a detailed report. Present findings to fund. Debate risks with team. Monitor protocol updates. Track KPIs weekly.",
+    "juniorToSenior": {
+      "junior": "Learning DeFi mechanics, understanding protocols, writing analysis. Supervised research.",
+      "mid": "Identifying protocol risks, modeling tokenomics, advising on investments. Published research.",
+      "senior": "Protocol expert, fund advisor, respected analyst. Speaking at conferences. Alpha generator."
+    },
+    "proofOfWorkTips": [
+      "Publish detailed DeFi protocol analysis - Substack is good",
+      "Call out protocol risks early and publicly - be right",
+      "Model tokenomics for new projects - share spreadsheets",
+      "Write research reports and publish them",
+      "Build a following for your insights"
+    ],
+    "avgCompRange": {
+      "usd": "$110k - $280k",
+      "note": "Hedge funds pay top dollar. Bounties and consulting add 30-50%."
+    },
+    "interviewQuestions": [
+      "Analyze a DeFi protocol for us. What's your investment thesis?",
+      "How do you think about tokenomics risk? What metrics matter?",
+      "Tell us about a DeFi protocol you got wrong. What happened?",
+      "Design a hypothetical DeFi primitive. What problems does it solve?",
+      "What's an underrated DeFi protocol? Why?"
     ],
     "resources": [
       {
@@ -257,111 +318,41 @@
         "title": "Bankless Academy",
         "url": "https://academy.bankless.com/",
         "description": "Free DeFi courses"
-      },
-      {
-        "title": "Alchemy DeFi Path",
-        "url": "https://university.alchemy.com/path/defi",
-        "description": "Interactive lessons"
-      }
-    ]
-  },
-  {
-    "id": "community-manager",
-    "category": "Marketing & Community",
-    "title": "Community Manager",
-    "description": "Build and engage communities via Discord, Twitter/X, events.",
-    "responsibilities": [
-      "Build and manage communities",
-      "Engage members on Discord/Twitter",
-      "Organize and host events",
-      "Create community initiatives"
-    ],
-    "resources": [
-      {
-        "title": "Web3 Community Manager Guide",
-        "url": "https://web3.career/learn-web3/community-manager",
-        "description": "Free tips and videos"
-      },
-      {
-        "title": "Developer DAO Blog",
-        "url": "https://blog.developerdao.com/",
-        "description": "Free guides on DAO community building"
-      },
-      {
-        "title": "Discord Moderation",
-        "url": "https://discord.com/moderation",
-        "description": "Free resources for mod tools"
-      }
-    ]
-  },
-  {
-    "id": "marketing-specialist",
-    "category": "Marketing & Community",
-    "title": "Marketing Specialist",
-    "description": "Promote projects, handle SEO, content, and growth hacking.",
-    "responsibilities": [
-      "Develop marketing strategies",
-      "Manage content creation",
-      "Optimize SEO and growth",
-      "Coordinate marketing campaigns"
-    ],
-    "resources": [
-      {
-        "title": "Web3 Marketing Strategies",
-        "url": "https://web3.career/learn-web3/marketing",
-        "description": "Free strategies for Web3"
-      },
-      {
-        "title": "a16z Crypto School",
-        "url": "https://a16zcrypto.com/content/series/crypto-startup-school/",
-        "description": "Free videos on Web3 marketing"
-      },
-      {
-        "title": "Web3 Marketing Resources",
-        "url": "https://www.youtube.com/results?search_query=web3+marketing+free+course",
-        "description": "Channels like EatTheBlocks"
-      }
-    ]
-  },
-  {
-    "id": "ux-designer",
-    "category": "Design & Creative",
-    "title": "UI/UX Designer",
-    "description": "Design interfaces for dApps, NFTs, and metaverse experiences.",
-    "responsibilities": [
-      "Design dApp interfaces",
-      "Create NFT experiences",
-      "Design metaverse UX",
-      "Conduct user research"
-    ],
-    "resources": [
-      {
-        "title": "Figma Web3 Community",
-        "url": "https://www.figma.com/community/search?query=web3",
-        "description": "Free tools and templates"
-      },
-      {
-        "title": "Web3 Design Guide",
-        "url": "https://www.useweb3.xyz/guides/design",
-        "description": "Curated free tutorials"
-      },
-      {
-        "title": "Adobe XD",
-        "url": "https://www.adobe.com/products/xd.html",
-        "description": "With Web3-focused YouTube guides"
       }
     ]
   },
   {
     "id": "nft-artist",
-    "category": "Design & Creative",
-    "title": "NFT Artist/Designer",
-    "description": "Create digital art, economies, and game assets for NFTs/Web3 gaming.",
-    "responsibilities": [
-      "Create digital art for NFTs",
-      "Design game assets",
-      "Develop economies and mechanics",
-      "Build interactive experiences"
+    "name": "NFT Artist/Designer",
+    "category": "design",
+    "oneLiner": "Create digital art, game assets, and immersive experiences for NFTs and metaverse projects.",
+    "mustHaveSkills": ["Digital art", "Design fundamentals", "Creative thinking", "Tools (Photoshop/Blender)", "Storytelling"],
+    "niceToHaveSkills": ["Animation", "3D modeling", "UX design", "Solidity knowledge", "Community engagement"],
+    "toolsAndProtocols": ["Blender", "Photoshop", "Procreate", "Cinema 4D", "OpenSea", "Foundation"],
+    "web2Equivalent": "Digital Artist / Game Designer",
+    "dayInTheLife": "Create 5 new NFT designs. Iterate on feedback. Render 3D assets in Blender. Check mint analytics. Engage collectors on Discord. Update roadmap visuals. Collaborate with dev on game assets. Post sketches on Twitter. Auction limited edition piece.",
+    "juniorToSenior": {
+      "junior": "Creating digital art, learning NFT design, minting small collections. Building portfolio.",
+      "mid": "Leading art direction, creating collections, building collector community. 1000+ holders.",
+      "senior": "Respected artist, influencing culture, mentoring artists. Art is investment-grade."
+    },
+    "proofOfWorkTips": [
+      "Mint NFT collections - sell them and show revenue",
+      "Get featured on OpenSea/Foundation - get sales",
+      "Build a collector community - engagement matters",
+      "Create art that's culturally significant to the community",
+      "Collaborate with known projects or artists"
+    ],
+    "avgCompRange": {
+      "usd": "$60k - $200k",
+      "note": "Highly variable. Top artists earn 6-7 figures. Revenue share with projects common."
+    },
+    "interviewQuestions": [
+      "Show us your best work. What's the story behind it?",
+      "How do you approach an NFT collection? Walk us through your process.",
+      "What makes good NFT art? How is it different from digital art?",
+      "Tell us about your collector community. How'd you build it?",
+      "What's your vision for NFTs in the next 3 years?"
     ],
     "resources": [
       {
@@ -373,131 +364,6 @@
         "title": "Blender Tutorials",
         "url": "https://www.blender.org/support/tutorials/",
         "description": "Free for 3D NFT art"
-      },
-      {
-        "title": "BuildSpace Projects",
-        "url": "https://buildspace.so/projects",
-        "description": "Hands-on minting tutorials"
-      }
-    ]
-  },
-  {
-    "id": "product-manager",
-    "category": "Operations & Management",
-    "title": "Product Manager",
-    "description": "Define roadmaps, user needs, and project strategy for Web3 products.",
-    "responsibilities": [
-      "Define product roadmaps",
-      "Understand user needs",
-      "Drive project strategy",
-      "Lead cross-functional teams"
-    ],
-    "resources": [
-      {
-        "title": "ProductSchool Web3 PM",
-        "url": "https://www.productschool.com/courses/web3-product-management",
-        "description": "Free intro webinars"
-      },
-      {
-        "title": "Web3 PM Guide",
-        "url": "https://web3.career/learn-web3/product-manager",
-        "description": "Free articles on DAOs/DeFi PM"
-      }
-    ]
-  },
-  {
-    "id": "bd-sales",
-    "category": "Operations & Management",
-    "title": "Business Development/Sales",
-    "description": "Forge partnerships, sales in crypto, and ecosystem growth.",
-    "responsibilities": [
-      "Develop strategic partnerships",
-      "Drive sales growth",
-      "Build ecosystem relationships",
-      "Identify new opportunities"
-    ],
-    "resources": [
-      {
-        "title": "LinkedIn Learning Web3",
-        "url": "https://www.linkedin.com/learning/topics/web3",
-        "description": "With Web3 sales focus"
-      },
-      {
-        "title": "CryptoJobsList Blog",
-        "url": "https://cryptojobslist.com/blog",
-        "description": "Free BD tips"
-      }
-    ]
-  },
-  {
-    "id": "operations-legal",
-    "category": "Operations & Management",
-    "title": "Operations/Legal/Compliance",
-    "description": "Handle ops, regulatory compliance, and risk in Web3 firms.",
-    "responsibilities": [
-      "Ensure regulatory compliance",
-      "Manage operational risks",
-      "Handle legal matters",
-      "Implement policies and procedures"
-    ],
-    "resources": [
-      {
-        "title": "CoinDesk Learn",
-        "url": "https://www.coindesk.com/learn/",
-        "description": "Free compliance articles"
-      },
-      {
-        "title": "Web3Bridge",
-        "url": "https://www.web3bridge.com/",
-        "description": "Free African-focused ops training"
-      }
-    ]
-  },
-  {
-    "id": "economy-designer",
-    "category": "Other Specialized Roles",
-    "title": "Economy Designer",
-    "description": "Design tokenomics, game economies, and DAO governance.",
-    "responsibilities": [
-      "Design tokenomics",
-      "Create game economies",
-      "Plan DAO governance",
-      "Model economic incentives"
-    ],
-    "resources": [
-      {
-        "title": "Tokenomics DAO",
-        "url": "https://tokenomicsdao.com/resources",
-        "description": "Free guides"
-      },
-      {
-        "title": "Economy Designer Guide",
-        "url": "https://web3.career/learn-web3/economy-designer",
-        "description": "Videos and articles"
-      }
-    ]
-  },
-  {
-    "id": "content-creator",
-    "category": "Other Specialized Roles",
-    "title": "Content Creator/Copywriter",
-    "description": "Produce blogs, videos, and social content for Web3 projects.",
-    "responsibilities": [
-      "Create blog content",
-      "Produce videos",
-      "Write social media content",
-      "Develop marketing narratives"
-    ],
-    "resources": [
-      {
-        "title": "Medium Web3",
-        "url": "https://medium.com/tag/web3",
-        "description": "Free publishing tips"
-      },
-      {
-        "title": "We Teach Blockchain",
-        "url": "https://weteachblockchain.org/",
-        "description": "Free content creation modules"
       }
     ]
   }
