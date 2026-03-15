@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { ArrowLeft, Briefcase, Code, DollarSign, Zap, Users, Lightbulb, BookOpen, CheckCircle } from 'lucide-react';
 
 interface Role {
@@ -32,29 +33,43 @@ interface Role {
   }>;
 }
 
-export default function RoleDetailPage({ params }: { params: { slug: string } }) {
+export default function RoleDetailPage() {
+  const params = useParams();
+  const slug = params?.slug as string;
+  
   const [role, setRole] = useState<Role | null>(null);
   const [allRoles, setAllRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    if (!slug) return;
+    
     fetch('/data/roles.json')
       .then(res => res.json())
       .then(data => {
         setAllRoles(data);
-        const found = data.find((r: Role) => r.id === params.slug);
-        setRole(found);
+        const found = data.find((r: Role) => r.id === slug);
+        if (!found) {
+          setError(true);
+        }
+        setRole(found || null);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError(true);
         setLoading(false);
       });
-  }, [params.slug]);
+  }, [slug]);
 
   if (loading) return <div className="text-center py-20 text-[#e8e8f0]">Loading...</div>;
-  if (!role) {
+  if (error || !role) {
     return (
-      <main className="min-h-screen bg-[#0f0f1a] text-[#e8e8f0] pt-24">
+      <main className="min-h-screen bg-gradient-to-br from-[#0f0f1a] via-[#1a1a2e] to-[#0f0f1a] text-[#e8e8f0] pt-24">
         <div className="max-w-4xl mx-auto px-4 py-12 text-center">
           <h1 className="text-3xl font-bold mb-4">Role not found</h1>
-          <Link href="/roles" className="text-[#f4d03f] hover:underline">
+          <p className="text-[#d0d0d8] mb-6">Sorry, we couldn't find the role you're looking for.</p>
+          <Link href="/roles" className="text-[#f4d03f] hover:underline font-semibold">
             ← Back to all roles
           </Link>
         </div>
@@ -209,23 +224,25 @@ export default function RoleDetailPage({ params }: { params: { slug: string } })
         </section>
 
         {/* Resources */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">Learning Resources</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {role.resources.map((resource, idx) => (
-              <a
-                key={idx}
-                href={resource.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#1a1a2e] rounded-lg p-6 border border-[#2a2a3e] hover:border-[#f4d03f] transition-all hover:shadow-lg"
-              >
-                <h3 className="font-bold text-[#f4d03f] mb-2">{resource.title}</h3>
-                <p className="text-[#d0d0d8]">{resource.description}</p>
-              </a>
-            ))}
-          </div>
-        </section>
+        {role.resources && role.resources.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">Learning Resources</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {role.resources.map((resource, idx) => (
+                <a
+                  key={idx}
+                  href={resource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#1a1a2e] rounded-lg p-6 border border-[#2a2a3e] hover:border-[#f4d03f] transition-all hover:shadow-lg"
+                >
+                  <h3 className="font-bold text-[#f4d03f] mb-2">{resource.title}</h3>
+                  <p className="text-[#d0d0d8]">{resource.description}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Next Role CTA */}
         <div className="bg-[#1a1a2e] rounded-lg p-8 border border-[#2a2a3e] text-center">
