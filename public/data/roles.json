@@ -33,16 +33,8 @@
       "Tell us about a blockchain project you built. What was the hardest part?"
     ],
     "resources": [
-      {
-        "title": "Ethereum Developer Tutorials",
-        "url": "https://ethereum.org/en/developers/tutorials/",
-        "description": "100+ free lessons on blockchain basics"
-      },
-      {
-        "title": "BuildSpace",
-        "url": "https://buildspace.so",
-        "description": "Hands-on projects for Ethereum/Polygon"
-      }
+      {"title": "Ethereum Developer Tutorials", "url": "https://ethereum.org/en/developers/tutorials/", "description": "100+ free lessons on blockchain basics"},
+      {"title": "BuildSpace", "url": "https://buildspace.so", "description": "Hands-on projects for Ethereum/Polygon"}
     ]
   },
   {
@@ -79,16 +71,8 @@
       "Tell us about a critical bug you found. How did you discover and fix it?"
     ],
     "resources": [
-      {
-        "title": "CryptoZombies",
-        "url": "https://cryptozombies.io",
-        "description": "Gamified Solidity tutorials"
-      },
-      {
-        "title": "Cyfrin Updraft",
-        "url": "https://updraft.cyfrin.io/",
-        "description": "Free Solidity security courses"
-      }
+      {"title": "CryptoZombies", "url": "https://cryptozombies.io", "description": "Gamified Solidity tutorials"},
+      {"title": "Cyfrin Updraft", "url": "https://updraft.cyfrin.io/", "description": "Free Solidity security courses"}
     ]
   },
   {
@@ -125,16 +109,84 @@
       "Design a Solana program for a lending protocol. Walk us through it."
     ],
     "resources": [
-      {
-        "title": "The Rust Book",
-        "url": "https://doc.rust-lang.org/book/",
-        "description": "Official free Rust guide"
-      },
-      {
-        "title": "Solana Dev Docs",
-        "url": "https://docs.solana.com/developing/programming-model",
-        "description": "Solana program model tutorials"
-      }
+      {"title": "The Rust Book", "url": "https://doc.rust-lang.org/book/", "description": "Official free Rust guide"},
+      {"title": "Solana Dev Docs", "url": "https://docs.solana.com/developing/programming-model", "description": "Solana program model tutorials"}
+    ]
+  },
+  {
+    "id": "fullstack-web3-developer",
+    "name": "Full Stack Web3 Developer",
+    "category": "technical",
+    "oneLiner": "Handle frontend (React/Vue), backend, and blockchain integration to build complete dApps.",
+    "mustHaveSkills": ["React/Vue", "Node.js/Backend", "Smart contracts basics", "Web3.js/Ethers.js", "Git"],
+    "niceToHaveSkills": ["TypeScript", "GraphQL", "Web3 libraries", "IPFS", "Wallet integration"],
+    "toolsAndProtocols": ["React", "Node.js", "Web3.js", "Ethers.js", "MetaMask", "IPFS"],
+    "web2Equivalent": "Full Stack Web Developer",
+    "dayInTheLife": "Build React components for your dApp. Connect wallet integration. Test Web3.js calls. Build backend APIs. Deploy frontend to Vercel. Debug contract integration issues. Review PRs from team. Optimize UX for gas costs. Deploy new features.",
+    "juniorToSenior": {
+      "junior": "Building UI components, connecting wallets, understanding Web3.js. Learning DeFi mechanics.",
+      "mid": "Architecting full dApps, optimizing performance, leading frontend. Understanding contract interactions.",
+      "senior": "Designing entire user experiences, mentoring teams, advising on product. Understanding DeFi deeply."
+    },
+    "proofOfWorkTips": [
+      "Build and ship a full dApp on mainnet - live demo matters",
+      "Create GitHub repos with clean, well-documented code",
+      "Write UX comparison posts (DeFi vs Web2)",
+      "Contribute to popular dApp front-ends (Uniswap, Aave, etc)",
+      "Win hackathons for best UX"
+    ],
+    "avgCompRange": {
+      "usd": "$110k - $280k",
+      "note": "Varies based on company stage. Startups may offer more tokens."
+    },
+    "interviewQuestions": [
+      "Tell us about a full dApp you built. Walk through the architecture.",
+      "How do you optimize gas costs on the frontend?",
+      "Explain wallet integration. What security considerations matter?",
+      "How would you handle Web3.js errors gracefully?",
+      "Design a lending dApp frontend. What UX matters most?"
+    ],
+    "resources": [
+      {"title": "DappUniversity", "url": "https://www.youtube.com/c/DappUniversity", "description": "Full-stack dApp tutorials"},
+      {"title": "UseWeb3", "url": "https://www.useweb3.xyz/", "description": "Web3.js and Ethers.js resources"}
+    ]
+  },
+  {
+    "id": "devops-engineer",
+    "name": "DevOps Engineer",
+    "category": "technical",
+    "oneLiner": "Manage infrastructure, CI/CD, and node operations for blockchain systems at scale.",
+    "mustHaveSkills": ["Kubernetes/Docker", "CI/CD pipelines", "Linux/Unix", "Monitoring", "Infrastructure as Code"],
+    "niceToHaveSkills": ["Blockchain nodes", "Terraform", "AWS/GCP", "Security hardening", "Performance tuning"],
+    "toolsAndProtocols": ["Docker", "Kubernetes", "Hardhat", "Foundry", "GitHub Actions", "Terraform"],
+    "web2Equivalent": "DevOps / Infrastructure Engineer",
+    "dayInTheLife": "Monitor node health dashboards. Scale Kubernetes clusters for load. Deploy new contract versions via CI/CD. Fix infrastructure issues. Optimize database performance. Set up monitoring alerts. On-call duty for critical issues. Review infrastructure changes.",
+    "juniorToSenior": {
+      "junior": "Setting up CI/CD, managing containers, learning blockchain nodes. Supervised deployments.",
+      "mid": "Architecting infrastructure, optimizing node performance, mentoring. Complex deployments.",
+      "senior": "Designing enterprise-scale infrastructure, leading team, advising on architecture. Zero-downtime deployments."
+    },
+    "proofOfWorkTips": [
+      "Set up production-grade CI/CD pipelines - show on GitHub",
+      "Run and maintain a blockchain node publicly - Etherscan or similar",
+      "Write infrastructure-as-code (Terraform) examples",
+      "Contribute to DevOps tools (Hardhat, Foundry plugins)",
+      "Blog about blockchain infrastructure challenges solved"
+    ],
+    "avgCompRange": {
+      "usd": "$140k - $320k",
+      "note": "On-call and critical infrastructure roles pay premium."
+    },
+    "interviewQuestions": [
+      "Design infrastructure for a high-volume DeFi protocol.",
+      "How would you monitor blockchain node health?",
+      "Walk us through your CI/CD pipeline for smart contract deployments.",
+      "How do you handle zero-downtime deployments for blockchain systems?",
+      "Tell us about an infrastructure crisis you solved."
+    ],
+    "resources": [
+      {"title": "Hardhat Docs", "url": "https://hardhat.org/docs", "description": "Deployment and testing tools"},
+      {"title": "Kubernetes.io", "url": "https://kubernetes.io/docs/", "description": "Container orchestration guide"}
     ]
   },
   {
@@ -157,30 +209,60 @@
       "Win Code4rena / Sherlock contests - public track record matters",
       "Write detailed security analysis posts on found vulnerabilities",
       "Contribute to Slither or other security tools",
-      "Pass formal security certifications (OSCP-related)"
+      "Pass formal security certifications"
     ],
     "avgCompRange": {
       "usd": "$180k - $500k+",
-      "note": "Top auditors and security leads earn premium. Bounties can add $100k+/year."
+      "note": "Top auditors earn premium. Bounties can add $100k+/year."
     },
     "interviewQuestions": [
-      "What are the 10 most critical Solidity vulnerabilities? How do you find them?",
-      "Describe a complex vulnerability you found and how you discovered it.",
-      "How would you audit a DeFi lending protocol? Walk through your methodology.",
-      "Can you explain formal verification? When is it necessary?",
-      "Tell us about a time you found a vulnerability before the team knew. What was it?"
+      "What are the 10 most critical Solidity vulnerabilities?",
+      "Describe a complex vulnerability you found and how.",
+      "Walk us through your audit methodology for a lending protocol.",
+      "Explain formal verification. When is it necessary?",
+      "Tell us about a critical bug you found before the team knew."
     ],
     "resources": [
-      {
-        "title": "Cyfrin Updraft",
-        "url": "https://updraft.cyfrin.io/",
-        "description": "Free Solidity security courses"
-      },
-      {
-        "title": "OpenZeppelin Docs",
-        "url": "https://docs.openzeppelin.com/",
-        "description": "Secure contract libraries and guides"
-      }
+      {"title": "Cyfrin Updraft", "url": "https://updraft.cyfrin.io/", "description": "Security courses"},
+      {"title": "OpenZeppelin", "url": "https://docs.openzeppelin.com/", "description": "Secure libraries"}
+    ]
+  },
+  {
+    "id": "blockchain-security-engineer",
+    "name": "Blockchain Security Engineer",
+    "category": "technical",
+    "oneLiner": "Focus on cryptography, zero-knowledge proofs, and threat mitigation at the protocol level.",
+    "mustHaveSkills": ["Cryptography", "Security protocols", "Smart contract security", "Threat modeling", "Mathematics"],
+    "niceToHaveSkills": ["Zero-knowledge proofs", "Formal verification", "Assembly", "Protocol design"],
+    "toolsAndProtocols": ["ZK frameworks", "Cryptographic libraries", "Circom", "Cairo", "Noir"],
+    "web2Equivalent": "Security Architect / Cryptographer",
+    "dayInTheLife": "Research new cryptographic attacks. Design ZK-proof circuits. Threat model a new protocol. Review security specifications. Mentor security team. Publish security research. Attend crypto conferences. Advise on protocol upgrades.",
+    "juniorToSenior": {
+      "junior": "Learning cryptography, understanding ZK, studying protocols. Building foundations.",
+      "mid": "Designing security solutions, leading threat modeling, teaching team. Publishing papers.",
+      "senior": "Cryptography researcher, protocol advisor, industry thought leader. Setting standards."
+    },
+    "proofOfWorkTips": [
+      "Publish cryptographic research - academic papers matter",
+      "Contribute to ZK frameworks (circom, Cairo, Noir)",
+      "Speak at crypto conferences about security",
+      "Advise projects on security design",
+      "Win security research competitions"
+    ],
+    "avgCompRange": {
+      "usd": "$160k - $380k",
+      "note": "Research-heavy roles. Industry recognition valuable."
+    },
+    "interviewQuestions": [
+      "Explain zero-knowledge proofs. Design a ZK circuit for X.",
+      "How do you threat model a blockchain protocol?",
+      "What cryptographic primitives would you use for [scenario]?",
+      "Describe a protocol-level security bug you found.",
+      "What's the future of crypto security?"
+    ],
+    "resources": [
+      {"title": "ZK Docs", "url": "https://0xparc.org/", "description": "Zero-knowledge resources"},
+      {"title": "Crypto Research", "url": "https://ia.cr/", "description": "Cryptographic eprints"}
     ]
   },
   {
@@ -199,7 +281,7 @@
       "senior": "Thought leader in on-chain analysis, publishing research, speaking at conferences. Authority in crypto."
     },
     "proofOfWorkTips": [
-      "Build public Dune dashboards - share them constantly on Twitter",
+      "Build public Dune dashboards - share constantly on Twitter",
       "Publish on-chain analysis threads with actionable insights",
       "Share alpha signals and be right - build a following",
       "Create novel metrics nobody else is tracking",
@@ -211,68 +293,14 @@
     },
     "interviewQuestions": [
       "Show us your best on-chain analysis. How did you discover it?",
-      "Design a Dune dashboard to track [specific metric]. Walk us through.",
-      "What on-chain signal do you think is misunderstood? Why?",
+      "Design a Dune dashboard to track [specific metric].",
+      "What on-chain signal do you think is misunderstood?",
       "Tell us about a trading signal you spotted. Was it right?",
       "How do you stay on top of on-chain trends?"
     ],
     "resources": [
-      {
-        "title": "Dune Analytics",
-        "url": "https://dune.com/docs/",
-        "description": "Free SQL-based on-chain analysis"
-      },
-      {
-        "title": "Messari Research",
-        "url": "https://messari.io/research",
-        "description": "Free crypto research and insights"
-      }
-    ]
-  },
-  {
-    "id": "community-manager",
-    "name": "Community Manager",
-    "category": "non-tech",
-    "oneLiner": "Build and nurture engaged communities on Discord, Twitter, and events. You're the vibe keeper.",
-    "mustHaveSkills": ["Communication", "Community building", "Conflict resolution", "Authentic engagement", "Moderation"],
-    "niceToHaveSkills": ["Event planning", "Content creation", "Analytics", "Psychology", "Multiple languages"],
-    "toolsAndProtocols": ["Discord", "Twitter/X", "Telegram", "Notion", "Google Analytics"],
-    "web2Equivalent": "Community Manager / Social Media Manager",
-    "dayInTheLife": "Start community standup. Moderate Discord for 2 hours - ban 3 bots, answer questions. Plan weekly Twitter Space. Meet with core community members. Create memes. Moderate drama respectfully. Host AMA with founder. Analyze sentiment. Plan next month's events.",
-    "juniorToSenior": {
-      "junior": "Managing Discord, answering questions, enforcing rules. Building relationships with members.",
-      "mid": "Leading community strategy, hosting events, building sub-communities. 10k+ active members.",
-      "senior": "Building global community, influencing product decisions, mentoring. Community is a moat."
-    },
-    "proofOfWorkTips": [
-      "Build a thriving Discord from scratch - show growth and engagement metrics",
-      "Create viral Twitter threads about your project - engagement proof",
-      "Host successful events (AMAs, calls, competitions) - show attendance",
-      "Manage community during crisis - show maturity and skill",
-      "Document your community strategy and results"
-    ],
-    "avgCompRange": {
-      "usd": "$80k - $180k",
-      "note": "Often includes community treasury allocation. Engagement bonuses common."
-    },
-    "interviewQuestions": [
-      "Tell us about a community crisis you managed. How did you handle it?",
-      "How do you measure community health? What metrics matter?",
-      "Design a community onboarding experience. Walk us through.",
-      "What's your philosophy on moderation? How do you balance freedom and safety?",
-      "Show us a community you built or managed. What are you proud of?"
-    ],
-    "resources": [
-      {
-        "title": "Web3 Community Guide",
-        "url": "https://web3.career/learn-web3/community-manager",
-        "description": "Free tips and best practices"
-      },
-      {
-        "title": "Developer DAO",
-        "url": "https://blog.developerdao.com/",
-        "description": "DAO community building guides"
-      }
+      {"title": "Dune Analytics", "url": "https://dune.com/docs/", "description": "SQL-based analysis"},
+      {"title": "Messari", "url": "https://messari.io/research", "description": "Crypto research"}
     ]
   },
   {
@@ -303,22 +331,128 @@
     },
     "interviewQuestions": [
       "Analyze a DeFi protocol for us. What's your investment thesis?",
-      "How do you think about tokenomics risk? What metrics matter?",
-      "Tell us about a DeFi protocol you got wrong. What happened?",
-      "Design a hypothetical DeFi primitive. What problems does it solve?",
-      "What's an underrated DeFi protocol? Why?"
+      "How do you think about tokenomics risk?",
+      "Tell us about a DeFi protocol you got wrong.",
+      "Design a hypothetical DeFi primitive.",
+      "What's an underrated DeFi protocol?"
     ],
     "resources": [
-      {
-        "title": "DefiLlama",
-        "url": "https://defillama.com/docs",
-        "description": "Free DeFi data tools"
-      },
-      {
-        "title": "Bankless Academy",
-        "url": "https://academy.bankless.com/",
-        "description": "Free DeFi courses"
-      }
+      {"title": "DefiLlama", "url": "https://defillama.com/docs", "description": "DeFi data"},
+      {"title": "Bankless", "url": "https://academy.bankless.com/", "description": "DeFi education"}
+    ]
+  },
+  {
+    "id": "community-manager",
+    "name": "Community Manager",
+    "category": "non-tech",
+    "oneLiner": "Build and nurture engaged communities on Discord, Twitter, and events. You're the vibe keeper.",
+    "mustHaveSkills": ["Communication", "Community building", "Conflict resolution", "Authentic engagement", "Moderation"],
+    "niceToHaveSkills": ["Event planning", "Content creation", "Analytics", "Psychology", "Multiple languages"],
+    "toolsAndProtocols": ["Discord", "Twitter/X", "Telegram", "Notion", "Google Analytics"],
+    "web2Equivalent": "Community Manager / Social Media Manager",
+    "dayInTheLife": "Start community standup. Moderate Discord for 2 hours - ban 3 bots, answer questions. Plan weekly Twitter Space. Meet with core community members. Create memes. Moderate drama respectfully. Host AMA with founder. Analyze sentiment. Plan next month's events.",
+    "juniorToSenior": {
+      "junior": "Managing Discord, answering questions, enforcing rules. Building relationships with members.",
+      "mid": "Leading community strategy, hosting events, building sub-communities. 10k+ active members.",
+      "senior": "Building global community, influencing product decisions, mentoring. Community is a moat."
+    },
+    "proofOfWorkTips": [
+      "Build a thriving Discord from scratch - show growth and engagement metrics",
+      "Create viral Twitter threads about your project - engagement proof",
+      "Host successful events (AMAs, calls, competitions) - show attendance",
+      "Manage community during crisis - show maturity and skill",
+      "Document your community strategy and results"
+    ],
+    "avgCompRange": {
+      "usd": "$80k - $180k",
+      "note": "Often includes community treasury allocation. Engagement bonuses common."
+    },
+    "interviewQuestions": [
+      "Tell us about a community crisis you managed.",
+      "How do you measure community health?",
+      "Design a community onboarding experience.",
+      "What's your philosophy on moderation?",
+      "Show us a community you built or managed."
+    ],
+    "resources": [
+      {"title": "Web3 Community Guide", "url": "https://web3.career/learn-web3/community-manager", "description": "Community best practices"},
+      {"title": "Developer DAO", "url": "https://blog.developerdao.com/", "description": "DAO community building"}
+    ]
+  },
+  {
+    "id": "marketing-specialist",
+    "name": "Marketing Specialist",
+    "category": "non-tech",
+    "oneLiner": "Promote projects, handle SEO, content, and growth hacking strategies for Web3 startups.",
+    "mustHaveSkills": ["Marketing strategy", "Content writing", "SEO basics", "Growth mindset", "Analytics"],
+    "niceToHaveSkills": ["Copywriting", "Social media", "Video production", "Community engagement", "Data analysis"],
+    "toolsAndProtocols": ["Content tools", "Analytics", "Social media platforms", "Email marketing", "Growth hacking"],
+    "web2Equivalent": "Marketing Manager / Growth Marketer",
+    "dayInTheLife": "Plan weekly content calendar. Write 3 blog posts optimized for SEO. Create Twitter thread strategy. Analyze engagement metrics. Test messaging variants. Coordinate with community team. Plan launch campaign. Review competitor strategy. Report metrics to leadership.",
+    "juniorToSenior": {
+      "junior": "Writing content, managing social media, learning SEO. Supporting campaigns.",
+      "mid": "Leading marketing strategy, creating content pillars, managing campaigns. Data-driven decisions.",
+      "senior": "Leading growth, advising product, building brand. Thought leader in space."
+    },
+    "proofOfWorkTips": [
+      "Write published articles - Medium, Substack, dev platforms",
+      "Grow Twitter following with engaging, valuable content",
+      "Launch successful marketing campaigns - show metrics",
+      "Create viral social content - engagement matters",
+      "Document case studies of marketing wins"
+    ],
+    "avgCompRange": {
+      "usd": "$90k - $200k",
+      "note": "Performance bonuses based on growth metrics common."
+    },
+    "interviewQuestions": [
+      "Tell us about a successful marketing campaign you led.",
+      "How would you position a new DeFi protocol?",
+      "Design a growth strategy for a crypto project.",
+      "How do you approach SEO for Web3?",
+      "What's your content strategy?"
+    ],
+    "resources": [
+      {"title": "HubSpot Academy", "url": "https://academy.hubspot.com/", "description": "Marketing fundamentals"},
+      {"title": "a16z Crypto School", "url": "https://a16zcrypto.com/", "description": "Crypto marketing insights"}
+    ]
+  },
+  {
+    "id": "ux-designer",
+    "name": "UI/UX Designer",
+    "category": "design",
+    "oneLiner": "Design intuitive interfaces for dApps, wallets, and DeFi protocols that users love.",
+    "mustHaveSkills": ["UI/UX design", "Figma", "User research", "Design thinking", "Communication"],
+    "niceToHaveSkills": ["Interaction design", "Prototyping", "Web development basics", "Accessibility", "Animation"],
+    "toolsAndProtocols": ["Figma", "Framer", "Sketch", "Adobe XD", "Prototyping tools"],
+    "web2Equivalent": "UX/UI Designer",
+    "dayInTheLife": "User research interviews with traders. Design wallet flow. Create high-fidelity mockups in Figma. Test designs with users. Iterate based on feedback. Work with devs on handoff. Design system updates. Accessibility audits. Review competitor dApps.",
+    "juniorToSenior": {
+      "junior": "Creating component designs, learning user research, building design systems.",
+      "mid": "Leading product design, conducting research, mentoring junior designers. 5+ shipped projects.",
+      "senior": "Design director, setting design strategy, influencing product. Design-led growth."
+    },
+    "proofOfWorkTips": [
+      "Build a portfolio of shipped dApp designs",
+      "Create case studies explaining your design decisions",
+      "Contribute to open-source design systems (Chakra, etc)",
+      "Write about Web3 UX patterns and problems",
+      "Win design competitions or awards"
+    ],
+    "avgCompRange": {
+      "usd": "$100k - $240k",
+      "note": "Senior designers and design leads earn more."
+    },
+    "interviewQuestions": [
+      "Walk us through your design process for a complex interface.",
+      "How do you approach UX for wallet/DeFi apps?",
+      "Show us your best design work and explain decisions.",
+      "How do you handle feedback and iterations?",
+      "Design a UI for [complex DeFi scenario]."
+    ],
+    "resources": [
+      {"title": "Figma Community", "url": "https://www.figma.com/community/", "description": "Design templates"},
+      {"title": "Design Systems", "url": "https://designsystemsrepo.com/", "description": "Reference systems"}
     ]
   },
   {
@@ -340,7 +474,7 @@
       "Mint NFT collections - sell them and show revenue",
       "Get featured on OpenSea/Foundation - get sales",
       "Build a collector community - engagement matters",
-      "Create art that's culturally significant to the community",
+      "Create culturally significant art to the community",
       "Collaborate with known projects or artists"
     ],
     "avgCompRange": {
@@ -349,22 +483,204 @@
     },
     "interviewQuestions": [
       "Show us your best work. What's the story behind it?",
-      "How do you approach an NFT collection? Walk us through your process.",
-      "What makes good NFT art? How is it different from digital art?",
-      "Tell us about your collector community. How'd you build it?",
-      "What's your vision for NFTs in the next 3 years?"
+      "How do you approach an NFT collection?",
+      "What makes good NFT art?",
+      "Tell us about your collector community.",
+      "What's your vision for NFTs?"
     ],
     "resources": [
-      {
-        "title": "OpenSea Learn",
-        "url": "https://opensea.io/learn",
-        "description": "Free NFT creation guides"
-      },
-      {
-        "title": "Blender Tutorials",
-        "url": "https://www.blender.org/support/tutorials/",
-        "description": "Free for 3D NFT art"
-      }
+      {"title": "OpenSea Learn", "url": "https://opensea.io/learn", "description": "NFT guides"},
+      {"title": "Blender", "url": "https://www.blender.org/support/tutorials/", "description": "3D art tutorials"}
+    ]
+  },
+  {
+    "id": "product-manager",
+    "name": "Product Manager",
+    "category": "non-tech",
+    "oneLiner": "Define roadmaps, user needs, and strategy for Web3 products that users actually want.",
+    "mustHaveSkills": ["Product thinking", "User research", "Data analysis", "Communication", "Prioritization"],
+    "niceToHaveSkills": ["Technical basics", "DeFi knowledge", "Analytics", "Design understanding", "Writing"],
+    "toolsAndProtocols": ["Figma", "Analytics tools", "Jira", "Notion", "Data platforms"],
+    "web2Equivalent": "Product Manager",
+    "dayInTheLife": "User interviews with power traders. Analyze usage data and find friction points. Draft PRD for new feature. Prioritize roadmap. Review wireframes with design. Brainstorm solutions with engineers. Present strategy to leadership. Monitor launch metrics. Iterate based on feedback.",
+    "juniorToSenior": {
+      "junior": "Analyzing user feedback, supporting PRDs, learning product thinking. Junior features.",
+      "mid": "Leading product strategy, running user research, driving launches. Multiple shipped features.",
+      "senior": "VP Product, setting product vision, advising CEO. Product-market fit expert."
+    },
+    "proofOfWorkTips": [
+      "Contribute to open-source DeFi projects as product advisor",
+      "Write product strategy posts - Medium articles matter",
+      "Launch features and share the metrics",
+      "Show user research and feedback loops",
+      "Build a reputation for shipping"
+    ],
+    "avgCompRange": {
+      "usd": "$120k - $280k",
+      "note": "VP/Head of Product earns 50%+ more. Equity important."
+    },
+    "interviewQuestions": [
+      "Tell us about a product you shipped. What was the impact?",
+      "How would you approach [specific DeFi problem]?",
+      "Walk us through your user research process.",
+      "How do you prioritize features?",
+      "What DeFi product would you build?"
+    ],
+    "resources": [
+      {"title": "ProductSchool", "url": "https://www.productschool.com/", "description": "PM education"},
+      {"title": "Web3 PM Guide", "url": "https://web3.career/learn-web3/product-manager", "description": "Web3-specific PM content"}
+    ]
+  },
+  {
+    "id": "business-development",
+    "name": "Business Development / Sales",
+    "category": "non-tech",
+    "oneLiner": "Forge partnerships, drive sales, and build ecosystem relationships for crypto projects.",
+    "mustHaveSkills": ["Sales", "Relationship building", "Negotiation", "Domain knowledge", "Communication"],
+    "niceToHaveSkills": ["Crypto knowledge", "Financial acumen", "Networking", "Ecosystem understanding", "Copywriting"],
+    "toolsAndProtocols": ["Salesforce", "LinkedIn", "Email outreach", "Crypto platforms", "Partnership tools"],
+    "web2Equivalent": "Business Development Manager / Sales Manager",
+    "dayInTheLife": "Call 10 potential partners. Pitch your protocol's integrations. Negotiate deal terms. Close partnership with exchange. Attend crypto conference for networking. Follow up on leads. Report on pipeline. Plan partnership announcements. Attend industry events.",
+    "juniorToSenior": {
+      "junior": "Prospecting, following up, learning sales process. Initial partnerships.",
+      "mid": "Closing deals, managing partnerships, leading negotiations. 5+ major deals/year.",
+      "senior": "VP BD, strategic partnerships, board-level relationships. Setting ecosystem strategy."
+    },
+    "proofOfWorkTips": [
+      "Show number of partnerships closed and their impact",
+      "Document deal processes and learnings",
+      "Build LinkedIn presence and network publicly",
+      "Speak at events about partnerships",
+      "Create partnerships playbooks"
+    ],
+    "avgCompRange": {
+      "usd": "$100k - $260k",
+      "note": "Often includes commission on deals. High performers earn 50%+ more."
+    },
+    "interviewQuestions": [
+      "Tell us about your biggest partnership win.",
+      "How would you approach a partnership with [major platform]?",
+      "Walk us through your sales process.",
+      "How do you identify partnership opportunities?",
+      "What's your approach to negotiation?"
+    ],
+    "resources": [
+      {"title": "LinkedIn Learning", "url": "https://www.linkedin.com/learning/", "description": "Sales training"},
+      {"title": "CryptoJobs Guide", "url": "https://cryptojobslist.com/", "description": "Crypto BD tips"}
+    ]
+  },
+  {
+    "id": "operations-compliance",
+    "name": "Operations / Legal / Compliance",
+    "category": "non-tech",
+    "oneLiner": "Handle operations, regulatory compliance, and legal/risk management for Web3 firms.",
+    "mustHaveSkills": ["Operations", "Legal knowledge", "Regulatory basics", "Risk management", "Organization"],
+    "niceToHaveSkills": ["Compliance software", "Legal writing", "Crypto regulation", "Policy design", "Risk modeling"],
+    "toolsAndProtocols": ["Compliance tools", "Legal software", "Risk platforms", "Regulatory databases", "Ops tools"],
+    "web2Equivalent": "Compliance Officer / Operations Manager",
+    "dayInTheLife": "Review regulatory changes. Update compliance policies. Audit operational procedures. Meet with legal team. Risk assessment on new feature. Prepare compliance report. Handle regulatory inquiries. Train team on compliance. Manage insurance.",
+    "juniorToSenior": {
+      "junior": "Learning compliance, supporting policies, handling admin tasks.",
+      "mid": "Leading compliance strategy, managing risk, driving operational efficiency.",
+      "senior": "Chief Compliance Officer, setting company policy, board reporting. Legal authority."
+    },
+    "proofOfWorkTips": [
+      "Write detailed compliance documentation",
+      "Obtain compliance certifications (SOC 2, ISO, etc)",
+      "Speak at events about crypto compliance",
+      "Contribute to regulatory discussions",
+      "Build compliance frameworks"
+    ],
+    "avgCompRange": {
+      "usd": "$110k - $270k",
+      "note": "Chief Compliance Officer roles pay premium."
+    },
+    "interviewQuestions": [
+      "How would you approach compliance for [jurisdiction]?",
+      "Tell us about a compliance challenge you solved.",
+      "What are key crypto compliance risks?",
+      "Design a compliance framework for a DeFi protocol.",
+      "How do you stay updated on regulations?"
+    ],
+    "resources": [
+      {"title": "CoinDesk Learn", "url": "https://www.coindesk.com/learn/", "description": "Compliance articles"},
+      {"title": "Web3Bridge", "url": "https://www.web3bridge.com/", "description": "Ops training"}
+    ]
+  },
+  {
+    "id": "economy-designer",
+    "name": "Economy Designer / Tokenomics",
+    "category": "non-tech",
+    "oneLiner": "Design tokenomics, game economies, and DAO governance mechanisms that align incentives.",
+    "mustHaveSkills": ["Tokenomics", "Game theory", "Economics", "Data analysis", "Communication"],
+    "niceToHaveSkills": ["System modeling", "Smart contract understanding", "Game design", "Mathematics", "Python"],
+    "toolsAndProtocols": ["Token models", "DAO tools", "Economics frameworks", "Simulation tools", "Spreadsheet modeling"],
+    "web2Equivalent": "Economist / Game Designer",
+    "dayInTheLife": "Model different tokenomics scenarios. Run simulations on token distribution. Design DAO voting mechanism. Analyze game theory incentives. Present model to team. Iterate based on feedback. Document tokenomics. Plan token launch strategy.",
+    "juniorToSenior": {
+      "junior": "Learning tokenomics, analyzing models, supporting design. Spreadsheet modeling.",
+      "mid": "Designing tokenomics, running simulations, advising on incentives. Novel mechanisms.",
+      "senior": "Tokenomics authority, designing games, speaking at conferences. Published research."
+    },
+    "proofOfWorkTips": [
+      "Publish tokenomics design posts - Medium is great",
+      "Create detailed tokenomics models - GitHub repos matter",
+      "Contribute to DAO governance design",
+      "Run public simulations and publish results",
+      "Speak about tokenomics at conferences"
+    ],
+    "avgCompRange": {
+      "usd": "$120k - $280k",
+      "note": "Specialists in game theory and economics earn premium."
+    },
+    "interviewQuestions": [
+      "Design tokenomics for [specific protocol type].",
+      "How do you prevent token dumping after launch?",
+      "Tell us about a tokenomics design you're proud of.",
+      "How do you model incentive alignment?",
+      "What's the biggest tokenomics challenge in crypto?"
+    ],
+    "resources": [
+      {"title": "Tokenomics DAO", "url": "https://tokenomicsdao.com/", "description": "Tokenomics resources"},
+      {"title": "Game Theory Basics", "url": "https://plato.stanford.edu/entries/game-theory/", "description": "Game theory reference"}
+    ]
+  },
+  {
+    "id": "content-creator",
+    "name": "Content Creator / Copywriter",
+    "category": "non-tech",
+    "oneLiner": "Produce blogs, videos, and social content that educates and engages the Web3 community.",
+    "mustHaveSkills": ["Writing", "Storytelling", "Communication", "Creativity", "Consistency"],
+    "niceToHaveSkills": ["Video production", "Copywriting", "SEO", "Social media", "Research"],
+    "toolsAndProtocols": ["Writing tools", "Video tools", "Social platforms", "Analytics", "Publishing platforms"],
+    "web2Equivalent": "Content Creator / Copywriter / Journalist",
+    "dayInTheLife": "Write 2 blog posts on DeFi trends. Create Twitter thread strategy. Film YouTube video explaining protocol. Edit and publish. Engage with audience comments. Analyze engagement metrics. Plan content calendar. Promote content on socials.",
+    "juniorToSenior": {
+      "junior": "Writing blog posts, creating social content, learning storytelling.",
+      "mid": "Leading content strategy, creating multimedia content, building audience. 10k+ followers.",
+      "senior": "Thought leader, influencing opinion, leading content team. 100k+ audience."
+    },
+    "proofOfWorkTips": [
+      "Build audience on Twitter/Substack - show growth",
+      "Create viral posts - engagement metrics matter",
+      "Produce video content - YouTube channel valuable",
+      "Write published articles on major platforms",
+      "Build a personal brand and following"
+    ],
+    "avgCompRange": {
+      "usd": "$70k - $180k",
+      "note": "Creators with 50k+ followers negotiate equity/revenue share."
+    },
+    "interviewQuestions": [
+      "Tell us about your best piece of content. Why did it work?",
+      "How do you approach explaining complex topics?",
+      "Design a content strategy for a crypto project.",
+      "What makes Web3 content different?",
+      "Show us your audience and engagement metrics."
+    ],
+    "resources": [
+      {"title": "Medium", "url": "https://medium.com/", "description": "Publishing platform"},
+      {"title": "Substack", "url": "https://substack.com/", "description": "Newsletter platform"}
     ]
   }
 ]
