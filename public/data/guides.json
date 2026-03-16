@@ -1,7 +1,7 @@
 {
   "landingTips": {
     "title": "Tips for Landing a Web3 Job",
-    "intro": "Web3 jobs are competitive and often require more than traditional resumes—focus on demonstrating value through action and visibility. Based on current advice from industry experts in 2026, here are key tips to stand out:",
+    "intro": "Web3 jobs are competitive and often require more than traditional resumes. Focus on demonstrating value through action and visibility. Based on current advice from industry experts in 2026, here are key tips to stand out:",
     "tips": [
       {
         "title": "Build a Strong Portfolio",
@@ -9,15 +9,15 @@
       },
       {
         "title": "Optimize Your X (Twitter) Profile as a Creator",
-        "description": "Treat your X account like a living CV—use your real name or consistent alias, craft a bio highlighting your expertise (e.g., 'Web3 Community Builder | DeFi Enthusiast'), and post regularly about projects, insights, or builds. Engage thoughtfully with industry leaders' posts, pin testimonials, and share client wins. This builds credibility and makes you discoverable."
+        "description": "Treat your X account like a living CV. Use your real name or consistent alias, craft a bio highlighting your expertise (e.g., 'Web3 Community Builder | DeFi Enthusiast'), and post regularly about projects, insights, or builds. Engage thoughtfully with industry leaders' posts, pin testimonials, and share client wins. This builds credibility and makes you discoverable."
       },
       {
         "title": "Network Actively and Build Connections",
-        "description": "Join Discord communities, DAOs, and Telegram groups for projects you're interested in. Attend events like hackathons, conferences (e.g., ETHDenver, Solana Breakpoint), or virtual Twitter Spaces. Reach out via cold DMs to founders or hiring managers: Identify a pain point, propose a solution, and keep it concise (3 paragraphs max). Who you know often trumps what you know—bear markets are ideal for forming genuine relationships with committed builders."
+        "description": "Join Discord communities, DAOs, and Telegram groups for projects you're interested in. Attend events like hackathons, conferences (e.g., ETHDenver, Solana Breakpoint), or virtual Twitter Spaces. Reach out via cold DMs to founders or hiring managers: Identify a pain point, propose a solution, and keep it concise (3 paragraphs max). Who you know often trumps what you know. Bear markets are ideal for forming genuine relationships with committed builders."
       },
       {
         "title": "Show Up Daily and Learn Publicly",
-        "description": "Post threads, research, or explanations of Web3 concepts on X or Medium. Participate in bounties on platforms like Gitcoin or Scribble DAO to gain experience and get paid. Volunteer in DAOs or contribute small tasks—consistency builds 'street credibility' and leads to opportunities. Aim for 15 outreaches daily; persistence pays off in this numbers game."
+        "description": "Post threads, research, or explanations of Web3 concepts on X or Medium. Participate in bounties on platforms like Gitcoin or Scribble DAO to gain experience and get paid. Volunteer in DAOs or contribute small tasks. Consistency builds 'street credibility' and leads to opportunities. Aim for 15 outreaches daily; persistence pays off in this numbers game."
       },
       {
         "title": "Start with Entry-Level or Freelance",
@@ -31,21 +31,21 @@
     "steps": [
       {
         "title": "Apply Directly",
-        "description": "Use job boards or company websites to submit applications. Tailor your pitch to show value—include your portfolio, GitHub links, or X profile. Many roles are remote and global, so highlight relevant skills like Solidity or community management. No formal HR in many startups; founders or leads review directly."
+        "description": "Use job boards or company websites to submit applications. Tailor your pitch to show value: include your portfolio, GitHub links, or X profile. Many roles are remote and global, so highlight relevant skills like Solidity or community management. No formal HR in many startups; founders or leads review directly."
       },
       {
         "title": "Teams May Reach Out First",
-        "description": "Opportunities often come via networks—e.g., a founder DMs you after seeing your X posts or DAO contributions. This is common in Web3's 'vibe-based' culture, where proof of work in communities leads to inbound offers. However, always verify: Check the company's official site, LinkedIn/X profiles, and mutual connections. Use reverse-image searches for photos and avoid new accounts."
+        "description": "Opportunities often come via networks. For example, a founder DMs you after seeing your X posts or DAO contributions. This is common in Web3's 'vibe-based' culture, where proof of work in communities leads to inbound offers. However, always verify: Check the company's official site, LinkedIn/X profiles, and mutual connections. Use reverse-image searches for photos and avoid new accounts."
       },
       {
         "title": "Interview and Evaluation",
-        "description": "Processes are fast and practical—expect coding tests, discussions on past projects, or trial tasks. For tech roles, clone repos or audit contracts; for non-tech, discuss strategies. Background checks may include on-chain verification. No legitimate process asks for seed phrases, private keys, or upfront payments—these are scam red flags."
+        "description": "Processes are fast and practical. Expect coding tests, discussions on past projects, or trial tasks. For tech roles, clone repos or audit contracts; for non-tech, discuss strategies. Background checks may include on-chain verification. No legitimate process asks for seed phrases, private keys, or upfront payments. These are scam red flags."
       },
       {
         "title": "Avoid Scams",
         "description": "Fake recruiters impersonate companies (e.g., via LinkedIn) and use malware in 'tests' or request sensitive info early. Verify via official channels; use third-party services for checks. Common fakes: BlockNovas, Couch Chain. If it seems too good (e.g., no interview, high pay), it's likely fraud. Report suspicious activity."
       }
     ],
-    "conclusion": "Overall, hiring favors those with visible contributions and networks—expect 1-3 months for results if proactive."
+    "conclusion": "Overall, hiring favors those with visible contributions and networks. Expect 1-3 months for results if proactive."
   }
 }

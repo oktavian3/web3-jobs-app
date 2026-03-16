@@ -131,7 +131,7 @@ export default function BridgePage() {
               Pro Tips for Success
             </h3>
             <ul className="space-y-3 text-[#d0d0d8] text-sm">
-              <li>✓ Build in public—share your work on Twitter/X</li>
+              <li>✓ Build in public and share your work on Twitter/X</li>
               <li>✓ Contribute to open-source projects on GitHub</li>
               <li>✓ Network actively in Discord/Twitter communities</li>
               <li>✓ Post consistently about Web3 topics</li>
