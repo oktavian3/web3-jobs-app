@@ -682,5 +682,83 @@
       {"title": "Medium", "url": "https://medium.com/", "description": "Publishing platform"},
       {"title": "Substack", "url": "https://substack.com/", "description": "Newsletter platform"}
     ]
+  },
+  {
+    "id": "discord-moderator",
+    "name": "Discord Moderator",
+    "category": "non-tech",
+    "oneLiner": "Moderate Discord servers, enforce rules, resolve disputes, organize events, and foster positive community interactions.",
+    "mustHaveSkills": ["Communication", "Conflict resolution", "Rule enforcement", "Community management", "Active listening"],
+    "niceToHaveSkills": ["Event planning", "Psychology", "Analytics", "Bot management", "Multiple languages"],
+    "toolsAndProtocols": ["Discord", "Discord bots", "Moderation tools", "Community management", "Event planning"],
+    "web2Equivalent": "Community Moderator / Customer Support",
+    "dayInTheLife": "Start shift moderating Discord. Answer 50+ questions from community members. Ban 5 bots and spammers. Resolve conflict between members. Plan weekly event (AMA, giveaway, game). Monitor voice channels for disruptive behavior. Document rule violations. Post announcements. Celebrate community wins.",
+    "juniorToSenior": {
+      "junior": "Enforcing server rules, answering questions, learning moderation. Supervised work.",
+      "mid": "Leading moderation team, handling disputes maturely, planning events. 5k+ active members.",
+      "senior": "Head of moderation, setting culture, training team. Community is thriving and positive."
+    },
+    "proofOfWorkTips": [
+      "Show experience moderating active Discord communities",
+      "Document successful conflict resolutions",
+      "Plan and execute memorable community events",
+      "Show metrics of a healthy, engaged community",
+      "Create moderation guides and documentation"
+    ],
+    "avgCompRange": {
+      "usd": "$60k - $140k",
+      "note": "Often part-time or seasonal. Lead mods earn more. Community bounties available."
+    },
+    "interviewQuestions": [
+      "Tell us about a community conflict you resolved.",
+      "How do you handle spam and bad actors?",
+      "Design a moderation strategy for a 10k member Discord.",
+      "What makes a healthy community culture?",
+      "Show us a server you've moderated."
+    ],
+    "resources": [
+      {"title": "Discord Moderator Academy", "url": "https://discord.com/moderation", "description": "Official Discord guides and tools"},
+      {"title": "Web3 Community Management", "url": "https://web3.career/learn-web3/community-manager", "description": "Free tips on moderation in Web3 communities"},
+      {"title": "Discord Moderator Training", "url": "https://www.youtube.com/results?search_query=discord+moderator+training+web3", "description": "Free YouTube tutorials on mod bots and best practices"}
+    ]
+  },
+  {
+    "id": "ambassador",
+    "name": "Ambassador",
+    "category": "non-tech",
+    "oneLiner": "Represent and promote projects in external communities, build partnerships, create promotional content, and drive user adoption.",
+    "mustHaveSkills": ["Communication", "Networking", "Authenticity", "Promotional content creation", "Relationship building"],
+    "niceToHaveSkills": ["Social media skills", "Event management", "Content creation", "Multiple languages", "Community influence"],
+    "toolsAndProtocols": ["Discord", "Twitter/X", "Telegram", "Community platforms", "Marketing tools"],
+    "web2Equivalent": "Brand Ambassador / Community Advocate",
+    "dayInTheLife": "Represent project at 3 community meetups. Create promotional content for social channels. Present project at Twitter Space. Build relationships with key influencers. Recruit 20 new community members. Answer questions in partner communities. Report metrics to team. Plan next month's ambassador activities.",
+    "juniorToSenior": {
+      "junior": "Attending events, promoting project, learning community building. Building initial following.",
+      "mid": "Leading ambassador program, driving adoption, managing partnerships. Strong community presence.",
+      "senior": "Ambassador director, building global program, influencing brand. Significant community impact."
+    },
+    "proofOfWorkTips": [
+      "Build strong personal community following on Twitter/Telegram",
+      "Show successful event attendance and engagement metrics",
+      "Create viral promotional content that resonates with audience",
+      "Document new users/partnerships brought to project",
+      "Show authentic engagement in multiple communities"
+    ],
+    "avgCompRange": {
+      "usd": "$70k - $160k",
+      "note": "Often performance-based (bonuses for user acquisition). Revenue sharing with projects common."
+    },
+    "interviewQuestions": [
+      "Tell us about your strongest community connections.",
+      "How would you promote a new Web3 project authentically?",
+      "Design an ambassador program for a protocol.",
+      "Show us your social media metrics and following.",
+      "How do you build genuine relationships in communities?"
+    ],
+    "resources": [
+      {"title": "Web3 Ambassadorship Guide", "url": "https://web3.career/learn-web3/marketing", "description": "Free strategies for ambassadorship in Web3"},
+      {"title": "a16z Crypto Content Series", "url": "https://a16zcrypto.com/content/series/crypto-startup-school/", "description": "Videos on community growth and ambassadorship"},
+      {"title": "Ambassador Program Guides", "url": "https://www.youtube.com/results?search_query=web3+ambassador+program+guide", "description": "Free guides on joining and succeeding in ambassador programs"}
+    ]
   }
 ]
