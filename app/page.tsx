@@ -98,8 +98,8 @@ export default function Home() {
     <div className="page-wrapper">
       {/* Hero Section */}
       <section className="relative px-4 py-20 sm:px-6 lg:px-8 pt-32 overflow-hidden">
-        {/* Grid background */}
-        <div className="absolute inset-0 grid-background opacity-50" />
+        {/* Grid background - z-index -1 ensures it's behind all content */}
+        <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
         
         <div className="max-w-5xl mx-auto text-center relative page-content">
           {/* Floating UI Elements */}
@@ -247,7 +247,7 @@ export default function Home() {
 
       {/* Stats Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="absolute inset-0 grid-background opacity-50" />
+        <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="grid grid-cols-3 gap-6">
             <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm hover:shadow-md hover:shadow-purple-500/10 transition-all">

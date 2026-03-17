@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { ArrowLeft, Briefcase, Code, DollarSign, Zap, Users, Lightbulb, BookOpen, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Briefcase, Code, DollarSign, Zap, Lightbulb, CheckCircle, BookOpen, ArrowRight, Sparkles } from 'lucide-react';
 
 interface Role {
   id: string;
@@ -62,208 +62,279 @@ export default function RoleDetailPage() {
       });
   }, [slug]);
 
-  if (loading) return <div className="text-center py-20 text-[#e8e8f0]">Loading...</div>;
-  if (error || !role) {
+  if (loading) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-[#0f0f1a] via-[#1a1a2e] to-[#0f0f1a] text-[#e8e8f0] pt-24">
-        <div className="max-w-4xl mx-auto px-4 py-12 text-center">
-          <h1 className="text-3xl font-bold mb-4">Role not found</h1>
-          <p className="text-[#d0d0d8] mb-6">Sorry, we couldn't find the role you're looking for.</p>
-          <Link href="/roles" className="text-[#f4d03f] hover:underline font-semibold">
-            ← Back to all roles
-          </Link>
+      <div className="page-wrapper">
+        <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
+        <div className="page-content pt-24 relative z-10">
+          <div className="max-w-4xl mx-auto px-4 py-20 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border shadow-sm">
+              <div className="w-4 h-4 rounded-full bg-purple-500 animate-pulse" />
+              <span className="text-muted">Loading role details...</span>
+            </div>
+          </div>
         </div>
-      </main>
+      </div>
     );
   }
 
-  const getCategoryColor = (category: string) => {
-    const colors: { [key: string]: string } = {
-      technical: 'bg-gradient-to-r from-[#f4d03f] to-[#f5a8d8]',
-      'non-tech': 'bg-gradient-to-r from-[#f5a8d8] to-[#d8b5e8]',
-      research: 'bg-gradient-to-r from-[#d8b5e8] to-[#1a237e]',
-      design: 'bg-gradient-to-r from-[#f4d03f] to-[#d8b5e8]',
+  if (error || !role) {
+    return (
+      <div className="page-wrapper">
+        <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
+        <div className="page-content pt-24 relative z-10">
+          <div className="max-w-4xl mx-auto px-4 py-12 text-center">
+            <h1 className="font-[family-name:var(--font-playfair)] text-3xl font-medium text-foreground mb-4">Role not found</h1>
+            <p className="text-muted mb-6">Sorry, we couldn&apos;t find the role you&apos;re looking for.</p>
+            <Link href="/roles" className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium">
+              <ArrowLeft className="w-4 h-4" /> Back to all roles
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const getCategoryStyle = (category: string) => {
+    const styles: { [key: string]: string } = {
+      technical: 'bg-blue-50 text-blue-700 border-blue-200',
+      'non-tech': 'bg-purple-50 text-purple-700 border-purple-200',
+      research: 'bg-amber-50 text-amber-700 border-amber-200',
+      design: 'bg-pink-50 text-pink-700 border-pink-200',
     };
-    return colors[category] || 'bg-gradient-to-r from-[#f4d03f] to-[#f5a8d8]';
+    return styles[category] || 'bg-gray-50 text-gray-700 border-gray-200';
   };
 
   const nextRole = allRoles[(allRoles.findIndex(r => r.id === role.id) + 1) % allRoles.length];
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-[#0f0f1a] via-[#1a1a2e] to-[#0f0f1a] text-[#e8e8f0] pt-24">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Back Button */}
-        <Link href="/roles" className="flex items-center gap-2 text-[#f4d03f] hover:text-[#f5a8d8] mb-8 font-semibold">
-          <ArrowLeft className="w-5 h-5" /> Back to roles
-        </Link>
+    <div className="page-wrapper">
+      {/* Grid background */}
+      <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
+      
+      <div className="page-content pt-24 relative z-10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Back Button */}
+          <Link 
+            href="/roles" 
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border shadow-sm text-foreground hover:border-purple-300 transition-colors mb-8"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to roles
+          </Link>
 
-        {/* Header */}
-        <div className="mb-12">
-          <div className={`inline-block px-4 py-2 rounded-full ${getCategoryColor(role.category)} text-white text-sm font-bold mb-4`}>
-            {role.category.charAt(0).toUpperCase() + role.category.slice(1)}
-          </div>
-          <h1 className="text-5xl font-bold mb-4">{role.name}</h1>
-          <p className="text-xl text-[#d8b5e8] mb-6">{role.oneLiner}</p>
-          <div className="flex flex-wrap gap-4">
-            <div className="flex items-center gap-2 text-[#f5a8d8]">
-              <Briefcase className="w-5 h-5" />
-              <span>Web2 equivalent: {role.web2Equivalent}</span>
-            </div>
-            <div className="flex items-center gap-2 text-[#f4d03f]">
-              <DollarSign className="w-5 h-5" />
-              <span>{role.avgCompRange.usd}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Day in the Life */}
-        <section className="bg-[#1a1a2e] rounded-lg p-8 border border-[#2a2a3e] mb-12">
-          <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
-            <Zap className="w-6 h-6 text-[#f4d03f]" />
-            A Day in the Life
-          </h2>
-          <p className="text-[#d0d0d8] leading-relaxed text-lg">{role.dayInTheLife}</p>
-        </section>
-
-        {/* Skills Section */}
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
-          {/* Must Have */}
-          <div className="bg-[#1a1a2e] rounded-lg p-6 border border-[#f4d03f]/30">
-            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-[#f4d03f]">
-              <CheckCircle className="w-5 h-5" /> Must-Have Skills
-            </h3>
-            <div className="space-y-2">
-              {role.mustHaveSkills.map((skill, idx) => (
-                <div key={idx} className="flex items-center gap-2 p-2 bg-[#f4d03f]/10 rounded border-l-2 border-[#f4d03f]">
-                  <span className="text-[#f4d03f]">✓</span>
-                  <span>{skill}</span>
+          {/* Floating decorative elements */}
+          <div className="hidden lg:block">
+            <div className="absolute top-40 right-8 bg-white rounded-2xl shadow-lg border border-border p-4 rotate-[3deg]">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center">
+                  <DollarSign className="w-5 h-5 text-white" />
                 </div>
+                <div>
+                  <p className="font-semibold text-foreground text-sm">{role.avgCompRange.usd}</p>
+                  <p className="text-xs text-muted">Avg. Salary Range</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Header */}
+          <div className="mb-12">
+            <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 border ${getCategoryStyle(role.category)}`}>
+              {role.category.charAt(0).toUpperCase() + role.category.slice(1)}
+            </div>
+            <h1 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-medium text-foreground mb-4">
+              {role.name}
+            </h1>
+            <p className="text-lg text-muted mb-6 max-w-2xl">{role.oneLiner}</p>
+            <div className="flex flex-wrap gap-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border shadow-sm text-sm">
+                <Briefcase className="w-4 h-4 text-purple-500" />
+                <span className="text-muted">Web2:</span>
+                <span className="text-foreground font-medium">{role.web2Equivalent}</span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border shadow-sm text-sm">
+                <DollarSign className="w-4 h-4 text-green-500" />
+                <span className="text-foreground font-medium">{role.avgCompRange.usd}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Day in the Life */}
+          <section className="bg-white rounded-2xl p-8 border border-border shadow-sm mb-8 hover:shadow-lg hover:shadow-purple-500/5 transition-shadow">
+            <h2 className="text-xl font-semibold mb-4 flex items-center gap-3 text-foreground">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+                <Zap className="w-5 h-5 text-amber-600" />
+              </div>
+              A Day in the Life
+            </h2>
+            <p className="text-muted leading-relaxed">{role.dayInTheLife}</p>
+          </section>
+
+          {/* Skills Section */}
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            {/* Must Have */}
+            <div className="bg-white rounded-2xl p-6 border border-border shadow-sm hover:shadow-lg hover:shadow-blue-500/5 transition-shadow">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-foreground">
+                <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                </div>
+                Must-Have Skills
+              </h3>
+              <div className="space-y-2">
+                {role.mustHaveSkills.map((skill, idx) => (
+                  <div key={idx} className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl border border-blue-100">
+                    <span className="text-blue-500 text-sm">&#10003;</span>
+                    <span className="text-foreground text-sm">{skill}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Nice to Have */}
+            <div className="bg-white rounded-2xl p-6 border border-border shadow-sm hover:shadow-lg hover:shadow-purple-500/5 transition-shadow">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-foreground">
+                <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
+                  <Lightbulb className="w-4 h-4 text-purple-600" />
+                </div>
+                Nice-to-Have Skills
+              </h3>
+              <div className="space-y-2">
+                {role.niceToHaveSkills.map((skill, idx) => (
+                  <div key={idx} className="flex items-center gap-3 p-3 bg-purple-50 rounded-xl border border-purple-100">
+                    <span className="text-purple-500 text-sm">&#9670;</span>
+                    <span className="text-foreground text-sm">{skill}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Tools & Protocols */}
+          <div className="bg-white rounded-2xl p-6 border border-border shadow-sm mb-8 hover:shadow-lg hover:shadow-purple-500/5 transition-shadow">
+            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-foreground">
+              <div className="w-8 h-8 rounded-lg bg-pink-100 flex items-center justify-center">
+                <Code className="w-4 h-4 text-pink-600" />
+              </div>
+              Tools & Protocols
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {role.toolsAndProtocols.map((tool, idx) => (
+                <span key={idx} className="px-4 py-2 bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-full text-sm text-purple-700 font-medium">
+                  {tool}
+                </span>
               ))}
             </div>
           </div>
 
-          {/* Nice to Have */}
-          <div className="bg-[#1a1a2e] rounded-lg p-6 border border-[#d8b5e8]/30">
-            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-[#d8b5e8]">
-              <Lightbulb className="w-5 h-5" /> Nice-to-Have Skills
-            </h3>
-            <div className="space-y-2">
-              {role.niceToHaveSkills.map((skill, idx) => (
-                <div key={idx} className="flex items-center gap-2 p-2 bg-[#d8b5e8]/10 rounded border-l-2 border-[#d8b5e8]">
-                  <span className="text-[#d8b5e8]">◆</span>
-                  <span>{skill}</span>
+          {/* Career Progression */}
+          <section className="mb-8">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
+              <h2 className="text-xl font-semibold text-foreground">Career Progression</h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-white rounded-2xl p-6 border-l-4 border-blue-400 shadow-sm hover:shadow-lg hover:shadow-blue-500/10 transition-shadow">
+                <h3 className="text-sm font-bold text-blue-600 mb-2 uppercase tracking-wide">Junior</h3>
+                <p className="text-muted text-sm leading-relaxed">{role.juniorToSenior.junior}</p>
+              </div>
+              <div className="bg-white rounded-2xl p-6 border-l-4 border-purple-400 shadow-sm hover:shadow-lg hover:shadow-purple-500/10 transition-shadow">
+                <h3 className="text-sm font-bold text-purple-600 mb-2 uppercase tracking-wide">Mid-Level</h3>
+                <p className="text-muted text-sm leading-relaxed">{role.juniorToSenior.mid}</p>
+              </div>
+              <div className="bg-white rounded-2xl p-6 border-l-4 border-pink-400 shadow-sm hover:shadow-lg hover:shadow-pink-500/10 transition-shadow">
+                <h3 className="text-sm font-bold text-pink-600 mb-2 uppercase tracking-wide">Senior</h3>
+                <p className="text-muted text-sm leading-relaxed">{role.juniorToSenior.senior}</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Proof of Work Tips */}
+          <section className="bg-white rounded-2xl p-8 border border-border shadow-sm mb-8">
+            <h2 className="text-xl font-semibold mb-6 text-foreground">Proof of Work Tips</h2>
+            <div className="space-y-3">
+              {role.proofOfWorkTips.map((tip, idx) => (
+                <div key={idx} className="flex gap-4 p-4 bg-background rounded-xl border border-border">
+                  <span className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">
+                    {idx + 1}
+                  </span>
+                  <p className="text-muted leading-relaxed">{tip}</p>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Tools & Protocols */}
-        <div className="bg-[#1a1a2e] rounded-lg p-6 border border-[#2a2a3e] mb-12">
-          <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-[#f5a8d8]">
-            <Code className="w-5 h-5" /> Tools & Protocols
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            {role.toolsAndProtocols.map((tool, idx) => (
-              <span key={idx} className="px-4 py-2 bg-gradient-to-r from-[#f4d03f]/20 to-[#f5a8d8]/20 border border-[#f5a8d8]/50 rounded-full text-[#f5a8d8]">
-                {tool}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Career Progression */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">Career Progression</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-[#1a1a2e] rounded-lg p-6 border-l-4 border-[#f4d03f]">
-              <h3 className="text-lg font-bold text-[#f4d03f] mb-3">Junior</h3>
-              <p className="text-[#d0d0d8]">{role.juniorToSenior.junior}</p>
-            </div>
-            <div className="bg-[#1a1a2e] rounded-lg p-6 border-l-4 border-[#f5a8d8]">
-              <h3 className="text-lg font-bold text-[#f5a8d8] mb-3">Mid</h3>
-              <p className="text-[#d0d0d8]">{role.juniorToSenior.mid}</p>
-            </div>
-            <div className="bg-[#1a1a2e] rounded-lg p-6 border-l-4 border-[#d8b5e8]">
-              <h3 className="text-lg font-bold text-[#d8b5e8] mb-3">Senior</h3>
-              <p className="text-[#d0d0d8]">{role.juniorToSenior.senior}</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Proof of Work Tips */}
-        <section className="bg-[#1a1a2e] rounded-lg p-8 border border-[#2a2a3e] mb-12">
-          <h2 className="text-2xl font-bold mb-6">Proof of Work Tips</h2>
-          <div className="space-y-3">
-            {role.proofOfWorkTips.map((tip, idx) => (
-              <div key={idx} className="flex gap-4 p-4 bg-[#0f0f1a] rounded-lg">
-                <span className="text-[#f4d03f] font-bold flex-shrink-0">{idx + 1}.</span>
-                <p className="text-[#d0d0d8]">{tip}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Compensation */}
-        <div className="bg-gradient-to-r from-[#f4d03f]/20 via-[#f5a8d8]/20 to-[#d8b5e8]/20 rounded-lg p-8 border border-[#d8b5e8]/30 mb-12">
-          <h2 className="text-2xl font-bold mb-4">Average Compensation</h2>
-          <div className="text-3xl font-bold text-[#f4d03f] mb-2">{role.avgCompRange.usd}</div>
-          <p className="text-[#d8b5e8]">{role.avgCompRange.note}</p>
-        </div>
-
-        {/* Interview Questions */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">Common Interview Questions</h2>
-          <div className="space-y-4">
-            {role.interviewQuestions.map((question, idx) => (
-              <div key={idx} className="bg-[#1a1a2e] rounded-lg p-6 border border-[#2a2a3e]">
-                <p className="font-semibold text-[#f5a8d8] mb-2">Q{idx + 1}: {question}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Resources */}
-        {role.resources && role.resources.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">Learning Resources</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {role.resources.map((resource, idx) => (
-                <a
-                  key={idx}
-                  href={resource.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-[#1a1a2e] rounded-lg p-6 border border-[#2a2a3e] hover:border-[#f4d03f] transition-all hover:shadow-lg"
-                >
-                  <h3 className="font-bold text-[#f4d03f] mb-2">{resource.title}</h3>
-                  <p className="text-[#d0d0d8]">{resource.description}</p>
-                </a>
               ))}
             </div>
           </section>
-        )}
 
-        {/* Next Role CTA */}
-        <div className="bg-[#1a1a2e] rounded-lg p-8 border border-[#2a2a3e] text-center">
-          <h3 className="text-2xl font-bold mb-4">Interested in other roles?</h3>
-          <p className="text-[#d0d0d8] mb-6">Explore {nextRole.name} or check out all Web3 career options.</p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Link
-              href={`/roles/${nextRole.id}`}
-              className="px-6 py-3 bg-gradient-to-r from-[#f4d03f] to-[#f5a8d8] text-[#0f0f1a] font-bold rounded-lg hover:shadow-lg transition-all"
-            >
-              Explore {nextRole.name.split('(')[0].trim()}
-            </Link>
-            <Link
-              href="/roles"
-              className="px-6 py-3 border-2 border-[#d8b5e8] text-[#d8b5e8] font-bold rounded-lg hover:bg-[#d8b5e8]/10 transition-all"
-            >
-              View All Roles
-            </Link>
+          {/* Compensation */}
+          <div className="bg-gradient-to-r from-purple-50 via-blue-50 to-purple-50 rounded-2xl p-8 border border-purple-200 mb-8">
+            <h2 className="text-xl font-semibold mb-4 text-foreground">Average Compensation</h2>
+            <div className="text-3xl font-bold text-purple-600 mb-2">{role.avgCompRange.usd}</div>
+            <p className="text-muted">{role.avgCompRange.note}</p>
+          </div>
+
+          {/* Interview Questions */}
+          <section className="mb-8">
+            <h2 className="text-xl font-semibold mb-6 text-foreground">Common Interview Questions</h2>
+            <div className="space-y-4">
+              {role.interviewQuestions.map((question, idx) => (
+                <div key={idx} className="bg-white rounded-2xl p-6 border border-border shadow-sm hover:shadow-lg hover:shadow-purple-500/5 transition-shadow">
+                  <p className="font-medium text-foreground">
+                    <span className="text-purple-600 mr-2">Q{idx + 1}:</span>
+                    {question}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Resources */}
+          {role.resources && role.resources.length > 0 && (
+            <section className="mb-8">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
+                  <BookOpen className="w-5 h-5 text-green-600" />
+                </div>
+                <h2 className="text-xl font-semibold text-foreground">Learning Resources</h2>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                {role.resources.map((resource, idx) => (
+                  <a
+                    key={idx}
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white rounded-2xl p-6 border border-border shadow-sm hover:shadow-lg hover:shadow-blue-500/10 hover:border-blue-300 transition-all group"
+                  >
+                    <h3 className="font-semibold text-foreground mb-2 group-hover:text-blue-600 transition-colors">{resource.title}</h3>
+                    <p className="text-muted text-sm">{resource.description}</p>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Next Role CTA */}
+          <div className="bg-white rounded-2xl p-8 border border-border shadow-sm text-center">
+            <h3 className="font-[family-name:var(--font-playfair)] text-2xl font-medium mb-4 text-foreground">Interested in other roles?</h3>
+            <p className="text-muted mb-6">Explore {nextRole.name} or check out all Web3 career options.</p>
+            <div className="flex gap-4 justify-center flex-wrap">
+              <Link
+                href={`/roles/${nextRole.id}`}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-colors"
+              >
+                Explore {nextRole.name.split('(')[0].trim()}
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/roles"
+                className="px-6 py-3 border border-border text-foreground font-medium rounded-full hover:bg-gray-50 transition-colors"
+              >
+                View All Roles
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

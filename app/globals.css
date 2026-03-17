@@ -44,6 +44,8 @@ html {
     linear-gradient(to right, #e5e5e5 1px, transparent 1px),
     linear-gradient(to bottom, #e5e5e5 1px, transparent 1px);
   background-size: 60px 60px;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* Page wrapper with gradient orbs */
@@ -61,7 +63,7 @@ html {
   border-radius: 50%;
   filter: blur(120px);
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 }
 
 .page-wrapper::before {
