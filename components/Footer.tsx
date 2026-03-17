@@ -14,8 +14,8 @@ export default function Footer() {
                 src="/images/kraft-logo.png"
                 alt="KRAFT"
                 width={120}
-                height={40}
-                className="h-8 w-auto"
+                height={28}
+                className="object-contain"
               />
             </Link>
             <p className="text-sm text-muted">

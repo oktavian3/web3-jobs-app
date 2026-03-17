@@ -25,9 +25,9 @@ export default function Navbar() {
             <Image
               src="/images/kraft-logo.png"
               alt="KRAFT"
-              width={140}
-              height={36}
-              className="h-9 w-auto object-contain"
+              width={120}
+              height={28}
+              className="object-contain"
               priority
             />
           </Link>
