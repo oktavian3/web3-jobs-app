@@ -13,8 +13,8 @@ export default function Footer() {
               <Image
                 src="/images/kraft-logo.png"
                 alt="KRAFT"
-                width={120}
-                height={28}
+                width={150}
+                height={35}
                 className="object-contain"
               />
             </Link>
