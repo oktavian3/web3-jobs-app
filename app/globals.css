@@ -38,13 +38,15 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Grid background */
+/* Grid background - MUST stay at z-index 0 (below all content) */
 .grid-background {
   background-image: 
     linear-gradient(to right, #e5e5e5 1px, transparent 1px),
     linear-gradient(to bottom, #e5e5e5 1px, transparent 1px);
   background-size: 60px 60px;
-  z-index: -1;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
 }
 
@@ -53,17 +55,18 @@ html {
   position: relative;
   min-height: 100vh;
   background: var(--background);
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
+/* Gradient orbs - fixed position, z-index 0 to stay behind content */
 .page-wrapper::before,
 .page-wrapper::after {
   content: '';
-  position: absolute;
+  position: fixed;
   border-radius: 50%;
   filter: blur(120px);
   pointer-events: none;
-  z-index: -1;
+  z-index: 0;
 }
 
 .page-wrapper::before {
@@ -82,9 +85,16 @@ html {
   right: -150px;
 }
 
+/* All page content MUST be z-index 1 or higher */
 .page-content {
   position: relative;
   z-index: 1;
+}
+
+/* Ensure all interactive elements are above background layers */
+button, a, input, select, textarea, [role="button"] {
+  position: relative;
+  z-index: 2;
 }
 
 /* Scrollbar styling */

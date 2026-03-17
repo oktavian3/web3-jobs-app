@@ -67,10 +67,10 @@ export default function GlossaryPage() {
 
   return (
     <div className="page-wrapper">
-      {/* Grid background - z-index -1 ensures it's behind all content */}
-      <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
+      {/* Grid background */}
+      <div className="grid-background opacity-50" />
       
-      <div className="page-content pt-24 relative z-10">
+      <div className="page-content pt-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Header */}
           <div className="mb-12 text-center">
@@ -97,7 +97,7 @@ export default function GlossaryPage() {
           </div>
 
           {/* Search */}
-          <div className="bg-white rounded-2xl p-6 mb-8 border border-border shadow-sm">
+          <div className="bg-white rounded-2xl p-6 mb-8 border border-border shadow-sm relative z-20">
             <div className="relative mb-6">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
               <input

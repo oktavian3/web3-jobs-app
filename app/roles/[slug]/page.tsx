@@ -65,8 +65,8 @@ export default function RoleDetailPage() {
   if (loading) {
     return (
       <div className="page-wrapper">
-        <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
-        <div className="page-content pt-24 relative z-10">
+        <div className="grid-background opacity-50" />
+        <div className="page-content pt-24">
           <div className="max-w-4xl mx-auto px-4 py-20 text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border shadow-sm">
               <div className="w-4 h-4 rounded-full bg-purple-500 animate-pulse" />
@@ -81,8 +81,8 @@ export default function RoleDetailPage() {
   if (error || !role) {
     return (
       <div className="page-wrapper">
-        <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
-        <div className="page-content pt-24 relative z-10">
+        <div className="grid-background opacity-50" />
+        <div className="page-content pt-24">
           <div className="max-w-4xl mx-auto px-4 py-12 text-center">
             <h1 className="font-[family-name:var(--font-playfair)] text-3xl font-medium text-foreground mb-4">Role not found</h1>
             <p className="text-muted mb-6">Sorry, we couldn&apos;t find the role you&apos;re looking for.</p>
@@ -110,9 +110,9 @@ export default function RoleDetailPage() {
   return (
     <div className="page-wrapper">
       {/* Grid background */}
-      <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
+      <div className="grid-background opacity-50" />
       
-      <div className="page-content pt-24 relative z-10">
+      <div className="page-content pt-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Back Button */}
           <Link 

@@ -57,10 +57,10 @@ export default function RolesPage() {
 
   return (
     <div className="page-wrapper">
-      {/* Grid background - z-index -1 ensures it's behind all content */}
-      <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
+      {/* Grid background - fixed, z-0, behind all content */}
+      <div className="grid-background opacity-50" />
       
-      <div className="page-content pt-24 relative z-10">
+      <div className="page-content pt-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Header */}
           <div className="mb-12 text-center">
@@ -99,7 +99,7 @@ export default function RolesPage() {
           </div>
 
           {/* Search and Filter */}
-          <div className="bg-white rounded-2xl p-6 mb-8 border border-border shadow-sm">
+          <div className="bg-white rounded-2xl p-6 mb-8 border border-border shadow-sm relative z-20">
             <div className="flex flex-col md:flex-row gap-4 mb-6">
               <div className="flex-1 relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
@@ -131,21 +131,26 @@ export default function RolesPage() {
           </div>
 
           {/* Roles Grid */}
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
+          <div className="grid md:grid-cols-2 gap-6 mb-12 relative z-10">
             {filteredRoles.map(role => (
-              <Link key={role.id} href={`/roles/${role.id}`}>
-                <div className="h-full bg-white rounded-2xl p-6 border border-border shadow-sm hover:shadow-xl hover:shadow-purple-500/10 hover:border-purple-300 transition-all duration-300 group cursor-pointer">
-                  <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 border ${getCategoryStyle(role.category)}`}>
-                    {role.category}
-                  </div>
+              <Link key={role.id} href={`/roles/${role.id}`} className="block">
+                <div className="h-full bg-white rounded-2xl p-6 border border-border shadow-sm hover:shadow-[0_8px_30px_rgb(139,92,246,0.12),0_8px_30px_rgb(59,130,246,0.08)] hover:border-purple-300 transition-all duration-300 group cursor-pointer relative overflow-hidden">
+                  {/* Subtle gradient glow on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                   
-                  <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-purple-600 transition-colors">
-                    {role.name}
-                  </h3>
-                  <p className="text-muted mb-4 leading-relaxed">{role.oneLiner}</p>
-                  
-                  <div className="flex items-center text-purple-600 font-medium text-sm group-hover:translate-x-2 transition-transform">
-                    View Details <ArrowRight className="w-4 h-4 ml-2" />
+                  <div className="relative z-10">
+                    <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 border ${getCategoryStyle(role.category)}`}>
+                      {role.category}
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-purple-600 transition-colors">
+                      {role.name}
+                    </h3>
+                    <p className="text-muted mb-4 leading-relaxed">{role.oneLiner}</p>
+                    
+                    <div className="flex items-center text-purple-600 font-medium text-sm group-hover:translate-x-2 transition-transform">
+                      View Details <ArrowRight className="w-4 h-4 ml-2" />
+                    </div>
                   </div>
                 </div>
               </Link>

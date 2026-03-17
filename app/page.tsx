@@ -96,10 +96,11 @@ function PressLogos() {
 export default function Home() {
   return (
     <div className="page-wrapper">
+      {/* Grid background - fixed position, stays behind all content */}
+      <div className="grid-background opacity-50" />
+      
       {/* Hero Section */}
       <section className="relative px-4 py-20 sm:px-6 lg:px-8 pt-32 overflow-hidden">
-        {/* Grid background - z-index -1 ensures it's behind all content */}
-        <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
         
         <div className="max-w-5xl mx-auto text-center relative page-content">
           {/* Floating UI Elements */}
@@ -246,9 +247,8 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
-        <div className="max-w-4xl mx-auto relative z-10">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-3 gap-6">
             <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm hover:shadow-md hover:shadow-purple-500/10 transition-all">
               <div className="text-4xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-purple-600 mb-2">8+</div>

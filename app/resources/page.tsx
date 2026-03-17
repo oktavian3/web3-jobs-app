@@ -246,9 +246,9 @@ export default function ResourcesPage() {
   return (
     <div className="page-wrapper">
       {/* Grid background */}
-      <div className="absolute inset-0 grid-background opacity-50 -z-10 pointer-events-none" />
+      <div className="grid-background opacity-50" />
       
-      <div className="page-content pt-24 relative z-10">
+      <div className="page-content pt-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Header */}
           <div className="mb-12 text-center">
@@ -291,7 +291,7 @@ export default function ResourcesPage() {
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex gap-2 mb-12 bg-white rounded-full p-1.5 border border-border shadow-sm max-w-md mx-auto">
+          <div className="flex gap-2 mb-12 bg-white rounded-full p-1.5 border border-border shadow-sm max-w-md mx-auto relative z-20">
             <button
               onClick={() => setActiveTab('boards')}
               className={`flex-1 py-3 px-6 rounded-full font-medium transition-all flex items-center justify-center gap-2 ${
@@ -355,7 +355,7 @@ export default function ResourcesPage() {
           {activeTab === 'boards' && (
             <>
               {/* Search and Filter */}
-              <div className="bg-white rounded-2xl p-6 mb-8 border border-border shadow-sm">
+              <div className="bg-white rounded-2xl p-6 mb-8 border border-border shadow-sm relative z-20">
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="flex-1 relative">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
