@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Rocket, Users, BookOpen, CheckCircle } from 'lucide-react';
+import { Rocket, Users, BookOpen, CheckCircle, AlertTriangle, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 interface GuideData {
@@ -34,140 +34,223 @@ export default function BridgePage() {
       .then(data => setGuides(data));
   }, []);
 
-  if (!guides) return <div className="text-center py-20 text-[#e8e8f0]">Loading...</div>;
-
-  const currentGuide = activeTab === 'landing' ? guides.landingTips : guides.hiringProcess;
+  if (!guides) return (
+    <div className="page-wrapper">
+      <div className="page-content flex items-center justify-center min-h-screen">
+        <div className="animate-pulse text-muted">Loading...</div>
+      </div>
+    </div>
+  );
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-[#0f0f1a] via-[#1a1a2e] to-[#0f0f1a] text-[#e8e8f0] pt-24">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold text-[#e8e8f0] mb-4">Your Path to a Web3 Job</h1>
-          <p className="text-[#d0d0d8] text-lg">Learn the strategies that actually work and navigate the hiring process with confidence.</p>
-        </div>
+    <div className="page-wrapper">
+      {/* Grid background */}
+      <div className="grid-background opacity-50" />
+      
+      <div className="page-content pt-24">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Header */}
+          <div className="mb-12 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border shadow-sm mb-6">
+              <Rocket className="w-4 h-4 text-purple-500" />
+              <span className="text-sm font-medium text-muted">Career Guide</span>
+            </div>
+            <h1 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-medium text-foreground mb-4 text-balance">
+              Your Path to a Web3 Job
+            </h1>
+            <p className="text-muted text-lg max-w-2xl mx-auto">
+              Learn the strategies that actually work and navigate the hiring process with confidence.
+            </p>
+          </div>
 
-        {/* Tab Navigation */}
-        <div className="flex gap-4 mb-12 bg-[#1a1a2e] rounded-lg p-2 border border-[#2a2a3e]">
-          <button
-            onClick={() => setActiveTab('landing')}
-            className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
-              activeTab === 'landing'
-                ? 'bg-gradient-to-r from-[#f4d03f] to-[#f5a8d8] text-[#0f0f1a]'
-                : 'text-[#e8e8f0] hover:bg-[#0f0f1a]'
-            }`}
-          >
-            <Rocket className="w-5 h-5 inline mr-2" />
-            Landing Tips
-          </button>
-          <button
-            onClick={() => setActiveTab('hiring')}
-            className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
-              activeTab === 'hiring'
-                ? 'bg-gradient-to-r from-[#f4d03f] to-[#f5a8d8] text-[#0f0f1a]'
-                : 'text-[#e8e8f0] hover:bg-[#0f0f1a]'
-            }`}
-          >
-            <Users className="w-5 h-5 inline mr-2" />
-            Hiring Process
-          </button>
-        </div>
+          {/* Floating decorative elements */}
+          <div className="hidden lg:block">
+            <div className="absolute top-40 left-8 bg-white rounded-2xl shadow-lg border border-border p-4 rotate-[-5deg]">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-foreground">Application Sent</p>
+                  <p className="text-[10px] text-muted">Smart Contract Dev</p>
+                </div>
+              </div>
+            </div>
+            <div className="absolute top-56 right-8 bg-purple-500 text-white rounded-2xl shadow-lg p-4 rotate-[4deg]">
+              <p className="text-xs font-semibold">Interview Scheduled</p>
+              <p className="text-[10px] opacity-80">Tomorrow, 2:00 PM</p>
+            </div>
+          </div>
 
-        {/* Content */}
-        <div className="bg-[#1a1a2e] rounded-lg border border-[#2a2a3e] overflow-hidden">
-          <div className="p-8">
-            <h2 className="text-3xl font-bold text-[#e8e8f0] mb-4">{currentGuide.title}</h2>
-            <p className="text-[#d0d0d8] text-lg mb-8">{currentGuide.intro}</p>
+          {/* Tab Navigation */}
+          <div className="flex gap-2 mb-12 bg-white rounded-full p-1.5 border border-border shadow-sm max-w-md mx-auto relative z-20">
+            <button
+              onClick={() => setActiveTab('landing')}
+              className={`flex-1 py-3 px-6 rounded-full font-medium text-sm transition-all flex items-center justify-center gap-2 ${
+                activeTab === 'landing'
+                  ? 'bg-foreground text-background'
+                  : 'text-muted hover:text-foreground'
+              }`}
+            >
+              <Rocket className="w-4 h-4" />
+              Landing Tips
+            </button>
+            <button
+              onClick={() => setActiveTab('hiring')}
+              className={`flex-1 py-3 px-6 rounded-full font-medium text-sm transition-all flex items-center justify-center gap-2 ${
+                activeTab === 'hiring'
+                  ? 'bg-foreground text-background'
+                  : 'text-muted hover:text-foreground'
+              }`}
+            >
+              <Users className="w-4 h-4" />
+              Hiring Process
+            </button>
+          </div>
+
+          {/* Timeline Content */}
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-border hidden md:block" />
 
             <div className="space-y-6">
               {activeTab === 'landing'
                 ? guides.landingTips.tips.map((tip, idx) => (
-                    <div key={idx} className="p-6 bg-gradient-to-r from-[#f4d03f]/10 to-[#f5a8d8]/10 rounded-lg border-l-4 border-[#f4d03f] hover:shadow-md transition-all">
-                      <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0">
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#f4d03f] to-[#f5a8d8] flex items-center justify-center text-[#0f0f1a] font-bold">
-                            {idx + 1}
-                          </div>
+                    <div key={idx} className="relative flex gap-6">
+                      {/* Timeline dot */}
+                      <div className="hidden md:flex flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 items-center justify-center text-white font-bold text-lg shadow-lg z-10">
+                        {idx + 1}
+                      </div>
+                      
+                      {/* Content card */}
+                      <div className="flex-1 bg-white rounded-2xl p-6 border border-border shadow-sm hover:shadow-md hover:shadow-purple-500/5 transition-all duration-300">
+                        <div className="md:hidden w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold mb-4">
+                          {idx + 1}
                         </div>
-                        <div className="flex-1">
-                          <h3 className="text-xl font-bold text-[#e8e8f0] mb-2">{tip.title}</h3>
-                          <p className="text-[#d0d0d8] leading-relaxed">{tip.description}</p>
-                        </div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">{tip.title}</h3>
+                        <p className="text-muted leading-relaxed">{tip.description}</p>
                       </div>
                     </div>
                   ))
                 : guides.hiringProcess.steps.map((step, idx) => (
-                    <div key={idx} className="p-6 bg-gradient-to-r from-[#d8b5e8]/10 to-[#f5a8d8]/10 rounded-lg border-l-4 border-[#d8b5e8] hover:shadow-md transition-all">
-                      <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0">
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#d8b5e8] to-[#f5a8d8] flex items-center justify-center text-[#0f0f1a] font-bold">
-                            {idx + 1}
-                          </div>
+                    <div key={idx} className="relative flex gap-6">
+                      {/* Timeline dot */}
+                      <div className="hidden md:flex flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 items-center justify-center text-white font-bold text-lg shadow-lg z-10">
+                        {idx + 1}
+                      </div>
+                      
+                      {/* Content card */}
+                      <div className="flex-1 bg-white rounded-2xl p-6 border border-border shadow-sm hover:shadow-md hover:shadow-blue-500/5 transition-all duration-300">
+                        <div className="md:hidden w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold mb-4">
+                          {idx + 1}
                         </div>
-                        <div className="flex-1">
-                          <h3 className="text-xl font-bold text-[#e8e8f0] mb-2">{step.title}</h3>
-                          <p className="text-[#d0d0d8] leading-relaxed">{step.description}</p>
-                        </div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">{step.title}</h3>
+                        <p className="text-muted leading-relaxed">{step.description}</p>
                       </div>
                     </div>
                   ))}
             </div>
 
             {activeTab === 'hiring' && (
-              <div className="mt-12 p-6 bg-[#d8b5e8]/10 rounded-lg border border-[#d8b5e8]">
-                <p className="text-[#d0d0d8] text-center font-semibold">
+              <div className="mt-8 ml-0 md:ml-18 bg-purple-50 rounded-2xl p-6 border border-purple-200">
+                <p className="text-purple-700 text-center font-medium">
                   {guides.hiringProcess.conclusion}
                 </p>
               </div>
             )}
           </div>
-        </div>
 
-        {/* Key Insights */}
-        <div className="mt-12 grid md:grid-cols-2 gap-6">
-          <div className="bg-[#1a1a2e] rounded-lg p-8 border border-[#f4d03f]/30">
-            <h3 className="text-lg font-bold text-[#e8e8f0] mb-4 flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-[#f4d03f]" />
-              Pro Tips for Success
-            </h3>
-            <ul className="space-y-3 text-[#d0d0d8] text-sm">
-              <li>✓ Build in public and share your work on Twitter/X</li>
-              <li>✓ Contribute to open-source projects on GitHub</li>
-              <li>✓ Network actively in Discord/Twitter communities</li>
-              <li>✓ Post consistently about Web3 topics</li>
-              <li>✓ Participate in bounties and hackathons</li>
-            </ul>
+          {/* Key Insights */}
+          <div className="mt-16 grid md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-2xl p-8 border border-border shadow-sm hover:shadow-md hover:shadow-green-500/5 transition-all">
+              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                </div>
+                Pro Tips for Success
+              </h3>
+              <ul className="space-y-3 text-muted text-sm">
+                <li className="flex items-start gap-2">
+                  <span className="text-green-500 mt-0.5">✓</span>
+                  Build in public and share your work on Twitter/X
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-500 mt-0.5">✓</span>
+                  Contribute to open-source projects on GitHub
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-500 mt-0.5">✓</span>
+                  Network actively in Discord/Twitter communities
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-500 mt-0.5">✓</span>
+                  Post consistently about Web3 topics
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-500 mt-0.5">✓</span>
+                  Participate in bounties and hackathons
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white rounded-2xl p-8 border border-border shadow-sm hover:shadow-md hover:shadow-red-500/5 transition-all">
+              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
+                  <AlertTriangle className="w-4 h-4 text-red-600" />
+                </div>
+                Red Flags to Avoid
+              </h3>
+              <ul className="space-y-3 text-muted text-sm">
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-0.5">✗</span>
+                  Jobs asking for payment upfront
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-0.5">✗</span>
+                  Requests to share seed phrases or private keys
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-0.5">✗</span>
+                  Unrealistic earnings promises with minimal work
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-0.5">✗</span>
+                  No official website or social media presence
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-0.5">✗</span>
+                  Pressure to move fast without due diligence
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <div className="bg-[#1a1a2e] rounded-lg p-8 border border-[#f5a8d8]/30">
-            <h3 className="text-lg font-bold text-[#e8e8f0] mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-[#f5a8d8]" />
-              Red Flags to Avoid
+          {/* CTA */}
+          <div className="mt-16 bg-foreground rounded-2xl p-8 text-center text-background">
+            <h3 className="font-[family-name:var(--font-playfair)] text-2xl font-medium mb-4">
+              Ready to Land Your Web3 Job?
             </h3>
-            <ul className="space-y-3 text-[#d0d0d8] text-sm">
-              <li>❌ Jobs asking for payment upfront</li>
-              <li>❌ Requests to share seed phrases or private keys</li>
-              <li>❌ Unrealistic earnings promises with minimal work</li>
-              <li>❌ No official website or social media presence</li>
-              <li>❌ Pressure to move fast without due diligence</li>
-            </ul>
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="mt-12 bg-gradient-to-r from-[#f4d03f] to-[#f5a8d8] rounded-lg p-8 text-center text-[#0f0f1a]">
-          <h3 className="text-2xl font-bold mb-4">Ready to Land Your Web3 Job?</h3>
-          <p className="mb-6 text-lg">Check out our job boards and role guides to find your perfect opportunity.</p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Link href="/roles" className="px-6 py-2 bg-[#0f0f1a] text-[#f4d03f] font-semibold rounded-lg hover:bg-[#1a1a2e] transition-all">
-              Explore Roles
-            </Link>
-            <Link href="/resources" className="px-6 py-2 bg-[#0f0f1a]/30 hover:bg-[#0f0f1a]/50 font-semibold rounded-lg transition-all border border-[#0f0f1a]">
-              View Job Boards
-            </Link>
+            <p className="mb-6 text-background/80 max-w-md mx-auto">
+              Check out our job boards and role guides to find your perfect opportunity.
+            </p>
+            <div className="flex gap-4 justify-center flex-wrap">
+              <Link 
+                href="/roles" 
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-foreground font-medium rounded-full hover:bg-gray-100 transition-all"
+              >
+                Explore Roles
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link 
+                href="/resources" 
+                className="px-6 py-3 bg-white/10 text-background font-medium rounded-full hover:bg-white/20 transition-all border border-white/20"
+              >
+                View Job Boards
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
