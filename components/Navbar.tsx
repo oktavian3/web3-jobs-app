@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { Menu, X, Plus, ArrowUpRight } from 'lucide-react';
 
@@ -19,13 +20,14 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-full bg-foreground flex items-center justify-center">
-              <span className="text-background font-bold text-sm">W3</span>
-            </div>
-            <span className="font-semibold text-foreground hidden sm:inline">
-              web3<span className="text-muted">jobs</span>
-            </span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/images/kraft-logo.png"
+              alt="KRAFT"
+              width={120}
+              height={40}
+              className="h-8 w-auto"
+            />
           </Link>
 
           {/* Desktop Menu - Pill Navigation */}

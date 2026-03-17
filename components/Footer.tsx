@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { Send } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -7,14 +9,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-full bg-foreground flex items-center justify-center">
-                <span className="text-background font-bold text-sm">W3</span>
-              </div>
-              <span className="font-semibold text-foreground">
-                web3<span className="text-muted">jobs</span>
-              </span>
-            </div>
+            <Link href="/" className="inline-block mb-4">
+              <Image
+                src="/images/kraft-logo.png"
+                alt="KRAFT"
+                width={120}
+                height={40}
+                className="h-8 w-auto"
+              />
+            </Link>
             <p className="text-sm text-muted">
               Know exactly what you're applying for before you apply.
             </p>
@@ -33,48 +36,6 @@ export default function Footer() {
                 <Link href="/glossary" className="hover:text-purple-600 transition">
                   Glossary
                 </Link>
-              </li>
-              <li>
-                <Link href="/bridge" className="hover:text-purple-600 transition">
-                  Web2 → Web3
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="hover:text-purple-600 transition">
-                  FAQ
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Learn */}
-          <div>
-            <h3 className="font-semibold mb-4 text-foreground">Learn</h3>
-            <ul className="space-y-2 text-sm text-muted">
-              <li>
-                <Link href="/resources" className="hover:text-purple-600 transition">
-                  Resources
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="https://ethereum.org/learn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-purple-600 transition"
-                >
-                  Ethereum.org
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://mirror.xyz"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-purple-600 transition"
-                >
-                  Web3 Writing
-                </a>
               </li>
             </ul>
           </div>
@@ -115,10 +76,28 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="font-semibold mb-4 text-foreground">Contact</h3>
+            <ul className="space-y-2 text-sm text-muted">
+              <li>
+                <a
+                  href="https://t.me/satyaxbt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-purple-600 transition"
+                >
+                  <Send className="w-4 h-4" />
+                  Telegram
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className="border-t border-border pt-8 text-center text-sm text-muted">
-          <p>© 2026 Web3 Jobs Education. Built with passion for the web3 community.</p>
+          <p>© 2026 KRAFT. Built with passion for the web3 community.</p>
         </div>
       </div>
     </footer>

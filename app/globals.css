@@ -46,6 +46,45 @@ html {
   background-size: 60px 60px;
 }
 
+/* Page wrapper with gradient orbs */
+.page-wrapper {
+  position: relative;
+  min-height: 100vh;
+  background: var(--background);
+  overflow: hidden;
+}
+
+.page-wrapper::before,
+.page-wrapper::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page-wrapper::before {
+  width: 600px;
+  height: 600px;
+  background: rgba(59, 130, 246, 0.15);
+  top: -200px;
+  left: -200px;
+}
+
+.page-wrapper::after {
+  width: 500px;
+  height: 500px;
+  background: rgba(139, 92, 246, 0.18);
+  bottom: -150px;
+  right: -150px;
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;

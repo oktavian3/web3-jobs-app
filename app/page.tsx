@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { ArrowRight, Calendar, Briefcase, Code, Users } from 'lucide-react';
-import Image from 'next/image';
 
 // Floating card components
 function UserCard({ 
@@ -96,10 +95,13 @@ function PressLogos() {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
+    <div className="page-wrapper">
       {/* Hero Section */}
-      <section className="relative px-4 py-20 sm:px-6 lg:px-8 pt-32 overflow-hidden grid-background">
-        <div className="max-w-5xl mx-auto text-center relative">
+      <section className="relative px-4 py-20 sm:px-6 lg:px-8 pt-32 overflow-hidden">
+        {/* Grid background */}
+        <div className="absolute inset-0 grid-background opacity-50" />
+        
+        <div className="max-w-5xl mx-auto text-center relative page-content">
           {/* Floating UI Elements */}
           <UserCard 
             name="Alex Chen" 
@@ -147,7 +149,7 @@ export default function Home() {
           
           {/* Main Content */}
           <div className="pt-32 md:pt-48 pb-8">
-            <h1 className="font-serif text-5xl md:text-7xl font-medium mb-6 text-foreground leading-tight text-balance">
+            <h1 className="font-[family-name:var(--font-playfair)] text-5xl md:text-7xl font-medium mb-6 text-foreground leading-tight text-balance">
               Career Matters.
               <br />
               <span className="text-muted">Empowering You</span>
@@ -182,16 +184,16 @@ export default function Home() {
         </div>
 
         {/* Press Logos Bar */}
-        <div className="max-w-5xl mx-auto pt-8 pb-4 border-t border-border">
+        <div className="max-w-5xl mx-auto pt-8 pb-4 border-t border-border relative z-10">
           <PressLogos />
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl md:text-5xl font-medium text-foreground mb-4">
+            <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-medium text-foreground mb-4">
               Everything You Need
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -200,7 +202,7 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg transition-shadow">
+            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-purple-500/10 transition-all">
               <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center mb-6">
                 <Briefcase className="w-6 h-6 text-purple-600" />
               </div>
@@ -210,9 +212,9 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center mb-6">
-                <Code className="w-6 h-6 text-purple-600" />
+            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-purple-500/10 transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center mb-6">
+                <Code className="w-6 h-6 text-blue-600" />
               </div>
               <h3 className="font-semibold text-foreground text-lg mb-2">Web3 Glossary</h3>
               <p className="text-muted text-sm leading-relaxed">
@@ -220,7 +222,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg transition-shadow">
+            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-blue-500/10 transition-all">
               <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center mb-6">
                 <Users className="w-6 h-6 text-purple-600" />
               </div>
@@ -230,9 +232,9 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center mb-6">
-                <Calendar className="w-6 h-6 text-purple-600" />
+            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-blue-500/10 transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center mb-6">
+                <Calendar className="w-6 h-6 text-blue-600" />
               </div>
               <h3 className="font-semibold text-foreground text-lg mb-2">Job Boards</h3>
               <p className="text-muted text-sm leading-relaxed">
@@ -244,19 +246,20 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background grid-background">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
+        <div className="absolute inset-0 grid-background opacity-50" />
+        <div className="max-w-4xl mx-auto relative z-10">
           <div className="grid grid-cols-3 gap-6">
-            <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm">
-              <div className="text-4xl md:text-5xl font-serif font-medium text-purple-600 mb-2">8+</div>
+            <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm hover:shadow-md hover:shadow-purple-500/10 transition-all">
+              <div className="text-4xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-purple-600 mb-2">8+</div>
               <div className="text-muted text-sm">Role Profiles</div>
             </div>
-            <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm">
-              <div className="text-4xl md:text-5xl font-serif font-medium text-purple-600 mb-2">50+</div>
+            <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm hover:shadow-md hover:shadow-blue-500/10 transition-all">
+              <div className="text-4xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-blue-600 mb-2">50+</div>
               <div className="text-muted text-sm">Glossary Terms</div>
             </div>
-            <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm">
-              <div className="text-4xl md:text-5xl font-serif font-medium text-purple-600 mb-2">12</div>
+            <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm hover:shadow-md hover:shadow-purple-500/10 transition-all">
+              <div className="text-4xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-purple-600 mb-2">12</div>
               <div className="text-muted text-sm">Job Boards</div>
             </div>
           </div>
@@ -264,9 +267,9 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white relative z-10">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="font-serif text-4xl md:text-5xl font-medium text-foreground mb-6">
+          <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-medium text-foreground mb-6">
             Ready to Launch Your Web3 Career?
           </h2>
           <p className="text-muted text-lg mb-10 max-w-xl mx-auto">
@@ -274,7 +277,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
-              href="/faq" 
+              href="/glossary" 
               className="px-8 py-3.5 bg-white border border-border text-foreground font-medium rounded-full hover:bg-gray-50 transition-all shadow-sm"
             >
               Learn More
@@ -289,6 +292,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
