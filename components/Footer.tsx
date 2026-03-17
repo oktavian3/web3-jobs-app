@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -7,12 +8,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-[#a855f7] to-[#10b981] rounded flex items-center justify-center">
-                <span className="text-white font-bold">W3</span>
-              </div>
-              <span className="font-bold">Web3 Jobs</span>
-            </div>
+            <Link href="/" className="inline-block mb-4">
+              <Image 
+                src="/kraft-logo.png" 
+                height={36} 
+                width={120}
+                alt="KRAFT"
+                className="h-8 w-auto"
+              />
+            </Link>
             <p className="text-sm text-gray-400">
               Know exactly what you're applying for before you apply.
             </p>
@@ -40,6 +44,11 @@ export default function Footer() {
               <li>
                 <Link href="/faq" className="hover:text-[#a855f7] transition">
                   FAQ
+                </Link>
+              </li>
+              <li>
+                <Link href="/disclaimers" className="hover:text-[#a855f7] transition font-semibold text-[#a855f7]">
+                  Disclaimers
                 </Link>
               </li>
             </ul>
