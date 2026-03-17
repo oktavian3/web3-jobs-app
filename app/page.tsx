@@ -99,6 +99,10 @@ export default function Home() {
       {/* Grid background - fixed position, stays behind all content */}
       <div className="grid-background opacity-50" />
       
+      {/* Gradient orbs - soft blurry glows */}
+      <div className="gradient-orb-primary" />
+      <div className="gradient-orb-secondary" />
+      
       {/* Hero Section */}
       <section className="relative px-4 py-20 sm:px-6 lg:px-8 pt-32 overflow-hidden">
         

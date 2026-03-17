@@ -58,31 +58,41 @@ html {
   overflow-x: hidden;
 }
 
-/* Gradient orbs - fixed position, z-index 0 to stay behind content */
-.page-wrapper::before,
-.page-wrapper::after {
-  content: '';
+/* Large gradient orb - center-right of hero */
+.gradient-orb-primary {
   position: fixed;
+  width: 800px;
+  height: 800px;
   border-radius: 50%;
-  filter: blur(120px);
+  background: radial-gradient(
+    circle at center,
+    rgba(168, 85, 247, 0.28) 0%,
+    rgba(59, 130, 246, 0.25) 40%,
+    transparent 70%
+  );
+  filter: blur(80px);
+  top: 5%;
+  right: -15%;
   pointer-events: none;
   z-index: 0;
 }
 
-.page-wrapper::before {
-  width: 600px;
-  height: 600px;
-  background: rgba(59, 130, 246, 0.15);
-  top: -200px;
-  left: -200px;
-}
-
-.page-wrapper::after {
+/* Smaller warm purple orb - bottom-left */
+.gradient-orb-secondary {
+  position: fixed;
   width: 500px;
   height: 500px;
-  background: rgba(139, 92, 246, 0.18);
-  bottom: -150px;
-  right: -150px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(192, 132, 252, 0.22) 0%,
+    transparent 70%
+  );
+  filter: blur(60px);
+  bottom: 10%;
+  left: -10%;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* All page content MUST be z-index 1 or higher */
