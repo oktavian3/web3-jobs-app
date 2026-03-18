@@ -19,7 +19,7 @@ function UserCard({
 }) {
   const isLight = variant === 'light';
   return (
-    <div className={`absolute ${position} rounded-2xl px-4 py-3 shadow-lg border ${
+    <div className={`hidden md:absolute ${position} rounded-2xl px-4 py-3 shadow-lg border ${
       isLight 
         ? 'bg-white border-border' 
         : 'bg-foreground text-background border-foreground'
@@ -40,7 +40,7 @@ function UserCard({
 
 function AppointmentCard({ position }: { position: string }) {
   return (
-    <div className={`absolute ${position} bg-white rounded-2xl p-4 shadow-lg border border-purple-200 rotate-6`}>
+    <div className={`hidden md:absolute ${position} bg-white rounded-2xl p-4 shadow-lg border border-purple-200 rotate-6`}>
       <p className="text-xs text-muted mb-1">Learn about</p>
       <p className="font-semibold text-foreground text-sm">Blockchain Dev</p>
       <div className="flex gap-2 mt-2">
@@ -57,7 +57,7 @@ function AppointmentCard({ position }: { position: string }) {
 
 function ExpertCard({ name, role, position, variant = 'dark' }: { name: string; role: string; position: string; variant?: 'dark' | 'purple' }) {
   return (
-    <div className={`absolute ${position} rounded-full px-4 py-2 flex items-center gap-3 shadow-lg ${
+    <div className={`hidden md:absolute md:flex ${position} rounded-full px-4 py-2 items-center gap-3 shadow-lg ${
       variant === 'dark' ? 'bg-foreground' : 'bg-purple-500'
     }`}>
       <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center">
@@ -104,7 +104,7 @@ export default function Home() {
       <div className="gradient-orb-secondary" />
       
       {/* Hero Section */}
-      <section className="relative px-4 py-20 sm:px-6 lg:px-8 pt-32 overflow-hidden">
+      <section className="relative px-4 py-12 sm:py-20 sm:px-6 lg:px-8 pt-24 sm:pt-32 overflow-hidden">
         
         <div className="max-w-5xl mx-auto text-center relative page-content">
           {/* Floating UI Elements */}
@@ -153,8 +153,8 @@ export default function Home() {
           </div>
           
           {/* Main Content */}
-          <div className="pt-32 md:pt-48 pb-8">
-            <h1 className="font-[family-name:var(--font-playfair)] text-5xl md:text-7xl font-medium mb-6 text-foreground leading-tight text-balance">
+          <div className="pt-8 md:pt-48 pb-8">
+            <h1 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl md:text-7xl font-medium mb-4 sm:mb-6 text-foreground leading-tight text-balance">
               Career Matters.
               <br />
               <span className="text-muted">Empowering You</span>
@@ -164,22 +164,22 @@ export default function Home() {
               To Build Tomorrow
             </h1>
             
-            <p className="text-lg text-muted mb-10 max-w-xl mx-auto">
+            <p className="text-base sm:text-lg text-muted mb-6 sm:mb-10 max-w-xl mx-auto">
               Educational resources for Web3 careers.
               <br />
               Empowering the curious to build the future.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-20">
               <Link 
                 href="/glossary" 
-                className="px-8 py-3.5 bg-white border border-border text-foreground font-medium rounded-full hover:bg-gray-50 transition-all shadow-sm"
+                className="px-6 py-3 sm:px-8 sm:py-3.5 bg-white border border-border text-foreground font-medium rounded-full hover:bg-gray-50 transition-all shadow-sm text-sm sm:text-base"
               >
                 Learn More
               </Link>
               <Link 
                 href="/roles" 
-                className="px-8 py-3.5 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-all flex items-center justify-center gap-2"
+                className="px-6 py-3 sm:px-8 sm:py-3.5 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
               >
                 Get Started
                 <ArrowRight className="w-4 h-4" />
@@ -195,10 +195,10 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white relative z-10">
+      <section className="py-12 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white relative z-10">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-medium text-foreground mb-4">
+          <div className="text-center mb-8 sm:mb-16">
+            <h2 className="font-[family-name:var(--font-playfair)] text-3xl sm:text-4xl md:text-5xl font-medium text-foreground mb-3 sm:mb-4">
               Everything You Need
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -206,7 +206,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-purple-500/10 transition-all">
               <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center mb-6">
                 <Briefcase className="w-6 h-6 text-purple-600" />
