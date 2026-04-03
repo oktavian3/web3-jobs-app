@@ -28,7 +28,8 @@ export default function ResourcesPage() {
   const [filteredBoards, setFilteredBoards] = useState<JobBoard[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<'rating' | 'jobs'>('rating');
-  const [activeTab, setActiveTab] = useState<'boards' | 'learning'>('boards');
+  const [activeTab, setActiveTab] = useState<'boards' | 'learning' | 'latest'>('boards');
+  const [latestJobs, setLatestJobs] = useState<any[]>([]);
 
   const learningResources: Learning[] = [
     {
@@ -217,6 +218,18 @@ export default function ResourcesPage() {
         setBoards(data);
         setFilteredBoards(data);
       });
+    
+    // Fetch latest jobs from Supabase
+    fetch('/api/admin/jobs')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setLatestJobs(data);
+        }
+      })
+      .catch(() => {
+        setLatestJobs([]);
+      });
   }, []);
 
   useEffect(() => {
@@ -291,10 +304,10 @@ export default function ResourcesPage() {
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex gap-2 mb-12 bg-white rounded-full p-1.5 border border-border shadow-sm max-w-md mx-auto relative z-20">
+          <div className="flex gap-2 mb-12 bg-white rounded-full p-1.5 border border-border shadow-sm max-w-lg mx-auto relative z-20">
             <button
               onClick={() => setActiveTab('boards')}
-              className={`flex-1 py-3 px-6 rounded-full font-medium transition-all flex items-center justify-center gap-2 ${
+              className={`flex-1 py-3 px-4 rounded-full font-medium transition-all flex items-center justify-center gap-2 ${
                 activeTab === 'boards'
                   ? 'bg-foreground text-background'
                   : 'text-muted hover:text-foreground'
@@ -304,8 +317,19 @@ export default function ResourcesPage() {
               Job Boards
             </button>
             <button
+              onClick={() => setActiveTab('latest')}
+              className={`flex-1 py-3 px-4 rounded-full font-medium transition-all flex items-center justify-center gap-2 ${
+                activeTab === 'latest'
+                  ? 'bg-foreground text-background'
+                  : 'text-muted hover:text-foreground'
+              }`}
+            >
+              <Sparkles className="w-4 h-4" />
+              Latest Jobs
+            </button>
+            <button
               onClick={() => setActiveTab('learning')}
-              className={`flex-1 py-3 px-6 rounded-full font-medium transition-all flex items-center justify-center gap-2 ${
+              className={`flex-1 py-3 px-4 rounded-full font-medium transition-all flex items-center justify-center gap-2 ${
                 activeTab === 'learning'
                   ? 'bg-foreground text-background'
                   : 'text-muted hover:text-foreground'
@@ -315,6 +339,76 @@ export default function ResourcesPage() {
               Learn Web3
             </button>
           </div>
+
+          {/* Latest Jobs Tab */}
+          {activeTab === 'latest' && (
+            <div className="space-y-6">
+              {latestJobs.length === 0 ? (
+                <div className="text-center py-12 bg-white rounded-2xl border border-border">
+                  <Sparkles className="w-12 h-12 text-purple-300 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-foreground mb-2">No jobs posted yet</h3>
+                  <p className="text-muted">Check back soon for new opportunities!</p>
+                </div>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-semibold text-foreground">
+                      Latest Opportunities
+                    </h2>
+                    <span className="text-sm text-muted">{latestJobs.length} job{latestJobs.length !== 1 ? 's' : ''}</span>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {latestJobs.map((job) => (
+                      <div
+                        key={job.id}
+                        className="bg-white rounded-2xl p-6 border border-border shadow-sm hover:shadow-lg hover:shadow-purple-500/10 hover:border-purple-300 transition-all"
+                      >
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h3 className="font-semibold text-foreground text-lg">{job.title}</h3>
+                            <p className="text-sm text-muted">{job.company}</p>
+                          </div>
+                          {job.is_featured && (
+                            <span className="px-2 py-1 bg-amber-100 text-amber-800 text-xs rounded-full font-medium">
+                              Featured
+                            </span>
+                          )}
+                        </div>
+                        
+                        <p className="text-muted text-sm mb-4 line-clamp-2">
+                          {job.description}
+                        </p>
+                        
+                        {job.tags && job.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {job.tags.map((tag: string, i: number) => (
+                              <span
+                                key={i}
+                                className="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        
+                        <a
+                          href={job.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-sm font-medium text-purple-600 hover:text-purple-700 transition-colors"
+                        >
+                          Apply Now
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
 
           {/* Learning Tab */}
           {activeTab === 'learning' && (
