@@ -3,21 +3,21 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import { Menu, X, Plus, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const links = [
     { href: '/', label: 'Home' },
-    { href: '/roles', label: 'Roles', hasDropdown: true },
-    { href: '/glossary', label: 'Glossary', hasDropdown: true },
-    { href: '/bridge', label: 'Get Hired' },
-    { href: '/disclaimers', label: 'Disclaimers' },
+    { href: '/roles', label: 'Roles' },
+    { href: '/skill-check', label: 'Skill Check' },
+    { href: '/glossary', label: 'Glossary' },
+    { href: '/get-hired', label: 'Get Hired' },
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-black/5 bg-background/80 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -42,7 +42,6 @@ export default function Navbar() {
                   className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground hover:bg-gray-100 rounded-full transition-colors"
                 >
                   {link.label}
-                  {link.hasDropdown && <Plus className="w-3 h-3" />}
                 </Link>
               ))}
             </div>
@@ -50,7 +49,7 @@ export default function Navbar() {
 
           {/* CTA Button */}
           <Link
-            href="/resources"
+            href="/jobs"
             className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-colors"
           >
             Job Boards
@@ -81,11 +80,10 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}
-                {link.hasDropdown && <Plus className="w-4 h-4 text-muted" />}
               </Link>
             ))}
             <Link
-              href="/resources"
+              href="/jobs"
               className="flex items-center justify-center gap-2 mt-4 px-4 py-3 bg-foreground text-background font-medium rounded-full"
               onClick={() => setIsOpen(false)}
             >

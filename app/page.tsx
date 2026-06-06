@@ -1,299 +1,203 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Calendar, Briefcase, Code, Users } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import roles from '@/public/data/roles.json';
+import { roleMeta } from '@/lib/career-data';
+import {
+  ArrowRight,
+  BadgeDollarSign,
+  BookOpenCheck,
+  BriefcaseBusiness,
+  CheckCircle2,
+  Route,
+  Sparkles,
+} from 'lucide-react';
 
-// Floating card components
-function UserCard({ 
-  name, 
-  date, 
-  week, 
-  position, 
-  variant = 'light' 
-}: { 
-  name: string; 
-  date: string; 
-  week: string; 
-  position: string; 
-  variant?: 'light' | 'dark';
-}) {
-  const isLight = variant === 'light';
-  return (
-    <div className={`hidden md:absolute ${position} rounded-2xl px-4 py-3 shadow-lg border ${
-      isLight 
-        ? 'bg-white border-border' 
-        : 'bg-foreground text-background border-foreground'
-    }`}>
-      <div className="flex items-center gap-3">
-        <div className={`w-10 h-10 rounded-full ${isLight ? 'bg-purple-100' : 'bg-gray-700'} flex items-center justify-center`}>
-          <Users className={`w-5 h-5 ${isLight ? 'text-purple-600' : 'text-purple-400'}`} />
-        </div>
-        <div>
-          <p className={`font-semibold text-sm ${isLight ? 'text-foreground' : 'text-background'}`}>{name}</p>
-          <p className={`text-xs ${isLight ? 'text-muted' : 'text-gray-400'}`}>Started {date}</p>
-        </div>
-      </div>
-      <p className={`text-xs mt-2 ${isLight ? 'text-muted' : 'text-gray-400'}`}>{week}</p>
-    </div>
-  );
-}
+const rotatingRoles = [
+  'Smart Contract Developer',
+  'Protocol Researcher',
+  'Web3 Product Manager',
+  'Community Lead',
+  'On-chain Analyst',
+];
 
-function AppointmentCard({ position }: { position: string }) {
-  return (
-    <div className={`hidden md:absolute ${position} bg-white rounded-2xl p-4 shadow-lg border border-purple-200 rotate-6`}>
-      <p className="text-xs text-muted mb-1">Learn about</p>
-      <p className="font-semibold text-foreground text-sm">Blockchain Dev</p>
-      <div className="flex gap-2 mt-2">
-        <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">Solidity</span>
-        <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">Smart Contracts</span>
-      </div>
-      <div className="flex items-center gap-2 mt-3 text-purple-600">
-        <Calendar className="w-4 h-4" />
-        <span className="text-xs font-medium">Start Today</span>
-      </div>
-    </div>
-  );
-}
+const stats = [
+  { value: 20, suffix: '', label: 'role guides' },
+  { value: 54, suffix: '+', label: 'terms decoded' },
+  { value: 14, suffix: '', label: 'trusted job boards' },
+];
 
-function ExpertCard({ name, role, position, variant = 'dark' }: { name: string; role: string; position: string; variant?: 'dark' | 'purple' }) {
-  return (
-    <div className={`hidden md:absolute md:flex ${position} rounded-full px-4 py-2 items-center gap-3 shadow-lg ${
-      variant === 'dark' ? 'bg-foreground' : 'bg-purple-500'
-    }`}>
-      <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center">
-        <Briefcase className="w-4 h-4 text-white" />
-      </div>
-      <div>
-        <p className="font-semibold text-white text-sm">{name}</p>
-        <p className="text-xs text-gray-300">{role}</p>
-      </div>
-    </div>
-  );
-}
+const pathways = [
+  {
+    href: '/skill-check',
+    title: 'Find your role fit',
+    copy: 'Answer a focused set of questions and get a practical role match.',
+    icon: BookOpenCheck,
+    accent: 'bg-purple-100 text-purple-700',
+  },
+  {
+    href: '/roadmap',
+    title: 'Build your roadmap',
+    copy: 'Turn a target role into milestones you can complete and track.',
+    icon: Route,
+    accent: 'bg-blue-100 text-blue-700',
+  },
+  {
+    href: '/interview',
+    title: 'Practice interviews',
+    copy: 'Flip through role-specific prompts and structure stronger answers.',
+    icon: BriefcaseBusiness,
+    accent: 'bg-amber-100 text-amber-700',
+  },
+  {
+    href: '/salary',
+    title: 'Know your range',
+    copy: 'Compare compensation by role before you enter a negotiation.',
+    icon: BadgeDollarSign,
+    accent: 'bg-emerald-100 text-emerald-700',
+  },
+];
 
-// Press logos component
-function PressLogos() {
-  const logos = [
-    { name: 'CoinDesk', style: 'font-serif font-bold' },
-    { name: 'The Block', style: 'font-serif italic' },
-    { name: 'Decrypt', style: 'font-bold tracking-wider' },
-    { name: 'CryptoSlate', style: 'font-mono' },
-    { name: 'DeFi Pulse', style: 'font-bold' },
-    { name: 'Messari', style: 'font-semibold tracking-wide' },
-  ];
+function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
+  const [display, setDisplay] = useState(0);
 
-  return (
-    <div className="flex items-center justify-center gap-8 md:gap-12 flex-wrap opacity-60">
-      {logos.map((logo) => (
-        <span key={logo.name} className={`text-foreground text-sm md:text-base ${logo.style}`}>
-          {logo.name}
-        </span>
-      ))}
-    </div>
-  );
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      const frame = requestAnimationFrame(() => setDisplay(value));
+      return () => cancelAnimationFrame(frame);
+    }
+
+    const startedAt = performance.now();
+    const duration = 900;
+    let animationFrame = 0;
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      setDisplay(Math.round(value * (1 - Math.pow(1 - progress, 3))));
+      if (progress < 1) animationFrame = requestAnimationFrame(tick);
+    };
+
+    animationFrame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [value]);
+
+  return <>{display}{suffix}</>;
 }
 
 export default function Home() {
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setRoleIndex((current) => (current + 1) % rotatingRoles.length);
+    }, 2400);
+    return () => window.clearInterval(interval);
+  }, []);
+
   return (
     <div className="page-wrapper">
-      {/* Grid background - fixed position, stays behind all content */}
       <div className="grid-background opacity-50" />
-      
-      {/* Gradient orbs - soft blurry glows */}
       <div className="gradient-orb-primary" />
       <div className="gradient-orb-secondary" />
-      
-      {/* Hero Section */}
-      <section className="relative px-4 py-12 sm:py-20 sm:px-6 lg:px-8 pt-24 sm:pt-32 overflow-hidden">
-        
-        <div className="max-w-5xl mx-auto text-center relative page-content">
-          {/* Floating UI Elements */}
-          <UserCard 
-            name="Alex Chen" 
-            date="Wed 12 Mar, 2026" 
-            week="Week 4, Day 2"
-            position="left-0 md:-left-8 top-12 md:top-24 -rotate-3"
-            variant="light"
-          />
-          
-          <UserCard 
-            name="Sarah Kim" 
-            date="Mon 10 Mar, 2026" 
-            week="Week 6, Day 5"
-            position="right-0 md:-right-4 top-20 md:top-32 rotate-2"
-            variant="light"
-          />
-          
-          <AppointmentCard position="left-1/2 -translate-x-1/2 top-48 md:top-56" />
-          
-          <ExpertCard 
-            name="DeFi Expert"
-            role="Advisor"
-            position="left-4 md:left-16 bottom-48 md:bottom-64"
-            variant="dark"
-          />
-          
-          <ExpertCard 
-            name="Smart Contract Dev"
-            role="Mentor"
-            position="right-4 md:right-8 bottom-40 md:bottom-56"
-            variant="purple"
-          />
 
-          {/* Decorative cursor icons */}
-          <div className="absolute left-1/4 top-1/3 hidden md:block">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-purple-400">
-              <path d="M5 3L19 12L12 13L9 20L5 3Z" stroke="currentColor" strokeWidth="2" fill="currentColor"/>
-            </svg>
-          </div>
-          <div className="absolute right-1/4 bottom-1/3 hidden md:block">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-foreground">
-              <path d="M5 3L19 12L12 13L9 20L5 3Z" stroke="currentColor" strokeWidth="2" fill="currentColor"/>
-            </svg>
-          </div>
-          
-          {/* Main Content */}
-          <div className="pt-8 md:pt-48 pb-8">
-            <h1 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl md:text-7xl font-medium mb-4 sm:mb-6 text-foreground leading-tight text-balance">
-              Career Matters.
-              <br />
-              <span className="text-muted">Empowering You</span>
-              <br />
-              For Web3 & Crypto
-              <br />
-              To Build Tomorrow
+      <section className="relative overflow-hidden px-4 pb-20 pt-32 sm:px-6 sm:pb-28 sm:pt-40 lg:px-8">
+        <div className="page-content mx-auto max-w-6xl">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-purple-200 bg-white/80 px-4 py-2 text-sm font-medium text-purple-700 shadow-sm backdrop-blur">
+              <Sparkles className="h-4 w-4" />
+              Your practical map into Web3 work
+            </div>
+
+            <h1 className="font-[family-name:var(--font-playfair)] text-5xl font-medium leading-[1.04] tracking-tight text-foreground sm:text-7xl">
+              Know the work before<br className="hidden sm:block" /> you chase the title.
             </h1>
-            
-            <p className="text-base sm:text-lg text-muted mb-6 sm:mb-10 max-w-xl mx-auto">
-              Educational resources for Web3 careers.
-              <br />
-              Empowering the curious to build the future.
+
+            <div className="mt-7 flex min-h-10 items-center justify-center text-lg text-muted sm:text-xl">
+              I want to become a&nbsp;
+              <span key={rotatingRoles[roleIndex]} className="role-swap font-semibold text-purple-700">
+                {rotatingRoles[roleIndex]}
+              </span>
+              <span className="ml-1 h-6 w-0.5 animate-pulse bg-purple-600" aria-hidden="true" />
+            </div>
+
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg">
+              Explore real role expectations, test your readiness, build a learning plan, and apply with proof—not guesswork.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-20">
-              <Link 
-                href="/glossary" 
-                className="px-6 py-3 sm:px-8 sm:py-3.5 bg-white border border-border text-foreground font-medium rounded-full hover:bg-gray-50 transition-all shadow-sm text-sm sm:text-base"
-              >
-                Learn More
+            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link href="/roles" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-7 py-3.5 font-semibold text-background transition-transform hover:-translate-y-0.5 sm:w-auto">
+                Find my role
+                <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link 
-                href="/roles" 
-                className="px-6 py-3 sm:px-8 sm:py-3.5 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
-              >
-                Get Started
-                <ArrowRight className="w-4 h-4" />
+              <Link href="/skill-check" className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-border bg-white/80 px-7 py-3.5 font-semibold text-foreground backdrop-blur transition-colors hover:border-purple-300 hover:text-purple-700 sm:w-auto">
+                Start skill check
               </Link>
             </div>
           </div>
-        </div>
 
-        {/* Press Logos Bar */}
-        <div className="max-w-5xl mx-auto pt-8 pb-4 border-t border-border relative z-10">
-          <PressLogos />
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-12 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 sm:mb-16">
-            <h2 className="font-[family-name:var(--font-playfair)] text-3xl sm:text-4xl md:text-5xl font-medium text-foreground mb-3 sm:mb-4">
-              Everything You Need
-            </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
-              Comprehensive resources to help you navigate and succeed in the Web3 ecosystem
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-purple-500/10 transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center mb-6">
-                <Briefcase className="w-6 h-6 text-purple-600" />
+          <div className="mx-auto mt-14 grid max-w-3xl grid-cols-3 overflow-hidden rounded-2xl border border-border bg-white/80 shadow-sm backdrop-blur">
+            {stats.map((stat, index) => (
+              <div key={stat.label} className={`px-3 py-5 text-center sm:px-6 ${index > 0 ? 'border-l border-border' : ''}`}>
+                <div className="text-2xl font-bold text-foreground sm:text-3xl">
+                  <AnimatedNumber value={stat.value} suffix={stat.suffix} />
+                </div>
+                <div className="mt-1 text-xs text-muted sm:text-sm">{stat.label}</div>
               </div>
-              <h3 className="font-semibold text-foreground text-lg mb-2">8+ Roles</h3>
-              <p className="text-muted text-sm leading-relaxed">
-                From blockchain developers to NFT artists, detailed profiles with interview questions.
-              </p>
-            </div>
-
-            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-purple-500/10 transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center mb-6">
-                <Code className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="font-semibold text-foreground text-lg mb-2">Web3 Glossary</h3>
-              <p className="text-muted text-sm leading-relaxed">
-                Master 50+ essential terms from blockchain basics to advanced DeFi concepts.
-              </p>
-            </div>
-
-            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-blue-500/10 transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center mb-6">
-                <Users className="w-6 h-6 text-purple-600" />
-              </div>
-              <h3 className="font-semibold text-foreground text-lg mb-2">Get Hired</h3>
-              <p className="text-muted text-sm leading-relaxed">
-                Proven strategies to build portfolios, network, and land your dream Web3 job.
-              </p>
-            </div>
-
-            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-blue-500/10 transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center mb-6">
-                <Calendar className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="font-semibold text-foreground text-lg mb-2">Job Boards</h3>
-              <p className="text-muted text-sm leading-relaxed">
-                Access 12+ top job boards with thousands of active Web3 opportunities.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-3 gap-6">
-            <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm hover:shadow-md hover:shadow-purple-500/10 transition-all">
-              <div className="text-4xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-purple-600 mb-2">8+</div>
-              <div className="text-muted text-sm">Role Profiles</div>
-            </div>
-            <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm hover:shadow-md hover:shadow-blue-500/10 transition-all">
-              <div className="text-4xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-blue-600 mb-2">50+</div>
-              <div className="text-muted text-sm">Glossary Terms</div>
-            </div>
-            <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm hover:shadow-md hover:shadow-purple-500/10 transition-all">
-              <div className="text-4xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-purple-600 mb-2">12</div>
-              <div className="text-muted text-sm">Job Boards</div>
-            </div>
-          </div>
+      <section className="relative px-4 py-20 sm:px-6 lg:px-8">
+        <div className="page-content mx-auto max-w-6xl">
+          <div className="text-center"><p className="text-sm font-semibold uppercase tracking-[0.2em] text-purple-700">How it works</p><h2 className="mt-3 font-[family-name:var(--font-playfair)] text-4xl font-medium">Five steps from curious to credible.</h2></div>
+          <div className="mt-10 grid gap-3 md:grid-cols-5">{[
+            ['01','Find your fit','Match strengths to a role.'],['02','Read the reality','Learn tasks, tools, and pay.'],['03','Close the gaps','Follow a 30-day roadmap.'],['04','Build evidence','Create role-specific proof.'],['05','Apply prepared','Practice and target real jobs.'],
+          ].map(([number,title,copy])=><div key={number} className="rounded-2xl border border-border bg-white p-5"><span className="text-sm font-bold text-purple-600">{number}</span><h3 className="mt-5 font-semibold">{title}</h3><p className="mt-2 text-sm leading-5 text-muted">{copy}</p></div>)}</div>
+          <div className="mt-20 flex items-end justify-between gap-4"><div><p className="text-sm font-semibold uppercase tracking-[0.2em] text-purple-700">Featured roles</p><h2 className="mt-3 font-[family-name:var(--font-playfair)] text-4xl">See what the work is worth.</h2></div><Link href="/roles" className="font-semibold text-purple-700">View all roles →</Link></div>
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{roles.slice(0,6).map(role=><Link key={role.id} href={`/roles/${role.id}`} className="group rounded-2xl border border-border bg-white p-6 shadow-sm hover:-translate-y-1 hover:shadow-lg"><div className="flex justify-between gap-3"><span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold capitalize">{roleMeta[role.id]?.difficulty}</span><strong className="text-purple-700">{role.avgCompRange.usd}</strong></div><h3 className="mt-5 text-xl font-semibold group-hover:text-purple-700">{role.name}</h3><p className="mt-2 line-clamp-2 text-sm leading-6 text-muted">{role.oneLiner}</p><div className="mt-4 flex flex-wrap gap-2">{role.mustHaveSkills.slice(0,2).map(skill=><span key={skill} className="rounded-lg bg-purple-50 px-2 py-1 text-xs text-purple-700">{skill}</span>)}</div></Link>)}</div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-medium text-foreground mb-6">
-            Ready to Launch Your Web3 Career?
-          </h2>
-          <p className="text-muted text-lg mb-10 max-w-xl mx-auto">
-            Start exploring roles, learning Web3 fundamentals, and connecting with opportunities today.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/glossary" 
-              className="px-8 py-3.5 bg-white border border-border text-foreground font-medium rounded-full hover:bg-gray-50 transition-all shadow-sm"
-            >
-              Learn More
-            </Link>
-            <Link 
-              href="/roles" 
-              className="px-8 py-3.5 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-all flex items-center justify-center gap-2"
-            >
-              Browse All Roles
-              <ArrowRight className="w-4 h-4" />
+      <section className="relative bg-foreground px-4 py-20 text-background sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-purple-300">From curious to credible</p>
+              <h2 className="max-w-2xl font-[family-name:var(--font-playfair)] text-3xl font-medium sm:text-5xl">One workspace for your Web3 career decisions.</h2>
+            </div>
+            <Link href="/get-hired" className="inline-flex items-center gap-2 font-semibold text-purple-300 hover:text-white">
+              See the full playbook <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
+
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {pathways.map(({ href, title, copy, icon: Icon, accent }) => (
+              <Link key={href} href={href} className="group rounded-2xl border border-white/10 bg-white/[0.06] p-6 transition-all hover:-translate-y-1 hover:border-purple-400/50 hover:bg-white/10">
+                <div className={`mb-5 flex h-11 w-11 items-center justify-center rounded-xl ${accent}`}>
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="text-lg font-semibold">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-white/60">{copy}</p>
+                <ArrowRight className="mt-5 h-4 w-4 text-purple-300 transition-transform group-hover:translate-x-1" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative px-4 py-20 sm:px-6 lg:px-8">
+        <div className="page-content mx-auto grid max-w-6xl gap-8 rounded-3xl border border-purple-200 bg-gradient-to-br from-white to-purple-50 p-8 shadow-sm md:grid-cols-[1fr_auto] md:items-center md:p-12">
+          <div>
+            <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-purple-700"><CheckCircle2 className="h-4 w-4" /> No wallet. No hype. No gatekeeping.</div>
+            <h2 className="font-[family-name:var(--font-playfair)] text-3xl font-medium sm:text-4xl">Start with a ten-question reality check.</h2>
+            <p className="mt-4 max-w-2xl leading-7 text-muted">Get matched to a career lane based on what you already enjoy doing, then leave with a concrete next step.</p>
+          </div>
+          <Link href="/skill-check" className="inline-flex items-center justify-center gap-2 rounded-full bg-purple-600 px-7 py-3.5 font-semibold text-white hover:bg-purple-700">
+            Start skill check <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
     </div>
