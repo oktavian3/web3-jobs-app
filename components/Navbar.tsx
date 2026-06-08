@@ -1,100 +1,126 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, X, Plus, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
+
+import { Container } from '@/components/landing/Primitives';
+
+const navigationLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/roles', label: 'Roles' },
+  { href: '/skill-check', label: 'Skill Check' },
+  { href: '/glossary', label: 'Glossary' },
+  { href: '/get-hired', label: 'Get Hired' },
+] as const;
+
+function isNavigationLinkActive(pathname: string, href: string) {
+  return href === '/' ? pathname === '/' : pathname.startsWith(href);
+}
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const links = [
-    { href: '/', label: 'Home' },
-    { href: '/roles', label: 'Roles', hasDropdown: true },
-    { href: '/glossary', label: 'Glossary', hasDropdown: true },
-    { href: '/bridge', label: 'Get Hired' },
-    { href: '/disclaimers', label: 'Disclaimers' },
-  ];
+  const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-black/[0.05] bg-[#f7f7f8]/85 backdrop-blur-xl">
+      <Container>
+        <div className="grid h-[76px] grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[190px_1fr_190px]">
+          <Link href="/" className="inline-flex w-fit items-center" aria-label="KRAFT home">
             <Image
               src="/images/kraft-logo.png"
               alt="KRAFT"
-              width={180}
-              height={42}
-              className="object-contain"
+              width={150}
+              height={35}
+              className="h-auto w-[126px] object-contain sm:w-[140px]"
               priority
             />
           </Link>
 
-          {/* Desktop Menu - Pill Navigation */}
-          <div className="hidden md:flex items-center">
-            <div className="flex items-center bg-white rounded-full border border-border px-1 py-1 shadow-sm">
-              {links.map(link => (
+          <nav
+            className="hidden justify-self-center rounded-full border border-black/[0.06] bg-white/90 p-1 shadow-[0_8px_25px_rgba(23,21,33,0.06)] md:flex"
+            aria-label="Primary navigation"
+          >
+            {navigationLinks.map((link) => {
+              const isActive = isNavigationLinkActive(pathname, link.href);
+
+              return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground hover:bg-gray-100 rounded-full transition-colors"
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`rounded-full px-4 py-2 text-xs font-semibold transition lg:px-5 ${
+                    isActive
+                      ? 'bg-foreground text-white shadow-sm'
+                      : 'text-muted hover:bg-[#f4f3f6] hover:text-foreground'
+                  }`}
                 >
                   {link.label}
-                  {link.hasDropdown && <Plus className="w-3 h-3" />}
                 </Link>
-              ))}
-            </div>
-          </div>
+              );
+            })}
+          </nav>
 
-          {/* CTA Button */}
           <Link
-            href="/resources"
-            className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-colors"
+            href="/jobs"
+            className="hidden justify-self-end rounded-full bg-foreground px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 md:inline-flex md:items-center md:gap-2"
           >
             Job Boards
-            <ArrowUpRight className="w-4 h-4" />
+            <ArrowUpRight className="h-4 w-4" />
           </Link>
 
-          {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors"
+            type="button"
+            onClick={() => setIsMenuOpen((current) => !current)}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
+            aria-label="Toggle navigation menu"
+            className="justify-self-end rounded-full border border-black/[0.06] bg-white p-2.5 text-foreground shadow-sm md:hidden"
           >
-            {isOpen ? (
-              <X className="w-6 h-6 text-foreground" />
-            ) : (
-              <Menu className="w-6 h-6 text-foreground" />
-            )}
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden mt-4 pb-4 bg-white rounded-2xl border border-border p-4 shadow-lg">
-            {links.map(link => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="flex items-center justify-between px-4 py-3 text-foreground font-medium hover:bg-gray-50 rounded-xl transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.label}
-                {link.hasDropdown && <Plus className="w-4 h-4 text-muted" />}
-              </Link>
-            ))}
+        {isMenuOpen && (
+          <div
+            id="mobile-navigation"
+            className="mb-4 rounded-2xl border border-black/[0.06] bg-white p-3 shadow-xl md:hidden"
+          >
+            <nav className="grid gap-1" aria-label="Mobile navigation">
+              {navigationLinks.map((link) => {
+                const isActive = isNavigationLinkActive(pathname, link.href);
+
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`rounded-xl px-4 py-3 text-sm font-semibold ${
+                      isActive
+                        ? 'bg-foreground text-white'
+                        : 'text-muted hover:bg-[#f5f4f7] hover:text-foreground'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </nav>
+
             <Link
-              href="/resources"
-              className="flex items-center justify-center gap-2 mt-4 px-4 py-3 bg-foreground text-background font-medium rounded-full"
-              onClick={() => setIsOpen(false)}
+              href="/jobs"
+              onClick={() => setIsMenuOpen(false)}
+              className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-purple-600 px-4 py-3 text-sm font-semibold text-white"
             >
               Job Boards
-              <ArrowUpRight className="w-4 h-4" />
+              <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
         )}
-      </div>
-    </nav>
+      </Container>
+    </header>
   );
 }
