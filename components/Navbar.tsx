@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { useState } from 'react';
 
 import { Container } from '@/components/landing/Primitives';
 
@@ -29,6 +31,20 @@ export default function Navbar() {
       <Container>
         <div className="grid h-[76px] grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[190px_1fr_190px]">
           <Link href="/" className="inline-flex w-fit items-center" aria-label="KRAFT home">
+  const links = [
+    { href: '/', label: 'Home' },
+    { href: '/roles', label: 'Roles' },
+    { href: '/skill-check', label: 'Skill Check' },
+    { href: '/glossary', label: 'Glossary' },
+    { href: '/get-hired', label: 'Get Hired' },
+  ];
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-black/5 bg-background/80 backdrop-blur-xl">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
             <Image
               src="/images/kraft-logo.png"
               alt="KRAFT"
@@ -66,6 +82,7 @@ export default function Navbar() {
           <Link
             href="/jobs"
             className="hidden justify-self-end rounded-full bg-foreground px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 md:inline-flex md:items-center md:gap-2"
+            className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-colors"
           >
             Job Boards
             <ArrowUpRight className="h-4 w-4" />
@@ -114,6 +131,23 @@ export default function Navbar() {
               href="/jobs"
               onClick={() => setIsMenuOpen(false)}
               className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-purple-600 px-4 py-3 text-sm font-semibold text-white"
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="md:hidden mt-4 pb-4 bg-white rounded-2xl border border-border p-4 shadow-lg">
+            {links.map(link => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="flex items-center justify-between px-4 py-3 text-foreground font-medium hover:bg-gray-50 rounded-xl transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href="/jobs"
+              className="flex items-center justify-center gap-2 mt-4 px-4 py-3 bg-foreground text-background font-medium rounded-full"
+              onClick={() => setIsOpen(false)}
             >
               Job Boards
               <ArrowUpRight className="h-4 w-4" />
