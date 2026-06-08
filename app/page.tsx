@@ -1,156 +1,206 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
-  ArrowRight, ArrowUpRight, BriefcaseBusiness, Check,
-  ChevronRight, Code2, Compass, FileCheck2, Gauge, MessageSquareText,
-  Route, Search, Sparkles, WalletCards,
+  ArrowRight,
+  BadgeDollarSign,
+  BarChart3,
+  BookOpenCheck,
+  BriefcaseBusiness,
+  Check,
+  Circle,
+  FileCheck2,
+  FolderKanban,
+  Gauge,
+  MessageSquareText,
+  Route,
+  Search,
+  Sparkles,
 } from 'lucide-react';
+import roles from '@/public/data/roles.json';
+import { roleMeta } from '@/lib/career-data';
+import FeatureCard from '@/components/landing/FeatureCard';
+import RoleCard from '@/components/landing/RoleCard';
+import ScrollReveal from '@/components/landing/ScrollReveal';
+import { Badge, Container, CTASection, SectionCard, SectionHeading } from '@/components/landing/Primitives';
 
-const rotatingRoles = ['Smart Contract Developer', 'Web3 Product Manager', 'Protocol Researcher', 'Community Lead'];
+const rotatingRoles = ['Web3 Product Manager', 'Community Manager', 'Smart Contract Developer', 'DeFi Analyst', 'Content Creator'];
 
-const paths = [
-  { icon: Code2, title: 'Build', copy: 'Engineering, security, data, and protocol roles.', color: 'blue', href: '/roles?category=technical' },
-  { icon: Compass, title: 'Grow', copy: 'Product, growth, community, and operations.', color: 'violet', href: '/roles?category=non-tech' },
-  { icon: WalletCards, title: 'Create', copy: 'Design, content, research, and ecosystem work.', color: 'amber', href: '/roles' },
+const features = [
+  { href: '/roles', title: 'Explore Roles', description: 'Understand real daily work, skills, tools, and salary context.', icon: Search, accent: 'purple' as const },
+  { href: '/skill-check', title: 'Skill Check', description: 'Answer 10 questions and get matched to a realistic career lane.', icon: BookOpenCheck, accent: 'blue' as const },
+  { href: '/roadmap', title: 'Build Roadmap', description: 'Turn your target role into milestones you can complete.', icon: Route, accent: 'cyan' as const },
+  { href: '/interview', title: 'Interview Prep', description: 'Practice role-specific questions and structure stronger answers.', icon: MessageSquareText, accent: 'amber' as const },
+  { href: '/portfolio', title: 'Portfolio Builder', description: 'Know what proof-of-work you need before applying.', icon: FolderKanban, accent: 'pink' as const },
+  { href: '/salary', title: 'Salary Explorer', description: 'Compare compensation by role before negotiation.', icon: BadgeDollarSign, accent: 'green' as const },
 ];
 
-const toolkit = [
-  { icon: Gauge, title: 'Skill check', copy: 'Find your strongest role match in under three minutes.', href: '/skill-check', tag: 'Start here' },
-  { icon: Route, title: '30-day roadmaps', copy: 'Turn curiosity into a daily, trackable learning plan.', href: '/roadmap', tag: 'Build skills' },
-  { icon: MessageSquareText, title: 'Interview practice', copy: 'Rehearse the questions Web3 teams actually ask.', href: '/interview', tag: 'Get ready' },
-  { icon: FileCheck2, title: 'Portfolio builder', copy: 'Ship proof of work that recruiters can verify.', href: '/portfolio', tag: 'Stand out' },
+const roleFilters = ['All', 'No-code', 'Writing', 'Technical', 'Research', 'Community', 'Growth'];
+const rolePreviewIds = ['community-manager', 'content-creator', 'defi-analyst', 'product-manager', 'smart-contract-developer', 'business-development'];
+const roleFilterMap: Record<string, string[]> = {
+  'community-manager': ['No-code', 'Community'], 'content-creator': ['No-code', 'Writing'], 'defi-analyst': ['Research'],
+  'product-manager': ['Growth'], 'smart-contract-developer': ['Technical'], 'business-development': ['No-code', 'Growth'],
+};
+
+const heroStats = [
+  { value: '20', label: 'Role guides' },
+  { value: '54+', label: 'Terms decoded' },
+  { value: '14', label: 'Job boards' },
+];
+
+const roadmapWeeks = [
+  { week: 'Week 1', task: 'Learn the role', done: true },
+  { week: 'Week 2', task: 'Build basic skills', done: true },
+  { week: 'Week 3', task: 'Create proof-of-work', done: false },
+  { week: 'Week 4', task: 'Apply with context', done: false },
+];
+
+const interviewQuestions = [
+  { category: 'Community', question: 'How would you handle an angry community after a delayed airdrop?' },
+  { category: 'Metrics', question: 'How do you measure community health?' },
+  { category: 'Research', question: 'What makes a good protocol breakdown?' },
+  { category: 'Product', question: 'How do you prioritize features as a Web3 PM?' },
 ];
 
 export default function Home() {
   const [roleIndex, setRoleIndex] = useState(0);
+  const [activeFilter, setActiveFilter] = useState('All');
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setRoleIndex((current) => (current + 1) % rotatingRoles.length);
-    }, 2600);
-    return () => window.clearInterval(timer);
+    const interval = window.setInterval(() => setRoleIndex((current) => (current + 1) % rotatingRoles.length), 2600);
+    return () => window.clearInterval(interval);
   }, []);
 
+  const previewRoles = useMemo(() => rolePreviewIds
+    .map((id) => roles.find((role) => role.id === id))
+    .filter((role): role is (typeof roles)[number] => Boolean(role))
+    .filter((role) => activeFilter === 'All' || roleFilterMap[role.id]?.includes(activeFilter)), [activeFilter]);
 
   return (
-    <div className="home-shell">
-      <section className="hero-section">
-        <div className="hero-glow hero-glow-one" />
-        <div className="hero-glow hero-glow-two" />
-        <div className="hero-grid" />
-        <div className="site-container relative z-10 pt-32 pb-20 md:pt-44 md:pb-28">
-          <div className="mx-auto max-w-4xl text-center">
-            <Link href="/skill-check" className="eyebrow-pill">
-              <Sparkles className="h-3.5 w-3.5" /> Built for the next generation of Web3 talent
-              <ChevronRight className="h-3.5 w-3.5" />
-            </Link>
-            <h1 className="hero-title mt-7">
-              Don&apos;t just find a Web3 job.
-              <span> Become ready for one.</span>
+    <div className="landing-page pb-6 pt-24 sm:pb-8 sm:pt-28">
+      <Container className="space-y-6 sm:space-y-8">
+        <SectionCard className="hero-surface relative overflow-hidden px-5 pb-10 pt-14 sm:px-10 sm:pb-14 sm:pt-16 lg:px-16 lg:pb-16 lg:pt-20">
+          <div className="hero-grid" aria-hidden="true" />
+          <div className="hero-glow hero-glow-one" aria-hidden="true" />
+          <div className="hero-glow hero-glow-two" aria-hidden="true" />
+
+          <Link href="/roles" className="hero-float-card hero-float-left-top hidden lg:flex">
+            <span className="hero-float-icon bg-purple-100 text-purple-700"><BriefcaseBusiness className="h-4 w-4" /></span>
+            <span><strong>Role guide</strong><small>20 career paths</small></span>
+          </Link>
+          <Link href="/skill-check" className="hero-float-card hero-float-right-top hidden lg:flex">
+            <span className="hero-float-icon bg-blue-100 text-blue-700"><Gauge className="h-4 w-4" /></span>
+            <span><strong>Skill check</strong><small>Find your lane</small></span>
+          </Link>
+          <Link href="/portfolio" className="hero-float-card hero-float-left-bottom hidden lg:flex">
+            <span className="hero-float-icon bg-pink-100 text-pink-700"><FileCheck2 className="h-4 w-4" /></span>
+            <span><strong>Portfolio</strong><small>Prove the work</small></span>
+          </Link>
+          <Link href="/interview" className="hero-float-card hero-float-right-bottom hidden lg:flex">
+            <span className="hero-float-icon bg-amber-100 text-amber-700"><MessageSquareText className="h-4 w-4" /></span>
+            <span><strong>Interview prep</strong><small>Practice answers</small></span>
+          </Link>
+
+          <div className="relative z-10 mx-auto max-w-3xl text-center">
+            <Badge tone="neutral">
+              <Sparkles className="h-3.5 w-3.5 text-purple-600" />
+              Your practical map into Web3 work
+            </Badge>
+            <h1 className="mt-7 text-4xl font-semibold leading-[1.04] tracking-[-0.055em] text-foreground sm:text-6xl lg:text-7xl">
+              Know the work before<br className="hidden sm:block" /> you chase the title.
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-slate-600 md:text-lg">
-              Clear role guides, practical roadmaps, and honest career tools for people who want to build a real career onchain.
+            <div className="mt-6 flex min-h-9 flex-wrap items-center justify-center text-base text-muted sm:text-lg">
+              <span>I want to become a&nbsp;</span>
+              <span key={rotatingRoles[roleIndex]} className="role-swap font-semibold text-purple-700">
+                {rotatingRoles[roleIndex]}
+              </span>
+              <span className="ml-1 h-5 w-px animate-pulse bg-purple-600" aria-hidden="true" />
+            </div>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted sm:text-lg">
+              Understand real roles, test your readiness, build proof-of-work, and apply with context—not guesswork.
             </p>
-            <div className="mt-8 flex min-h-8 items-center justify-center gap-2 text-sm font-semibold text-slate-500">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_5px_rgba(52,211,153,.12)]" />
-              Explore a path as a <span key={roleIndex} className="role-swap">{rotatingRoles[roleIndex]}</span>
-            </div>
-            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href="/skill-check" className="button-primary">
-                Find my Web3 role <ArrowRight className="h-4 w-4" />
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link href="/roles" className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-black/10 transition hover:-translate-y-0.5">
+                Find my role <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link href="/roles" className="button-secondary">
-                Explore all roles <ArrowUpRight className="h-4 w-4" />
+              <Link href="/skill-check" className="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-white px-6 py-3.5 text-sm font-semibold text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-purple-200">
+                Start skill check
               </Link>
             </div>
           </div>
 
-          <div className="hero-dashboard mx-auto mt-16 max-w-5xl">
-            <div className="dashboard-topbar">
-              <div className="flex gap-1.5"><i /><i /><i /></div>
-              <div className="dashboard-search"><Search className="h-3.5 w-3.5" /> usekraft.xyz / career-map</div>
-              <div className="h-7 w-7 rounded-full bg-gradient-to-br from-blue-500 to-violet-500" />
-            </div>
-            <div className="grid gap-px bg-slate-200 md:grid-cols-[1.15fr_.85fr]">
-              <div className="bg-white p-6 md:p-9">
-                <div className="flex items-center justify-between">
-                  <div><p className="text-xs font-bold uppercase tracking-[.16em] text-slate-400">Your career map</p><h2 className="mt-2 text-2xl font-bold tracking-tight">Blockchain Developer</h2></div>
-                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">82% match</span>
-                </div>
-                <div className="mt-8 space-y-5">
-                  {['Blockchain fundamentals', 'Solidity & smart contracts', 'Testing & security'].map((skill, index) => (
-                    <div key={skill}>
-                      <div className="mb-2 flex justify-between text-xs font-semibold"><span>{skill}</span><span className="text-slate-400">{[92, 68, 44][index]}%</span></div>
-                      <div className="h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-violet-500" style={{ width: `${[92, 68, 44][index]}%` }} /></div>
-                    </div>
-                  ))}
-                </div>
+          <div className="relative z-10 mx-auto mt-12 grid max-w-2xl grid-cols-3 overflow-hidden rounded-2xl border border-black/[0.06] bg-white/80 shadow-sm backdrop-blur sm:mt-16">
+            {heroStats.map(({ value, label }, index) => (
+              <div key={label} className={`px-2 py-4 text-center sm:px-5 ${index ? 'border-l border-black/[0.06]' : ''}`}>
+                <strong className="block text-lg sm:text-2xl">{value}</strong>
+                <span className="mt-0.5 block text-[10px] text-muted sm:text-xs">{label}</span>
               </div>
-              <div className="bg-[#111827] p-6 text-white md:p-9">
-                <p className="text-xs font-bold uppercase tracking-[.16em] text-slate-500">Next milestone</p>
-                <div className="mt-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/15 text-blue-300"><Code2 className="h-6 w-6" /></div>
-                <h3 className="mt-5 text-xl font-semibold">Ship your first contract</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-400">Complete three focused tasks and deploy to a public testnet.</p>
-                <div className="mt-7 space-y-3 text-sm">
-                  {['Write contract', 'Add test coverage', 'Deploy & document'].map((item, i) => <div key={item} className="flex items-center gap-3"><span className={`flex h-5 w-5 items-center justify-center rounded-full ${i === 0 ? 'bg-emerald-400 text-slate-950' : 'border border-slate-600'}`}>{i === 0 && <Check className="h-3 w-3" />}</span>{item}</div>)}
-                </div>
+            ))}
+          </div>
+        </SectionCard>
+
+        <ScrollReveal>
+          <SectionCard className="p-5 sm:p-8 lg:p-10">
+            <SectionHeading eyebrow="Career toolkit" title="Everything you need before applying" copy="Move through one clear journey—from understanding the role to proving you can do the work." align="center" />
+            <div className="mt-9 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {features.map((feature, index) => (
+                <ScrollReveal key={feature.href} delay={index * 45}>
+                  <FeatureCard {...feature} />
+                </ScrollReveal>
+              ))}
+            </div>
+          </SectionCard>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <SectionCard className="p-5 sm:p-8 lg:p-10">
+            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+              <SectionHeading eyebrow="Role preview" title="Pick a lane, then learn the work." copy="Filter by the kind of work you enjoy. Each guide explains the day-to-day reality, not just the job title." />
+              <Link href="/roles" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-purple-700">Explore all roles <ArrowRight className="h-4 w-4" /></Link>
+            </div>
+            <div className="mt-7 flex gap-2 overflow-x-auto pb-2">{roleFilters.map((filter) => <button key={filter} onClick={() => setActiveFilter(filter)} className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${activeFilter === filter ? 'bg-foreground text-white' : 'border border-black/[0.06] bg-white text-muted hover:text-foreground'}`}>{filter}</button>)}</div>
+            <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{previewRoles.map((role) => <RoleCard key={role.id} href={`/roles/${role.id}`} title={role.name === 'Business Development' ? 'Growth / BD' : role.name} difficulty={roleMeta[role.id]?.difficulty ?? role.category} description={role.dayInTheLife.split('.').slice(0, 2).join('.') + '.'} skills={role.mustHaveSkills} />)}</div>
+            {previewRoles.length === 0 && <div className="mt-6 rounded-2xl border border-dashed border-black/10 bg-white p-8 text-center text-sm text-muted">No preview role matches this filter yet. <Link href="/roles" className="font-semibold text-purple-700">Browse every role.</Link></div>}
+          </SectionCard>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <CTASection
+            badge="No wallet. No hype. No gatekeeping."
+            title="Start with a ten-question reality check."
+            copy="Get matched to a career lane based on what you already enjoy doing, then leave with a concrete next step."
+            href="/skill-check"
+            label="Start skill check"
+          />
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <SectionCard className="overflow-hidden p-5 sm:p-8 lg:p-10">
+            <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+              <div><Badge tone="blue"><Route className="h-3.5 w-3.5" />30-day progress</Badge><h2 className="mt-5 text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">Your roadmap should feel doable, not imaginary.</h2><p className="mt-4 max-w-lg leading-7 text-muted">Break a target role into weekly outcomes, save progress in your browser, and always know the next useful action.</p><Link href="/roadmap" className="mt-7 inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-semibold text-white">Build my roadmap <ArrowRight className="h-4 w-4" /></Link></div>
+              <div className="roadmap-preview rounded-3xl border border-black/[0.06] bg-[#f8f8fa] p-5 shadow-[0_22px_60px_rgba(25,20,48,0.09)] sm:p-7">
+                <div className="flex items-center justify-between"><div><p className="text-xs font-semibold text-purple-600">COMMUNITY MANAGER</p><h3 className="mt-1 font-semibold">4-week starter roadmap</h3></div><strong className="text-2xl text-purple-700">50%</strong></div>
+                <div className="mt-5 h-2 overflow-hidden rounded-full bg-white"><div className="roadmap-progress h-full w-1/2 rounded-full bg-gradient-to-r from-purple-600 to-blue-500" /></div>
+                <div className="mt-5 space-y-3">{roadmapWeeks.map(({ week, task, done }) => <div key={String(week)} className={`flex items-center gap-3 rounded-xl border p-3.5 ${done ? 'border-emerald-100 bg-white' : 'border-black/[0.05] bg-white/60'}`}><span className={`flex h-7 w-7 items-center justify-center rounded-full ${done ? 'bg-emerald-500 text-white' : 'bg-[#eeeef2] text-muted'}`}>{done ? <Check className="h-4 w-4" /> : <Circle className="h-4 w-4" />}</span><span><small className="block text-[10px] font-semibold uppercase tracking-wider text-muted">{week}</small><strong className="text-sm">{task}</strong></span></div>)}</div>
               </div>
             </div>
-          </div>
+          </SectionCard>
+        </ScrollReveal>
 
-          <div className="stats-strip mx-auto max-w-4xl">
-            {[['20', 'career paths'], ['54', 'Web3 terms'], ['12', 'trusted job boards'], ['100%', 'free to explore']].map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
-          </div>
-        </div>
-      </section>
+        <ScrollReveal>
+          <SectionCard className="p-5 sm:p-8 lg:p-10">
+            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end"><SectionHeading eyebrow="Interview prep" title="Practice the judgment behind the answer." copy="Use role-specific prompts to rehearse calm, structured answers before the real conversation." /><Link href="/interview" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-purple-700">Practice interview questions <ArrowRight className="h-4 w-4" /></Link></div>
+            <div className="mt-8 grid gap-4 md:grid-cols-2">{interviewQuestions.map((item, index) => <Link key={item.question} href="/interview" className="group rounded-2xl border border-black/[0.06] bg-white p-5 transition hover:-translate-y-1 hover:border-purple-200 hover:shadow-[0_15px_35px_rgba(64,47,120,0.08)]"><div className="flex items-center justify-between"><Badge tone={index % 2 ? 'blue' : 'purple'}>{item.category}</Badge><span className="text-xs font-semibold text-muted">0{index + 1}</span></div><h3 className="mt-6 max-w-md text-lg font-semibold leading-7 tracking-[-0.015em]">"{item.question}"</h3><span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-purple-700">See answer framework <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span></Link>)}</div>
+          </SectionCard>
+        </ScrollReveal>
 
-      <section className="section-space bg-white">
-        <div className="site-container">
-          <div className="section-heading"><span>Find your lane</span><h2>There&apos;s more than one way into Web3.</h2><p>Start with the kind of work you enjoy. We&apos;ll show you the roles, skills, and proof of work that matter.</p></div>
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {paths.map(({ icon: Icon, title, copy, color, href }) => <Link href={href} key={title} className={`path-card path-${color}`}><div className="path-icon"><Icon /></div><div><p className="text-xs font-bold uppercase tracking-[.16em] text-slate-400">I want to</p><h3>{title}</h3><p>{copy}</p></div><ArrowUpRight className="ml-auto h-5 w-5" /></Link>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-space bg-[#f6f7fb]">
-        <div className="site-container">
-          <div className="section-heading"><span>Your career toolkit</span><h2>From “where do I start?” to “I got the offer.”</h2><p>Practical tools designed around each stage of your Web3 career—not generic advice and endless link lists.</p></div>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {toolkit.map(({ icon: Icon, title, copy, href, tag }, index) => <Link key={title} href={href} className="tool-card"><div className={`tool-number tool-number-${index}`}>0{index + 1}</div><div className="tool-icon"><Icon /></div><span>{tag}</span><h3>{title}</h3><p>{copy}</p><div className="tool-link">Open tool <ArrowRight className="h-4 w-4" /></div></Link>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-space bg-white">
-        <div className="site-container grid items-center gap-14 lg:grid-cols-2">
-          <div className="relative">
-            <div className="proof-card">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-5"><div><p className="text-xs font-bold uppercase tracking-widest text-blue-600">Proof of work</p><h3 className="mt-1 text-xl font-bold">Your portfolio signal</h3></div><span className="rounded-xl bg-blue-50 px-3 py-2 text-sm font-bold text-blue-700">4 / 6</span></div>
-              <div className="mt-5 space-y-3">{['Public project with README', 'Onchain deployment', 'Technical write-up', 'Open-source contribution', 'Demo video', 'Community reference'].map((item, i) => <div key={item} className={`flex items-center gap-3 rounded-xl border p-3.5 text-sm font-medium ${i < 4 ? 'border-emerald-100 bg-emerald-50/60 text-slate-800' : 'border-slate-100 text-slate-400'}`}><span className={`flex h-6 w-6 items-center justify-center rounded-full ${i < 4 ? 'bg-emerald-500 text-white' : 'bg-slate-100'}`}>{i < 4 && <Check className="h-3.5 w-3.5" />}</span>{item}</div>)}</div>
-            </div>
-            <div className="absolute -bottom-5 -right-3 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-xl md:-right-8"><p className="text-xs font-bold text-slate-400">RECRUITER READY</p><p className="mt-1 text-2xl font-black text-emerald-500">67%</p></div>
-          </div>
-          <div>
-            <span className="section-kicker">Build evidence, not hype</span>
-            <h2 className="mt-4 text-4xl font-bold tracking-[-.04em] text-slate-950 md:text-5xl">Your work should speak before the interview starts.</h2>
-            <p className="mt-6 text-lg leading-8 text-slate-600">The best Web3 teams hire visible builders. Use our portfolio checklist to turn small projects, writing, and community contributions into a credible body of work.</p>
-            <ul className="mt-7 space-y-4 text-sm font-semibold text-slate-700">{['Role-specific project ideas', 'A recruiter-ready checklist', 'Clear examples of strong proof of work'].map(item => <li key={item} className="flex items-center gap-3"><span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-blue-700"><Check className="h-3.5 w-3.5" /></span>{item}</li>)}</ul>
-            <Link href="/portfolio" className="mt-9 inline-flex items-center gap-2 font-bold text-blue-700">Build my portfolio <ArrowRight className="h-4 w-4" /></Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-4 pb-20 pt-5 md:pb-28">
-        <div className="site-container overflow-hidden rounded-[2rem] bg-[#111827] px-6 py-14 text-center text-white md:px-14 md:py-20">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500 text-white"><BriefcaseBusiness className="h-6 w-6" /></div>
-          <h2 className="mx-auto mt-6 max-w-2xl text-3xl font-bold tracking-[-.03em] md:text-5xl">Ready to make your move into Web3?</h2>
-          <p className="mx-auto mt-5 max-w-xl leading-7 text-slate-400">Start with a role match, build the missing skills, and apply with proof—not guesswork.</p>
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><Link href="/skill-check" className="button-light">Take the skill check <ArrowRight className="h-4 w-4" /></Link><Link href="/jobs" className="button-dark-outline">Browse Web3 jobs <ArrowUpRight className="h-4 w-4" /></Link></div>
-        </div>
-      </section>
+        <ScrollReveal>
+          <SectionCard className="overflow-hidden bg-[linear-gradient(135deg,#f5f1ff_0%,#eff6ff_55%,#f8f8fb_100%)] p-7 sm:p-10">
+            <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]"><div><Badge><BarChart3 className="h-3.5 w-3.5" />Ready to move forward?</Badge><h2 className="mt-5 text-3xl font-semibold tracking-[-0.035em]">Take your next step with context.</h2><p className="mt-3 max-w-xl leading-7 text-muted">Explore trusted job boards after you understand the role, test your readiness, and build evidence recruiters can inspect.</p></div><Link href="/jobs" className="inline-flex w-fit items-center gap-2 rounded-full bg-purple-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-purple-600/15 transition hover:-translate-y-0.5">Browse job boards <ArrowRight className="h-4 w-4" /></Link></div>
+          </SectionCard>
+        </ScrollReveal>
+      </Container>
     </div>
   );
 }
