@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f7f4;
+  --background: #f7f7f8;
   --foreground: #1a1a1a;
   --muted: #6b6b6b;
   --accent-purple: #a855f7;
@@ -144,4 +144,127 @@ button, a, input, select, textarea, [role="button"] {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Unified KRAFT landing-page system */
+.landing-page {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 15% 8%, rgba(139, 92, 246, 0.07), transparent 25rem),
+    radial-gradient(circle at 88% 20%, rgba(59, 130, 246, 0.06), transparent 24rem),
+    #f7f7f8;
+}
+
+.landing-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(32, 28, 45, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(32, 28, 45, 0.028) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, black 0, transparent 72%);
+}
+
+.landing-card {
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(24, 21, 35, 0.065);
+  border-radius: 28px;
+  background: rgba(252, 252, 253, 0.94);
+  box-shadow: 0 18px 55px rgba(31, 27, 48, 0.055);
+}
+
+.hero-surface {
+  background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(249,248,252,0.96));
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(71, 60, 97, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(71, 60, 97, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at center, black, transparent 74%);
+}
+
+.hero-glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.hero-glow-one {
+  width: 24rem;
+  height: 24rem;
+  left: -10rem;
+  bottom: -14rem;
+  background: radial-gradient(circle, rgba(154, 112, 255, 0.17), transparent 68%);
+}
+
+.hero-glow-two {
+  width: 28rem;
+  height: 28rem;
+  right: -12rem;
+  top: -15rem;
+  background: radial-gradient(circle, rgba(87, 154, 255, 0.14), transparent 68%);
+}
+
+.hero-float-card {
+  position: absolute;
+  z-index: 12;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 9.5rem;
+  border: 1px solid rgba(28, 24, 42, 0.07);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 0.65rem 0.8rem;
+  box-shadow: 0 13px 32px rgba(32, 27, 50, 0.08);
+  backdrop-filter: blur(12px);
+  animation: soft-float 5.5s ease-in-out infinite;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.hero-float-card:hover {
+  border-color: rgba(139, 92, 246, 0.25);
+  box-shadow: 0 16px 38px rgba(74, 54, 130, 0.13);
+}
+
+.hero-float-card strong,
+.hero-float-card small { display: block; }
+.hero-float-card strong { font-size: 0.75rem; }
+.hero-float-card small { margin-top: 0.1rem; color: var(--muted); font-size: 0.625rem; }
+.hero-float-icon { display: flex; width: 2rem; height: 2rem; flex: 0 0 auto; align-items: center; justify-content: center; border-radius: 10px; }
+.hero-float-left-top { left: 2.5rem; top: 7.5rem; transform: rotate(-2deg); }
+.hero-float-right-top { right: 2.5rem; top: 7rem; transform: rotate(2deg); animation-delay: -1.5s; }
+.hero-float-left-bottom { left: 3.5rem; bottom: 8.5rem; transform: rotate(1deg); animation-delay: -2.8s; }
+.hero-float-right-bottom { right: 3.5rem; bottom: 8rem; transform: rotate(-1deg); animation-delay: -4s; }
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 600ms ease, transform 600ms cubic-bezier(.22,.8,.3,1);
+}
+.reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+.roadmap-progress { animation: roadmap-grow 1.2s cubic-bezier(.22,.8,.3,1) both; transform-origin: left; }
+
+@keyframes soft-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
+}
+
+@keyframes roadmap-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (max-width: 640px) {
+  .landing-card { border-radius: 22px; }
+  .landing-page::before { background-size: 38px 38px; }
 }
