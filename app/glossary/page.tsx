@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Search, BookOpen, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface GlossaryTerm {
@@ -11,7 +11,6 @@ interface GlossaryTerm {
 
 export default function GlossaryPage() {
   const [terms, setTerms] = useState<GlossaryTerm[]>([]);
-  const [filteredTerms, setFilteredTerms] = useState<GlossaryTerm[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedTerms, setExpandedTerms] = useState<Set<number>>(new Set());
@@ -21,11 +20,10 @@ export default function GlossaryPage() {
       .then(res => res.json())
       .then(data => {
         setTerms(data);
-        setFilteredTerms(data);
       });
   }, []);
 
-  useEffect(() => {
+  const filteredTerms = useMemo(() => {
     let filtered = terms;
 
     if (selectedCategory !== 'all') {
@@ -39,7 +37,7 @@ export default function GlossaryPage() {
       );
     }
 
-    setFilteredTerms(filtered);
+    return filtered;
   }, [selectedCategory, searchTerm, terms]);
 
   const categories = ['all', ...new Set(terms.map(t => t.category))];

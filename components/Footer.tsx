@@ -19,7 +19,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-sm text-muted">
-              Know exactly what you're applying for before you apply.
+              Know exactly what you&apos;re applying for before you apply.
             </p>
           </div>
 
@@ -27,6 +27,11 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-4 text-foreground">Explore</h3>
             <ul className="space-y-2 text-sm text-muted">
+              <li>
+                <Link href="/skill-check" className="hover:text-purple-600 transition">
+                  Skill Check
+                </Link>
+              </li>
               <li>
                 <Link href="/roles" className="hover:text-purple-600 transition">
                   All Roles

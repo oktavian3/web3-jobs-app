@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Search, Sparkles } from 'lucide-react';
 
@@ -13,7 +13,6 @@ interface Role {
 
 export default function RolesPage() {
   const [roles, setRoles] = useState<Role[]>([]);
-  const [filteredRoles, setFilteredRoles] = useState<Role[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -22,11 +21,10 @@ export default function RolesPage() {
       .then(res => res.json())
       .then(data => {
         setRoles(data);
-        setFilteredRoles(data);
       });
   }, []);
 
-  useEffect(() => {
+  const filteredRoles = useMemo(() => {
     let filtered = roles;
 
     if (selectedCategory !== 'all') {
@@ -40,7 +38,7 @@ export default function RolesPage() {
       );
     }
 
-    setFilteredRoles(filtered);
+    return filtered;
   }, [selectedCategory, searchTerm, roles]);
 
   const categories = ['all', ...new Set(roles.map(r => r.category))];

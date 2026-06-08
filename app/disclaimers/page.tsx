@@ -1,14 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 const DisclaimersPage = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const warnings = [
     {
       title: 'Fast-Paced and Volatile Environment',
@@ -51,8 +43,6 @@ const DisclaimersPage = () => {
     'No official website or social media presence? Proceed with caution.',
     'Making unrealistic promises of big earnings with little work? Trust your instincts, something\'s off.',
   ];
-
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
@@ -130,7 +120,7 @@ const DisclaimersPage = () => {
               <div>
                 <h3 className="text-xl font-semibold text-white mb-3">Conclusion</h3>
                 <p className="text-slate-200 leading-relaxed">
-                  Web3 can be exciting and rewarding for those passionate about decentralization, but it's not a get-rich-quick scheme. Research thoroughly, start small (e.g., contribute to open-source), and prioritize your well-being. If something seems too good to be true, it probably is.
+                  Web3 can be exciting and rewarding for those passionate about decentralization, but it&apos;s not a get-rich-quick scheme. Research thoroughly, start small (e.g., contribute to open-source), and prioritize your well-being. If something seems too good to be true, it probably is.
                 </p>
               </div>
             </div>
