@@ -1,169 +1,34 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Search, Sparkles } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { ArrowRight, GitCompareArrows, Search, Sparkles, X } from 'lucide-react';
+import rolesData from '@/public/data/roles.json';
+import { roleMeta, salaryNumbers, type Difficulty, type WorkType } from '@/lib/career-data';
 
-interface Role {
-  id: string;
-  category: string;
-  name: string;
-  oneLiner: string;
-}
+type Role = (typeof rolesData)[number];
 
 export default function RolesPage() {
-  const [roles, setRoles] = useState<Role[]>([]);
-  const [filteredRoles, setFilteredRoles] = useState<Role[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [search, setSearch] = useState(''); const [category, setCategory] = useState('all');
+  const [difficulty, setDifficulty] = useState<'all' | Difficulty>('all'); const [work, setWork] = useState<'all' | WorkType>('all');
+  const [salary, setSalary] = useState('all'); const [compare, setCompare] = useState<string[]>([]);
+  const categories = ['all', ...new Set(rolesData.map((role) => role.category))];
+  const roles = useMemo(() => rolesData.filter((role) => {
+    const meta = roleMeta[role.id]; const [, high] = salaryNumbers(role.avgCompRange.usd);
+    return (!search || `${role.name} ${role.oneLiner} ${role.mustHaveSkills.join(' ')}`.toLowerCase().includes(search.toLowerCase())) &&
+      (category === 'all' || role.category === category) && (difficulty === 'all' || meta?.difficulty === difficulty) &&
+      (work === 'all' || meta?.work.includes(work)) && (salary === 'all' || (salary === '100' ? high >= 100 : high >= 150));
+  }), [search, category, difficulty, work, salary]);
+  const compared = compare.map((id) => rolesData.find((role) => role.id === id)).filter(Boolean) as Role[];
+  const toggleCompare = (id: string) => setCompare((current) => current.includes(id) ? current.filter((item) => item !== id) : current.length < 2 ? [...current, id] : [current[1], id]);
 
-  useEffect(() => {
-    fetch('/data/roles.json')
-      .then(res => res.json())
-      .then(data => {
-        setRoles(data);
-        setFilteredRoles(data);
-      });
-  }, []);
-
-  useEffect(() => {
-    let filtered = roles;
-
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(role => role.category === selectedCategory);
-    }
-
-    if (searchTerm) {
-      filtered = filtered.filter(role =>
-        role.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        role.oneLiner.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    setFilteredRoles(filtered);
-  }, [selectedCategory, searchTerm, roles]);
-
-  const categories = ['all', ...new Set(roles.map(r => r.category))];
-
-  const getCategoryStyle = (category: string) => {
-    const styles: { [key: string]: string } = {
-      technical: 'bg-blue-50 text-blue-700 border-blue-200',
-      'non-tech': 'bg-purple-50 text-purple-700 border-purple-200',
-      research: 'bg-amber-50 text-amber-700 border-amber-200',
-      design: 'bg-pink-50 text-pink-700 border-pink-200',
-    };
-    return styles[category] || 'bg-gray-50 text-gray-700 border-gray-200';
-  };
-
-  return (
-    <div className="page-wrapper">
-      {/* Grid background - fixed, z-0, behind all content */}
-      <div className="grid-background opacity-50" />
-      
-      <div className="page-content pt-24">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Header */}
-          <div className="mb-12 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border shadow-sm mb-6">
-              <Sparkles className="w-4 h-4 text-purple-500" />
-              <span className="text-sm font-medium text-muted">Explore Career Paths</span>
-            </div>
-            <h1 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-medium text-foreground mb-4 text-balance">
-              Web3 Job Roles
-            </h1>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
-              Explore detailed profiles with skills, interview questions, and career paths.
-            </p>
-          </div>
-
-          {/* Floating decorative cards */}
-          <div className="hidden lg:block">
-            <div className="absolute top-32 left-8 bg-white rounded-2xl shadow-lg border border-border p-4 rotate-[-6deg] animate-pulse">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500" />
-                <div>
-                  <p className="font-semibold text-foreground text-sm">Smart Contract Dev</p>
-                  <p className="text-xs text-muted">$120k - $200k</p>
-                </div>
-              </div>
-            </div>
-            <div className="absolute top-48 right-8 bg-white rounded-2xl shadow-lg border border-border p-4 rotate-[4deg]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-500" />
-                <div>
-                  <p className="font-semibold text-foreground text-sm">DeFi Analyst</p>
-                  <p className="text-xs text-muted">$90k - $150k</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Search and Filter */}
-          <div className="bg-white rounded-2xl p-6 mb-8 border border-border shadow-sm relative z-20">
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
-              <div className="flex-1 relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
-                <input
-                  type="text"
-                  placeholder="Search roles..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 text-foreground transition-all"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-full font-medium text-sm transition-all ${
-                    selectedCategory === cat
-                      ? 'bg-foreground text-background'
-                      : 'bg-background text-foreground hover:bg-gray-100 border border-border'
-                  }`}
-                >
-                  {cat === 'all' ? 'All Roles' : cat.charAt(0).toUpperCase() + cat.slice(1)}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Roles Grid */}
-          <div className="grid md:grid-cols-2 gap-6 mb-12 relative z-10">
-            {filteredRoles.map(role => (
-              <Link key={role.id} href={`/roles/${role.id}`} className="block">
-                <div className="h-full bg-white rounded-2xl p-6 border border-border shadow-sm hover:shadow-[0_8px_30px_rgb(139,92,246,0.12),0_8px_30px_rgb(59,130,246,0.08)] hover:border-purple-300 transition-all duration-300 group cursor-pointer relative overflow-hidden">
-                  {/* Subtle gradient glow on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                  
-                  <div className="relative z-10">
-                    <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 border ${getCategoryStyle(role.category)}`}>
-                      {role.category}
-                    </div>
-                    
-                    <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-purple-600 transition-colors">
-                      {role.name}
-                    </h3>
-                    <p className="text-muted mb-4 leading-relaxed">{role.oneLiner}</p>
-                    
-                    <div className="flex items-center text-purple-600 font-medium text-sm group-hover:translate-x-2 transition-transform">
-                      View Details <ArrowRight className="w-4 h-4 ml-2" />
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          {filteredRoles.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted text-lg">No roles found matching your search.</p>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+  return <div className="page-wrapper px-4 pb-24 pt-32 sm:px-6 lg:px-8"><div className="grid-background opacity-40" /><main className="page-content mx-auto max-w-6xl">
+    <header className="text-center"><p className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm font-semibold text-purple-700"><Sparkles className="h-4 w-4" /> 20 real Web3 career paths</p><h1 className="mt-6 font-[family-name:var(--font-playfair)] text-5xl font-medium">Choose the work, not the hype.</h1><p className="mx-auto mt-4 max-w-2xl text-lg text-muted">Compare expectations, compensation, skills, and time-to-readiness before you commit.</p></header>
+    <Link href="/skill-check" className="mt-10 flex flex-col justify-between gap-4 rounded-3xl bg-foreground p-7 text-background sm:flex-row sm:items-center"><span><strong className="text-xl">Not sure where to start?</strong><span className="mt-1 block text-sm text-white/60">Take the role finder and leave with a focused recommendation.</span></span><span className="inline-flex items-center gap-2 font-semibold text-purple-300">Find my role <ArrowRight className="h-4 w-4" /></span></Link>
+    <section className="mt-8 rounded-3xl border border-border bg-white p-5 shadow-sm"><div className="relative"><Search className="absolute left-4 top-3.5 h-5 w-5 text-muted" /><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search roles or skills" className="w-full rounded-xl border border-border bg-background py-3 pl-12 pr-4" /></div><div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{[
+      ['Category', category, setCategory, categories], ['Difficulty', difficulty, setDifficulty, ['all','technical','hybrid','no-code']], ['Work style', work, setWork, ['all','remote','async','on-site']], ['Salary', salary, setSalary, ['all','100','150']],
+    ].map(([label,value,setter,options]) => <label key={label as string} className="text-xs font-semibold uppercase tracking-wide text-muted">{label as string}<select value={value as string} onChange={(e) => (setter as (value: never) => void)(e.target.value as never)} className="mt-1 block w-full rounded-xl border border-border bg-white px-3 py-2.5 text-sm capitalize text-foreground">{(options as string[]).map((option) => <option key={option} value={option}>{option === 'all' ? `All ${label}` : option === '100' ? '$100k+' : option === '150' ? '$150k+' : option}</option>)}</select></label>)}</div></section>
+    {compared.length > 0 && <section className="sticky top-24 z-30 mt-5 rounded-2xl border border-purple-300 bg-purple-50 p-4 shadow-lg"><div className="flex flex-wrap items-center justify-between gap-3"><p className="font-semibold"><GitCompareArrows className="mr-2 inline h-5 w-5" />{compared.length}/2 roles selected</p>{compared.length === 2 && <span className="text-sm text-purple-800">Compare salary, skills, timeline, and demand below.</span>}</div>{compared.length === 2 && <div className="mt-4 grid grid-cols-2 gap-3">{compared.map((role) => <div key={role.id} className="rounded-xl bg-white p-4"><button onClick={() => toggleCompare(role.id)} className="float-right"><X className="h-4 w-4" /></button><strong>{role.name}</strong><dl className="mt-3 space-y-1 text-sm"><div><dt className="inline text-muted">Salary: </dt><dd className="inline font-medium">{role.avgCompRange.usd}</dd></div><div><dt className="inline text-muted">Timeline: </dt><dd className="inline">{roleMeta[role.id]?.timeline}</dd></div><div><dt className="inline text-muted">Demand: </dt><dd className="inline">{roleMeta[role.id]?.demand}</dd></div><div><dt className="inline text-muted">Core: </dt><dd className="inline">{role.mustHaveSkills.slice(0,2).join(', ')}</dd></div></dl></div>)}</div>}</section>}
+    <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{roles.map((role) => { const meta = roleMeta[role.id]; return <article key={role.id} className="flex flex-col rounded-3xl border border-border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"><div className="flex items-start justify-between gap-3"><span className="rounded-full bg-purple-50 px-3 py-1 text-xs font-semibold capitalize text-purple-700">{meta?.difficulty}</span><button onClick={() => toggleCompare(role.id)} className={`rounded-full border px-3 py-1 text-xs font-semibold ${compare.includes(role.id) ? 'border-purple-600 bg-purple-600 text-white' : 'border-border'}`}>Compare</button></div><h2 className="mt-5 text-xl font-semibold">{role.name}</h2><p className="mt-2 flex-1 text-sm leading-6 text-muted">{role.oneLiner}</p><div className="mt-5 flex flex-wrap gap-2">{role.mustHaveSkills.slice(0,3).map((skill) => <span key={skill} className="rounded-lg bg-gray-100 px-2.5 py-1 text-xs">{skill}</span>)}</div><div className="mt-5 flex items-center justify-between border-t border-border pt-4"><span><strong className="block text-purple-700">{role.avgCompRange.usd}</strong><span className="text-xs text-muted">{meta?.demand} demand</span></span><Link href={`/roles/${role.id}`} aria-label={`View ${role.name}`} className="rounded-full bg-foreground p-3 text-background"><ArrowRight className="h-4 w-4" /></Link></div></article>})}</div>
+  </main></div>;
 }
