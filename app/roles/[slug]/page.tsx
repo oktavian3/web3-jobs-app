@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { ArrowLeft, Briefcase, Code, DollarSign, Zap, Lightbulb, CheckCircle, BookOpen, ArrowRight, Sparkles } from 'lucide-react';
+import { roleMeta } from '@/lib/career-data';
 
 interface Role {
   id: string;
@@ -41,6 +42,7 @@ export default function RoleDetailPage() {
   const [allRoles, setAllRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [readySkills, setReadySkills] = useState<number[]>([]);
 
   useEffect(() => {
     if (!slug) return;
@@ -61,6 +63,19 @@ export default function RoleDetailPage() {
         setLoading(false);
       });
   }, [slug]);
+
+  useEffect(() => {
+    if (!slug) return;
+    const saved = window.localStorage.getItem(`kraft-ready-${slug}`);
+    const frame = requestAnimationFrame(() => setReadySkills(saved ? JSON.parse(saved) : []));
+    return () => cancelAnimationFrame(frame);
+  }, [slug]);
+
+  const toggleReady = (index: number) => {
+    const next = readySkills.includes(index) ? readySkills.filter((item) => item !== index) : [...readySkills, index];
+    setReadySkills(next);
+    window.localStorage.setItem(`kraft-ready-${slug}`, JSON.stringify(next));
+  };
 
   if (loading) {
     return (
@@ -225,6 +240,12 @@ export default function RoleDetailPage() {
               ))}
             </div>
           </div>
+
+          <section className="sticky top-24 z-20 mb-8 rounded-2xl border border-purple-200 bg-white p-6 shadow-lg">
+            <div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-wider text-purple-700">Am I ready?</p><h2 className="mt-1 text-xl font-semibold">Check your must-have signals</h2></div><strong className="text-3xl text-purple-700">{Math.round(readySkills.length / role.mustHaveSkills.length * 100)}%</strong></div>
+            <div className="mt-4 grid gap-2 sm:grid-cols-2">{role.mustHaveSkills.map((skill, index) => <button key={skill} onClick={() => toggleReady(index)} className={`flex items-center gap-3 rounded-xl border p-3 text-left text-sm ${readySkills.includes(index) ? 'border-emerald-300 bg-emerald-50' : 'border-border'}`}><span className={`flex h-5 w-5 items-center justify-center rounded ${readySkills.includes(index) ? 'bg-emerald-500 text-white' : 'border'}`}>{readySkills.includes(index) ? '✓' : ''}</span>{skill}<Link href="/glossary" onClick={(event) => event.stopPropagation()} className="ml-auto text-xs font-semibold text-purple-700">Learn</Link></button>)}</div>
+            <div className="mt-4 flex flex-wrap gap-3 text-sm"><span className="rounded-full bg-gray-100 px-3 py-1">Demand: {roleMeta[role.id]?.demand}</span><span className="rounded-full bg-gray-100 px-3 py-1">Asia: {roleMeta[role.id]?.asia}</span><span className="rounded-full bg-gray-100 px-3 py-1">Freelance: {roleMeta[role.id]?.freelance}</span></div>
+          </section>
 
           {/* Career Progression */}
           <section className="mb-8">
