@@ -8,7 +8,14 @@ export function middleware(request: NextRequest) {
   if (pathname === '/admin' || (pathname.startsWith('/admin/') && pathname !== '/admin/login')) {
     const adminSession = request.cookies.get('admin_session');
     
-    if (!adminSession || adminSession.value !== 'true') {
+    // Validate session token exists and is not empty
+    if (!adminSession || !adminSession.value || adminSession.value.length < 10) {
+      return NextResponse.redirect(new URL('/admin/login', request.url));
+    }
+    
+    // Additional validation: check token format (should be hex string)
+    const hexRegex = /^[0-9a-f]{64}$/;
+    if (!hexRegex.test(adminSession.value)) {
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
   }
