@@ -1,301 +1,163 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Calendar, Briefcase, Code, Users } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  ArrowRight,
+  BadgeDollarSign,
+  BarChart3,
+  BookOpenCheck,
+  BriefcaseBusiness,
+  Check,
+  Circle,
+  FileCheck2,
+  FolderKanban,
+  Gauge,
+  MessageSquareText,
+  Route,
+  Search,
+  Sparkles,
+} from 'lucide-react';
+import roles from '@/public/data/roles.json';
+import { roleMeta } from '@/lib/career-data';
+import FeatureCard from '@/components/landing/FeatureCard';
+import RoleCard from '@/components/landing/RoleCard';
+import ScrollReveal from '@/components/landing/ScrollReveal';
+import { Badge, Container, CTASection, SectionCard, SectionHeading } from '@/components/landing/Primitives';
 
-// Floating card components
-function UserCard({ 
-  name, 
-  date, 
-  week, 
-  position, 
-  variant = 'light' 
-}: { 
-  name: string; 
-  date: string; 
-  week: string; 
-  position: string; 
-  variant?: 'light' | 'dark';
-}) {
-  const isLight = variant === 'light';
-  return (
-    <div className={`hidden md:absolute ${position} rounded-2xl px-4 py-3 shadow-lg border ${
-      isLight 
-        ? 'bg-white border-border' 
-        : 'bg-foreground text-background border-foreground'
-    }`}>
-      <div className="flex items-center gap-3">
-        <div className={`w-10 h-10 rounded-full ${isLight ? 'bg-purple-100' : 'bg-gray-700'} flex items-center justify-center`}>
-          <Users className={`w-5 h-5 ${isLight ? 'text-purple-600' : 'text-purple-400'}`} />
-        </div>
-        <div>
-          <p className={`font-semibold text-sm ${isLight ? 'text-foreground' : 'text-background'}`}>{name}</p>
-          <p className={`text-xs ${isLight ? 'text-muted' : 'text-gray-400'}`}>Started {date}</p>
-        </div>
-      </div>
-      <p className={`text-xs mt-2 ${isLight ? 'text-muted' : 'text-gray-400'}`}>{week}</p>
-    </div>
-  );
-}
+const rotatingRoles = ['Web3 Product Manager', 'Community Manager', 'Smart Contract Developer', 'DeFi Analyst', 'Content Creator'];
 
-function AppointmentCard({ position }: { position: string }) {
-  return (
-    <div className={`hidden md:absolute ${position} bg-white rounded-2xl p-4 shadow-lg border border-purple-200 rotate-6`}>
-      <p className="text-xs text-muted mb-1">Learn about</p>
-      <p className="font-semibold text-foreground text-sm">Blockchain Dev</p>
-      <div className="flex gap-2 mt-2">
-        <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">Solidity</span>
-        <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">Smart Contracts</span>
-      </div>
-      <div className="flex items-center gap-2 mt-3 text-purple-600">
-        <Calendar className="w-4 h-4" />
-        <span className="text-xs font-medium">Start Today</span>
-      </div>
-    </div>
-  );
-}
+const features = [
+  { href: '/roles', title: 'Explore Roles', description: 'Understand real daily work, skills, tools, and salary context.', icon: Search, accent: 'purple' as const },
+  { href: '/skill-check', title: 'Skill Check', description: 'Answer 10 questions and get matched to a realistic career lane.', icon: BookOpenCheck, accent: 'blue' as const },
+  { href: '/roadmap', title: 'Build Roadmap', description: 'Turn your target role into milestones you can complete.', icon: Route, accent: 'cyan' as const },
+  { href: '/interview', title: 'Interview Prep', description: 'Practice role-specific questions and structure stronger answers.', icon: MessageSquareText, accent: 'amber' as const },
+  { href: '/portfolio', title: 'Portfolio Builder', description: 'Know what proof-of-work you need before applying.', icon: FolderKanban, accent: 'pink' as const },
+  { href: '/salary', title: 'Salary Explorer', description: 'Compare compensation by role before negotiation.', icon: BadgeDollarSign, accent: 'green' as const },
+];
 
-function ExpertCard({ name, role, position, variant = 'dark' }: { name: string; role: string; position: string; variant?: 'dark' | 'purple' }) {
-  return (
-    <div className={`hidden md:absolute md:flex ${position} rounded-full px-4 py-2 items-center gap-3 shadow-lg ${
-      variant === 'dark' ? 'bg-foreground' : 'bg-purple-500'
-    }`}>
-      <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center">
-        <Briefcase className="w-4 h-4 text-white" />
-      </div>
-      <div>
-        <p className="font-semibold text-white text-sm">{name}</p>
-        <p className="text-xs text-gray-300">{role}</p>
-      </div>
-    </div>
-  );
-}
+const roleFilters = ['All', 'No-code', 'Writing', 'Technical', 'Research', 'Community', 'Growth'];
+const rolePreviewIds = ['community-manager', 'content-creator', 'defi-analyst', 'product-manager', 'smart-contract-developer', 'business-development'];
+const roleFilterMap: Record<string, string[]> = {
+  'community-manager': ['No-code', 'Community'], 'content-creator': ['No-code', 'Writing'], 'defi-analyst': ['Research'],
+  'product-manager': ['Growth'], 'smart-contract-developer': ['Technical'], 'business-development': ['No-code', 'Growth'],
+};
 
-// Press logos component
-function PressLogos() {
-  const logos = [
-    { name: 'CoinDesk', style: 'font-serif font-bold' },
-    { name: 'The Block', style: 'font-serif italic' },
-    { name: 'Decrypt', style: 'font-bold tracking-wider' },
-    { name: 'CryptoSlate', style: 'font-mono' },
-    { name: 'DeFi Pulse', style: 'font-bold' },
-    { name: 'Messari', style: 'font-semibold tracking-wide' },
-  ];
-
-  return (
-    <div className="flex items-center justify-center gap-8 md:gap-12 flex-wrap opacity-60">
-      {logos.map((logo) => (
-        <span key={logo.name} className={`text-foreground text-sm md:text-base ${logo.style}`}>
-          {logo.name}
-        </span>
-      ))}
-    </div>
-  );
-}
+const interviewQuestions = [
+  { category: 'Community', question: 'How would you handle an angry community after a delayed airdrop?' },
+  { category: 'Metrics', question: 'How do you measure community health?' },
+  { category: 'Research', question: 'What makes a good protocol breakdown?' },
+  { category: 'Product', question: 'How do you prioritize features as a Web3 PM?' },
+];
 
 export default function Home() {
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [activeFilter, setActiveFilter] = useState('All');
+
+  useEffect(() => {
+    const interval = window.setInterval(() => setRoleIndex((current) => (current + 1) % rotatingRoles.length), 2600);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const previewRoles = useMemo(() => rolePreviewIds
+    .map((id) => roles.find((role) => role.id === id))
+    .filter((role): role is (typeof roles)[number] => Boolean(role))
+    .filter((role) => activeFilter === 'All' || roleFilterMap[role.id]?.includes(activeFilter)), [activeFilter]);
+
   return (
-    <div className="page-wrapper">
-      {/* Grid background - fixed position, stays behind all content */}
-      <div className="grid-background opacity-50" />
-      
-      {/* Gradient orbs - soft blurry glows */}
-      <div className="gradient-orb-primary" />
-      <div className="gradient-orb-secondary" />
-      
-      {/* Hero Section */}
-      <section className="relative px-4 py-12 sm:py-20 sm:px-6 lg:px-8 pt-24 sm:pt-32 overflow-hidden">
-        
-        <div className="max-w-5xl mx-auto text-center relative page-content">
-          {/* Floating UI Elements */}
-          <UserCard 
-            name="Alex Chen" 
-            date="Wed 12 Mar, 2026" 
-            week="Week 4, Day 2"
-            position="left-0 md:-left-8 top-12 md:top-24 -rotate-3"
-            variant="light"
-          />
-          
-          <UserCard 
-            name="Sarah Kim" 
-            date="Mon 10 Mar, 2026" 
-            week="Week 6, Day 5"
-            position="right-0 md:-right-4 top-20 md:top-32 rotate-2"
-            variant="light"
-          />
-          
-          <AppointmentCard position="left-1/2 -translate-x-1/2 top-48 md:top-56" />
-          
-          <ExpertCard 
-            name="DeFi Expert"
-            role="Advisor"
-            position="left-4 md:left-16 bottom-48 md:bottom-64"
-            variant="dark"
-          />
-          
-          <ExpertCard 
-            name="Smart Contract Dev"
-            role="Mentor"
-            position="right-4 md:right-8 bottom-40 md:bottom-56"
-            variant="purple"
-          />
+    <div className="landing-page pb-6 pt-24 sm:pb-8 sm:pt-28">
+      <Container className="space-y-6 sm:space-y-8">
+        <SectionCard className="hero-surface relative overflow-hidden px-5 pb-10 pt-14 sm:px-10 sm:pb-14 sm:pt-16 lg:px-16 lg:pb-16 lg:pt-20">
+          <div className="hero-grid" aria-hidden="true" />
+          <div className="hero-glow hero-glow-one" aria-hidden="true" />
+          <div className="hero-glow hero-glow-two" aria-hidden="true" />
 
-          {/* Decorative cursor icons */}
-          <div className="absolute left-1/4 top-1/3 hidden md:block">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-purple-400">
-              <path d="M5 3L19 12L12 13L9 20L5 3Z" stroke="currentColor" strokeWidth="2" fill="currentColor"/>
-            </svg>
-          </div>
-          <div className="absolute right-1/4 bottom-1/3 hidden md:block">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-foreground">
-              <path d="M5 3L19 12L12 13L9 20L5 3Z" stroke="currentColor" strokeWidth="2" fill="currentColor"/>
-            </svg>
-          </div>
-          
-          {/* Main Content */}
-          <div className="pt-8 md:pt-48 pb-8">
-            <h1 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl md:text-7xl font-medium mb-4 sm:mb-6 text-foreground leading-tight text-balance">
-              Career Matters.
-              <br />
-              <span className="text-muted">Empowering You</span>
-              <br />
-              For Web3 & Crypto
-              <br />
-              To Build Tomorrow
+          <Link href="/roles" className="hero-float-card hero-float-left-top hidden lg:flex">
+            <span className="hero-float-icon bg-purple-100 text-purple-700"><BriefcaseBusiness className="h-4 w-4" /></span>
+            <span><strong>Role guide</strong><small>20 career paths</small></span>
+          </Link>
+          <Link href="/skill-check" className="hero-float-card hero-float-right-top hidden lg:flex">
+            <span className="hero-float-icon bg-blue-100 text-blue-700"><Gauge className="h-4 w-4" /></span>
+            <span><strong>Skill check</strong><small>Find your lane</small></span>
+          </Link>
+          <Link href="/portfolio" className="hero-float-card hero-float-left-bottom hidden lg:flex">
+            <span className="hero-float-icon bg-pink-100 text-pink-700"><FileCheck2 className="h-4 w-4" /></span>
+            <span><strong>Portfolio</strong><small>Prove the work</small></span>
+          </Link>
+          <Link href="/interview" className="hero-float-card hero-float-right-bottom hidden lg:flex">
+            <span className="hero-float-icon bg-amber-100 text-amber-700"><MessageSquareText className="h-4 w-4" /></span>
+            <span><strong>Interview prep</strong><small>Practice answers</small></span>
+          </Link>
+
+          <div className="relative z-10 mx-auto max-w-3xl text-center">
+            <Badge tone="neutral"><Sparkles className="h-3.5 w-3.5 text-purple-600" />Your practical map into Web3 work</Badge>
+            <h1 className="mt-7 text-4xl font-semibold leading-[1.04] tracking-[-0.055em] text-foreground sm:text-6xl lg:text-7xl">
+              Know the work before<br className="hidden sm:block" /> you chase the title.
             </h1>
-            
-            <p className="text-base sm:text-lg text-muted mb-6 sm:mb-10 max-w-xl mx-auto">
-              Educational resources for Web3 careers.
-              <br />
-              Empowering the curious to build the future.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-20">
-              <Link 
-                href="/glossary" 
-                className="px-6 py-3 sm:px-8 sm:py-3.5 bg-white border border-border text-foreground font-medium rounded-full hover:bg-gray-50 transition-all shadow-sm text-sm sm:text-base"
-              >
-                Learn More
-              </Link>
-              <Link 
-                href="/roles" 
-                className="px-6 py-3 sm:px-8 sm:py-3.5 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
-              >
-                Get Started
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+            <div className="mt-6 flex min-h-9 flex-wrap items-center justify-center text-base text-muted sm:text-lg">
+              <span>I want to become a&nbsp;</span>
+              <span key={rotatingRoles[roleIndex]} className="role-swap font-semibold text-purple-700">{rotatingRoles[roleIndex]}</span>
+              <span className="ml-1 h-5 w-px animate-pulse bg-purple-600" aria-hidden="true" />
+            </div>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted sm:text-lg">Understand real roles, test your readiness, build proof-of-work, and apply with context—not guesswork.</p>
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link href="/roles" className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-black/10 transition hover:-translate-y-0.5">Find my role <ArrowRight className="h-4 w-4" /></Link>
+              <Link href="/skill-check" className="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-white px-6 py-3.5 text-sm font-semibold text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-purple-200">Start skill check</Link>
             </div>
           </div>
-        </div>
 
-        {/* Press Logos Bar */}
-        <div className="max-w-5xl mx-auto pt-8 pb-4 border-t border-border relative z-10">
-          <PressLogos />
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-12 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 sm:mb-16">
-            <h2 className="font-[family-name:var(--font-playfair)] text-3xl sm:text-4xl md:text-5xl font-medium text-foreground mb-3 sm:mb-4">
-              Everything You Need
-            </h2>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
-              Comprehensive resources to help you navigate and succeed in the Web3 ecosystem
-            </p>
+          <div className="relative z-10 mx-auto mt-12 grid max-w-2xl grid-cols-3 overflow-hidden rounded-2xl border border-black/[0.06] bg-white/80 shadow-sm backdrop-blur sm:mt-16">
+            {[['20', 'Role guides'], ['54+', 'Terms decoded'], ['14', 'Job boards']].map(([value, label], index) => <div key={label} className={`px-2 py-4 text-center sm:px-5 ${index ? 'border-l border-black/[0.06]' : ''}`}><strong className="block text-lg sm:text-2xl">{value}</strong><span className="mt-0.5 block text-[10px] text-muted sm:text-xs">{label}</span></div>)}
           </div>
+        </SectionCard>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-purple-500/10 transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center mb-6">
-                <Briefcase className="w-6 h-6 text-purple-600" />
+        <ScrollReveal>
+          <SectionCard className="p-5 sm:p-8 lg:p-10">
+            <SectionHeading eyebrow="Career toolkit" title="Everything you need before applying" copy="Move through one clear journey—from understanding the role to proving you can do the work." align="center" />
+            <div className="mt-9 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{features.map((feature, index) => <ScrollReveal key={feature.href} delay={index * 45}><FeatureCard {...feature} /></ScrollReveal>)}</div>
+          </SectionCard>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <SectionCard className="p-5 sm:p-8 lg:p-10">
+            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+              <SectionHeading eyebrow="Role preview" title="Pick a lane, then learn the work." copy="Filter by the kind of work you enjoy. Each guide explains the day-to-day reality, not just the job title." />
+              <Link href="/roles" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-purple-700">Explore all roles <ArrowRight className="h-4 w-4" /></Link>
+            </div>
+            <div className="mt-7 flex gap-2 overflow-x-auto pb-2">{roleFilters.map((filter) => <button key={filter} onClick={() => setActiveFilter(filter)} className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${activeFilter === filter ? 'bg-foreground text-white' : 'border border-black/[0.06] bg-white text-muted hover:text-foreground'}`}>{filter}</button>)}</div>
+            <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{previewRoles.map((role) => <RoleCard key={role.id} href={`/roles/${role.id}`} title={role.name === 'Business Development' ? 'Growth / BD' : role.name} difficulty={roleMeta[role.id]?.difficulty ?? role.category} description={role.dayInTheLife.split('.').slice(0, 2).join('.') + '.'} skills={role.mustHaveSkills} />)}</div>
+            {previewRoles.length === 0 && <div className="mt-6 rounded-2xl border border-dashed border-black/10 bg-white p-8 text-center text-sm text-muted">No preview role matches this filter yet. <Link href="/roles" className="font-semibold text-purple-700">Browse every role.</Link></div>}
+          </SectionCard>
+        </ScrollReveal>
+
+        <ScrollReveal><CTASection badge="No wallet. No hype. No gatekeeping." title="Start with a ten-question reality check." copy="Get matched to a career lane based on what you already enjoy doing, then leave with a concrete next step." href="/skill-check" label="Start skill check" /></ScrollReveal>
+
+        <ScrollReveal>
+          <SectionCard className="overflow-hidden p-5 sm:p-8 lg:p-10">
+            <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+              <div><Badge tone="blue"><Route className="h-3.5 w-3.5" />30-day progress</Badge><h2 className="mt-5 text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">Your roadmap should feel doable, not imaginary.</h2><p className="mt-4 max-w-lg leading-7 text-muted">Break a target role into weekly outcomes, save progress in your browser, and always know the next useful action.</p><Link href="/roadmap" className="mt-7 inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-semibold text-white">Build my roadmap <ArrowRight className="h-4 w-4" /></Link></div>
+              <div className="roadmap-preview rounded-3xl border border-black/[0.06] bg-[#f8f8fa] p-5 shadow-[0_22px_60px_rgba(25,20,48,0.09)] sm:p-7">
+                <div className="flex items-center justify-between"><div><p className="text-xs font-semibold text-purple-600">COMMUNITY MANAGER</p><h3 className="mt-1 font-semibold">4-week starter roadmap</h3></div><strong className="text-2xl text-purple-700">50%</strong></div>
+                <div className="mt-5 h-2 overflow-hidden rounded-full bg-white"><div className="roadmap-progress h-full w-1/2 rounded-full bg-gradient-to-r from-purple-600 to-blue-500" /></div>
+                <div className="mt-5 space-y-3">{[['Week 1', 'Learn the role', true], ['Week 2', 'Build basic skills', true], ['Week 3', 'Create proof-of-work', false], ['Week 4', 'Apply with context', false]].map(([week, task, done]) => <div key={String(week)} className={`flex items-center gap-3 rounded-xl border p-3.5 ${done ? 'border-emerald-100 bg-white' : 'border-black/[0.05] bg-white/60'}`}><span className={`flex h-7 w-7 items-center justify-center rounded-full ${done ? 'bg-emerald-500 text-white' : 'bg-[#eeeef2] text-muted'}`}>{done ? <Check className="h-4 w-4" /> : <Circle className="h-4 w-4" />}</span><span><small className="block text-[10px] font-semibold uppercase tracking-wider text-muted">{week}</small><strong className="text-sm">{task}</strong></span></div>)}</div>
               </div>
-              <h3 className="font-semibold text-foreground text-lg mb-2">8+ Roles</h3>
-              <p className="text-muted text-sm leading-relaxed">
-                From blockchain developers to NFT artists, detailed profiles with interview questions.
-              </p>
             </div>
+          </SectionCard>
+        </ScrollReveal>
 
-            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-purple-500/10 transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center mb-6">
-                <Code className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="font-semibold text-foreground text-lg mb-2">Web3 Glossary</h3>
-              <p className="text-muted text-sm leading-relaxed">
-                Master 50+ essential terms from blockchain basics to advanced DeFi concepts.
-              </p>
-            </div>
+        <ScrollReveal>
+          <SectionCard className="p-5 sm:p-8 lg:p-10">
+            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end"><SectionHeading eyebrow="Interview prep" title="Practice the judgment behind the answer." copy="Use role-specific prompts to rehearse calm, structured answers before the real conversation." /><Link href="/interview" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-purple-700">Practice interview questions <ArrowRight className="h-4 w-4" /></Link></div>
+            <div className="mt-8 grid gap-4 md:grid-cols-2">{interviewQuestions.map((item, index) => <Link key={item.question} href="/interview" className="group rounded-2xl border border-black/[0.06] bg-white p-5 transition hover:-translate-y-1 hover:border-purple-200 hover:shadow-[0_15px_35px_rgba(64,47,120,0.08)]"><div className="flex items-center justify-between"><Badge tone={index % 2 ? 'blue' : 'purple'}>{item.category}</Badge><span className="text-xs font-semibold text-muted">0{index + 1}</span></div><h3 className="mt-6 max-w-md text-lg font-semibold leading-7 tracking-[-0.015em]">“{item.question}”</h3><span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-purple-700">See answer framework <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span></Link>)}</div>
+          </SectionCard>
+        </ScrollReveal>
 
-            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-blue-500/10 transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center mb-6">
-                <Users className="w-6 h-6 text-purple-600" />
-              </div>
-              <h3 className="font-semibold text-foreground text-lg mb-2">Get Hired</h3>
-              <p className="text-muted text-sm leading-relaxed">
-                Proven strategies to build portfolios, network, and land your dream Web3 job.
-              </p>
-            </div>
-
-            <div className="p-8 bg-background rounded-3xl border border-border hover:shadow-lg hover:shadow-blue-500/10 transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center mb-6">
-                <Calendar className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="font-semibold text-foreground text-lg mb-2">Job Boards</h3>
-              <p className="text-muted text-sm leading-relaxed">
-                Access 12+ top job boards with thousands of active Web3 opportunities.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-3 gap-6">
-            <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm hover:shadow-md hover:shadow-purple-500/10 transition-all">
-              <div className="text-4xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-purple-600 mb-2">8+</div>
-              <div className="text-muted text-sm">Role Profiles</div>
-            </div>
-            <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm hover:shadow-md hover:shadow-blue-500/10 transition-all">
-              <div className="text-4xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-blue-600 mb-2">50+</div>
-              <div className="text-muted text-sm">Glossary Terms</div>
-            </div>
-            <div className="text-center p-8 bg-white rounded-3xl border border-border shadow-sm hover:shadow-md hover:shadow-purple-500/10 transition-all">
-              <div className="text-4xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-purple-600 mb-2">12</div>
-              <div className="text-muted text-sm">Job Boards</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-medium text-foreground mb-6">
-            Ready to Launch Your Web3 Career?
-          </h2>
-          <p className="text-muted text-lg mb-10 max-w-xl mx-auto">
-            Start exploring roles, learning Web3 fundamentals, and connecting with opportunities today.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/glossary" 
-              className="px-8 py-3.5 bg-white border border-border text-foreground font-medium rounded-full hover:bg-gray-50 transition-all shadow-sm"
-            >
-              Learn More
-            </Link>
-            <Link 
-              href="/roles" 
-              className="px-8 py-3.5 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-all flex items-center justify-center gap-2"
-            >
-              Browse All Roles
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
+        <ScrollReveal>
+          <SectionCard className="overflow-hidden bg-[linear-gradient(135deg,#f5f1ff_0%,#eff6ff_55%,#f8f8fb_100%)] p-7 sm:p-10">
+            <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]"><div><Badge><BarChart3 className="h-3.5 w-3.5" />Ready to move forward?</Badge><h2 className="mt-5 text-3xl font-semibold tracking-[-0.035em]">Take your next step with context.</h2><p className="mt-3 max-w-xl leading-7 text-muted">Explore trusted job boards after you understand the role, test your readiness, and build evidence recruiters can inspect.</p></div><Link href="/jobs" className="inline-flex w-fit items-center gap-2 rounded-full bg-purple-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-purple-600/15 transition hover:-translate-y-0.5">Browse job boards <ArrowRight className="h-4 w-4" /></Link></div>
+          </SectionCard>
+        </ScrollReveal>
+      </Container>
     </div>
   );
 }
