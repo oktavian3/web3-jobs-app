@@ -1,30 +1,17 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Inter, Playfair_Display } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-});
+import SiteChrome from "@/components/SiteChrome";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://usekraft.xyz"),
   title: {
-    default: "KRAFT — Build Your Web3 Career",
+    default: "KRAFT — Learn the Work Before the Title",
     template: "%s | KRAFT",
   },
   description:
-    "Explore Web3 roles, test your skills, build a roadmap, practice interviews, and find trusted job boards.",
+    "A practical Web3 career course to understand roles, build proof-of-work, prepare for interviews, and apply with context.",
   keywords: [
     "web3 jobs",
     "blockchain careers",
@@ -33,8 +20,8 @@ export const metadata: Metadata = {
     "web3 education",
   ],
   openGraph: {
-    title: "KRAFT — Build Your Web3 Career",
-    description: "Know what the work takes before you apply.",
+    title: "KRAFT — Learn the Work Before the Title",
+    description: "Learn the work, build proof-of-work, and apply with context.",
     url: "https://usekraft.xyz",
     siteName: "KRAFT",
     type: "website",
@@ -45,14 +32,9 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en">
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
-        <div className="flex min-h-screen flex-col">
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
-        <Analytics />
+        <SiteChrome>{children}</SiteChrome>
         <GoogleAnalytics gaId="G-58F9FBFVMS" />
       </body>
     </html>
