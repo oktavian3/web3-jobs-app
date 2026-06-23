@@ -11,7 +11,6 @@ export default function Navbar() {
   const links = [
     { href: '/', label: 'Home' },
     { href: '/roles', label: 'Roles' },
-    { href: '/skill-check', label: 'Skill Check' },
     { href: '/glossary', label: 'Glossary' },
     { href: '/get-hired', label: 'Get Hired' },
   ];

@@ -10,7 +10,6 @@ const explore = [
 ];
 
 const tools = [
-  ['/skill-check', 'Skill check'],
   ['/roadmap', 'Roadmap'],
   ['/interview', 'Interview prep'],
   ['/portfolio', 'Portfolio builder'],
