@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { ArrowLeft, Briefcase, Code, DollarSign, Zap, Lightbulb, CheckCircle, BookOpen, ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowLeft, Briefcase, Code, DollarSign, Zap, Lightbulb, CheckCircle, BookOpen, ArrowRight, Sparkles, ClipboardCheck, Route } from 'lucide-react';
 
 interface Role {
   id: string;
@@ -107,6 +107,19 @@ export default function RoleDetailPage() {
 
   const nextRole = allRoles[(allRoles.findIndex(r => r.id === role.id) + 1) % allRoles.length];
 
+  const starterRoadmap = [
+    'Week 1: learn the role, vocabulary, and tools recruiters expect.',
+    'Week 2: copy real workflows by studying projects, docs, dashboards, and communities.',
+    'Week 3: publish one proof-of-work artifact from the checklist below.',
+    'Week 4: refine your portfolio, rehearse interview answers, and apply to 5 targeted roles.',
+  ];
+
+  const portfolioChecklist = [
+    ...role.proofOfWorkTips.slice(0, 3),
+    `Write a short case study explaining how your ${role.name} work creates value.`,
+    'Package links, screenshots, and outcomes into one recruiter-friendly portfolio page.',
+  ];
+
   return (
     <div className="page-wrapper">
       {/* Grid background */}
@@ -209,6 +222,24 @@ export default function RoleDetailPage() {
             </div>
           </div>
 
+          {/* Starter Roadmap */}
+          <section className="bg-white rounded-2xl p-8 border border-border shadow-sm mb-8">
+            <h2 className="text-xl font-semibold mb-6 flex items-center gap-3 text-foreground">
+              <div className="w-10 h-10 rounded-xl bg-cyan-100 flex items-center justify-center">
+                <Route className="w-5 h-5 text-cyan-700" />
+              </div>
+              30-Day Starter Roadmap
+            </h2>
+            <div className="space-y-3">
+              {starterRoadmap.map((step, idx) => (
+                <div key={step} className="flex gap-4 rounded-xl border border-border bg-background p-4">
+                  <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-foreground text-sm font-bold text-white">{idx + 1}</span>
+                  <p className="text-sm leading-6 text-muted">{step}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* Tools & Protocols */}
           <div className="bg-white rounded-2xl p-6 border border-border shadow-sm mb-8 hover:shadow-lg hover:shadow-purple-500/5 transition-shadow">
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-foreground">
@@ -265,11 +296,34 @@ export default function RoleDetailPage() {
             </div>
           </section>
 
+          {/* Portfolio Checklist */}
+          <section className="bg-white rounded-2xl p-8 border border-border shadow-sm mb-8">
+            <h2 className="text-xl font-semibold mb-6 flex items-center gap-3 text-foreground">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+                <ClipboardCheck className="w-5 h-5 text-emerald-700" />
+              </div>
+              Portfolio Checklist
+            </h2>
+            <div className="grid gap-3 md:grid-cols-2">
+              {portfolioChecklist.map((item, idx) => (
+                <div key={`${item}-${idx}`} className="flex gap-3 rounded-xl border border-emerald-100 bg-emerald-50/60 p-4">
+                  <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-600" />
+                  <p className="text-sm leading-6 text-muted">{item}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* Compensation */}
           <div className="bg-gradient-to-r from-purple-50 via-blue-50 to-purple-50 rounded-2xl p-8 border border-purple-200 mb-8">
             <h2 className="text-xl font-semibold mb-4 text-foreground">Average Compensation</h2>
             <div className="text-3xl font-bold text-purple-600 mb-2">{role.avgCompRange.usd}</div>
             <p className="text-muted">{role.avgCompRange.note}</p>
+            <div className="mt-5 grid gap-3 text-sm md:grid-cols-3">
+              <div className="rounded-xl bg-white/70 p-4"><strong className="block text-foreground">Junior / Asia</strong><span className="text-muted">Often lower than global ranges; use this as negotiation context, not a promise.</span></div>
+              <div className="rounded-xl bg-white/70 p-4"><strong className="block text-foreground">Remote senior</strong><span className="text-muted">Top compensation usually needs shipped proof, security judgment, or domain expertise.</span></div>
+              <div className="rounded-xl bg-white/70 p-4"><strong className="block text-foreground">Token upside</strong><span className="text-muted">Treat token grants as volatile upside, not guaranteed cash salary.</span></div>
+            </div>
           </div>
 
           {/* Interview Questions */}

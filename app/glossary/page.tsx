@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Search, BookOpen, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface GlossaryTerm {
@@ -11,7 +11,6 @@ interface GlossaryTerm {
 
 export default function GlossaryPage() {
   const [terms, setTerms] = useState<GlossaryTerm[]>([]);
-  const [filteredTerms, setFilteredTerms] = useState<GlossaryTerm[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedTerms, setExpandedTerms] = useState<Set<number>>(new Set());
@@ -20,12 +19,12 @@ export default function GlossaryPage() {
     fetch('/data/glossary.json')
       .then(res => res.json())
       .then(data => {
-        setTerms(data);
-        setFilteredTerms(data);
-      });
+        setTerms(Array.isArray(data) ? data : []);
+      })
+      .catch(() => setTerms([]));
   }, []);
 
-  useEffect(() => {
+  const filteredTerms = useMemo(() => {
     let filtered = terms;
 
     if (selectedCategory !== 'all') {
@@ -39,7 +38,7 @@ export default function GlossaryPage() {
       );
     }
 
-    setFilteredTerms(filtered);
+    return filtered;
   }, [selectedCategory, searchTerm, terms]);
 
   const categories = ['all', ...new Set(terms.map(t => t.category))];
@@ -161,8 +160,11 @@ export default function GlossaryPage() {
           </div>
 
           {filteredTerms.length === 0 && (
-            <div className="text-center py-16">
-              <p className="text-muted text-lg">No terms found matching your search.</p>
+            <div className="rounded-2xl border border-dashed border-purple-200 bg-white p-10 text-center shadow-sm">
+              <Search className="mx-auto mb-4 h-10 w-10 text-purple-300" />
+              <h3 className="mb-2 text-lg font-semibold text-foreground">No glossary term matches that search</h3>
+              <p className="mx-auto mb-5 max-w-md text-sm leading-6 text-muted">Reset the search to keep learning wallet, DeFi, smart contract, and governance terms.</p>
+              <button onClick={() => { setSearchTerm(''); setSelectedCategory('all'); }} className="rounded-full bg-foreground px-5 py-3 text-sm font-semibold text-white">View all terms</button>
             </div>
           )}
 
