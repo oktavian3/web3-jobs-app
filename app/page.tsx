@@ -1,193 +1,294 @@
-'use client';
-
-import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import Link from "next/link";
 import {
   ArrowRight,
-  BadgeDollarSign,
   BarChart3,
   BriefcaseBusiness,
-  Check,
-  Circle,
-  FileCheck2,
-  FolderKanban,
-  MessageSquareText,
-  Route,
+  CandlestickChart,
+  Code2,
+  Gauge,
+  Megaphone,
+  Palette,
+  PenLine,
+  Scale,
   Search,
+  Settings2,
   Sparkles,
-} from 'lucide-react';
-import roles from '@/public/data/roles.json';
-import { roleMeta } from '@/lib/career-data';
-import FeatureCard from '@/components/landing/FeatureCard';
-import RoleCard from '@/components/landing/RoleCard';
-import ScrollReveal from '@/components/landing/ScrollReveal';
-import { Badge, Container, SectionCard, SectionHeading } from '@/components/landing/Primitives';
+  type LucideIcon,
+} from "lucide-react";
+import { careerLanes, roles, type CareerLane } from "@/data/roles";
+import { glossaryTerms } from "@/data/glossary";
+import { jobBoards } from "@/data/jobBoards";
+import { getActiveCuratedJobs, selectedJobPlatforms } from "@/data/curatedJobs";
+import { Shell, Container, BluePanel, Eyebrow, SectionHeading, PrimaryLink, SecondaryLink, FinalCTA, Card } from "@/components/kraft/Primitives";
+import { RoleCard } from "@/components/kraft/Cards";
+import { CountUp, ProofChecklistAnimation } from "@/components/kraft/AnimatedBits";
+import LearningPreview from "@/components/kraft/LearningPreview";
+import HeroProductPreview from "@/components/kraft/HeroProductPreview";
 
-const rotatingRoles = ['Web3 Product Manager', 'Community Manager', 'Smart Contract Developer', 'DeFi Analyst', 'Content Creator'];
-
-const features = [
-  { href: '/roles', title: 'Explore Roles', description: 'Understand real daily work, skills, tools, and salary context.', icon: Search, accent: 'purple' as const },
-  { href: '/roadmap', title: 'Build Roadmap', description: 'Turn your target role into milestones you can complete.', icon: Route, accent: 'cyan' as const },
-  { href: '/interview', title: 'Interview Prep', description: 'Practice role-specific questions and structure stronger answers.', icon: MessageSquareText, accent: 'amber' as const },
-  { href: '/portfolio', title: 'Portfolio Builder', description: 'Know what proof-of-work you need before applying.', icon: FolderKanban, accent: 'pink' as const },
-  { href: '/salary', title: 'Salary Explorer', description: 'Compare compensation by role before negotiation.', icon: BadgeDollarSign, accent: 'green' as const },
+const startCards = [
+  { title: "New to Web3", copy: "Understand the industry, basic terms, and which roles do not require coding.", cta: "Learn the Basics", href: "/learn-web3" },
+  { title: "Exploring a Career", copy: "Compare roles, test your fit, and see what the work looks like day to day.", cta: "Find My Role", href: "/skill-check", featured: true },
+  { title: "Ready to Apply", copy: "Build proof-of-work, practice interviews, and use better job sources.", cta: "Get Hired", href: "/get-hired" },
 ];
 
-const roleFilters = ['All', 'No-code', 'Writing', 'Technical', 'Research', 'Community', 'Growth'];
-const rolePreviewIds = ['community-manager', 'content-creator', 'defi-analyst', 'product-manager', 'smart-contract-developer', 'business-development'];
-const roleFilterMap: Record<string, string[]> = {
-  'community-manager': ['No-code', 'Community'], 'content-creator': ['No-code', 'Writing'], 'defi-analyst': ['Research'],
-  'product-manager': ['Growth'], 'smart-contract-developer': ['Technical'], 'business-development': ['No-code', 'Growth'],
+const productMetrics = [
+  { value: roles.length, label: "detailed role guides" },
+  { value: glossaryTerms.length, label: "practical glossary terms" },
+  { value: careerLanes.length, label: "career lanes" },
+  { value: jobBoards.length, label: "curated job platforms" },
+];
+
+const laneIcons: Record<CareerLane, LucideIcon> = {
+  "Community & Growth": Megaphone,
+  "Content & Marketing": PenLine,
+  "Product & Operations": Settings2,
+  "Research & Data": BarChart3,
+  "Technical & Security": Code2,
+  "Creative & Design": Palette,
+  "Governance, Legal & People": Scale,
+  "Trading & Finance Adjacent": CandlestickChart,
 };
 
-const heroStats = [
-  { value: '20', label: 'Role guides' },
-  { value: '54+', label: 'Terms decoded' },
-  { value: '14', label: 'Job boards' },
-];
-
-const roadmapWeeks = [
-  { week: 'Week 1', task: 'Learn the role', done: true },
-  { week: 'Week 2', task: 'Build basic skills', done: true },
-  { week: 'Week 3', task: 'Create proof-of-work', done: false },
-  { week: 'Week 4', task: 'Apply with context', done: false },
-];
-
-const interviewQuestions = [
-  { category: 'Community', question: 'How would you handle an angry community after a delayed airdrop?' },
-  { category: 'Metrics', question: 'How do you measure community health?' },
-  { category: 'Research', question: 'What makes a good protocol breakdown?' },
-  { category: 'Product', question: 'How do you prioritize features as a Web3 PM?' },
-];
+const selectedPlatforms = selectedJobPlatforms
+  .slice(0, 4)
+  .map((selection) => ({ selection, board: jobBoards.find((board) => board.slug === selection.platformSlug) }))
+  .filter((item): item is { selection: (typeof selectedJobPlatforms)[number]; board: (typeof jobBoards)[number] } => Boolean(item.board));
+const proofChecklistItems = ["Role-specific project", "Documented result", "Portfolio case study", "Tailored application", "Interview preparation"];
+const latestCuratedJobs = getActiveCuratedJobs().slice(0, 3);
 
 export default function Home() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [activeFilter, setActiveFilter] = useState('All');
-
-  useEffect(() => {
-    const interval = window.setInterval(() => setRoleIndex((current) => (current + 1) % rotatingRoles.length), 2600);
-    return () => window.clearInterval(interval);
-  }, []);
-
-  const previewRoles = useMemo(() => rolePreviewIds
-    .map((id) => roles.find((role) => role.id === id))
-    .filter((role): role is (typeof roles)[number] => Boolean(role))
-    .filter((role) => activeFilter === 'All' || roleFilterMap[role.id]?.includes(activeFilter)), [activeFilter]);
-
   return (
-    <div className="landing-page pb-6 pt-24 sm:pb-8 sm:pt-28">
-      <Container className="space-y-6 sm:space-y-8">
-        <SectionCard className="hero-surface relative overflow-hidden px-5 pb-10 pt-14 sm:px-10 sm:pb-14 sm:pt-16 lg:px-16 lg:pb-16 lg:pt-20">
-          <div className="hero-grid" aria-hidden="true" />
-          <div className="hero-glow hero-glow-one" aria-hidden="true" />
-          <div className="hero-glow hero-glow-two" aria-hidden="true" />
-
-          <Link href="/roles" className="hero-float-card hero-float-left-top hidden lg:flex">
-            <span className="hero-float-icon bg-purple-100 text-purple-700"><BriefcaseBusiness className="h-4 w-4" /></span>
-            <span><strong>Role guide</strong><small>20 career paths</small></span>
-          </Link>
-          <Link href="/roadmap" className="hero-float-card hero-float-right-top hidden lg:flex">
-            <span className="hero-float-icon bg-blue-100 text-blue-700"><Route className="h-4 w-4" /></span>
-            <span><strong>Roadmap</strong><small>Follow the path</small></span>
-          </Link>
-          <Link href="/portfolio" className="hero-float-card hero-float-left-bottom hidden lg:flex">
-            <span className="hero-float-icon bg-pink-100 text-pink-700"><FileCheck2 className="h-4 w-4" /></span>
-            <span><strong>Portfolio</strong><small>Prove the work</small></span>
-          </Link>
-          <Link href="/interview" className="hero-float-card hero-float-right-bottom hidden lg:flex">
-            <span className="hero-float-icon bg-amber-100 text-amber-700"><MessageSquareText className="h-4 w-4" /></span>
-            <span><strong>Interview prep</strong><small>Practice answers</small></span>
-          </Link>
-
-          <div className="relative z-10 mx-auto max-w-3xl text-center">
-            <Badge tone="neutral">
-              <Sparkles className="h-3.5 w-3.5 text-purple-600" />
-              Your practical map into Web3 work
-            </Badge>
-            <h1 className="mt-7 text-4xl font-semibold leading-[1.04] tracking-[-0.055em] text-foreground sm:text-6xl lg:text-7xl">
-              Know the work before<br className="hidden sm:block" /> you chase the title.
+    <Shell>
+      <Container className="space-y-24 py-6 sm:space-y-28 sm:py-8">
+        <BluePanel className="px-5 pb-8 pt-14 text-center sm:px-10 sm:pb-12 sm:pt-16 lg:px-16">
+          <div className="relative z-10 mx-auto max-w-4xl">
+            <span className="inline-flex rounded-full border border-white/35 bg-white/15 px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.14em] text-white backdrop-blur">
+              Web3 Career Learning Centre
+            </span>
+            <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl">
+              Know the work before you chase the title.
             </h1>
-            <div className="mt-6 flex min-h-9 flex-wrap items-center justify-center text-base text-muted sm:text-lg">
-              <span>I want to become a&nbsp;</span>
-              <span key={rotatingRoles[roleIndex]} className="role-swap font-semibold text-purple-700">
-                {rotatingRoles[roleIndex]}
-              </span>
-              <span className="ml-1 h-5 w-px animate-pulse bg-purple-600" aria-hidden="true" />
-            </div>
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted sm:text-lg">
-              Understand real roles, follow practical roadmaps, build proof-of-work, and apply with context, not guesswork.
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-blue-50 sm:text-lg">
+              Explore real Web3 roles, test your fit, learn the language, build proof-of-work, and apply with context.
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link href="/roles" className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-black/10 transition hover:-translate-y-0.5">
-                Find my role <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link href="/roadmap" className="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-white px-6 py-3.5 text-sm font-semibold text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-purple-200">
-                Build roadmap
-              </Link>
+              <Link href="/skill-check" className="btn-white">Find My Role <ArrowRight className="h-4 w-4" /></Link>
+              <Link href="/roles" className="btn-ghost-white">Explore Roles</Link>
             </div>
           </div>
 
-          <div className="relative z-10 mx-auto mt-12 grid max-w-2xl grid-cols-3 overflow-hidden rounded-2xl border border-black/[0.06] bg-white/80 shadow-sm backdrop-blur sm:mt-16">
-            {heroStats.map(({ value, label }, index) => (
-              <div key={label} className={`px-2 py-4 text-center sm:px-5 ${index ? 'border-l border-black/[0.06]' : ''}`}>
-                <strong className="block text-lg sm:text-2xl">{value}</strong>
-                <span className="mt-0.5 block text-[10px] text-muted sm:text-xs">{label}</span>
-              </div>
+          <HeroProductPreview />
+        </BluePanel>
+
+        <section className="reveal-card overflow-hidden rounded-[32px] border border-blue-100 bg-[radial-gradient(circle_at_20%_0%,rgba(20,107,255,0.18),transparent_32%),linear-gradient(145deg,#ffffff_0%,#f2f8ff_52%,#e5f2ff_100%)] p-5 text-center shadow-blue sm:p-8 lg:p-10">
+          <span className="tag">KRAFT overview</span>
+          <h2 className="mt-4 text-2xl font-extrabold tracking-tight text-ink sm:text-4xl">One place to understand Web3 work.</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-muted sm:text-base">
+            The role library, glossary, job sources, and proof tasks all point to the same outcome: clearer applications with visible evidence.
+          </p>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {productMetrics.map((metric) => (
+              <Card key={metric.label} className="reveal-card bg-white/88 p-5">
+                <strong className="text-3xl font-extrabold text-blue-700"><CountUp value={metric.value} /></strong>
+                <p className="mt-1 text-sm font-bold text-muted">{metric.label}</p>
+              </Card>
             ))}
           </div>
-        </SectionCard>
+        </section>
 
-        <ScrollReveal>
-          <SectionCard className="p-5 sm:p-8 lg:p-10">
-            <SectionHeading eyebrow="Career toolkit" title="Everything you need before applying" copy="Move through one clear journey—from understanding the role to proving you can do the work." align="center" />
-            <div className="mt-9 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {features.map((feature, index) => (
-                <ScrollReveal key={feature.href} delay={index * 45}>
-                  <FeatureCard {...feature} />
-                </ScrollReveal>
+        <section className="reveal-card">
+          <SectionHeading eyebrow="Built for different starting points" title="Start with the question you actually have." />
+          <div className="mt-10 grid items-center gap-5 lg:grid-cols-3">
+            {startCards.map((card) => (
+              <Card key={card.title} className={`reveal-card group relative overflow-hidden p-6 transition duration-300 hover:-translate-y-2 hover:border-blue-300 hover:shadow-blue focus-within:border-blue-400 ${card.featured ? "border-blue-200 bg-[linear-gradient(145deg,#eaf4ff,#ffffff)] shadow-blue lg:scale-105" : ""}`}>
+                <div className="pointer-events-none absolute -right-8 -top-10 h-24 w-24 rounded-full bg-blue-200/40 blur-2xl transition group-hover:bg-blue-300/70" />
+                <span className="relative inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-blue-700 shadow-soft">
+                  <Sparkles className="h-5 w-5" />
+                </span>
+                <h3 className="relative mt-5 text-2xl font-extrabold tracking-tight text-ink">{card.title}</h3>
+                <p className="relative mt-3 text-sm leading-6 text-slate-700">{card.copy}</p>
+                <Link href={card.href} className="relative mt-6 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
+                  {card.cta} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="reveal-card">
+          <SectionHeading eyebrow="Everything connects" title="Learn one thing, then know what to do next." copy="KRAFT connects role guides, terminology, practical tasks, interview preparation, and job platforms instead of leaving each resource as an isolated page." />
+          <div className="mt-10">
+            <LearningPreview />
+          </div>
+        </section>
+
+        <section className="reveal-card">
+          <SectionHeading title="Explore Web3 work by career lane." />
+          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {careerLanes.map((lane) => {
+              const Icon = laneIcons[lane.lane];
+              const count = roles.filter((role) => role.lane === lane.lane).length;
+              return (
+                <Card key={lane.lane} className="reveal-card group relative overflow-hidden p-5 transition duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-blue">
+                  <div className="pointer-events-none absolute -right-8 -top-10 h-24 w-24 rounded-full bg-blue-200/45 blur-2xl transition group-hover:bg-blue-300/70" />
+                  <div className="relative flex items-start justify-between gap-3">
+                    <span className="grid h-12 w-12 place-items-center rounded-2xl bg-blue-600 text-white shadow-blue">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <span className="tag">{count} roles</span>
+                  </div>
+                  <h3 className="relative mt-5 text-lg font-extrabold tracking-tight text-ink">{lane.lane}</h3>
+                  <p className="relative mt-3 text-sm leading-6 text-muted">{lane.description}</p>
+                  <div className="relative mt-5 flex flex-wrap gap-2">
+                    {lane.exampleRoles.slice(0, 3).map((role) => <span key={role} className="tag">{role}</span>)}
+                  </div>
+                  <div className="relative mt-5 flex items-center justify-between gap-3">
+                    <span className="text-xs font-extrabold uppercase tracking-[0.12em] text-blue-700">{lane.difficulty}</span>
+                    <Link href={`/roles?lane=${encodeURIComponent(lane.lane)}`} className="inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
+                      View <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="reveal-card grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+          <div>
+            <Eyebrow>Ten minutes, practical result</Eyebrow>
+            <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-5xl">Get a role match, not a personality label.</h2>
+            <p className="mt-4 text-base leading-7 text-muted">Answer focused questions about how you work. KRAFT returns your strongest career lanes, current readiness, missing skills, and the next proof-of-work task to build.</p>
+            <div className="mt-7"><PrimaryLink href="/skill-check">Start Skill Check</PrimaryLink></div>
+          </div>
+          <Card className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">Readiness</p>
+                <h3 className="mt-1 text-2xl font-extrabold text-ink">58% ready</h3>
+              </div>
+              <div className="grid h-24 w-24 place-items-center rounded-full border-[12px] border-blue-600 bg-blue-50 text-xl font-extrabold text-blue-700">58</div>
+            </div>
+            <div className="mt-6 space-y-3">
+              {["Community & Growth", "Product & Operations", "Content & Marketing"].map((lane, index) => (
+                <div key={lane} className="rounded-2xl border border-border bg-soft p-4">
+                  <div className="flex items-center justify-between text-sm font-extrabold"><span>{lane}</span><span>{82 - index * 11}%</span></div>
+                  <div className="mt-3 h-2 rounded-full bg-white"><div className="h-2 rounded-full bg-blue-600" style={{ width: `${82 - index * 11}%` }} /></div>
+                </div>
               ))}
             </div>
-          </SectionCard>
-        </ScrollReveal>
+          </Card>
+        </section>
 
-        <ScrollReveal>
-          <SectionCard className="p-5 sm:p-8 lg:p-10">
-            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
-              <SectionHeading eyebrow="Role preview" title="Pick a lane, then learn the work." copy="Filter by the kind of work you enjoy. Each guide explains the day-to-day reality, not just the job title." />
-              <Link href="/roles" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-purple-700">Explore all roles <ArrowRight className="h-4 w-4" /></Link>
+        <section className="reveal-card grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <SectionHeading align="left" title="See what the role actually expects." copy="Role pages explain daily work, expected outputs, tools, portfolio evidence, interview prompts, and salary context without vague job-description language." />
+            <div className="mt-6 flex flex-wrap gap-2">
+              {["Daily Work", "Skills", "Tools", "Portfolio", "Interview", "Salary Context"].map((chip) => <span key={chip} className="tag">{chip}</span>)}
             </div>
-            <div className="mt-7 flex gap-2 overflow-x-auto pb-2">{roleFilters.map((filter) => <button key={filter} onClick={() => setActiveFilter(filter)} className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${activeFilter === filter ? 'bg-foreground text-white' : 'border border-black/[0.06] bg-white text-muted hover:text-foreground'}`}>{filter}</button>)}</div>
-            <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{previewRoles.map((role) => <RoleCard key={role.id} href={`/roles/${role.id}`} title={role.name === 'Business Development' ? 'Growth / BD' : role.name} difficulty={roleMeta[role.id]?.difficulty ?? role.category} description={role.dayInTheLife.split('.').slice(0, 2).join('.') + '.'} skills={role.mustHaveSkills} />)}</div>
-            {previewRoles.length === 0 && <div className="mt-6 rounded-2xl border border-dashed border-black/10 bg-white p-8 text-center text-sm text-muted">No preview role matches this filter yet. <Link href="/roles" className="font-semibold text-purple-700">Browse every role.</Link></div>}
-          </SectionCard>
-        </ScrollReveal>
+            <div className="mt-7"><PrimaryLink href="/roles">Explore Role Guides</PrimaryLink></div>
+          </div>
+          <RoleCard role={roles.find((role) => role.slug === "community-manager") ?? roles[0]} />
+        </section>
 
-        <ScrollReveal>
-          <SectionCard className="overflow-hidden p-5 sm:p-8 lg:p-10">
-            <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-              <div><Badge tone="blue"><Route className="h-3.5 w-3.5" />30-day progress</Badge><h2 className="mt-5 text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">Your roadmap should feel doable, not imaginary.</h2><p className="mt-4 max-w-lg leading-7 text-muted">Break a target role into weekly outcomes, save progress in your browser, and always know the next useful action.</p><Link href="/roadmap" className="mt-7 inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-semibold text-white">Build my roadmap <ArrowRight className="h-4 w-4" /></Link></div>
-              <div className="roadmap-preview rounded-3xl border border-black/[0.06] bg-[#f8f8fa] p-5 shadow-[0_22px_60px_rgba(25,20,48,0.09)] sm:p-7">
-                <div className="flex items-center justify-between"><div><p className="text-xs font-semibold text-purple-600">COMMUNITY MANAGER</p><h3 className="mt-1 font-semibold">4-week starter roadmap</h3></div><strong className="text-2xl text-purple-700">50%</strong></div>
-                <div className="mt-5 h-2 overflow-hidden rounded-full bg-white"><div className="roadmap-progress h-full w-1/2 rounded-full bg-gradient-to-r from-purple-600 to-blue-500" /></div>
-                <div className="mt-5 space-y-3">{roadmapWeeks.map(({ week, task, done }) => <div key={String(week)} className={`flex items-center gap-3 rounded-xl border p-3.5 ${done ? 'border-emerald-100 bg-white' : 'border-black/[0.05] bg-white/60'}`}><span className={`flex h-7 w-7 items-center justify-center rounded-full ${done ? 'bg-emerald-500 text-white' : 'bg-[#eeeef2] text-muted'}`}>{done ? <Check className="h-4 w-4" /> : <Circle className="h-4 w-4" />}</span><span><small className="block text-[10px] font-semibold uppercase tracking-wider text-muted">{week}</small><strong className="text-sm">{task}</strong></span></div>)}</div>
+        <section className="reveal-card">
+          <SectionHeading title="Learn terms in the context of work." copy="Definitions include why the term matters, common misunderstandings, related roles, and the next useful concept." />
+          <div className="mx-auto mt-10 max-w-4xl rounded-[28px] border border-border bg-white p-5 shadow-blue">
+            <div className="flex items-center gap-3 rounded-full border border-border bg-soft px-4 py-3 text-sm font-bold text-muted">
+              <Search className="h-4 w-4" /> Search TVL, Token Unlock, Multisig
+            </div>
+            <div className="mt-5 grid gap-4 md:grid-cols-3">
+              {["TVL", "Token Unlock", "Multisig"].map((term) => {
+                const item = glossaryTerms.find((entry) => entry.term === term);
+                return item ? (
+                  <Card key={term} className="p-4">
+                    <h3 className="font-extrabold text-ink">{item.term}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted">{item.commonTrap}</p>
+                  </Card>
+                ) : null;
+              })}
+            </div>
+          </div>
+          <div className="mt-7 text-center"><SecondaryLink href="/glossary">Open Glossary</SecondaryLink></div>
+        </section>
+
+        <section className="reveal-card grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <SectionHeading align="left" title="Build proof before you send applications." />
+            <p className="mt-4 text-base leading-7 text-muted">KRAFT turns role expectations into concrete proof-of-work tasks, portfolio packaging, interview preparation, and safer application habits.</p>
+            <div className="mt-7"><PrimaryLink href="/get-hired">Open Hiring Guide</PrimaryLink></div>
+          </div>
+          <ProofChecklistAnimation items={proofChecklistItems} />
+        </section>
+
+        <section className="reveal-card grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <SectionHeading align="left" title="Find the right place to search, not another endless feed." copy="Compare curated Web3 job platforms by role type, remote coverage, seniority, and application style." />
+            <div className="mt-7"><PrimaryLink href="/job-boards">Browse Job Platforms</PrimaryLink></div>
+          </div>
+          <div className="grid gap-4">
+            <Card className="reveal-card overflow-hidden p-0">
+              <div className="border-b border-blue-100 bg-[linear-gradient(135deg,#146bff,#68c4ff)] p-5 text-white">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-2xl bg-white/18">
+                    <BriefcaseBusiness className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-50">Selected by KRAFT</p>
+                    <h3 className="mt-1 text-2xl font-extrabold">Platforms worth checking first</h3>
+                  </div>
+                </div>
               </div>
-            </div>
-          </SectionCard>
-        </ScrollReveal>
+              <div className="grid gap-0 divide-y divide-blue-100">
+                {selectedPlatforms.map(({ selection, board }) => (
+                  <a key={selection.id} href={board.url} target="_blank" rel="noreferrer" className="group flex items-center justify-between gap-4 p-4 transition hover:bg-blue-50/70">
+                    <div>
+                      <h4 className="font-extrabold text-ink">{selection.recommendationLabel}: {board.name}</h4>
+                      <p className="mt-1 text-sm leading-6 text-muted">{selection.whySelected}</p>
+                    </div>
+                    <span className="tag shrink-0">{board.remoteSupport}</span>
+                  </a>
+                ))}
+              </div>
+            </Card>
 
-        <ScrollReveal>
-          <SectionCard className="p-5 sm:p-8 lg:p-10">
-            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end"><SectionHeading eyebrow="Interview prep" title="Practice the judgment behind the answer." copy="Use role-specific prompts to rehearse calm, structured answers before the real conversation." /><Link href="/interview" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-purple-700">Practice interview questions <ArrowRight className="h-4 w-4" /></Link></div>
-            <div className="mt-8 grid gap-4 md:grid-cols-2">{interviewQuestions.map((item, index) => <Link key={item.question} href="/interview" className="group rounded-2xl border border-black/[0.06] bg-white p-5 transition hover:-translate-y-1 hover:border-purple-200 hover:shadow-[0_15px_35px_rgba(64,47,120,0.08)]"><div className="flex items-center justify-between"><Badge tone={index % 2 ? 'blue' : 'purple'}>{item.category}</Badge><span className="text-xs font-semibold text-muted">0{index + 1}</span></div><h3 className="mt-6 max-w-md text-lg font-semibold leading-7 tracking-[-0.015em]">&ldquo;{item.question}&rdquo;</h3><span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-purple-700">See answer framework <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span></Link>)}</div>
-          </SectionCard>
-        </ScrollReveal>
+            <Card className="reveal-card p-5">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <span className="tag">Fresh picks from KRAFT</span>
+                  <h3 className="mt-3 text-2xl font-extrabold tracking-tight text-ink">Curated searches to inspect this week</h3>
+                </div>
+                <Gauge className="hidden h-10 w-10 text-blue-600 sm:block" />
+              </div>
+              <div className="mt-5 grid gap-3">
+                {latestCuratedJobs.length ? latestCuratedJobs.map((pick) => (
+                  <a key={pick.id} href={pick.applyUrl} target="_blank" rel="noreferrer" className="group rounded-2xl border border-blue-100 bg-soft p-4 transition hover:-translate-y-0.5 hover:border-blue-300 hover:bg-white">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="tag">{pick.category}</span>
+                      <span className="tag">{pick.seniority}</span>
+                      <span className="tag">Added by KRAFT</span>
+                    </div>
+                    <h4 className="mt-3 font-extrabold text-ink">{pick.title}</h4>
+                    <p className="mt-2 text-sm leading-6 text-muted">{pick.kraftNote}</p>
+                    <p className="mt-3 text-xs font-bold uppercase tracking-[0.12em] text-blue-700">{pick.location} - added {pick.addedAt}</p>
+                  </a>
+                )) : (
+                  <div className="rounded-2xl border border-dashed border-blue-200 bg-soft p-4 text-sm font-bold leading-6 text-muted">
+                    No active manually curated jobs are published yet. KRAFT will show the latest three here after they are added to the data file.
+                  </div>
+                )}
+              </div>
+            </Card>
+          </div>
+        </section>
 
-        <ScrollReveal>
-          <SectionCard className="overflow-hidden bg-[linear-gradient(135deg,#f5f1ff_0%,#eff6ff_55%,#f8f8fb_100%)] p-7 sm:p-10">
-            <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]"><div><Badge><BarChart3 className="h-3.5 w-3.5" />Ready to move forward?</Badge><h2 className="mt-5 text-3xl font-semibold tracking-[-0.035em]">Take your next step with context.</h2><p className="mt-3 max-w-xl leading-7 text-muted">Explore trusted job boards after you understand the role, follow a roadmap, and build evidence recruiters can inspect.</p></div><Link href="/jobs" className="inline-flex w-fit items-center gap-2 rounded-full bg-purple-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-purple-600/15 transition hover:-translate-y-0.5">Browse job boards <ArrowRight className="h-4 w-4" /></Link></div>
-          </SectionCard>
-        </ScrollReveal>
+        <FinalCTA
+          title="Stop applying blind."
+          copy="Find your role, build proof-of-work, and prepare with context before sending another application."
+          primary={{ href: "/skill-check", label: "Find My Role" }}
+          secondary={{ href: "/job-boards", label: "Browse Job Boards" }}
+        />
       </Container>
-    </div>
+    </Shell>
   );
 }
