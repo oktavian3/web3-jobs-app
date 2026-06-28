@@ -1,24 +1,22 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const inter = Inter({ 
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-const playfair = Playfair_Display({ 
-  subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-manrope",
 });
 
 export const metadata: Metadata = {
-  title: "Web3 Jobs Education - Know What You're Applying For",
-  description: "Learn about web3 job roles, skills, and how to transition from Web2 to Web3",
-  keywords: ["web3", "jobs", "blockchain", "crypto", "careers", "education"],
+  title: {
+    default: "KRAFT - Web3 Career Learning Centre",
+    template: "%s | KRAFT",
+  },
+  description: "Explore real Web3 roles, test your fit, learn the language, build proof-of-work, and apply with context.",
+  keywords: ["web3 careers", "web3 jobs", "proof of work", "career learning", "crypto jobs"],
 };
 
 export default function RootLayout({
@@ -27,10 +25,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="bg-background text-foreground min-h-screen flex flex-col font-sans">
+    <html lang="en" className={manrope.variable}>
+      <body className="min-h-screen bg-page text-ink antialiased">
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main>{children}</main>
         <Footer />
         <GoogleAnalytics gaId="G-58F9FBFVMS" />
       </body>

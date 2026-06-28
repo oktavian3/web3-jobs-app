@@ -1,0 +1,87 @@
+import type { CareerLane } from "./roles";
+
+export type SelectedJobPlatform = {
+  id: string;
+  platformSlug: string;
+  recommendationLabel: string;
+  whySelected: string;
+  bestRoleCategories: CareerLane[];
+};
+
+export type CuratedJob = {
+  id: string;
+  title: string;
+  company: string;
+  companyLogo?: string;
+  category: CareerLane;
+  roleSlug?: string;
+  location: string;
+  remote: boolean;
+  seniority: string;
+  employmentType?: string;
+  salary?: string;
+  source: string;
+  sourceUrl: string;
+  applyUrl: string;
+  publishedAt?: string;
+  addedAt: string;
+  kraftNote: string;
+  isFeatured: boolean;
+  isSelectedByKraft: boolean;
+  status: "active" | "expired" | "draft";
+};
+
+export const selectedJobPlatforms: SelectedJobPlatform[] = [
+  {
+    id: "best-overall",
+    platformSlug: "web3-career",
+    recommendationLabel: "Best overall",
+    whySelected: "Broad coverage across technical, growth, product, research, and non-technical Web3 roles with useful category filters.",
+    bestRoleCategories: ["Community & Growth", "Content & Marketing", "Product & Operations", "Technical & Security"],
+  },
+  {
+    id: "best-remote",
+    platformSlug: "remote3",
+    recommendationLabel: "Best for remote work",
+    whySelected: "Remote-first browsing makes it easier to compare timezone expectations and distributed-team roles.",
+    bestRoleCategories: ["Community & Growth", "Creative & Design", "Technical & Security"],
+  },
+  {
+    id: "best-developers",
+    platformSlug: "useweb3",
+    recommendationLabel: "Best for developers",
+    whySelected: "Developer-oriented listings and ecosystem roles are more relevant for engineering, DevRel, and technical writing paths.",
+    bestRoleCategories: ["Technical & Security", "Product & Operations"],
+  },
+  {
+    id: "best-non-technical",
+    platformSlug: "cryptojobslist",
+    recommendationLabel: "Best for non-technical roles",
+    whySelected: "Good range of community, content, marketing, operations, and BD roles that do not always require coding.",
+    bestRoleCategories: ["Community & Growth", "Content & Marketing", "Product & Operations"],
+  },
+  {
+    id: "best-startups",
+    platformSlug: "wellfound",
+    recommendationLabel: "Best for early-stage startup roles",
+    whySelected: "Useful company profiles, startup context, and broader Web3-adjacent product, growth, and operations openings.",
+    bestRoleCategories: ["Product & Operations", "Community & Growth", "Creative & Design"],
+  },
+  {
+    id: "best-entry-browsing",
+    platformSlug: "gitcoin",
+    recommendationLabel: "Best for entry-level browsing",
+    whySelected: "Bounties, grants, and contributor work can help candidates build proof before applying for full-time roles.",
+    bestRoleCategories: ["Community & Growth", "Governance, Legal & People", "Research & Data"],
+  },
+];
+
+export const curatedJobs: CuratedJob[] = [];
+
+export function getActiveCuratedJobs() {
+  return curatedJobs
+    .filter((job) => job.status === "active")
+    .sort((a, b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime());
+}
+
+export const curatedJobsLastUpdated = "2026-06-29";

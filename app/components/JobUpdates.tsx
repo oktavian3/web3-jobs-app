@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { createServerClient } from '@/lib/supabase';
 
 interface JobUpdate {
   id: string;
@@ -12,6 +12,12 @@ interface JobUpdate {
 }
 
 export default async function JobUpdates() {
+  const supabase = createServerClient();
+
+  if (!supabase) {
+    return null;
+  }
+
   const { data: jobs } = await supabase
     .from('job_updates')
     .select('*')

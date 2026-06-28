@@ -1,194 +1,78 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useMemo } from 'react';
-import { Search, BookOpen, ChevronDown, ChevronUp } from 'lucide-react';
-
-interface GlossaryTerm {
-  term: string;
-  category: string;
-  definition: string;
-}
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import { ChevronDown, Search } from "lucide-react";
+import { glossaryTerms } from "@/data/glossary";
+import { Shell, Container, SectionHeading, Card, FinalCTA } from "@/components/kraft/Primitives";
 
 export default function GlossaryPage() {
-  const [terms, setTerms] = useState<GlossaryTerm[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [expandedTerms, setExpandedTerms] = useState<Set<number>>(new Set());
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("All");
+  const [open, setOpen] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    return new URLSearchParams(window.location.search).get("term");
+  });
+  const categories = ["All", ...Array.from(new Set(glossaryTerms.map((term) => term.category)))];
 
-  useEffect(() => {
-    fetch('/data/glossary.json')
-      .then(res => res.json())
-      .then(data => {
-        setTerms(Array.isArray(data) ? data : []);
-      })
-      .catch(() => setTerms([]));
-  }, []);
-
-  const filteredTerms = useMemo(() => {
-    let filtered = terms;
-
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(term => term.category === selectedCategory);
-    }
-
-    if (searchTerm) {
-      filtered = filtered.filter(term =>
-        term.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        term.definition.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    return filtered;
-  }, [selectedCategory, searchTerm, terms]);
-
-  const categories = ['all', ...new Set(terms.map(t => t.category))];
-
-  const toggleTerm = (idx: number) => {
-    const newExpanded = new Set(expandedTerms);
-    if (newExpanded.has(idx)) {
-      newExpanded.delete(idx);
-    } else {
-      newExpanded.add(idx);
-    }
-    setExpandedTerms(newExpanded);
-  };
-
-  const getCategoryColor = (category: string) => {
-    const colors: { [key: string]: string } = {
-      'Basics & Blockchain Fundamentals': 'bg-blue-100 text-blue-700',
-      'Smart Contracts & Development': 'bg-purple-100 text-purple-700',
-      'DeFi (Decentralized Finance)': 'bg-green-100 text-green-700',
-      'NFTs & Digital Assets': 'bg-pink-100 text-pink-700',
-      'Governance & Advanced Concepts': 'bg-amber-100 text-amber-700',
-    };
-    return colors[category] || 'bg-gray-100 text-gray-700';
-  };
+  const terms = useMemo(() => {
+    return glossaryTerms.filter((term) => {
+      const text = `${term.term} ${term.simpleMeaning} ${term.whyItMatters} ${term.relatedTerms.join(" ")}`.toLowerCase();
+      return (!query || text.includes(query.toLowerCase())) && (category === "All" || term.category === category);
+    });
+  }, [query, category]);
 
   return (
-    <div className="page-wrapper">
-      {/* Grid background */}
-      <div className="grid-background opacity-50" />
-      
-      <div className="page-content pt-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Header */}
-          <div className="mb-12 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border shadow-sm mb-6">
-              <BookOpen className="w-4 h-4 text-purple-500" />
-              <span className="text-sm font-medium text-muted">Learn Web3</span>
-            </div>
-            <h1 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-medium text-foreground mb-4 text-balance">
-              Web3 Glossary
-            </h1>
-            <p className="text-muted text-lg max-w-2xl mx-auto">
-              Master 50+ essential Web3 terms. From blockchain basics to advanced DeFi concepts.
-            </p>
-          </div>
-
-          {/* Floating decorative elements */}
-          <div className="hidden lg:block">
-            <div className="absolute top-40 left-4 bg-white rounded-2xl shadow-lg border border-border p-3 rotate-[-8deg]">
-              <p className="text-xs font-mono text-purple-600">{"{ blockchain }"}</p>
-            </div>
-            <div className="absolute top-56 right-4 bg-purple-500 text-white rounded-2xl shadow-lg p-3 rotate-[6deg]">
-              <p className="text-xs font-semibold">Smart Contract</p>
-            </div>
-          </div>
-
-          {/* Search */}
-          <div className="bg-white rounded-2xl p-6 mb-8 border border-border shadow-sm relative z-20">
-            <div className="relative mb-6">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
-              <input
-                type="text"
-                placeholder="Search terms..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 text-foreground transition-all"
-              />
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-full font-medium text-sm transition-all ${
-                    selectedCategory === cat
-                      ? 'bg-foreground text-background'
-                      : 'bg-background text-foreground hover:bg-gray-100 border border-border'
-                  }`}
-                >
-                  {cat === 'all' ? 'All Terms' : cat.split('&')[0].trim()}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Terms List - Accordion Style */}
-          <div className="space-y-3">
-            {filteredTerms.map((term, idx) => (
-              <div 
-                key={idx}
-                className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden hover:shadow-md hover:shadow-purple-500/5 transition-all duration-300"
-              >
-                <button
-                  onClick={() => toggleTerm(idx)}
-                  className="w-full p-5 flex items-center justify-between text-left"
-                >
-                  <div className="flex items-center gap-4">
-                    <h3 className="text-lg font-semibold text-foreground">{term.term}</h3>
-                    <span className={`text-xs font-medium px-2 py-1 rounded-full ${getCategoryColor(term.category)}`}>
-                      {term.category.split('&')[0].trim()}
-                    </span>
-                  </div>
-                  {expandedTerms.has(idx) ? (
-                    <ChevronUp className="w-5 h-5 text-muted" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-muted" />
-                  )}
-                </button>
-                {expandedTerms.has(idx) && (
-                  <div className="px-5 pb-5 pt-0">
-                    <div className="pt-4 border-t border-border">
-                      <p className="text-muted leading-relaxed">{term.definition}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
+    <Shell>
+      <Container className="space-y-12 py-12 sm:py-16">
+        <SectionHeading eyebrow="Glossary" title="Web3 terms in the context of work." copy={`${glossaryTerms.length} practical terms with traps, related roles, and next concepts.`} />
+        <Card className="p-5">
+          <label className="relative block">
+            <span className="sr-only">Search glossary</span>
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
+            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search terms, traps, or related concepts" className="w-full rounded-2xl border border-border bg-soft py-3 pl-11 pr-4 text-sm font-bold text-ink" />
+          </label>
+          <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+            {categories.map((item) => (
+              <button key={item} type="button" onClick={() => setCategory(item)} className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-extrabold ${category === item ? "bg-blue-600 text-white" : "bg-soft text-muted hover:text-ink"}`}>
+                {item}
+              </button>
             ))}
           </div>
-
-          {filteredTerms.length === 0 && (
-            <div className="rounded-2xl border border-dashed border-purple-200 bg-white p-10 text-center shadow-sm">
-              <Search className="mx-auto mb-4 h-10 w-10 text-purple-300" />
-              <h3 className="mb-2 text-lg font-semibold text-foreground">No glossary term matches that search</h3>
-              <p className="mx-auto mb-5 max-w-md text-sm leading-6 text-muted">Reset the search to keep learning wallet, DeFi, smart contract, and governance terms.</p>
-              <button onClick={() => { setSearchTerm(''); setSelectedCategory('all'); }} className="rounded-full bg-foreground px-5 py-3 text-sm font-semibold text-white">View all terms</button>
-            </div>
-          )}
-
-          {/* Stats */}
-          <div className="mt-16 bg-white rounded-2xl p-8 border border-border shadow-sm text-center">
-            <h3 className="font-[family-name:var(--font-playfair)] text-2xl font-medium text-foreground mb-4">
-              Master Web3 Fundamentals
-            </h3>
-            <p className="text-muted mb-6 max-w-xl mx-auto">
-              Our comprehensive glossary covers everything from blockchain basics to advanced DeFi concepts.
-            </p>
-            <div className="flex justify-center gap-12">
-              <div>
-                <div className="text-3xl font-bold text-purple-600">{filteredTerms.length}</div>
-                <div className="text-sm text-muted">Total Terms</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-blue-600">{categories.length - 1}</div>
-                <div className="text-sm text-muted">Categories</div>
-              </div>
-            </div>
-          </div>
+        </Card>
+        <div className="grid gap-3">
+          {terms.map((term) => {
+            const isOpen = open === term.slug;
+            return (
+              <Card key={term.slug} className="overflow-hidden">
+                <button type="button" onClick={() => setOpen(isOpen ? null : term.slug)} className="flex w-full items-center justify-between gap-4 p-5 text-left">
+                  <span>
+                    <span className="text-lg font-extrabold text-ink">{term.term}</span>
+                    <span className="ml-3 hidden rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 sm:inline-flex">{term.category}</span>
+                  </span>
+                  <ChevronDown className={`h-5 w-5 text-muted transition ${isOpen ? "rotate-180" : ""}`} />
+                </button>
+                {isOpen ? (
+                  <div className="grid gap-4 border-t border-border bg-soft p-5 md:grid-cols-2">
+                    <div><h3 className="text-sm font-extrabold text-ink">Simple meaning</h3><p className="mt-2 text-sm leading-6 text-muted">{term.simpleMeaning}</p></div>
+                    <div><h3 className="text-sm font-extrabold text-ink">Why it matters</h3><p className="mt-2 text-sm leading-6 text-muted">{term.whyItMatters}</p></div>
+                    <div><h3 className="text-sm font-extrabold text-ink">Common trap</h3><p className="mt-2 text-sm leading-6 text-muted">{term.commonTrap}</p></div>
+                    <div>
+                      <h3 className="text-sm font-extrabold text-ink">Used in roles</h3>
+                      <div className="mt-2 flex flex-wrap gap-2">{term.usedInRoles.map((lane) => <Link key={lane} href={`/roles?lane=${encodeURIComponent(lane)}`} className="tag">{lane}</Link>)}</div>
+                    </div>
+                    <div className="md:col-span-2">
+                      <h3 className="text-sm font-extrabold text-ink">Related terms</h3>
+                      <div className="mt-2 flex flex-wrap gap-2">{term.relatedTerms.map((item) => <span key={item} className="tag">{item}</span>)}</div>
+                    </div>
+                  </div>
+                ) : null}
+              </Card>
+            );
+          })}
         </div>
-      </div>
-    </div>
+        <FinalCTA title="Turn terms into career context." copy="After you learn the language, compare roles that use those concepts and choose a practical proof project." primary={{ href: "/roles", label: "Explore Related Roles" }} secondary={{ href: "/portfolio", label: "Choose a Project" }} />
+      </Container>
+    </Shell>
   );
 }

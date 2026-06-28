@@ -3,6 +3,10 @@ import { createServerClient } from '@/lib/supabase';
 
 export async function GET() {
   const supabase = createServerClient();
+
+  if (!supabase) {
+    return NextResponse.json([]);
+  }
   
   const { data, error } = await supabase
     .from('job_updates')
@@ -18,6 +22,11 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const supabase = createServerClient();
+
+  if (!supabase) {
+    return NextResponse.json({ error: 'Supabase is not configured' }, { status: 503 });
+  }
+
   const body = await request.json();
   
   const { data, error } = await supabase
