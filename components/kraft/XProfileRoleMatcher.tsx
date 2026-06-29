@@ -1,13 +1,25 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, AtSign, Sparkles, Wand2 } from "lucide-react";
 import { roles } from "@/data/roles";
 
+type XProfile = {
+  source: string;
+  handle: string;
+  name: string;
+  bio: string;
+  followers: number;
+  following: number;
+  posts: number;
+  avatarUrl?: string;
+};
+
 const loadingLines = [
-  "Tunggu bentar, KRAFT lagi masak datanya...",
-  "Ngecek bio, followers, dan vibes timeline...",
+  "Tunggu bentar, KRAFT lagi nyeduh data publik X...",
+  "Ngecek bio, followers, dan vibes postingan...",
   "Nyari apakah kamu builder, shiller, atau spreadsheet enjoyer...",
   "Sebentar lagi keluar hasilnya, jangan refresh dulu ya.",
 ];
@@ -21,7 +33,7 @@ const fallbackBios = [
 
 const keywordMap = [
   { words: ["dev", "solidity", "rust", "engineer", "code", "contract", "audit", "security", "zk"], lane: "Technical & Security" },
-  { words: ["write", "thread", "content", "marketing", "meme", "creator", "newsletter", "copy"], lane: "Content & Marketing" },
+  { words: ["write", "writing", "thread", "content", "marketing", "meme", "creator", "newsletter", "copy", "shitposting"], lane: "Content & Marketing" },
   { words: ["community", "mod", "ambassador", "growth", "discord", "telegram", "partnership"], lane: "Community & Growth" },
   { words: ["data", "research", "defi", "on-chain", "analyst", "token", "market", "dashboard"], lane: "Research & Data" },
   { words: ["product", "ops", "operation", "strategy", "launch", "pm", "project"], lane: "Product & Operations" },
@@ -36,10 +48,12 @@ function cleanUsername(value: string) {
   return value.trim().replace(/^@/, "").replace(/[^a-zA-Z0-9_]/g, "").slice(0, 15);
 }
 
-function fakeProfile(username: string) {
+function fallbackProfile(username: string): XProfile {
   const seed = hashText(username || "kraft");
   return {
+    source: "fallback-generated",
     handle: username || "anonintern",
+    name: username || "anon intern",
     followers: 420 + ((seed * 137) % 185000),
     following: 69 + ((seed * 29) % 3200),
     bio: fallbackBios[seed % fallbackBios.length],
@@ -47,8 +61,8 @@ function fakeProfile(username: string) {
   };
 }
 
-function pickRole(username: string, bio: string) {
-  const lower = `${username} ${bio}`.toLowerCase();
+function pickRole(username: string, profile: XProfile) {
+  const lower = `${username} ${profile.name} ${profile.bio} followers:${profile.followers} posts:${profile.posts}`.toLowerCase();
   const matchedLane = keywordMap.find((item) => item.words.some((word) => lower.includes(word)))?.lane;
   const pool = matchedLane ? roles.filter((role) => role.lane === matchedLane) : roles;
   return pool[hashText(lower) % pool.length];
@@ -56,13 +70,14 @@ function pickRole(username: string, bio: string) {
 
 export default function XProfileRoleMatcher() {
   const [username, setUsername] = useState("");
+  const [profile, setProfile] = useState<XProfile>(() => fallbackProfile(""));
   const [isLoading, setIsLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [loadingIndex, setLoadingIndex] = useState(0);
+  const [notice, setNotice] = useState("");
 
   const cleanedUsername = cleanUsername(username);
-  const profile = useMemo(() => fakeProfile(cleanedUsername), [cleanedUsername]);
-  const role = useMemo(() => pickRole(cleanedUsername, profile.bio), [cleanedUsername, profile.bio]);
+  const role = useMemo(() => pickRole(cleanedUsername, profile), [cleanedUsername, profile]);
 
   useEffect(() => {
     if (!isLoading) return;
@@ -72,15 +87,31 @@ export default function XProfileRoleMatcher() {
     return () => window.clearInterval(interval);
   }, [isLoading]);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!cleanedUsername) return;
+
     setShowResult(false);
     setIsLoading(true);
     setLoadingIndex(0);
-    window.setTimeout(() => {
+    setNotice("");
+
+    try {
+      const [response] = await Promise.all([
+        fetch(`/api/x-profile?username=${encodeURIComponent(cleanedUsername)}`),
+        new Promise((resolve) => window.setTimeout(resolve, 2300)),
+      ]);
+
+      if (!response.ok) throw new Error("Profile fetch failed");
+      const data = (await response.json()) as XProfile;
+      setProfile(data);
+    } catch {
+      setProfile(fallbackProfile(cleanedUsername));
+      setNotice("Public profile lagi susah diambil, jadi KRAFT pakai backup vibe mode dulu.");
+    } finally {
       setIsLoading(false);
       setShowResult(true);
-    }, 2600);
+    }
   }
 
   return (
@@ -92,7 +123,7 @@ export default function XProfileRoleMatcher() {
           </span>
           <h2 className="mt-4 text-3xl font-black tracking-tight text-ink sm:text-5xl">X Profile Role Matcher.</h2>
           <p className="mt-4 text-base leading-7 text-muted">
-            Masukin username X/Twitter, nanti KRAFT pura-pura baca vibe profile kamu dan nebak role Web3 yang paling cocok. Ini simulasi ringan, bukan ambil data real dari X API.
+            Masukin username X/Twitter, KRAFT bakal baca data publik profile kamu lewat third-party fetcher, terus nebak role Web3 yang paling cocok dari bio dan vibe akun.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -106,7 +137,7 @@ export default function XProfileRoleMatcher() {
                 className="w-full rounded-full border border-border bg-white px-12 py-4 text-sm font-bold text-ink outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
               />
             </label>
-            <button type="submit" disabled={isLoading} className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 text-sm font-extrabold text-white shadow-soft transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70">
+            <button type="submit" disabled={isLoading || !cleanedUsername} className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 text-sm font-extrabold text-white shadow-soft transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70">
               <Wand2 className="h-4 w-4" /> Masak role
             </button>
           </form>
@@ -115,11 +146,14 @@ export default function XProfileRoleMatcher() {
         <div className="rounded-[1.75rem] border border-white/80 bg-white/80 p-5 shadow-soft backdrop-blur">
           <div className="rounded-3xl bg-ink p-5 text-white">
             <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-sm font-extrabold">@{profile.handle}</p>
-                <p className="mt-1 text-xs text-white/65">profile vibe snapshot</p>
+              <div className="flex items-center gap-3">
+                {profile.avatarUrl ? <Image src={profile.avatarUrl} alt="" width={48} height={48} unoptimized className="h-12 w-12 rounded-full border border-white/20 object-cover" /> : null}
+                <div>
+                  <p className="text-sm font-extrabold">{profile.name}</p>
+                  <p className="mt-1 text-xs text-white/65">@{profile.handle} profile snapshot</p>
+                </div>
               </div>
-              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-bold">not financial career advice</span>
+              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-bold">public data</span>
             </div>
             <p className="mt-5 text-sm leading-6 text-white/80">{profile.bio}</p>
             <div className="mt-5 grid grid-cols-3 gap-2 text-center text-xs">
@@ -128,6 +162,8 @@ export default function XProfileRoleMatcher() {
               <div className="rounded-2xl bg-white/10 p-3"><strong className="block text-base">{profile.posts.toLocaleString()}</strong> posts</div>
             </div>
           </div>
+
+          {notice ? <p className="mt-3 rounded-2xl bg-amber-50 px-4 py-3 text-xs font-bold leading-5 text-amber-800">{notice}</p> : null}
 
           {isLoading ? (
             <div className="mt-5 rounded-3xl border border-dashed border-amber-300 bg-amber-50 p-5 text-center">
