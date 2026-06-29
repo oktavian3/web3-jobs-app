@@ -18,10 +18,10 @@ type XProfile = {
 };
 
 const loadingLines = [
-  "Tunggu bentar, KRAFT lagi nyeduh data publik X...",
-  "Ngecek bio, followers, dan vibes postingan...",
-  "Nyari apakah kamu builder, shiller, atau spreadsheet enjoyer...",
-  "Sebentar lagi keluar hasilnya, jangan refresh dulu ya.",
+  "Scanning your public X profile signal...",
+  "Reading bio, audience size, and posting rhythm...",
+  "Mapping your online footprint to Web3 career lanes...",
+  "Cooking the final role match. Almost there.",
 ];
 
 const fallbackBios = [
@@ -107,7 +107,7 @@ export default function XProfileRoleMatcher() {
       setProfile(data);
     } catch {
       setProfile(fallbackProfile(cleanedUsername));
-      setNotice("Public profile lagi susah diambil, jadi KRAFT pakai backup vibe mode dulu.");
+      setNotice("Live profile signal is limited right now, so KRAFT is using a lightweight matching model.");
     } finally {
       setIsLoading(false);
       setShowResult(true);
@@ -115,15 +115,15 @@ export default function XProfileRoleMatcher() {
   }
 
   return (
-    <section className="overflow-hidden rounded-[2rem] border border-amber-200 bg-[radial-gradient(circle_at_top_left,#fff7d6,transparent_34%),linear-gradient(135deg,#fffdf6,#eaf6ff_52%,#fff)] p-5 shadow-soft sm:p-8">
+    <section id="x-profile-role-matcher" className="scroll-mt-28 overflow-hidden rounded-[2rem] border border-amber-200 bg-[radial-gradient(circle_at_top_left,#fff7d6,transparent_34%),linear-gradient(135deg,#fffdf6,#eaf6ff_52%,#fff)] p-5 shadow-soft sm:p-8">
       <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
         <div>
           <span className="inline-flex w-fit items-center gap-2 rounded-full border border-amber-300 bg-white/80 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.14em] text-amber-700">
-            <Sparkles className="h-3.5 w-3.5" /> For fun only
+            <Sparkles className="h-3.5 w-3.5" /> Social signal scan
           </span>
           <h2 className="mt-4 text-3xl font-black tracking-tight text-ink sm:text-5xl">X Profile Role Matcher.</h2>
           <p className="mt-4 text-base leading-7 text-muted">
-            Masukin username X/Twitter, KRAFT bakal baca data publik profile kamu lewat third-party fetcher, terus nebak role Web3 yang paling cocok dari bio dan vibe akun.
+            Drop your X username and KRAFT will turn your public profile signals into a Web3 role match, using your bio, audience, and posting footprint as career clues.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -138,7 +138,7 @@ export default function XProfileRoleMatcher() {
               />
             </label>
             <button type="submit" disabled={isLoading || !cleanedUsername} className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 text-sm font-extrabold text-white shadow-soft transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70">
-              <Wand2 className="h-4 w-4" /> Masak role
+              <Wand2 className="h-4 w-4" /> Analyze profile
             </button>
           </form>
         </div>
@@ -172,17 +172,17 @@ export default function XProfileRoleMatcher() {
             </div>
           ) : showResult ? (
             <div className="mt-5 rounded-3xl border border-blue-100 bg-soft p-5">
-              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">Based on your X profile, kamu cocoknya jadi</p>
+              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">Based on your X profile, your strongest match is</p>
               <h3 className="mt-2 text-2xl font-black tracking-tight text-ink">{role.title}</h3>
               <p className="mt-2 text-sm font-bold text-blue-700">{role.lane} - {role.level}</p>
               <p className="mt-3 text-sm leading-6 text-muted">{role.summary}</p>
               <Link href={`/roles/${role.slug}`} className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-extrabold text-ink shadow-soft transition hover:-translate-y-0.5">
-                Lihat role ini <ArrowRight className="h-4 w-4" />
+                View this role <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           ) : (
             <div className="mt-5 rounded-3xl border border-dashed border-blue-200 bg-soft p-5 text-center text-sm font-bold text-muted">
-              Hasil role kamu bakal muncul di sini setelah username dimasak.
+              Your result will appear here after KRAFT reads the profile signal.
             </div>
           )}
         </div>

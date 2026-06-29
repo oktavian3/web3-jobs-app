@@ -74,6 +74,7 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Link href="/skill-check" className="btn-white">Find My Role <ArrowRight className="h-4 w-4" /></Link>
+              <Link href="#x-profile-role-matcher" className="btn-ghost-white">Analyze My X Profile</Link>
               <Link href="/roles" className="btn-ghost-white">Explore Roles</Link>
             </div>
           </div>
