@@ -8,30 +8,47 @@ export default function GetHiredPage() {
     <Shell>
       <Container className="space-y-12 py-12 sm:py-16">
         <SectionHeading eyebrow="Get Hired" title="Build proof before you send applications." copy="A practical guide for positioning, proof-of-work, portfolio packaging, outreach, trial tasks, interviews, compensation review, and scam checks." />
+        <nav aria-label="Get hired sections" className="flex flex-wrap justify-center gap-2">
+          {hiringGuides.map((guide) => (
+            <a key={guide.slug} href={`#${guide.slug}`} className="rounded-full border border-blue-100 bg-white px-3 py-2 text-xs font-extrabold text-blue-700 shadow-soft transition hover:border-blue-300 hover:bg-blue-50">
+              {guide.title}
+            </a>
+          ))}
+        </nav>
         <div className="grid gap-4">
           {hiringGuides.map((guide) => (
-            <Card key={guide.id} className="p-5 sm:p-6">
-              <div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr_0.7fr]">
-                <div>
-                  <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-extrabold text-blue-700">Step {guide.id}</span>
-                  <h2 className="mt-4 text-2xl font-extrabold tracking-tight text-ink">{guide.title}</h2>
-                  <p className="mt-3 text-sm leading-6 text-muted">{guide.guidance}</p>
+            <section key={guide.id} id={guide.slug} className="scroll-mt-28">
+              <Card className="p-5 sm:p-6">
+                <div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr_0.7fr]">
+                  <div>
+                    <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-extrabold text-blue-700">Section {guide.id}</span>
+                    <h2 className="mt-4 text-2xl font-extrabold tracking-tight text-ink">{guide.title}</h2>
+                    <p className="mt-3 text-sm leading-6 text-muted">{guide.guidance}</p>
+                    {guide.template ? (
+                      <div className="mt-5 rounded-2xl border border-blue-100 bg-soft p-4">
+                        <h3 className="text-sm font-extrabold text-ink">Template</h3>
+                        <ul className="mt-3 grid gap-2">
+                          {guide.template.map((item) => <li key={item} className="text-sm font-bold leading-6 text-muted">{item}</li>)}
+                        </ul>
+                      </div>
+                    ) : null}
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-extrabold text-ink">Checklist</h3>
+                    <ul className="mt-3 grid gap-2">
+                      {guide.checklist.map((item) => <li key={item} className="rounded-xl bg-soft px-4 py-3 text-sm font-bold text-ink">{item}</li>)}
+                    </ul>
+                  </div>
+                  <div className="rounded-2xl border border-border bg-soft p-4">
+                    <h3 className="text-sm font-extrabold text-ink">Example</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted">{guide.example}</p>
+                    <Link href={guide.relatedTool.href} className="mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
+                      {guide.relatedTool.label} <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-sm font-extrabold text-ink">Checklist</h3>
-                  <ul className="mt-3 grid gap-2">
-                    {guide.checklist.map((item) => <li key={item} className="rounded-xl bg-soft px-4 py-3 text-sm font-bold text-ink">{item}</li>)}
-                  </ul>
-                </div>
-                <div className="rounded-2xl border border-border bg-soft p-4">
-                  <h3 className="text-sm font-extrabold text-ink">Example</h3>
-                  <p className="mt-2 text-sm leading-6 text-muted">{guide.example}</p>
-                  <Link href={guide.relatedTool.href} className="mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-                    {guide.relatedTool.label} <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </section>
           ))}
         </div>
         <Card className="bg-blue-50 p-6">

@@ -3,8 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/kraft/Primitives";
 
 const navigationLinks = [
@@ -21,7 +20,6 @@ function isActive(pathname: string, href: string) {
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/60 bg-page/80 backdrop-blur-xl">
@@ -51,31 +49,25 @@ export default function Navbar() {
             <ArrowUpRight className="h-4 w-4" />
           </Link>
 
-          <button type="button" onClick={() => setOpen((current) => !current)} aria-label="Toggle navigation menu" aria-expanded={open} aria-controls="mobile-navigation" className="icon-button justify-self-end md:hidden">
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <Link href="/job-boards" className="inline-flex justify-self-end rounded-full bg-ink px-4 py-2.5 text-xs font-bold text-white shadow-soft md:hidden">
+            Jobs
+          </Link>
         </div>
 
-        {open ? (
-          <div id="mobile-navigation" className="mb-4 rounded-3xl border border-border bg-white p-3 shadow-blue md:hidden">
-            <nav className="grid gap-1" aria-label="Mobile navigation">
-              {navigationLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  aria-current={isActive(pathname, link.href) ? "page" : undefined}
-                  className={`rounded-2xl px-4 py-3 text-sm font-bold ${isActive(pathname, link.href) ? "bg-ink text-white" : "text-muted hover:bg-soft hover:text-ink"}`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-            <Link href="/job-boards" onClick={() => setOpen(false)} className="mt-2 flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-sm font-bold text-white">
-              Job Boards <ArrowUpRight className="h-4 w-4" />
+        <nav className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-4 md:hidden" aria-label="Small-screen navigation">
+          {navigationLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={isActive(pathname, link.href) ? "page" : undefined}
+              className={`shrink-0 rounded-full px-3 py-2 text-xs font-bold transition ${
+                isActive(pathname, link.href) ? "bg-ink text-white" : "bg-white text-muted shadow-soft hover:bg-soft hover:text-ink"
+              }`}
+            >
+              {link.label}
             </Link>
-          </div>
-        ) : null}
+          ))}
+        </nav>
       </Container>
     </header>
   );

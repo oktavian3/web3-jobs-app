@@ -4,7 +4,7 @@ import { Send } from "lucide-react";
 import { Container } from "@/components/kraft/Primitives";
 
 const columns = [
-  { title: "Explore", links: [{ href: "/roles", label: "Roles" }, { href: "/glossary", label: "Glossary" }, { href: "/learn-web3", label: "Learn Web3" }, { href: "/roadmaps", label: "Roadmaps" }] },
+  { title: "Explore", links: [{ href: "/roles", label: "Roles" }, { href: "/glossary", label: "Glossary" }, { href: "/learn-web3", label: "Learn Web3" }, { href: "/roadmaps", label: "Roadmaps" }, { href: "/faq", label: "FAQ" }] },
   { title: "Tools", links: [{ href: "/skill-check", label: "Skill Check" }, { href: "/interview-prep", label: "Interview Prep" }, { href: "/portfolio", label: "Portfolio" }] },
   { title: "Apply", links: [{ href: "/get-hired", label: "Get Hired" }, { href: "/job-boards", label: "Job Boards" }, { href: "/disclaimers", label: "Disclaimers" }] },
 ];

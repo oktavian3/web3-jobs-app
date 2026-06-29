@@ -125,6 +125,7 @@ export default function RoleDetailInteractive({
   const [selectedTool, setSelectedTool] = useState<ToolInfo | null>(null);
   const visibleSections = useMemo(() => new Set(tabSections[activeTab]), [activeTab]);
   const salaryContext = getSalaryContext(role);
+  const projectHref = project ? `/portfolio/${project.slug}` : "/portfolio";
 
   useEffect(() => {
     const onScroll = () => {
@@ -307,7 +308,7 @@ export default function RoleDetailInteractive({
             <div className="rounded-2xl border border-blue-100 bg-soft p-5">
               <h3 className="text-xl font-extrabold text-ink">{project?.task ?? role.assignment}</h3>
               <p className="mt-3 text-sm leading-6 text-muted">{project?.deliverable ?? "Package the output as a concise case study with assumptions, screenshots, and links."}</p>
-              <Link href="/portfolio" className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">Open project briefs <ArrowRight className="h-4 w-4" /></Link>
+              <Link href={projectHref} className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">Open project brief <ArrowRight className="h-4 w-4" /></Link>
             </div>
           </SectionCard>
 
@@ -321,6 +322,34 @@ export default function RoleDetailInteractive({
 
           <SectionCard id="salary" title="11. Salary Context" icon={<BriefcaseBusiness className="h-5 w-5" />}>
             <p className="leading-7 text-muted">{salaryContext.summary}</p>
+            <div className="mt-5 grid gap-3 md:grid-cols-3">
+              <div className="mini-stat"><dt>Confidence</dt><dd>{salaryContext.salaryConfidence}</dd></div>
+              <div className="mini-stat"><dt>Last reviewed</dt><dd>{salaryContext.lastReviewed}</dd></div>
+              <div className="mini-stat"><dt>Evidence count</dt><dd>{salaryContext.salaryEvidence.length}</dd></div>
+            </div>
+            {salaryContext.salaryEvidence.length ? (
+              <div className="mt-5 grid gap-3">
+                {salaryContext.salaryEvidence.map((evidence) => {
+                  const source = salaryContext.sources.find((item) => item.id === evidence.sourceId);
+                  return (
+                    <div key={`${evidence.sourceId}-${evidence.tier}`} className="rounded-2xl border border-blue-100 bg-soft p-4">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="tag">{evidence.tier}</span>
+                        <span className="tag">{source?.market ?? "Market varies"}</span>
+                        <span className="tag">{source?.employmentType ?? "Employment type varies"}</span>
+                      </div>
+                      <p className="mt-3 text-sm font-bold leading-6 text-ink">{evidence.summary}</p>
+                      {evidence.displayAmount ? <p className="mt-2 text-sm leading-6 text-muted">{evidence.displayAmount}</p> : null}
+                      {source ? (
+                        <a href={source.url} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
+                          {source.id}: {source.label} <ArrowUpRight className="h-4 w-4" />
+                        </a>
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : null}
             <div className="mt-5 grid gap-4 md:grid-cols-3">
               <div className="mini-stat"><dt>Entry</dt><dd>{salaryContext.seniorityNotes.entry}</dd></div>
               <div className="mini-stat"><dt>Mid</dt><dd>{salaryContext.seniorityNotes.mid}</dd></div>
@@ -380,7 +409,7 @@ export default function RoleDetailInteractive({
           <SectionCard id="next-steps" title="15. Next Steps" icon={<ArrowRight className="h-5 w-5" />}>
             <p className="leading-7 text-muted">Turn this guide into action: build one role-specific proof piece, practice the questions, then use the recommended platforms with a targeted application.</p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <PrimaryLink href="/portfolio">Build Proof-of-Work</PrimaryLink>
+              <PrimaryLink href={projectHref}>Build Proof-of-Work</PrimaryLink>
               <SecondaryLink href="/interview-prep">Practice Interviews</SecondaryLink>
             </div>
           </SectionCard>

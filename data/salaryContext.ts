@@ -1,4 +1,5 @@
 import type { Role } from "./roles";
+import { getRoleResearch, type SalaryEvidence, type SourceRef } from "./roleResearch";
 
 export type SalaryContext = {
   summary: string;
@@ -10,6 +11,10 @@ export type SalaryContext = {
   employmentTypes: string[];
   payFactors: string[];
   tokenCompensationRisks: string[];
+  salaryEvidence: SalaryEvidence[];
+  sources: SourceRef[];
+  salaryConfidence: "high" | "medium" | "low";
+  lastReviewed: string;
   verifiedRange?: {
     min: number;
     max: number;
@@ -23,8 +28,10 @@ export type SalaryContext = {
 };
 
 export function getSalaryContext(role: Role): SalaryContext {
+  const research = getRoleResearch(role.slug);
   return {
     summary:
+      research?.salarySummary ??
       "No verified benchmark is currently available for this role. Compensation varies by location, seniority, company stage, employment structure, and token exposure.",
     seniorityNotes: {
       entry: "Entry roles are usually evaluated through reliability, clear communication, safety basics, and small proof-of-work samples.",
@@ -48,5 +55,9 @@ export function getSalaryContext(role: Role): SalaryContext {
       "Tax, legal, and reporting obligations can differ by country.",
       "High token-heavy offers may hide weak cash compensation or unclear runway.",
     ],
+    salaryEvidence: research?.salaryEvidence ?? [],
+    sources: research?.sources ?? [],
+    salaryConfidence: research?.salaryConfidence ?? "low",
+    lastReviewed: research?.lastReviewed ?? "2026-06-29",
   };
 }
