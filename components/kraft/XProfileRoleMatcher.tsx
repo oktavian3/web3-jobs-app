@@ -74,7 +74,6 @@ export default function XProfileRoleMatcher() {
   const [isLoading, setIsLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [loadingIndex, setLoadingIndex] = useState(0);
-  const [notice, setNotice] = useState("");
 
   const cleanedUsername = cleanUsername(username);
   const role = useMemo(() => pickRole(cleanedUsername, profile), [cleanedUsername, profile]);
@@ -94,7 +93,6 @@ export default function XProfileRoleMatcher() {
     setShowResult(false);
     setIsLoading(true);
     setLoadingIndex(0);
-    setNotice("");
 
     try {
       const [response] = await Promise.all([
@@ -107,7 +105,6 @@ export default function XProfileRoleMatcher() {
       setProfile(data);
     } catch {
       setProfile(fallbackProfile(cleanedUsername));
-      setNotice("Live profile signal is limited right now, so KRAFT is using a lightweight matching model.");
     } finally {
       setIsLoading(false);
       setShowResult(true);
@@ -162,8 +159,6 @@ export default function XProfileRoleMatcher() {
               <div className="rounded-2xl bg-white/10 p-3"><strong className="block text-base">{profile.posts.toLocaleString()}</strong> posts</div>
             </div>
           </div>
-
-          {notice ? <p className="mt-3 rounded-2xl bg-amber-50 px-4 py-3 text-xs font-bold leading-5 text-amber-800">{notice}</p> : null}
 
           {isLoading ? (
             <div className="mt-5 rounded-3xl border border-dashed border-amber-300 bg-amber-50 p-5 text-center">
