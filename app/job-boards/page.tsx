@@ -40,7 +40,7 @@ export default function JobBoardsPage() {
               <div className="mt-6 rounded-3xl border border-dashed border-blue-200 bg-soft p-8 text-center">
                 <h3 className="text-2xl font-extrabold tracking-tight text-ink">No active curated jobs right now.</h3>
                 <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-muted">
-                  KRAFT will show manually reviewed individual opportunities here after they are added to `data/curatedJobs.ts` with active status.
+                  KRAFT will show manually reviewed job opportunities here after they are added with active status.
                 </p>
               </div>
             )}
