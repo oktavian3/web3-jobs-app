@@ -38,6 +38,7 @@ export default async function RoleDetailPage({ params }: { params: Promise<{ slu
   if (!role) notFound();
 
   const project = portfolioProjects.find((item) => item.targetRole === role.slug);
+  const projectHref = project ? `/portfolio/${project.slug}` : "/portfolio";
   const matchedTerms = glossaryTerms.filter((term) => role.relatedGlossary.includes(term.term));
   const relatedTerms = (matchedTerms.length ? matchedTerms : glossaryTerms.filter((term) => term.usedInRoles.includes(role.lane))).slice(0, 6);
   const matchedBoards = jobBoards.filter((board) => role.recommendedPlatforms.includes(board.name));
@@ -72,7 +73,7 @@ export default async function RoleDetailPage({ params }: { params: Promise<{ slu
             <h2 className="text-xl font-extrabold text-ink">Next action</h2>
             <p className="mt-3 text-sm leading-6 text-muted">{role.assignment}</p>
             <div className="mt-6 flex flex-col gap-3">
-              <PrimaryLink href="/portfolio">Build Proof-of-Work</PrimaryLink>
+              <PrimaryLink href={projectHref}>Build Proof-of-Work</PrimaryLink>
               <SecondaryLink href="/interview-prep">Practice Interview Questions</SecondaryLink>
             </div>
           </Card>
@@ -88,7 +89,7 @@ export default async function RoleDetailPage({ params }: { params: Promise<{ slu
           learnResources={learnResources}
         />
 
-        <FinalCTA title="Turn this role into evidence." copy="Choose a proof project, package the result, and practice the questions this role is likely to ask." primary={{ href: "/portfolio", label: "Choose a Project" }} secondary={{ href: "/interview-prep", label: "Practice Questions" }} />
+        <FinalCTA title="Turn this role into evidence." copy="Choose a proof project, package the result, and practice the questions this role is likely to ask." primary={{ href: projectHref, label: "Choose a Project" }} secondary={{ href: "/interview-prep", label: "Practice Questions" }} />
       </Container>
     </Shell>
   );

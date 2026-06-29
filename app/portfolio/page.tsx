@@ -22,9 +22,14 @@ export default function PortfolioPage() {
                   <p className="mt-2 text-sm leading-6 text-muted">{project.deliverable}</p>
                 </div>
                 <div className="mt-5 flex flex-wrap gap-2">{project.rubric.slice(0, 3).map((item) => <span key={item} className="tag">{item}</span>)}</div>
-                <Link href={`/roles/${project.targetRole}`} className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-                  See related role <ArrowRight className="h-4 w-4" />
-                </Link>
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <Link href={`/portfolio/${project.slug}`} className="inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
+                    Open project brief <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <Link href={`/roles/${project.targetRole}`} className="inline-flex items-center gap-2 text-sm font-extrabold text-slate-600">
+                    Related role <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
               </Card>
             );
           })}

@@ -1,45 +1,84 @@
-import type { Role } from "./roles";
+import { roles, type Role } from "./roles";
 
 export type PortfolioProject = {
   slug: string;
   targetRole: string;
+  title: string;
   context: string;
   task: string;
   deliverable: string;
   constraints: string[];
+  executionPlan: string[];
+  tools: string[];
   rubric: string[];
+  caseStudyPackaging: string[];
+  checklist: string[];
   presentation: string;
 };
 
-const projects: Array<[Role["slug"], string, string]> = [
-  ["community-moderator", "Create a moderation SOP for scams, spam, harassment, and escalation.", "SOP document, escalation flow, and example responses."],
-  ["community-manager", "Design a 30-day community plan for a protocol with low-quality engagement.", "Goals, calendar, metrics, and report template."],
-  ["ambassador-manager", "Redesign an ambassador program that rewards useful output.", "Program tiers, rubric, anti-spam rules, and review process."],
-  ["content-creator", "Create a three-post educational series about one protocol feature.", "Research notes, posts, visual direction, and performance hypothesis."],
-  ["research-writer", "Analyze one protocol using primary sources and disclose limitations.", "1,000-1,500 word memo with sources."],
-  ["social-media-manager", "Build a two-week content calendar for a product launch.", "Calendar, copy samples, asset list, and reporting plan."],
-  ["product-manager", "Write a PRD for improving a wallet onboarding problem.", "Problem, users, scope, flows, and acceptance criteria."],
-  ["product-operations", "Create a launch and incident-response checklist.", "Ownership matrix, checklist, escalation, and postmortem template."],
-  ["ecosystem-bd", "Map and qualify 20 potential ecosystem partners.", "Research sheet, scoring, and three tailored outreach messages."],
-  ["defi-analyst", "Compare two protocols with similar TVL.", "Metric table, risk analysis, and written conclusion."],
-  ["on-chain-analyst", "Build a dashboard that measures real user retention.", "Query logic, dashboard, caveats, and interpretation."],
-  ["tokenomics-analyst", "Model supply and unlock pressure for one token.", "Spreadsheet, chart, assumptions, and risk summary."],
-  ["smart-contract-developer", "Build and test a small escrow or multisig-related contract.", "Repository, tests, deployment, and threat notes."],
-  ["frontend-web3-developer", "Build a transaction UI with pending, rejection, failure, and success states.", "Working app, responsive UI, and documented states."],
-  ["devrel", "Create a quick-start tutorial and sample integration.", "Tutorial, repository, and troubleshooting section."],
-  ["ui-ux-designer", "Redesign a risky token approval flow.", "User flow, wireframes, final UI, rationale, and accessibility notes."],
-  ["brand-motion-designer", "Create a distinctive mini campaign system without generic crypto cliches.", "Key visual, social templates, and 10-second motion sample."],
-  ["technical-writer", "Rewrite a confusing quick-start guide and test every step.", "New information architecture, guide, and verified code examples."],
-];
+function titleFor(role: Role) {
+  return `${role.title} proof-of-work brief`;
+}
 
-export const portfolioProjects: PortfolioProject[] = projects.map(([slug, task, deliverable]) => ({
-  slug,
-  targetRole: slug,
-  context: "Use a real or realistic Web3 workflow. Name assumptions clearly and avoid inventing company outcomes.",
-  task,
-  deliverable,
+function deliverableFor(role: Role) {
+  return role.expectedOutputs.slice(0, 4).join(", ");
+}
+
+function executionPlanFor(role: Role) {
+  return [
+    `Define the ${role.title.toLowerCase()} scenario, audience, and assumptions.`,
+    "Collect public sources, examples, constraints, and any definitions needed to avoid guesswork.",
+    `Create the core deliverable: ${deliverableFor(role)}.`,
+    "Review the work against the rubric and add caveats, decisions, and next-step notes.",
+    "Package the result as a concise case study with links, screenshots, or artifacts where useful.",
+  ];
+}
+
+function rubricFor(role: Role) {
+  return Array.from(
+    new Set([
+      "Clear problem framing",
+      "Role-relevant output",
+      "Evidence and caveats",
+      "Readable presentation",
+      "Actionable next step",
+      ...role.mustHave.slice(0, 3),
+    ])
+  );
+}
+
+function checklistFor(role: Role) {
+  return [
+    "All assumptions are named.",
+    "No private data, seed phrases, or wallet secrets are included.",
+    "Sources are linked or described clearly.",
+    `The deliverable matches ${role.title} expectations.`,
+    "The case study explains what you would improve next.",
+  ];
+}
+
+export const portfolioProjects: PortfolioProject[] = roles.map((role) => ({
+  slug: role.slug,
+  targetRole: role.slug,
+  title: titleFor(role),
+  context: `Use a real or realistic ${role.lane.toLowerCase()} workflow. ${role.summary}`,
+  task: role.assignment,
+  deliverable: deliverableFor(role),
   constraints: ["No private data", "No seed phrases or wallet secrets", "Use public sources", "Document assumptions"],
-  rubric: ["Clear problem framing", "Role-relevant output", "Evidence and caveats", "Readable presentation", "Actionable next step"],
+  executionPlan: executionPlanFor(role),
+  tools: role.tools,
+  rubric: rubricFor(role),
+  caseStudyPackaging: [
+    "Start with the problem, role context, and why the work matters.",
+    "Show the final artifact before process notes.",
+    "Explain three to five decisions, trade-offs, or definitions.",
+    "Add a short limitations section and a next-iteration plan.",
+    "Close with links, screenshots, source notes, or a downloadable artifact when available.",
+  ],
+  checklist: checklistFor(role),
   presentation: "Turn the final work into a case study with context, decisions, output, limitations, and links.",
 }));
 
+export function getPortfolioProjectBySlug(slug: string) {
+  return portfolioProjects.find((project) => project.slug === slug);
+}

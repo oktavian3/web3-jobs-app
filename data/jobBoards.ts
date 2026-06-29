@@ -11,6 +11,70 @@ export type JobBoard = {
   note: string;
 };
 
+export type EcosystemJobBoard = {
+  slug: string;
+  name: string;
+  url: string;
+  ecosystem: "TON" | "Arbitrum" | "Optimism" | "Base";
+  sourceType: "Official ecosystem job board" | "Official core-team careers" | "Official ecosystem directory";
+  bestFor: string;
+  lastReviewed: string;
+  note: string;
+};
+
+export const ecosystemJobBoards: EcosystemJobBoard[] = [
+  {
+    slug: "ton-jobs",
+    name: "TON Jobs",
+    url: "https://jobs.ton.org/jobs",
+    ecosystem: "TON",
+    sourceType: "Official ecosystem job board",
+    bestFor: "Roles across companies building in the TON ecosystem.",
+    lastReviewed: "2026-06",
+    note: "Use the official board as a discovery source, then verify the hiring company and application domain.",
+  },
+  {
+    slug: "arbitrum-jobs",
+    name: "Arbitrum Jobs",
+    url: "https://jobs.arbitrum.io/jobs",
+    ecosystem: "Arbitrum",
+    sourceType: "Official ecosystem job board",
+    bestFor: "Openings from teams in the Arbitrum ecosystem.",
+    lastReviewed: "2026-06",
+    note: "Good for ecosystem-focused roles; still verify each company and listing freshness before applying.",
+  },
+  {
+    slug: "optimism-jobs",
+    name: "Optimism Jobs",
+    url: "https://jobs.optimism.io/jobs",
+    ecosystem: "Optimism",
+    sourceType: "Official ecosystem job board",
+    bestFor: "Optimism Collective and ecosystem opportunities.",
+    lastReviewed: "2026-06",
+    note: "Treat this as an ecosystem board, not a guarantee that every role is current or suitable.",
+  },
+  {
+    slug: "base-jobs",
+    name: "Base Jobs",
+    url: "https://www.base.org/jobs",
+    ecosystem: "Base",
+    sourceType: "Official core-team careers",
+    bestFor: "Base core-team roles published through the official Base site.",
+    lastReviewed: "2026-06",
+    note: "This is not a complete ecosystem aggregator. Use the Base ecosystem directory for broader company discovery.",
+  },
+  {
+    slug: "base-ecosystem",
+    name: "Base Ecosystem",
+    url: "https://www.base.org/ecosystem",
+    ecosystem: "Base",
+    sourceType: "Official ecosystem directory",
+    bestFor: "Finding Base ecosystem companies before checking their official career pages.",
+    lastReviewed: "2026-06",
+    note: "Use it to discover companies, then verify openings on each company's official careers page.",
+  },
+];
+
 export const jobBoards: JobBoard[] = [
   { slug: "web3-career", name: "Web3.career", url: "https://web3.career/", bestFor: "Broad Web3 roles across technical and non-technical categories.", commonRoleTypes: ["Engineering", "Marketing", "Community", "Product"], remoteSupport: "Strong", salaryVisibility: "Often shown", applicationStyle: "External job links and direct listings", lastReviewed: "2026-06", note: "Useful filters and a large category range. Verify job freshness and company legitimacy." },
   { slug: "cryptojobslist", name: "CryptoJobsList", url: "https://cryptojobslist.com/", bestFor: "Remote crypto and Web3 roles, including entry and mid-level listings.", commonRoleTypes: ["Community", "Content", "Engineering", "BD"], remoteSupport: "Strong", salaryVisibility: "Sometimes shown", applicationStyle: "Listing pages with apply links", lastReviewed: "2026-06", note: "Good for broad browsing; compare listings with company channels before applying." },
