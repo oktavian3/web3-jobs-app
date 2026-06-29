@@ -46,7 +46,7 @@ export default function HeroProductPreview() {
       <p className="mx-auto mb-4 w-fit rounded-full border border-white/35 bg-white/15 px-3 py-1 text-xs font-extrabold uppercase tracking-[0.14em] text-white backdrop-blur">
         Product preview
       </p>
-      <div className="grid gap-4 lg:grid-cols-4">
+      <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Link href={match.href} className={cardClass} {...pauseProps}>
           <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-white transition group-hover:rotate-6">
             <Target className="h-4 w-4" />
@@ -59,7 +59,7 @@ export default function HeroProductPreview() {
           <span className="mt-4 inline-flex items-center gap-1 text-xs font-extrabold text-blue-700">Open Skill Check <ArrowUpRight className="h-3.5 w-3.5" /></span>
         </Link>
 
-        <Link href="/roadmaps" className={`${cardClass} lg:-mt-6`} {...pauseProps}>
+        <Link href="/roadmaps" className={cardClass} {...pauseProps}>
           <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-white transition group-hover:scale-110">
             <Trophy className="h-4 w-4" />
           </span>
