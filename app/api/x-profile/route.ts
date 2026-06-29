@@ -34,16 +34,26 @@ export async function GET(request: Request) {
   }
 
   try {
-    const response = await fetch(`https://r.jina.ai/http://https://x.com/${username}`, {
-      headers: { "User-Agent": "KRAFT-role-matcher/1.0" },
-      next: { revalidate: 60 * 30 },
-    });
+    const sources = [
+      `https://r.jina.ai/http://https://twitter.com/${username}`,
+      `https://r.jina.ai/http://https://x.com/${username}`,
+    ];
 
-    if (!response.ok) {
-      return NextResponse.json({ error: "Could not fetch public X profile" }, { status: 502 });
+    let markdown = "";
+    for (const source of sources) {
+      const response = await fetch(source, {
+        headers: { "User-Agent": "KRAFT-role-matcher/1.0" },
+        next: { revalidate: 60 * 30 },
+      });
+      if (response.ok) {
+        markdown = await response.text();
+        break;
+      }
     }
 
-    const markdown = await response.text();
+    if (!markdown) {
+      return NextResponse.json({ error: "Could not fetch public X profile" }, { status: 502 });
+    }
     const displayName = firstMatch(markdown, [/\n([^\n]+)\n\n@\w+/]);
     const bio = firstMatch(markdown, [/@\w+\n\n([^\n]+)\n\n\[/, /@\w+\n\n([^\n]+)\n\nJoined/]);
     const postsText = firstMatch(markdown, [/\n([\d.,]+[KMB]?) posts\n/i]);
