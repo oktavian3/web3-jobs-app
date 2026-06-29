@@ -24,6 +24,7 @@ import { RoleCard } from "@/components/kraft/Cards";
 import { CountUp, ProofChecklistAnimation } from "@/components/kraft/AnimatedBits";
 import LearningPreview from "@/components/kraft/LearningPreview";
 import HeroProductPreview from "@/components/kraft/HeroProductPreview";
+import XProfileRoleMatcher from "@/components/kraft/XProfileRoleMatcher";
 
 const startCards = [
   { title: "New to Web3", copy: "Understand the industry, basic terms, and which roles do not require coding.", cta: "Learn the Basics", href: "/learn-web3" },
@@ -179,6 +180,8 @@ export default function Home() {
             </div>
           </Card>
         </section>
+
+        <XProfileRoleMatcher />
 
         <section className="reveal-card grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
