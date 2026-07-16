@@ -1,4 +1,4 @@
-import { ArrowUpRight, Search, ShieldAlert, SlidersHorizontal, Sparkles } from "lucide-react";
+import { ArrowUpRight, Search, ShieldAlert, SlidersHorizontal } from "lucide-react";
 import { ecosystemJobBoards, jobBoards } from "@/data/jobBoards";
 import { curatedJobsLastUpdated, getActiveCuratedJobs, selectedJobPlatforms } from "@/data/curatedJobs";
 import { Shell, Container, SectionHeading, Card, FinalCTA } from "@/components/kraft/Primitives";
@@ -12,16 +12,20 @@ export default function JobBoardsPage() {
   return (
     <Shell>
       <Container className="space-y-12 py-12 sm:py-16">
-        <SectionHeading eyebrow="Job Boards" title="Curated Web3 Job Platforms." copy="KRAFT compares external platforms. It does not host every listed job, and platform listings should be verified before you apply." />
-        <section>
-          <SectionHeading eyebrow="New Jobs Curated by KRAFT" title="New Jobs Curated by KRAFT." copy="This section is manually maintained from a data file. It only shows jobs marked active and does not use fake listings or a live API." />
-          <Card className="mt-8 p-5 sm:p-6">
+        <SectionHeading eyebrow="Job Boards" title="Find jobs in two different ways." copy="KRAFT separates its own curated job updates from platform recommendations so you can browse by signal instead of mixing everything together." />
+
+        <section className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+          <Card className="p-5 sm:p-6">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <span className="tag">Added by KRAFT</span>
+              <div>
+                <span className="tag">KRAFT updates</span>
+                <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-ink">Job updates curated by KRAFT</h2>
+              </div>
               <p className="text-sm font-bold text-muted">Last updated {curatedJobsLastUpdated}</p>
             </div>
+            <p className="mt-3 text-sm leading-6 text-muted">These are the updates, announcements, or opportunities we publish ourselves. They live in the same content system as the admin studio and the homepage feed.</p>
             {activeCuratedJobs.length ? (
-              <div className="mt-6 grid gap-4 lg:grid-cols-3">
+              <div className="mt-6 grid gap-4 lg:grid-cols-2">
                 {activeCuratedJobs.map((job) => (
                   <a key={job.id} href={job.applyUrl} target="_blank" rel="noreferrer" className="interactive-card group rounded-3xl border border-blue-100 bg-soft p-5 transition hover:-translate-y-1 hover:border-blue-300 hover:bg-white hover:shadow-blue">
                     <div className="flex flex-wrap gap-2">
@@ -38,43 +42,41 @@ export default function JobBoardsPage() {
               </div>
             ) : (
               <div className="mt-6 rounded-3xl border border-dashed border-blue-200 bg-soft p-8 text-center">
-                <h3 className="text-2xl font-extrabold tracking-tight text-ink">No active curated jobs right now.</h3>
-                <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-muted">
-                  KRAFT will show manually reviewed job opportunities here after they are added with active status.
-                </p>
+                <h3 className="text-2xl font-extrabold tracking-tight text-ink">No KRAFT updates published yet.</h3>
+                <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-muted">When KRAFT publishes a new update, it will appear here and on the posts archive.</p>
               </div>
             )}
           </Card>
-        </section>
-        <section>
-          <SectionHeading eyebrow="Selected by KRAFT" title="Selected by KRAFT platforms for specific search needs." copy="These are still external platforms. KRAFT highlights when each one is useful, but you should verify every listing before applying." />
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {selectedJobPlatforms.map((selection) => {
-              const board = jobBoards.find((item) => item.slug === selection.platformSlug);
-              if (!board) return null;
-              return (
-                <Card key={selection.id} className="interactive-card group p-5 transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-blue">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <span className="tag">{selection.recommendationLabel}</span>
-                      <h3 className="mt-4 text-xl font-extrabold tracking-tight text-ink">{board.name}</h3>
-                      <p className="mt-2 text-sm leading-6 text-slate-700">{selection.whySelected}</p>
+
+          <Card className="p-5 sm:p-6">
+            <span className="tag">Specific search needs</span>
+            <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-ink">Selected platforms by use case</h2>
+            <p className="mt-3 text-sm leading-6 text-muted">These are the platform picks KRAFT recommends for different search styles, like remote-first, developer-focused, or non-technical roles.</p>
+            <div className="mt-5 space-y-3">
+              {selectedJobPlatforms.slice(0, 4).map((selection) => {
+                const board = jobBoards.find((item) => item.slug === selection.platformSlug);
+                if (!board) return null;
+                return (
+                  <a key={selection.id} href={board.url} target="_blank" rel="noreferrer" className="block rounded-2xl border border-blue-100 bg-[linear-gradient(180deg,#ffffff,#f2f8ff)] p-4 transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-blue">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-700">{selection.recommendationLabel}</p>
+                        <h3 className="mt-1 font-extrabold text-ink">{board.name}</h3>
+                      </div>
+                      <ArrowUpRight className="h-5 w-5 text-blue-700" />
                     </div>
-                    <Sparkles className="h-6 w-6 shrink-0 text-blue-700 transition group-hover:rotate-6" />
-                  </div>
-                  <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
-                    <div className="mini-stat"><dt>Remote</dt><dd>{board.remoteSupport}</dd></div>
-                    <div className="mini-stat"><dt>Salary</dt><dd>{board.salaryVisibility}</dd></div>
-                  </dl>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {selection.bestRoleCategories.map((category) => <span key={category} className="tag">{category}</span>)}
-                  </div>
-                  <a href={board.url} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-                    Visit platform <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    <p className="mt-2 text-sm leading-6 text-slate-700">{selection.whySelected}</p>
                   </a>
-                </Card>
-              );
-            })}
+                );
+              })}
+            </div>
+          </Card>
+        </section>
+
+        <section>
+          <SectionHeading eyebrow="Platform directory" title="Browse the broader directory after the curated picks." copy="The directory stays below the split so the two content types are clearly separated but still on one page." />
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {jobBoards.map((board) => <JobBoardCard key={board.slug} board={board} />)}
           </div>
         </section>
         <section>
