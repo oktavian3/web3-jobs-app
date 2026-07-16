@@ -14,7 +14,16 @@ type JobUpdate = {
   created_at: string;
 };
 
-const emptyForm = {
+type DraftPost = {
+  title: string;
+  company: string;
+  description: string;
+  url: string;
+  tags: string;
+  is_featured: boolean;
+};
+
+const emptyForm: DraftPost = {
   title: '',
   company: '',
   description: '',
@@ -23,21 +32,46 @@ const emptyForm = {
   is_featured: false,
 };
 
+const draftStorageKey = 'kraft-admin-draft-post';
+
 export default function AdminDashboard() {
   const router = useRouter();
   const [jobs, setJobs] = useState<JobUpdate[]>([]);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState(emptyForm);
+  const [savedDraft, setSavedDraft] = useState(false);
+  const [formData, setFormData] = useState<DraftPost>(emptyForm);
 
   const previewTags = useMemo(() => formData.tags.split(',').map((t) => t.trim()).filter(Boolean), [formData.tags]);
 
   useEffect(() => {
     void fetchJobs();
+    const raw = localStorage.getItem(draftStorageKey);
+    if (raw) {
+      try {
+        setFormData({ ...emptyForm, ...JSON.parse(raw) });
+      } catch {
+        localStorage.removeItem(draftStorageKey);
+      }
+    }
   }, []);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      localStorage.setItem(draftStorageKey, JSON.stringify(formData));
+      setSavedDraft(true);
+      window.setTimeout(() => setSavedDraft(false), 1200);
+    }, 250);
+    return () => window.clearTimeout(timeout);
+  }, [formData]);
 
   const fetchJobs = async () => {
     const res = await fetch('/api/admin/jobs');
     if (res.ok) setJobs(await res.json());
+  };
+
+  const clearDraft = () => {
+    localStorage.removeItem(draftStorageKey);
+    setFormData(emptyForm);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -50,7 +84,7 @@ export default function AdminDashboard() {
         body: JSON.stringify({ ...formData, tags: previewTags }),
       });
       if (res.ok) {
-        setFormData(emptyForm);
+        clearDraft();
         await fetchJobs();
       }
     } finally {
@@ -78,25 +112,31 @@ export default function AdminDashboard() {
             <p className="text-xs font-bold uppercase tracking-[0.24em] text-amber-700">Admin</p>
             <h1 className="text-xl font-black tracking-tight">Content Studio</h1>
           </div>
-          <button onClick={handleLogout} className="rounded-full border border-black/10 px-4 py-2 text-sm font-semibold hover:bg-black hover:text-white">Logout</button>
+          <div className="flex items-center gap-3">
+            {savedDraft ? <span className="text-sm font-semibold text-emerald-700">Draft saved</span> : null}
+            <button onClick={handleLogout} className="rounded-full border border-black/10 px-4 py-2 text-sm font-semibold hover:bg-black hover:text-white">Logout</button>
+          </div>
         </div>
       </header>
 
       <main className="relative mx-auto grid max-w-6xl gap-8 px-6 py-8 lg:grid-cols-[1.05fr_0.95fr]">
         <section className="rounded-[28px] border border-black/10 bg-white p-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
           <div className="mb-6">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-700">Template</p>
-            <h2 className="mt-2 text-3xl font-black tracking-tight">Create a post</h2>
-            <p className="mt-2 text-sm text-slate-600">This is the default template for new updates, jobs, or announcements.</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-700">Draft editor</p>
+            <h2 className="mt-2 text-3xl font-black tracking-tight">Write once, publish when ready.</h2>
+            <p className="mt-2 text-sm text-slate-600">Your draft autosaves locally first, then publishes into the shared posts feed when you hit publish.</p>
           </div>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <input className="w-full rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 outline-none ring-0 placeholder:text-slate-400 focus:border-amber-500" placeholder="Post title" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} required />
+            <input className="w-full rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 outline-none placeholder:text-slate-400 focus:border-amber-500" placeholder="Post title" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} required />
             <input className="w-full rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 outline-none placeholder:text-slate-400 focus:border-amber-500" placeholder="Company / source" value={formData.company} onChange={(e) => setFormData({ ...formData, company: e.target.value })} required />
             <textarea className="w-full rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 outline-none placeholder:text-slate-400 focus:border-amber-500" rows={5} placeholder="Post description" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} required />
             <input className="w-full rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 outline-none placeholder:text-slate-400 focus:border-amber-500" placeholder="Target URL" type="url" value={formData.url} onChange={(e) => setFormData({ ...formData, url: e.target.value })} required />
             <input className="w-full rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 outline-none placeholder:text-slate-400 focus:border-amber-500" placeholder="Tags, comma-separated" value={formData.tags} onChange={(e) => setFormData({ ...formData, tags: e.target.value })} />
             <label className="flex items-center gap-3 rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 text-sm font-medium"><input type="checkbox" checked={formData.is_featured} onChange={(e) => setFormData({ ...formData, is_featured: e.target.checked })} /> Feature this post</label>
-            <button type="submit" disabled={loading} className="w-full rounded-2xl bg-slate-900 px-4 py-3 font-bold text-white transition hover:bg-slate-800 disabled:opacity-50">{loading ? 'Publishing...' : 'Publish post'}</button>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <button type="submit" disabled={loading} className="w-full rounded-2xl bg-slate-900 px-4 py-3 font-bold text-white transition hover:bg-slate-800 disabled:opacity-50">{loading ? 'Publishing...' : 'Publish post'}</button>
+              <button type="button" onClick={clearDraft} className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 font-bold text-slate-700 transition hover:bg-slate-50">Clear draft</button>
+            </div>
           </form>
         </section>
 
