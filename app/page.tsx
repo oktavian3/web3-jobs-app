@@ -56,6 +56,7 @@ const selectedPlatforms = selectedJobPlatforms
   .filter((item): item is { selection: (typeof selectedJobPlatforms)[number]; board: (typeof jobBoards)[number] } => Boolean(item.board));
 const proofChecklistItems = ["Role-specific project", "Documented result", "Portfolio case study", "Tailored application", "Interview preparation"];
 const latestCuratedJobs = getActiveCuratedJobs().slice(0, 3);
+const latestPostLink = "/posts";
 
 export default function Home() {
   return (
@@ -281,6 +282,9 @@ export default function Home() {
                     No active manually curated jobs are published yet. KRAFT will show the latest three here after they are added to the data file.
                   </div>
                 )}
+                <a href={latestPostLink} className="inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
+                  Browse all posts
+                </a>
               </div>
             </Card>
           </div>
