@@ -61,3 +61,24 @@ export function getRoleContent(slug: string): RoleContent | undefined {
 }
 
 export const roleContentSlugs = Object.keys(roleContentBySlug);
+
+// Employment models are derived from each role's APPROVED "Where the role sits" and
+// "Compensation and role risks" copy (which names them explicitly), so the directory
+// filter uses structured, source-grounded values rather than invented tags.
+const EMPLOYMENT_MODEL_KEYWORDS: { label: string; test: RegExp }[] = [
+  { label: "Full-time", test: /full-time|core-team/i },
+  { label: "Contract", test: /\bcontract(or|ors|s|-based)?\b/i },
+  { label: "Freelance", test: /freelance/i },
+  { label: "Agency", test: /agenc(y|ies)/i },
+  { label: "Contributor", test: /contributor/i },
+  { label: "Part-time", test: /part-time/i },
+  { label: "Retainer", test: /retainer/i },
+  { label: "Grant-funded", test: /\bgrant(s|-funded)?\b/i },
+];
+
+export function getEmploymentModels(slug: string): string[] {
+  const content = roleContentBySlug[slug];
+  if (!content) return [];
+  const text = [...content.whereItSits, ...content.compensationIntro].join(" ");
+  return EMPLOYMENT_MODEL_KEYWORDS.filter(({ test }) => test.test(text)).map(({ label }) => label);
+}

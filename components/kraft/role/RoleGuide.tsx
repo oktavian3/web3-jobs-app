@@ -1,6 +1,6 @@
 import type { Role, CompensationConfidence, EvidenceTier } from "@/data/roles";
 import type { RoleContent } from "@/data/roleContent";
-import { compensationEvidenceLegend, compensationVariables } from "@/data/sharedBlocks";
+import { compensationEvidenceLegend, compensationVariables, noReliableRange } from "@/data/sharedBlocks";
 import RoleTableOfContents, { type TocItem } from "./RoleTableOfContents";
 import {
   Section,
@@ -29,6 +29,12 @@ import {
 export type RoleSalaryView = {
   confidence: CompensationConfidence;
   tier: EvidenceTier;
+  hasReliableRange: boolean;
+  range?: { min: number; max: number; currency: string; period: string };
+  geography?: string;
+  employmentModel?: string;
+  sourceLabel?: string;
+  sourceUrl?: string;
 };
 
 const TOC: TocItem[] = [
@@ -56,7 +62,6 @@ export default function RoleGuide({
   content,
   salary,
   relatedRoles,
-  reviewed,
   proofHref,
   interviewHref,
 }: {
@@ -64,7 +69,6 @@ export default function RoleGuide({
   content: RoleContent;
   salary: RoleSalaryView;
   relatedRoles: RelatedRole[];
-  reviewed: string;
   proofHref: string;
   interviewHref: string;
 }) {
@@ -153,8 +157,16 @@ export default function RoleGuide({
             tier={salary.tier}
             intro={content.compensationIntro}
             roleRisks={content.roleRisks}
+            hasReliableRange={salary.hasReliableRange}
+            range={salary.range}
+            geography={salary.geography}
+            employmentModel={salary.employmentModel}
+            sourceLabel={salary.sourceLabel}
+            sourceUrl={salary.sourceUrl}
+            noRangeText={noReliableRange.body}
             variablesText={compensationVariables.body}
             legend={compensationEvidenceLegend}
+            methodologyHref="/salary-methodology"
           />
         </Section>
 
@@ -170,7 +182,7 @@ export default function RoleGuide({
           <RelatedRoles roles={relatedRoles} />
         </Section>
 
-        <SourceAndReviewStatus reviewed={reviewed} />
+        <SourceAndReviewStatus />
       </div>
     </div>
   );

@@ -327,25 +327,49 @@ export function InterviewPreparation({ intro, questions }: { intro: string[]; qu
 }
 
 // ── salary + evidence ─────────────────────────────────────────────────────
-// Phase 2A is context-first: confidence, evidence tier, approved role-specific
-// compensation context, and role risks. No numeric ranges are shown here, so no
-// figure is ever inferred from an unrelated role. Verified per-role numeric
-// records are introduced in the Phase 2B salary register.
+// Context-first: confidence, evidence tier, approved role-specific compensation
+// context, and role risks. A numeric range is shown ONLY when an approved evidence
+// record supplies one (register `hasReliableRange`). The approved package supplies
+// none today, so every role renders the no-reliable-range state (SB-03). No figure
+// is inferred from an unrelated role and no internal source ID is exposed.
+
+export type SalaryRangeView = {
+  min: number;
+  max: number;
+  currency: string;
+  period: string;
+};
 
 export function SalaryEvidenceBlock({
   confidence,
   tier,
   intro,
   roleRisks,
+  hasReliableRange,
+  range,
+  geography,
+  employmentModel,
+  sourceLabel,
+  sourceUrl,
+  noRangeText,
   variablesText,
   legend,
+  methodologyHref,
 }: {
   confidence: CompensationConfidence;
   tier: EvidenceTier;
   intro: string[];
   roleRisks: string[];
+  hasReliableRange: boolean;
+  range?: SalaryRangeView;
+  geography?: string;
+  employmentModel?: string;
+  sourceLabel?: string;
+  sourceUrl?: string;
+  noRangeText: string;
   variablesText: string;
   legend: { title: string; tiers: { tier: string; meaning: string }[]; note: string };
+  methodologyHref: string;
 }) {
   return (
     <div className="space-y-5">
@@ -356,12 +380,51 @@ export function SalaryEvidenceBlock({
 
       <Prose paragraphs={intro} />
 
+      {hasReliableRange && range ? (
+        <div className="rounded-2xl border border-border bg-soft p-4 sm:p-5">
+          <SubHeading>Reported range (context, not a guarantee)</SubHeading>
+          <p className="mt-2 text-lg font-extrabold text-ink">
+            {range.currency}{range.min.toLocaleString()}–{range.currency}{range.max.toLocaleString()}{" "}
+            <span className="text-sm font-bold text-muted">/ {range.period}</span>
+          </p>
+          {(geography || employmentModel) && (
+            <p className="mt-1 text-sm leading-6 text-muted">
+              {[geography, employmentModel].filter(Boolean).join(" · ")}
+            </p>
+          )}
+          {sourceLabel && sourceUrl && (
+            <a
+              href={sourceUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            >
+              Source: {sourceLabel}
+            </a>
+          )}
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 sm:p-5">
+          <SubHeading>No reliable role-specific range</SubHeading>
+          <p className="mt-2 text-sm leading-6 text-amber-900">{noRangeText}</p>
+        </div>
+      )}
+
       <div>
         <SubHeading>Role risks</SubHeading>
         <div className="mt-3"><Bullets items={roleRisks} /></div>
       </div>
 
       <p className="text-xs leading-5 text-muted">{variablesText}</p>
+
+      <div className="flex flex-wrap items-center gap-4">
+        <Link
+          href={methodologyHref}
+          className="inline-flex items-center gap-1 text-sm font-extrabold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        >
+          Read the salary methodology
+        </Link>
+      </div>
 
       <details className="rounded-2xl border border-border bg-white p-4">
         <summary className="cursor-pointer text-sm font-extrabold text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
@@ -456,20 +519,28 @@ export function RelatedRoles({ roles }: { roles: RelatedRole[] }) {
 
 // ── source + review status ────────────────────────────────────────────────
 
-export function SourceAndReviewStatus({ reviewed }: { reviewed: string }) {
+export function SourceAndReviewStatus() {
   return (
     <div className="rounded-2xl border border-border bg-soft p-4 text-sm leading-6 text-muted">
       <p>
-        <span className="font-bold text-ink">Content review.</span> This guide is drawn from current first-party
-        hiring material and reputable industry evidence, with compensation labelled by confidence and evidence tier.
-        Last reviewed {reviewed}.
+        <span className="font-bold text-ink">How this guide is built.</span> Role content is drawn from current
+        first-party hiring material and reputable industry evidence, with compensation labelled by confidence and
+        evidence tier rather than a single number.
       </p>
-      <Link
-        href="/disclaimers"
-        className="mt-2 inline-flex items-center gap-1 font-bold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-      >
-        Read the disclaimers
-      </Link>
+      <div className="mt-2 flex flex-wrap gap-4">
+        <Link
+          href="/methodology"
+          className="inline-flex items-center gap-1 font-bold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        >
+          Read the methodology
+        </Link>
+        <Link
+          href="/disclaimers"
+          className="inline-flex items-center gap-1 font-bold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        >
+          Read the disclaimers
+        </Link>
+      </div>
     </div>
   );
 }

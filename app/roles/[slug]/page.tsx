@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { getRoleBySlug, roles, type EvidenceTier } from "@/data/roles";
+import { getRoleBySlug, roles } from "@/data/roles";
 import { getRoleContent } from "@/data/roleContent";
-import { getSalaryContext } from "@/data/salaryContext";
+import { getSalaryRecord } from "@/data/salaryRegister";
 import { portfolioProjects } from "@/data/portfolioProjects";
 import { Shell, Container, FinalCTA } from "@/components/kraft/Primitives";
 import RoleGuide from "@/components/kraft/role/RoleGuide";
@@ -24,8 +24,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-const tierRank: Record<EvidenceTier, number> = { Direct: 3, "Broad market": 2, Adjacent: 1, Unverified: 0 };
-
 export default async function RoleDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const role = getRoleBySlug(slug);
@@ -34,12 +32,7 @@ export default async function RoleDetailPage({ params }: { params: Promise<{ slu
   const content = getRoleContent(role.slug);
   if (!content) notFound();
 
-  const research = getSalaryContext(role);
-  const primaryTier: EvidenceTier =
-    research.salaryEvidence
-      .map((item) => item.canonicalTier)
-      .filter((tier): tier is EvidenceTier => Boolean(tier))
-      .sort((a, b) => tierRank[b] - tierRank[a])[0] ?? "Unverified";
+  const salaryRecord = getSalaryRecord(role.slug);
 
   const relatedRoles: RelatedRole[] = role.relatedRoleSlugs
     .map((relatedSlug) => getRoleBySlug(relatedSlug))
@@ -67,9 +60,17 @@ export default async function RoleDetailPage({ params }: { params: Promise<{ slu
         <RoleGuide
           role={role}
           content={content}
-          salary={{ confidence: role.compensationConfidence, tier: primaryTier }}
+          salary={{
+            confidence: role.compensationConfidence,
+            tier: salaryRecord.evidenceTier,
+            hasReliableRange: salaryRecord.hasReliableRange,
+            range: salaryRecord.range,
+            geography: salaryRecord.geography,
+            employmentModel: salaryRecord.employmentModel,
+            sourceLabel: salaryRecord.sourceLabel,
+            sourceUrl: salaryRecord.sourceUrl,
+          }}
           relatedRoles={relatedRoles}
-          reviewed={research.lastReviewed}
           proofHref={proofHref}
           interviewHref="/interview-prep"
         />
