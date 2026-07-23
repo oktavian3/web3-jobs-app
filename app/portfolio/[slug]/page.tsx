@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, CheckCircle2, ClipboardList, Hammer, PackageCheck, Wrench } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, X } from "lucide-react";
 import { getPortfolioProjectBySlug, portfolioProjects } from "@/data/portfolioProjects";
 import { getRoleBySlug } from "@/data/roles";
-import { Shell, Container, Card, SectionHeading, FinalCTA } from "@/components/kraft/Primitives";
+import { Shell, Container } from "@/components/kraft/Primitives";
+import CareerNext from "@/components/kraft/career/CareerNext";
 
 export function generateStaticParams() {
   return portfolioProjects.map((project) => ({ slug: project.slug }));
@@ -13,19 +14,31 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const project = getPortfolioProjectBySlug(slug);
-  return { title: project ? `${project.title} | KRAFT Portfolio` : "Portfolio Brief" };
+  return {
+    title: project ? `${project.roleTitle} portfolio brief` : "Portfolio Brief",
+    description: project ? `A simulated proof-of-work brief for the ${project.roleTitle} role.` : undefined,
+  };
 }
 
-function ListCard({ items }: { items: string[] }) {
+function Bullets({ items }: { items: string[] }) {
   return (
-    <div className="grid gap-3">
-      {items.map((item) => (
-        <div key={item} className="flex gap-3 rounded-2xl border border-blue-100 bg-soft p-4">
-          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
-          <p className="text-sm font-bold leading-6 text-ink">{item}</p>
-        </div>
+    <ul className="space-y-2">
+      {items.map((item, i) => (
+        <li key={i} className="flex gap-2.5 text-sm leading-6 text-ink">
+          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" aria-hidden="true" />
+          <span>{item}</span>
+        </li>
       ))}
-    </div>
+    </ul>
+  );
+}
+
+function Block({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
+  return (
+    <section id={id} className="scroll-mt-28">
+      <h2 className="text-xl font-extrabold tracking-tight text-ink sm:text-2xl">{title}</h2>
+      <div className="mt-4">{children}</div>
+    </section>
   );
 }
 
@@ -35,81 +48,125 @@ export default async function PortfolioDetailPage({ params }: { params: Promise<
   if (!project) notFound();
 
   const role = getRoleBySlug(project.targetRole);
-  const sectionIconClass = "grid h-11 w-11 place-items-center rounded-2xl bg-blue-600 text-white shadow-blue";
 
   return (
     <Shell>
-      <Container className="space-y-10 py-12 sm:py-16">
-        <Link href="/portfolio" className="inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-          <ArrowLeft className="h-4 w-4" /> Back to portfolio
+      <Container className="space-y-12 py-12 sm:py-16">
+        <Link href="/portfolio" className="inline-flex items-center gap-2 text-sm font-extrabold text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Back to portfolio
         </Link>
 
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            <span className="tag">{role?.lane ?? "KRAFT"}</span>
-            <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-ink sm:text-6xl">{project.title}</h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-muted">{project.context}</p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {project.tools.slice(0, 6).map((tool) => <span key={tool} className="tag">{tool}</span>)}
-            </div>
+        <header className="max-w-3xl">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="tag">{project.lane}</span>
+            <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-amber-900">Simulated project</span>
           </div>
-          <Card className="p-6">
-            <h2 className="text-xl font-extrabold text-ink">Project brief</h2>
-            <p className="mt-3 text-sm leading-6 text-muted">{project.task}</p>
-            <div className="mt-5 rounded-2xl bg-soft p-4">
-              <h3 className="text-sm font-extrabold text-ink">Expected deliverable</h3>
-              <p className="mt-2 text-sm leading-6 text-muted">{project.deliverable}</p>
+          <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">{project.roleTitle} portfolio brief</h1>
+          <p className="mt-5 text-lg leading-8 text-muted">{project.scenario}</p>
+          {role && (
+            <Link href={`/roles/${role.slug}`} className="mt-4 inline-flex items-center gap-1 text-sm font-extrabold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+              Open the {role.title} role guide <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          )}
+        </header>
+
+        <div className="grid gap-10 lg:grid-cols-2">
+          <Block id="objective" title="Objective">
+            <p className="text-base leading-7 text-muted">{project.objective}</p>
+          </Block>
+          <Block id="deliverables" title="Expected deliverables">
+            <div className="flex flex-wrap gap-2">
+              {project.deliverables.map((item) => (
+                <span key={item} className="rounded-xl border border-border bg-soft px-3 py-2 text-sm font-bold text-ink">{item}</span>
+              ))}
             </div>
-            {role ? (
-              <Link href={`/roles/${role.slug}`} className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-                Open related role <ArrowRight className="h-4 w-4" />
-              </Link>
-            ) : null}
-          </Card>
+          </Block>
         </div>
 
-        <section className="grid gap-5 lg:grid-cols-2">
-          <Card className="p-5 sm:p-7">
-            <div className="flex items-center gap-3">
-              <span className={sectionIconClass}><ClipboardList className="h-5 w-5" /></span>
-              <h2 className="text-2xl font-extrabold tracking-tight text-ink">Execution Plan</h2>
-            </div>
-            <div className="mt-5"><ListCard items={project.executionPlan} /></div>
-          </Card>
-          <Card className="p-5 sm:p-7">
-            <div className="flex items-center gap-3">
-              <span className={sectionIconClass}><Hammer className="h-5 w-5" /></span>
-              <h2 className="text-2xl font-extrabold tracking-tight text-ink">Rubric</h2>
-            </div>
-            <div className="mt-5"><ListCard items={project.rubric} /></div>
-          </Card>
-        </section>
+        <div className="grid gap-10 lg:grid-cols-2">
+          <Block id="workflow" title="Recommended workflow">
+            <ol className="space-y-2">
+              {project.workflow.map((step, i) => (
+                <li key={i} className="flex gap-3 text-sm leading-6 text-ink">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white" aria-hidden="true">{i + 1}</span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+          </Block>
+          <Block id="constraints" title="Constraints and safety">
+            <Bullets items={project.constraints} />
+          </Block>
+        </div>
 
-        <section className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
-          <Card className="p-5 sm:p-7">
-            <div className="flex items-center gap-3">
-              <span className={sectionIconClass}><Wrench className="h-5 w-5" /></span>
-              <h2 className="text-2xl font-extrabold tracking-tight text-ink">Tools</h2>
-            </div>
-            <div className="mt-5 flex flex-wrap gap-2">{project.tools.map((tool) => <span key={tool} className="tag">{tool}</span>)}</div>
-          </Card>
-          <Card className="p-5 sm:p-7">
-            <div className="flex items-center gap-3">
-              <span className={sectionIconClass}><PackageCheck className="h-5 w-5" /></span>
-              <h2 className="text-2xl font-extrabold tracking-tight text-ink">Case-study Packaging</h2>
-            </div>
-            <div className="mt-5"><ListCard items={project.caseStudyPackaging} /></div>
-          </Card>
-        </section>
+        {project.tools.length > 0 && (
+          <Block id="tools" title="Tools in practice">
+            <dl className="divide-y divide-border overflow-hidden rounded-2xl border border-border">
+              {project.tools.map((tool) => (
+                <div key={tool.name} className="grid gap-1 p-4 sm:grid-cols-[minmax(9rem,12rem)_1fr] sm:gap-4">
+                  <dt className="text-sm font-extrabold text-ink">{tool.name}</dt>
+                  <dd className="text-sm leading-6 text-muted">{tool.useCase}.</dd>
+                </div>
+              ))}
+            </dl>
+          </Block>
+        )}
 
-        <section>
-          <SectionHeading eyebrow="Final check" title="Checklist before publishing." copy={project.presentation} />
-          <Card className="mt-8 p-5 sm:p-7">
-            <ListCard items={[...project.constraints, ...project.checklist]} />
-          </Card>
-        </section>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4 sm:p-5">
+            <h2 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">What a strong submission shows</h2>
+            <ul className="mt-3 space-y-2.5">
+              {project.strongSubmission.map((item, i) => (
+                <li key={i} className="flex gap-2.5 text-sm leading-6 text-ink">
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-2xl border border-border bg-soft p-4 sm:p-5">
+            <h2 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">Weak submission patterns</h2>
+            <ul className="mt-3 space-y-2.5">
+              {project.weakPatterns.map((item, i) => (
+                <li key={i} className="flex gap-2.5 text-sm leading-6 text-ink">
+                  <X className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
-        <FinalCTA title="Use the brief as evidence." copy="A strong proof piece makes your application easier to evaluate because it shows role judgment, not only interest." primary={{ href: "/get-hired", label: "Open Hiring Guide" }} secondary={{ href: "/interview-prep", label: "Practice Interviews" }} />
+        <div className="grid gap-10 lg:grid-cols-2">
+          <Block id="rubric" title="Review rubric">
+            <Bullets items={project.rubric} />
+          </Block>
+          <Block id="case-study" title="Present it as a case study">
+            <Bullets items={project.caseStudy} />
+          </Block>
+        </div>
+
+        {project.interviewQuestions.length > 0 && (
+          <Block id="interview" title="Interview questions this project helps you answer">
+            <ol className="space-y-3">
+              {project.interviewQuestions.map((q, i) => (
+                <li key={i} className="flex gap-3 rounded-2xl border border-border bg-white p-4">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white" aria-hidden="true">{i + 1}</span>
+                  <p className="text-base leading-7 text-ink">{q}</p>
+                </li>
+              ))}
+            </ol>
+          </Block>
+        )}
+
+        <CareerNext
+          heading="Turn this into an application"
+          items={[
+            { title: "Practice interviews", href: "/interview-prep", why: `Rehearse the ${project.roleTitle} questions above with the answer framework.` },
+            { title: "Package and apply", href: "/get-hired", why: "Use the Get Hired journey to turn this brief into a case study and targeted application." },
+            ...(role ? [{ title: "Related role guide", href: `/roles/${role.slug}`, why: `See the full ${role.title} scope, proof standards, and boundaries.` }] : []),
+          ]}
+        />
       </Container>
     </Shell>
   );

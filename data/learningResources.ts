@@ -62,9 +62,9 @@ export const learningCategories: LearningCategory[] = [
     description: "Build a useful creator path with positioning, source checking, proof-of-work, ethical brand deals, and income paths.",
     accent: "Create",
     resources: [
-      { title: "Panduan Jadi Web3 Creator", description: "Internal Bahasa Indonesia guide for positioning, content workflow, portfolio, pricing, ethics, and a 30-day checklist.", url: "/learn/creator", type: "Guide" },
-      { title: "Original SatyaXBT creator post", description: "Featured source that inspired this creator learning path.", url: "https://x.com/satyaXBT/status/2070492362623819952?s=20", type: "Community" },
       { title: "KRAFT Creator Roles", description: "Role guides for content creators, crypto journalists, ambassadors, and creator-adjacent community work.", url: "/roles?lane=Content%20%26%20Marketing", type: "Guide" },
+      { title: "KRAFT Content Portfolio Briefs", description: "Simulated proof-of-work briefs for content, research, and campaign work.", url: "/portfolio", type: "Guide" },
+      { title: "Messari Research", description: "Examples of crypto research structure, caveats, and market framing to model content on.", url: "https://messari.io/research", type: "Guide" },
     ],
   },
   {

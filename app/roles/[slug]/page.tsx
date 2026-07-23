@@ -55,6 +55,13 @@ export default async function RoleDetailPage({ params }: { params: Promise<{ slu
           </span>
           <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">{role.title}</h1>
           <p className="mt-5 text-lg leading-8 text-muted">{content.summary}</p>
+          <p className="mt-4 text-sm leading-6 text-muted">
+            New to this area?{" "}
+            <Link href="/learn-web3" className="font-extrabold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+              Learn the foundations
+            </Link>{" "}
+            before building proof.
+          </p>
         </header>
 
         <RoleGuide
