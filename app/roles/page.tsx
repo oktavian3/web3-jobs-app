@@ -12,7 +12,8 @@ const skillTags = ["All", "Writing", "Community", "Data", "Product", "Design", "
 
 function normalizeLane(value: string | null) {
   if (value === "Technical") return "Technical & Security";
-  if (value === "Creative") return "Creative & Design";
+  // "Creative" is now the canonical lane label; legacy "Creative & Design" links normalize to it.
+  if (value === "Creative & Design") return "Creative";
   return value ?? "All";
 }
 

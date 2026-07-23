@@ -1,7 +1,16 @@
-import { roles, type Role } from "./roles";
+import { roles, type Role, type EvidenceTier } from "./roles";
 
-export type EvidenceTier = "direct-web3" | "adjacent-occupation" | "listing-example" | "no-direct-benchmark";
+// Internal salary-evidence tier used by the migrated benchmark data.
+// Mapped to the canonical EvidenceTier (Direct / Adjacent / Broad market / Unverified) for display.
+export type LegacySalaryTier = "direct-web3" | "adjacent-occupation" | "listing-example" | "no-direct-benchmark";
 export type SalaryConfidence = "high" | "medium" | "low";
+
+const legacyToCanonicalTier: Record<LegacySalaryTier, EvidenceTier> = {
+  "direct-web3": "Direct",
+  "adjacent-occupation": "Adjacent",
+  "listing-example": "Broad market",
+  "no-direct-benchmark": "Unverified",
+};
 
 export type SourceRef = {
   id: string;
@@ -15,10 +24,12 @@ export type SourceRef = {
 };
 
 export type SalaryEvidence = {
-  tier: EvidenceTier;
+  tier: LegacySalaryTier;
   sourceId: string;
   summary: string;
   displayAmount?: string;
+  // Canonical tier for public display; derived from `tier` when records are built.
+  canonicalTier?: EvidenceTier;
 };
 
 export type RoleResearch = {
@@ -169,27 +180,40 @@ const salaryGroups: Record<string, { summary: string; confidence: SalaryConfiden
       { tier: "adjacent-occupation", sourceId: "BLS-SW", summary: "Software developer context only when the role is deeply technical." },
     ],
   },
+  unbenchmarked: {
+    summary: "No verified direct Web3 salary benchmark was migrated for this exact title in this phase. Treat any figure as broad-market context only and verify against current role-specific listings before relying on it.",
+    confidence: "low",
+    evidence: [
+      { tier: "no-direct-benchmark", sourceId: "W3-AGG", summary: "No clean direct Web3 benchmark for this exact role title; broad Web3 listings aggregate used as context only." },
+    ],
+  },
 };
 
 function groupKey(role: Role) {
-  if (["community-moderator", "community-manager", "ambassador-manager", "dao-governance-coordinator", "ambassador-kol"].includes(role.slug)) return "community";
-  if (["content-creator", "research-writer", "social-media-manager", "technical-writer", "grant-writer", "crypto-journalist-writer"].includes(role.slug)) return "content";
-  if (["product-manager", "product-operations", "web3-virtual-assistant"].includes(role.slug)) return "product";
-  if (["defi-analyst", "on-chain-analyst", "tokenomics-analyst", "protocol-researcher", "blockchain-data-analyst", "tokenomics-designer", "airdrop-researcher-alpha-hunter", "market-maker"].includes(role.slug)) return "research";
+  if (["community-moderator", "community-manager", "ambassador-manager", "governance-coordinator", "creator-ambassador-partner"].includes(role.slug)) return "community";
+  if (["content-creator", "research-writer", "social-media-manager", "technical-writer", "grant-writer", "crypto-journalist"].includes(role.slug)) return "content";
+  if (["product-manager", "product-operations", "operations-assistant"].includes(role.slug)) return "product";
+  if (["defi-analyst", "onchain-data-analyst", "tokenomics-analyst", "protocol-researcher", "tokenomics-designer", "ecosystem-researcher", "market-maker"].includes(role.slug)) return "research";
   if (role.slug === "smart-contract-developer") return "smartContract";
-  if (["frontend-web3-developer", "devrel", "node-operator-validator"].includes(role.slug)) return "technicalAdjacent";
+  if (["frontend-web3-developer", "developer-relations", "node-operator-validator", "protocol-engineer", "backend-engineer"].includes(role.slug)) return "technicalAdjacent";
   if (role.slug === "smart-contract-auditor") return "security";
-  if (role.slug === "zk-engineer-cryptographer") return "zk";
-  if (["ui-ux-designer", "brand-motion-designer", "nft-generative-artist", "web3-ui-ux-designer", "motion-designer"].includes(role.slug)) return "design";
+  if (role.slug === "zk-engineer-cryptography-researcher") return "zk";
+  if (["web3-product-designer", "brand-designer", "nft-generative-artist", "motion-designer"].includes(role.slug)) return "design";
   if (role.slug === "web3-legal-compliance") return "legal";
   if (role.slug === "web3-hr-talent-acquisition") return "hr";
   if (role.slug === "web3-educator-curriculum-builder") return "education";
-  return "research";
+  // Newly added canonical roles with no directly migrated benchmark.
+  if (["ecosystem-partnerships-manager", "partnerships-manager", "growth-manager", "product-marketing-manager", "operations-associate", "customer-support-specialist"].includes(role.slug)) return "unbenchmarked";
+  return "unbenchmarked";
 }
 
 export const roleResearch: RoleResearch[] = roles.map((role) => {
   const salary = salaryGroups[groupKey(role)];
   const sources = salary.evidence.map((item) => sourceRefs[item.sourceId]).filter(Boolean);
+  const salaryEvidence = salary.evidence.map((item) => ({
+    ...item,
+    canonicalTier: legacyToCanonicalTier[item.tier],
+  }));
   return {
     slug: role.slug,
     title: role.title,
@@ -203,7 +227,7 @@ export const roleResearch: RoleResearch[] = roles.map((role) => {
     tools: role.tools,
     proofOfWork: role.proofOfWork,
     interviewTopics: role.interviewQuestions,
-    salaryEvidence: salary.evidence,
+    salaryEvidence,
     salarySummary: salary.summary,
     salaryConfidence: salary.confidence,
     sources,

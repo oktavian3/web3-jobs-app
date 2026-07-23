@@ -33,7 +33,7 @@ const prepByLane: Record<CareerLane, { evaluate: string; prepare: string[]; mist
     prepare: ["Tested repo", "Threat notes", "Transaction-state demo"],
     mistakes: ["Happy-path only", "No tests", "Unclear access control"],
   },
-  "Creative & Design": {
+  "Creative": {
     evaluate: "Clarity, visual systems, risk communication, accessibility, and ability to explain design decisions.",
     prepare: ["Approval-flow redesign", "Case study", "Reusable mini system"],
     mistakes: ["Visual novelty over clarity", "No rationale", "Missing failure states"],

@@ -24,7 +24,6 @@ import { RoleCard } from "@/components/kraft/Cards";
 import { CountUp, ProofChecklistAnimation } from "@/components/kraft/AnimatedBits";
 import LearningPreview from "@/components/kraft/LearningPreview";
 import HeroProductPreview from "@/components/kraft/HeroProductPreview";
-import XProfileRoleMatcher from "@/components/kraft/XProfileRoleMatcher";
 
 const startCards = [
   { title: "New to Web3", copy: "Understand the industry, basic terms, and which roles do not require coding.", cta: "Learn the Basics", href: "/learn-web3" },
@@ -45,7 +44,7 @@ const laneIcons: Record<CareerLane, LucideIcon> = {
   "Product & Operations": Settings2,
   "Research & Data": BarChart3,
   "Technical & Security": Code2,
-  "Creative & Design": Palette,
+  "Creative": Palette,
   "Governance, Legal & People": Scale,
   "Trading & Finance Adjacent": CandlestickChart,
 };
@@ -56,7 +55,6 @@ const selectedPlatforms = selectedJobPlatforms
   .filter((item): item is { selection: (typeof selectedJobPlatforms)[number]; board: (typeof jobBoards)[number] } => Boolean(item.board));
 const proofChecklistItems = ["Role-specific project", "Documented result", "Portfolio case study", "Tailored application", "Interview preparation"];
 const latestCuratedJobs = getActiveCuratedJobs().slice(0, 3);
-const latestPostLink = "/posts";
 
 export default function Home() {
   return (
@@ -183,8 +181,6 @@ export default function Home() {
           </Card>
         </section>
 
-        <XProfileRoleMatcher />
-
         <section className="reveal-card grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <SectionHeading align="left" title="See what the role actually expects." copy="Role pages explain daily work, expected outputs, tools, portfolio evidence, interview prompts, and salary context without vague job-description language." />
@@ -282,9 +278,6 @@ export default function Home() {
                     No active manually curated jobs are published yet. KRAFT will show the latest three here after they are added to the data file.
                   </div>
                 )}
-                <a href={latestPostLink} className="inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-                  Browse all posts
-                </a>
               </div>
             </Card>
           </div>

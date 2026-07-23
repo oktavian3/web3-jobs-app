@@ -97,7 +97,7 @@ export const learningCategories: LearningCategory[] = [
     resources: [
       { title: "Figma Community", description: "Explore UI systems and patterns, then adapt thoughtfully for Web3 flows.", url: "https://www.figma.com/community", type: "Tool" },
       { title: "Material Design Accessibility", description: "Helpful accessibility guidance for readable, usable interfaces.", url: "https://m3.material.io/foundations/accessible-design/overview", type: "Guide" },
-      { title: "KRAFT Creative Roles", description: "Role guides for UX, brand, motion, and case-study expectations.", url: "/roles?lane=Creative%20%26%20Design", type: "Guide" },
+      { title: "KRAFT Creative Roles", description: "Role guides for UX, brand, motion, and case-study expectations.", url: "/roles?lane=Creative", type: "Guide" },
     ],
   },
 ];

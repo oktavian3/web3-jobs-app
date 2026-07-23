@@ -27,7 +27,7 @@ const learningByLane: Record<CareerLane, string[]> = {
   "Product & Operations": ["basics", "product-ops", "design"],
   "Research & Data": ["basics", "research", "content"],
   "Technical & Security": ["basics", "developers", "research"],
-  "Creative & Design": ["basics", "design", "product-ops"],
+  "Creative": ["basics", "design", "product-ops"],
   "Governance, Legal & People": ["basics", "community", "product-ops"],
   "Trading & Finance Adjacent": ["basics", "research", "developers"],
 };

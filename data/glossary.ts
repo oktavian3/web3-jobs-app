@@ -23,13 +23,13 @@ const categories = {
 } as const;
 
 const laneByKey: Record<string, CareerLane[]> = {
-  all: ["Community & Growth", "Content & Marketing", "Product & Operations", "Research & Data", "Technical & Security", "Creative & Design", "Governance, Legal & People", "Trading & Finance Adjacent"],
+  all: ["Community & Growth", "Content & Marketing", "Product & Operations", "Research & Data", "Technical & Security", "Creative", "Governance, Legal & People", "Trading & Finance Adjacent"],
   community: ["Community & Growth"],
   content: ["Content & Marketing"],
   product: ["Product & Operations"],
   research: ["Research & Data"],
   technical: ["Technical & Security"],
-  creative: ["Creative & Design"],
+  creative: ["Creative"],
   governance: ["Governance, Legal & People"],
   finance: ["Trading & Finance Adjacent"],
   growth: ["Community & Growth", "Content & Marketing"],
