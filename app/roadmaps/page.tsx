@@ -27,7 +27,7 @@ export default function RoadmapsPage() {
             <Link
               key={detail.laneSlug}
               href={`/roadmaps/${detail.laneSlug}`}
-              className="group flex h-full flex-col rounded-3xl border border-border bg-white p-6 transition hover:-translate-y-1 hover:border-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              className="card-surface card-surface--interactive group flex h-full flex-col p-6"
             >
               <span className="tag">{detail.difficulty}</span>
               <h2 className="mt-5 text-2xl font-extrabold tracking-tight text-ink">{detail.lane}</h2>

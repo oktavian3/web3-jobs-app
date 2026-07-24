@@ -68,11 +68,17 @@ export default function LearnWeb3Explorer({ lanes }: { lanes: LaneOption[] }) {
         </label>
       </div>
 
+      <div className="flex flex-wrap items-center gap-2 text-sm">
+        <span className="text-xs font-bold uppercase tracking-[0.1em] text-muted">Now viewing</span>
+        <span className="rounded-full bg-highlight px-3 py-1 font-extrabold text-blue-700">{activeLane.lane}</span>
+        {activeRole && <span className="rounded-full bg-highlight px-3 py-1 font-extrabold text-blue-700">{activeRole.title}</span>}
+      </div>
+
       <p className="max-w-3xl text-base leading-7 text-muted">{activeLane.description}</p>
 
       {activeRole && (
-        <div className="rounded-2xl border border-blue-100 bg-blue-50 p-4 sm:p-5">
-          <p className="text-sm leading-6 text-blue-900">
+        <div className="card-surface card-surface--evidence p-4 sm:p-5">
+          <p className="text-sm leading-6 text-ink">
             Studying toward <span className="font-extrabold">{activeRole.title}</span>? Its role guide lists the exact
             prerequisite knowledge, tools, and proof standards these resources should feed into.
           </p>
@@ -87,7 +93,7 @@ export default function LearnWeb3Explorer({ lanes }: { lanes: LaneOption[] }) {
 
       <div className="grid gap-4 md:grid-cols-2">
         {activeLane.items.map((item) => (
-          <div key={item.slug} className="flex h-full flex-col rounded-3xl border border-border bg-white p-5">
+          <div key={item.slug} className="card-surface flex h-full flex-col p-5">
             <div className="flex flex-wrap items-center gap-2">
               <span className="tag">{item.type}</span>
               <span className="tag">{item.level}</span>

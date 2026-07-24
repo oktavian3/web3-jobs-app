@@ -14,7 +14,7 @@ export default function CareerNext({ heading, items }: { heading: string; items:
           <Link
             key={item.href + item.title}
             href={item.href}
-            className="group flex h-full flex-col rounded-2xl border border-border bg-white p-4 transition hover:-translate-y-0.5 hover:border-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            className="card-surface card-surface--next-step card-surface--interactive group flex h-full flex-col p-4"
           >
             <span className="flex items-center justify-between gap-2">
               <span className="font-extrabold text-ink">{item.title}</span>

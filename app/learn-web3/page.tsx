@@ -45,12 +45,13 @@ export default function LearnWeb3Page() {
           copy="Start with the foundations everyone needs, then move into one career lane and one target role. External resources are curated, not authored or maintained by KRAFT — they are clearly marked."
         />
 
-        <section>
-          <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Step 1 — Web3 foundations</h2>
+        <section className="card-surface card-surface--featured p-5 sm:p-8">
+          <span className="tag">Start here</span>
+          <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Step 1 — Web3 foundations</h2>
           <p className="mt-2 max-w-3xl text-base leading-7 text-muted">Wallets, safety, and vocabulary that every lane assumes you already know.</p>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
-            {foundationsItems.map((item) => (
-              <div key={item.slug} className="flex h-full flex-col rounded-3xl border border-border bg-white p-5">
+            {foundationsItems.map((item, index) => (
+              <div key={item.slug} className={`card-surface card-surface--interactive relative flex h-full flex-col p-5 ${index === 0 ? "pixel-accent" : ""}`}>
                 <span className="tag">{item.level}</span>
                 <h3 className="mt-3 text-lg font-extrabold tracking-tight text-ink">{item.title}</h3>
                 <p className="mt-2 flex-1 text-sm leading-6 text-muted">{item.whyItMatters}</p>
@@ -68,7 +69,7 @@ export default function LearnWeb3Page() {
           </div>
         </section>
 
-        <section>
+        <section className="border-t border-border pt-14">
           <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Step 2 — Choose a lane and a role</h2>
           <p className="mt-2 max-w-3xl text-base leading-7 text-muted">
             Learning without a target role tends to stay abstract. Pick a lane, then a role, to see resources matched to it.

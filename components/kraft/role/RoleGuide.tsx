@@ -78,8 +78,8 @@ export default function RoleGuide({
         <RoleTableOfContents items={TOC} />
       </aside>
 
-      <div className="min-w-0 space-y-12">
-        <div id="snapshot">
+      <div className="min-w-0">
+        <div id="snapshot" className="mb-12">
           <RoleSnapshot
             lane={role.lane}
             level={role.level}
@@ -91,7 +91,7 @@ export default function RoleGuide({
           />
         </div>
 
-        <Section id="what-it-does" title="What this role actually does">
+        <Section id="what-it-does" title="What this role actually does" first>
           <Prose paragraphs={content.whatItDoes} />
         </Section>
 

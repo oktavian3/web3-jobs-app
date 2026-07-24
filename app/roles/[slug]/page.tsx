@@ -50,7 +50,7 @@ export default async function RoleDetailPage({ params }: { params: Promise<{ slu
         </Link>
 
         <header className="max-w-3xl">
-          <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">
+          <span className="rounded-full bg-highlight px-3 py-1 text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">
             {role.lane}
           </span>
           <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">{role.title}</h1>

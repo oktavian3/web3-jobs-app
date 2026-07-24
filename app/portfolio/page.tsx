@@ -24,7 +24,7 @@ export default function PortfolioPage() {
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {portfolioProjects.map((project) => (
-            <article key={project.slug} className="flex h-full flex-col rounded-3xl border border-border bg-white p-5">
+            <article key={project.slug} className="card-surface flex h-full flex-col p-5">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="tag">{project.lane}</span>
                 <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-amber-900">Simulated</span>

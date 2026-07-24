@@ -42,6 +42,10 @@ function Block({ id, title, children }: { id: string; title: string; children: R
   );
 }
 
+function Divider({ children }: { children: React.ReactNode }) {
+  return <div className="border-t border-border pt-8">{children}</div>;
+}
+
 export default async function PortfolioDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const project = getPortfolioProjectBySlug(slug);
@@ -63,12 +67,24 @@ export default async function PortfolioDetailPage({ params }: { params: Promise<
           </div>
           <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">{project.roleTitle} portfolio brief</h1>
           <p className="mt-5 text-lg leading-8 text-muted">{project.scenario}</p>
-          {role && (
-            <Link href={`/roles/${role.slug}`} className="mt-4 inline-flex items-center gap-1 text-sm font-extrabold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
-              Open the {role.title} role guide <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          )}
         </header>
+
+        <div className="card-surface card-surface--featured p-5 sm:p-6">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="tag">{project.deliverables.length} deliverables</span>
+            {project.tools.length > 0 && <span className="tag">{project.tools.length} tools referenced</span>}
+            {project.interviewQuestions.length > 0 && <span className="tag">{project.interviewQuestions.length} linked interview questions</span>}
+          </div>
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+            {role && (
+              <Link href={`/interview-prep?role=${role.slug}`} className="btn-primary group">
+                Practice interview questions
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            )}
+            {role && <Link href={`/roles/${role.slug}`} className="btn-secondary">Open the {role.title} role guide</Link>}
+          </div>
+        </div>
 
         <div className="grid gap-10 lg:grid-cols-2">
           <Block id="objective" title="Objective">
@@ -83,80 +99,93 @@ export default async function PortfolioDetailPage({ params }: { params: Promise<
           </Block>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-2">
-          <Block id="workflow" title="Recommended workflow">
-            <ol className="space-y-2">
-              {project.workflow.map((step, i) => (
-                <li key={i} className="flex gap-3 text-sm leading-6 text-ink">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white" aria-hidden="true">{i + 1}</span>
-                  <span>{step}</span>
-                </li>
-              ))}
-            </ol>
-          </Block>
-          <Block id="constraints" title="Constraints and safety">
-            <Bullets items={project.constraints} />
-          </Block>
-        </div>
+        <Divider>
+          <div className="grid gap-10 lg:grid-cols-2">
+            <Block id="workflow" title="Recommended workflow">
+              <ol className="space-y-2">
+                {project.workflow.map((step, i) => (
+                  <li key={i} className="flex gap-3 text-sm leading-6 text-ink">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white" aria-hidden="true">{i + 1}</span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </Block>
+            <Block id="constraints" title="Constraints and safety">
+              <Bullets items={project.constraints} />
+            </Block>
+          </div>
+        </Divider>
 
         {project.tools.length > 0 && (
-          <Block id="tools" title="Tools in practice">
-            <dl className="divide-y divide-border overflow-hidden rounded-2xl border border-border">
-              {project.tools.map((tool) => (
-                <div key={tool.name} className="grid gap-1 p-4 sm:grid-cols-[minmax(9rem,12rem)_1fr] sm:gap-4">
-                  <dt className="text-sm font-extrabold text-ink">{tool.name}</dt>
-                  <dd className="text-sm leading-6 text-muted">{tool.useCase}.</dd>
-                </div>
-              ))}
-            </dl>
-          </Block>
+          <Divider>
+            <Block id="tools" title="Tools in practice">
+              <dl className="divide-y divide-border overflow-hidden rounded-2xl border border-border">
+                {project.tools.map((tool) => (
+                  <div key={tool.name} className="grid gap-1 p-4 sm:grid-cols-[minmax(9rem,12rem)_1fr] sm:gap-4">
+                    <dt className="text-sm font-extrabold text-ink">{tool.name}</dt>
+                    <dd className="text-sm leading-6 text-muted">{tool.useCase}.</dd>
+                  </div>
+                ))}
+              </dl>
+            </Block>
+          </Divider>
         )}
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4 sm:p-5">
-            <h2 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">What a strong submission shows</h2>
-            <ul className="mt-3 space-y-2.5">
-              {project.strongSubmission.map((item, i) => (
-                <li key={i} className="flex gap-2.5 text-sm leading-6 text-ink">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+        <Divider>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-4 sm:p-5">
+              <h2 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">What a strong submission shows</h2>
+              <ul className="mt-3 space-y-2.5">
+                {project.strongSubmission.map((item, i) => (
+                  <li key={i} className="flex gap-2.5 text-sm leading-6 text-ink">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="card-surface card-surface--informational p-4 sm:p-5">
+              <h2 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">Weak submission patterns</h2>
+              <ul className="mt-3 space-y-2.5">
+                {project.weakPatterns.map((item, i) => (
+                  <li key={i} className="flex gap-2.5 text-sm leading-6 text-ink">
+                    <X className="mt-0.5 h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="rounded-2xl border border-border bg-soft p-4 sm:p-5">
-            <h2 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">Weak submission patterns</h2>
-            <ul className="mt-3 space-y-2.5">
-              {project.weakPatterns.map((item, i) => (
-                <li key={i} className="flex gap-2.5 text-sm leading-6 text-ink">
-                  <X className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" aria-hidden="true" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        </Divider>
 
-        <div className="grid gap-10 lg:grid-cols-2">
-          <Block id="rubric" title="Review rubric">
-            <Bullets items={project.rubric} />
-          </Block>
-          <Block id="case-study" title="Present it as a case study">
-            <Bullets items={project.caseStudy} />
-          </Block>
-        </div>
+        <Divider>
+          <div className="grid gap-10 lg:grid-cols-2">
+            <section id="rubric" className="scroll-mt-28">
+              <div className="card-surface card-surface--evidence p-5 sm:p-6">
+                <h2 className="text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Review rubric</h2>
+                <div className="mt-4"><Bullets items={project.rubric} /></div>
+              </div>
+            </section>
+            <Block id="case-study" title="Present it as a case study">
+              <Bullets items={project.caseStudy} />
+            </Block>
+          </div>
+        </Divider>
 
         {project.interviewQuestions.length > 0 && (
-          <Block id="interview" title="Interview questions this project helps you answer">
-            <ol className="space-y-3">
-              {project.interviewQuestions.map((q, i) => (
-                <li key={i} className="flex gap-3 rounded-2xl border border-border bg-white p-4">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white" aria-hidden="true">{i + 1}</span>
-                  <p className="text-base leading-7 text-ink">{q}</p>
-                </li>
-              ))}
-            </ol>
-          </Block>
+          <Divider>
+            <Block id="interview" title="Interview questions this project helps you answer">
+              <ol className="divide-y divide-border border-y border-border">
+                {project.interviewQuestions.map((q, i) => (
+                  <li key={i} className="flex gap-3 py-4">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white" aria-hidden="true">{i + 1}</span>
+                    <p className="text-base leading-7 text-ink">{q}</p>
+                  </li>
+                ))}
+              </ol>
+            </Block>
+          </Divider>
         )}
 
         <CareerNext

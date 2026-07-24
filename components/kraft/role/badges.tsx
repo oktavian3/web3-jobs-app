@@ -6,7 +6,7 @@ const confidenceStyles: Record<CompensationConfidence, { ring: string; dot: stri
   High: { ring: "border-emerald-300 bg-emerald-50 text-emerald-900", dot: "bg-emerald-500" },
   Medium: { ring: "border-blue-300 bg-blue-50 text-blue-900", dot: "bg-blue-500" },
   Low: { ring: "border-amber-300 bg-amber-50 text-amber-900", dot: "bg-amber-500" },
-  "Very low": { ring: "border-slate-300 bg-slate-100 text-slate-800", dot: "bg-slate-400" },
+  "Very low": { ring: "border-border-strong bg-soft text-ink", dot: "bg-muted" },
 };
 
 export function ConfidenceBadge({ level }: { level: CompensationConfidence }) {
@@ -26,7 +26,7 @@ const tierStyles: Record<EvidenceTier, string> = {
   Direct: "border-emerald-300 bg-emerald-50 text-emerald-900",
   Adjacent: "border-blue-300 bg-blue-50 text-blue-900",
   "Broad market": "border-amber-300 bg-amber-50 text-amber-900",
-  Unverified: "border-slate-300 bg-slate-100 text-slate-800",
+  Unverified: "border-border-strong bg-soft text-ink",
 };
 
 export function EvidenceBadge({ tier }: { tier: EvidenceTier }) {

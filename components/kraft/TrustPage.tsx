@@ -29,9 +29,9 @@ export default function TrustPage({
             <p className="mt-4 text-lg leading-8 text-muted">{supporting}</p>
           </header>
 
-          <div className="mt-10 space-y-10">
-            {sections.map((section) => (
-              <section key={section.title}>
+          <div className="mt-10">
+            {sections.map((section, index) => (
+              <section key={section.title} className={index > 0 ? "mt-8 border-t border-border pt-8 sm:mt-10 sm:pt-10" : ""}>
                 <h2 className="text-xl font-extrabold tracking-tight text-ink sm:text-2xl">{section.title}</h2>
                 <div className="mt-3 space-y-4">
                   {section.paragraphs.map((p, i) => (

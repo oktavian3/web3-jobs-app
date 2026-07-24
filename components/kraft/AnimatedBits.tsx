@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export function CountUp({ value }: { value: number }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -32,10 +32,20 @@ export function CountUp({ value }: { value: number }) {
   return <span ref={ref}>{started ? display : 0}</span>;
 }
 
-export function ProofChecklistAnimation({ items }: { items: string[] }) {
+// The proof-building pipeline: Knowledge -> Task -> Deliverable -> Review ->
+// Case Study. This illustrates KRAFT's model of evidence, not tracked user
+// progress — there is no completion state, count, or percentage.
+const pipelineStages = [
+  { stage: "Knowledge", detail: "Learn the role's real prerequisites, not generic courses." },
+  { stage: "Task", detail: "Work from a role-specific, clearly simulated brief." },
+  { stage: "Deliverable", detail: "Produce the actual artifact the role is judged on." },
+  { stage: "Review", detail: "Check it against the brief's rubric and name your assumptions." },
+  { stage: "Case Study", detail: "Package context, decisions, and limitations for a reviewer." },
+] as const;
+
+export function ProofPipeline() {
   const [active, setActive] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const completeCount = 3;
 
   useEffect(() => {
     const node = ref.current;
@@ -51,36 +61,31 @@ export function ProofChecklistAnimation({ items }: { items: string[] }) {
   }, [active]);
 
   return (
-    <div ref={ref} className="rounded-[28px] border border-blue-100 bg-[linear-gradient(145deg,#ffffff,#edf6ff)] p-5 shadow-blue">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <span className="tag">Portfolio progress</span>
-          <h3 className="mt-3 text-2xl font-extrabold text-ink">{completeCount} of {items.length} complete</h3>
-        </div>
-        <div className="grid h-20 w-20 place-items-center rounded-full border-[10px] border-blue-600 bg-blue-50 text-xl font-extrabold text-blue-700">
-          60%
-        </div>
-      </div>
-      <div className="mt-5 h-2 overflow-hidden rounded-full bg-white shadow-[inset_0_0_0_1px_rgba(20,107,255,0.12)]">
-        <div className={`h-full rounded-full bg-[linear-gradient(90deg,#146bff,#76c9ff)] transition-all duration-1000 ${active ? "w-[60%]" : "w-0"}`} />
-      </div>
-      <div className="mt-5 space-y-3">
-        {items.map((item, index) => {
-          const complete = index < completeCount;
-          return (
-            <div
-              key={item}
-              className={`flex gap-3 rounded-2xl border p-4 transition duration-700 ${
-                active ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
-              } ${complete ? "border-blue-100 bg-white text-ink" : "border-slate-200 bg-slate-50 text-slate-500"}`}
-              style={{ transitionDelay: `${index * 120}ms` }}
-            >
-              <CheckCircle2 className={`mt-0.5 h-5 w-5 ${complete && active ? "text-blue-600" : "text-slate-300"}`} />
-              <span className="text-sm font-bold leading-6">{item}</span>
+    <div ref={ref} className="card-surface p-5 sm:p-6">
+      <span className="tag">Evidence, not certificates</span>
+      <h3 className="mt-3 text-2xl font-extrabold text-ink">How KRAFT frames proof-of-work</h3>
+      <ol className="mt-5 space-y-3">
+        {pipelineStages.map((item, index) => (
+          <li
+            key={item.stage}
+            className={`flex gap-3 rounded-2xl border border-border bg-soft p-4 transition duration-500 ${
+              active ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+            }`}
+            style={{ transitionDelay: `${index * 100}ms` }}
+          >
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white" aria-hidden="true">
+              {index + 1}
+            </span>
+            <div>
+              <p className="text-sm font-extrabold text-ink">{item.stage}</p>
+              <p className="mt-1 text-sm leading-6 text-muted">{item.detail}</p>
             </div>
-          );
-        })}
-      </div>
+            {index < pipelineStages.length - 1 && (
+              <ArrowRight className="ml-auto hidden h-4 w-4 shrink-0 self-center text-muted sm:block" aria-hidden="true" />
+            )}
+          </li>
+        ))}
+      </ol>
     </div>
   );
 }

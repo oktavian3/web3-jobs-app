@@ -133,7 +133,7 @@ export default function InterviewPrepExplorer({
 
           <ol className="space-y-3">
             {visibleQuestions.map((q, i) => (
-              <li key={i} className="rounded-2xl border border-border bg-white p-4 sm:p-5">
+              <li key={i} className="card-surface p-4 sm:p-5">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-blue-700">{q.category}</span>
                 </div>
@@ -151,7 +151,7 @@ export default function InterviewPrepExplorer({
           </ol>
 
           <div className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-2xl border border-border bg-soft p-4 sm:p-5">
+            <div className="card-surface card-surface--informational p-4 sm:p-5">
               <h3 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">Weak-answer patterns</h3>
               <ul className="mt-3 space-y-2">
                 {[...framework.weakAnswer, ...activeSet.weakPatterns].map((item, i) => (
@@ -159,7 +159,7 @@ export default function InterviewPrepExplorer({
                 ))}
               </ul>
             </div>
-            <div className="rounded-2xl border border-border bg-white p-4 sm:p-5">
+            <div className="card-surface card-surface--next-step p-4 sm:p-5">
               <h3 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">Self-review after practicing</h3>
               <div className="mt-3 flex flex-wrap gap-2">
                 {framework.selfReview.map((item) => (

@@ -61,7 +61,7 @@ export default async function GlossaryTermPage({ params }: { params: Promise<{ s
           </div>
         </section>
 
-        <section>
+        <section className="border-t border-border pt-8">
           <h2 className="text-xl font-extrabold tracking-tight text-ink">Where you will encounter it</h2>
           <p className="mt-2 text-sm leading-6 text-muted">Roles whose work regularly depends on this term.</p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -69,7 +69,7 @@ export default async function GlossaryTermPage({ params }: { params: Promise<{ s
               <Link
                 key={role.slug}
                 href={`/roles/${role.slug}`}
-                className="group flex items-center justify-between rounded-2xl border border-border bg-white p-4 transition hover:-translate-y-0.5 hover:border-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                className="card-surface card-surface--interactive group flex items-center justify-between p-4"
               >
                 <span>
                   <span className="block text-xs font-bold uppercase tracking-[0.1em] text-muted">{role.lane}</span>
@@ -81,7 +81,7 @@ export default async function GlossaryTermPage({ params }: { params: Promise<{ s
           </div>
         </section>
 
-        <section>
+        <section className="border-t border-border pt-8">
           <h2 className="text-xl font-extrabold tracking-tight text-ink">Related terms</h2>
           <div className="mt-4 flex flex-wrap gap-2">
             {term.relatedTerms.map((label) => {

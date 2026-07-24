@@ -61,7 +61,7 @@ export default function SkillCheckResultsPage() {
           copy="These results are a starting point based on your answers. They do not determine career fit or hiring readiness, and they are not a scientifically validated assessment."
         />
 
-        <section className="rounded-3xl border border-border bg-white p-6 sm:p-8">
+        <section className="card-surface card-surface--featured p-6 sm:p-8">
           <div className="flex flex-wrap items-center gap-2">
             <ConfidencePill label="Match" level={result.confidence} />
             <ConfidencePill label="Evidence readiness" level={result.readiness} />
@@ -76,7 +76,7 @@ export default function SkillCheckResultsPage() {
               <Link
                 key={role.slug}
                 href={`/roles/${role.slug}`}
-                className="group flex items-center justify-between rounded-2xl border border-border bg-soft p-4 transition hover:-translate-y-0.5 hover:border-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                className="card-surface card-surface--interactive group flex items-center justify-between p-4"
               >
                 <span className="font-extrabold text-ink">{role.title}</span>
                 <ArrowRight className="h-4 w-4 text-blue-600 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
@@ -85,11 +85,11 @@ export default function SkillCheckResultsPage() {
           </div>
 
           <div className="mt-6 grid gap-4 md:grid-cols-2">
-            <div className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4">
+            <div className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-4">
               <h3 className="text-xs font-extrabold uppercase tracking-[0.1em] text-muted">Why this appeared</h3>
               <p className="mt-2 text-sm leading-6 text-ink">Your answers signalled strength in: {result.strengths.join(" and ")}.</p>
             </div>
-            <div className="rounded-2xl border border-border bg-soft p-4">
+            <div className="card-surface card-surface--informational p-4">
               <h3 className="text-xs font-extrabold uppercase tracking-[0.1em] text-muted">What could make it wrong</h3>
               <ul className="mt-2 space-y-1.5">
                 {result.missingEvidence.map((item, i) => (
@@ -121,22 +121,22 @@ export default function SkillCheckResultsPage() {
           </div>
         </section>
 
-        <section className="rounded-3xl border border-blue-100 bg-blue-50 p-5 sm:p-6">
+        <section className="card-surface card-surface--next-step p-5 sm:p-6">
           <h2 className="text-lg font-extrabold text-ink">Next evidence to build</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <Link href={result.nextEvidence.roleHref} className="rounded-2xl border border-blue-200 bg-white p-4 text-sm font-bold text-ink transition hover:border-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+            <Link href={result.nextEvidence.roleHref} className="card-surface card-surface--interactive p-4 text-sm font-bold text-ink">
               Open the {result.nextEvidence.roleTitle} role guide
             </Link>
             {result.nextEvidence.portfolioHref && (
-              <Link href={result.nextEvidence.portfolioHref} className="rounded-2xl border border-blue-200 bg-white p-4 text-sm font-bold text-ink transition hover:border-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+              <Link href={result.nextEvidence.portfolioHref} className="card-surface card-surface--interactive p-4 text-sm font-bold text-ink">
                 Build the matching portfolio brief
               </Link>
             )}
-            <Link href={result.nextEvidence.interviewHref} className="rounded-2xl border border-blue-200 bg-white p-4 text-sm font-bold text-ink transition hover:border-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+            <Link href={result.nextEvidence.interviewHref} className="card-surface card-surface--interactive p-4 text-sm font-bold text-ink">
               Practice this role&apos;s interview set
             </Link>
             {result.nextEvidence.prerequisite && (
-              <div className="rounded-2xl border border-blue-200 bg-white p-4 text-sm leading-6 text-ink">
+              <div className="card-surface card-surface--informational p-4 text-sm leading-6 text-ink">
                 <span className="font-extrabold">One prerequisite: </span>{result.nextEvidence.prerequisite}
               </div>
             )}

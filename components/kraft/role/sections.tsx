@@ -7,9 +7,19 @@ import { ConfidenceBadge, EvidenceBadge } from "./badges";
 
 // ── shared primitives ─────────────────────────────────────────────────────
 
-export function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
+export function Section({
+  id,
+  title,
+  children,
+  first = false,
+}: {
+  id: string;
+  title: string;
+  children: ReactNode;
+  first?: boolean;
+}) {
   return (
-    <section id={id} className="scroll-mt-28">
+    <section id={id} className={`scroll-mt-28 ${first ? "" : "mt-12 border-t border-border pt-12"}`}>
       <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">{title}</h2>
       <div className="mt-5">{children}</div>
     </section>
@@ -70,11 +80,11 @@ export function RoleSnapshot({
         <span className="tag">{mode}</span>
         <ConfidenceBadge level={confidence} />
       </div>
-      <div className="mt-5">
+      <div className="mt-5 border-t border-border pt-5">
         <SubHeading>Also listed as</SubHeading>
         <p className="mt-2 text-sm leading-6 text-muted">{altTitles.join(" · ")}</p>
       </div>
-      <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+      <div className="mt-6 flex flex-col gap-3 border-t border-border pt-6 sm:flex-row">
         <Link href={proofHref} className="btn-primary group">
           Build proof-of-work
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -184,7 +194,7 @@ export function SkillRequirements({
           <div className="mt-3"><Bullets items={workingSkills} /></div>
         </div>
       </div>
-      <div className="rounded-2xl border border-border bg-soft p-4">
+      <div className="border-l-2 border-blue-200 pl-4">
         <SubHeading>Prerequisite knowledge</SubHeading>
         <p className="mt-2 text-base leading-7 text-ink">{prerequisite}</p>
       </div>
@@ -201,9 +211,9 @@ export function LevelExpectationsTable({ levels }: { levels: RoleLevels }) {
     { label: "Senior", text: levels.senior },
   ];
   return (
-    <div className="space-y-3">
+    <div className="divide-y divide-border border-y border-border">
       {rows.map((row) => (
-        <div key={row.label} className="rounded-2xl border border-border p-4 sm:p-5">
+        <div key={row.label} className="py-4 sm:py-5">
           <p className="text-sm font-extrabold uppercase tracking-[0.1em] text-blue-700">{row.label}</p>
           <p className="mt-2 text-base leading-7 text-muted">{row.text}</p>
         </div>
@@ -227,7 +237,7 @@ export function ProofOfWorkBlock({
     <div className="space-y-6">
       <Prose paragraphs={intro} />
       <div className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4 sm:p-5">
+        <div className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-4 sm:p-5">
           <SubHeading>Strong proof</SubHeading>
           <ul className="mt-3 space-y-2.5">
             {strongExamples.map((item, i) => (
@@ -238,12 +248,12 @@ export function ProofOfWorkBlock({
             ))}
           </ul>
         </div>
-        <div className="rounded-2xl border border-border bg-soft p-4 sm:p-5">
+        <div className="card-surface card-surface--informational p-4 sm:p-5">
           <SubHeading>Weak evidence</SubHeading>
           <ul className="mt-3 space-y-2.5">
             {weakEvidence.map((item, i) => (
               <li key={i} className="flex gap-2.5 text-sm leading-6 text-ink">
-                <X className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" aria-hidden="true" />
+                <X className="mt-0.5 h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
                 <span>{item}</span>
               </li>
             ))}
@@ -261,12 +271,12 @@ export function CommonMistakes({ mistakes, misconception }: { mistakes: string[]
     <div className="space-y-5">
       <Bullets items={mistakes} />
       {misconception.length > 0 && (
-        <div className="flex gap-3 rounded-2xl border border-border bg-soft p-4">
-          <TriangleAlert className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" aria-hidden="true" />
+        <div className="flex gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+          <TriangleAlert className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" aria-hidden="true" />
           <div className="space-y-2">
             <SubHeading>Common misconception</SubHeading>
             {misconception.map((p, i) => (
-              <p key={i} className="text-sm leading-6 text-ink">{p}</p>
+              <p key={i} className="text-sm leading-6 text-amber-900">{p}</p>
             ))}
           </div>
         </div>
@@ -280,7 +290,7 @@ export function CommonMistakes({ mistakes, misconception }: { mistakes: string[]
 export function BoundaryComparison({ owns, doesNotOwn }: { owns: string[]; doesNotOwn: string[] }) {
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      <div className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4 sm:p-5">
+      <div className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-4 sm:p-5">
         <SubHeading>Usually owns</SubHeading>
         <ul className="mt-3 space-y-2.5">
           {owns.map((item, i) => (
@@ -291,12 +301,12 @@ export function BoundaryComparison({ owns, doesNotOwn }: { owns: string[]; doesN
           ))}
         </ul>
       </div>
-      <div className="rounded-2xl border border-border bg-soft p-4 sm:p-5">
+      <div className="card-surface card-surface--informational p-4 sm:p-5">
         <SubHeading>Usually does not own</SubHeading>
         <ul className="mt-3 space-y-2.5">
           {doesNotOwn.map((item, i) => (
             <li key={i} className="flex gap-2.5 text-sm leading-6 text-ink">
-              <X className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" aria-hidden="true" />
+              <X className="mt-0.5 h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
               <span>{item}</span>
             </li>
           ))}
@@ -312,9 +322,9 @@ export function InterviewPreparation({ intro, questions }: { intro: string[]; qu
   return (
     <div className="space-y-5">
       <Prose paragraphs={intro} />
-      <ol className="space-y-3">
+      <ol className="divide-y divide-border border-y border-border">
         {questions.map((q, i) => (
-          <li key={i} className="flex gap-3 rounded-2xl border border-border bg-white p-4">
+          <li key={i} className="flex gap-3 py-4">
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white" aria-hidden="true">
               {i + 1}
             </span>
@@ -381,7 +391,7 @@ export function SalaryEvidenceBlock({
       <Prose paragraphs={intro} />
 
       {hasReliableRange && range ? (
-        <div className="rounded-2xl border border-border bg-soft p-4 sm:p-5">
+        <div className="card-surface card-surface--informational p-4 sm:p-5">
           <SubHeading>Reported range (context, not a guarantee)</SubHeading>
           <p className="mt-2 text-lg font-extrabold text-ink">
             {range.currency}{range.min.toLocaleString()}–{range.currency}{range.max.toLocaleString()}{" "}
@@ -426,8 +436,8 @@ export function SalaryEvidenceBlock({
         </Link>
       </div>
 
-      <details className="rounded-2xl border border-border bg-white p-4">
-        <summary className="cursor-pointer text-sm font-extrabold text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+      <details className="rounded-2xl border border-border bg-elevated p-4">
+        <summary className="cursor-pointer text-sm font-extrabold text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
           {legend.title}
         </summary>
         <dl className="mt-3 space-y-2">
@@ -462,20 +472,20 @@ export function CareerProgression({
         <div className="mt-3 flex flex-wrap items-center gap-2">
           {progression.map((step, i) => (
             <span key={i} className="inline-flex items-center gap-2">
-              <span className="rounded-xl border border-border bg-white px-3 py-2 text-sm font-bold text-ink">{step}</span>
+              <span className="rounded-xl border border-border bg-elevated px-3 py-2 text-sm font-bold text-ink">{step}</span>
               {i < progression.length - 1 && <ArrowRight className="h-4 w-4 text-muted" aria-hidden="true" />}
             </span>
           ))}
         </div>
       </div>
-      <div className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-2xl border border-border bg-soft p-4 sm:p-5">
+      <div className="grid gap-6 sm:grid-cols-2 sm:divide-x sm:divide-border">
+        <div>
           <SubHeading>May fit people who</SubHeading>
           <div className="mt-2 space-y-2">
             {fit.map((p, i) => <p key={i} className="text-sm leading-6 text-ink">{p}</p>)}
           </div>
         </div>
-        <div className="rounded-2xl border border-border bg-soft p-4 sm:p-5">
+        <div className="border-t border-border pt-6 sm:border-t-0 sm:pl-6 sm:pt-0">
           <SubHeading>May not fit people who</SubHeading>
           <div className="mt-2 space-y-2">
             {nonFit.map((p, i) => <p key={i} className="text-sm leading-6 text-ink">{p}</p>)}
@@ -489,7 +499,11 @@ export function CareerProgression({
 // ── practical next steps ──────────────────────────────────────────────────
 
 export function NextSteps({ items }: { items: string[] }) {
-  return <Bullets items={items} />;
+  return (
+    <div className="card-surface card-surface--next-step p-5 sm:p-6">
+      <Bullets items={items} />
+    </div>
+  );
 }
 
 // ── related roles ─────────────────────────────────────────────────────────
@@ -504,7 +518,7 @@ export function RelatedRoles({ roles }: { roles: RelatedRole[] }) {
         <Link
           key={role.slug}
           href={`/roles/${role.slug}`}
-          className="group flex items-center justify-between rounded-2xl border border-border bg-white p-4 transition hover:-translate-y-0.5 hover:border-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          className="card-surface card-surface--interactive group flex items-center justify-between p-4"
         >
           <span>
             <span className="block text-xs font-bold uppercase tracking-[0.1em] text-muted">{role.lane}</span>
@@ -521,7 +535,8 @@ export function RelatedRoles({ roles }: { roles: RelatedRole[] }) {
 
 export function SourceAndReviewStatus() {
   return (
-    <div className="rounded-2xl border border-border bg-soft p-4 text-sm leading-6 text-muted">
+    <div className="mt-12 border-t border-border pt-12">
+      <div className="card-surface card-surface--informational p-4 text-sm leading-6 text-muted">
       <p>
         <span className="font-bold text-ink">How this guide is built.</span> Role content is drawn from current
         first-party hiring material and reputable industry evidence, with compensation labelled by confidence and
@@ -540,6 +555,7 @@ export function SourceAndReviewStatus() {
         >
           Read the disclaimers
         </Link>
+      </div>
       </div>
     </div>
   );

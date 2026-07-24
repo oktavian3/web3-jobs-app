@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { roles } from "@/data/roles";
 import { getRoleContent, getEmploymentModels } from "@/data/roleContent";
-import { Shell, Container, SectionHeading } from "@/components/kraft/Primitives";
+import { Shell, Container } from "@/components/kraft/Primitives";
+import PageHeader from "@/components/kraft/PageHeader";
 import RolesDirectory, { type DirectoryRole } from "@/components/kraft/RolesDirectory";
 
 export const metadata: Metadata = {
@@ -30,7 +31,7 @@ export default function RolesPage() {
   return (
     <Shell>
       <Container className="space-y-10 py-12 sm:py-16">
-        <SectionHeading
+        <PageHeader
           eyebrow="Role directory"
           title="Find the role closest to the work you want to do."
           copy="Browse the full 42-role taxonomy by actual work rather than title familiarity. Filter by lane, work style, entry level, and employment model, then read the boundary notes before choosing."

@@ -73,7 +73,7 @@ export default function GetHiredPage() {
           </div>
         </section>
 
-        <Card className="bg-blue-50 p-6">
+        <Card className="card-surface--evidence p-6">
           <div className="flex gap-4">
             <ShieldCheck className="h-7 w-7 shrink-0 text-blue-700" aria-hidden="true" />
             <div>

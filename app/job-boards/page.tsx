@@ -53,7 +53,7 @@ export default function JobBoardsPage() {
             {activeCuratedJobs.length ? (
               <div className="mt-6 grid gap-4 lg:grid-cols-2">
                 {activeCuratedJobs.map((job) => (
-                  <a key={job.id} href={job.applyUrl} target="_blank" rel="noreferrer" className="group rounded-3xl border border-blue-100 bg-soft p-5 transition hover:-translate-y-1 hover:border-blue-300 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                  <a key={job.id} href={job.applyUrl} target="_blank" rel="noreferrer" className="card-surface card-surface--interactive group p-5">
                     <div className="flex flex-wrap gap-2">
                       <span className="tag">{job.category}</span>
                       <span className="tag">{job.remote ? "Remote" : "On-site / hybrid"}</span>
@@ -66,7 +66,7 @@ export default function JobBoardsPage() {
                 ))}
               </div>
             ) : (
-              <div className="mt-6 rounded-3xl border border-dashed border-blue-200 bg-soft p-8 text-center">
+              <div className="mt-6 rounded-3xl border border-dashed border-border-strong bg-soft p-8 text-center">
                 <h3 className="text-xl font-extrabold tracking-tight text-ink">No curated opportunities published yet.</h3>
                 <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-muted">
                   There are no verified KRAFT listings to show right now. Use the selected sources and boards below, and verify each role on the employer&apos;s official domain.
@@ -88,7 +88,7 @@ export default function JobBoardsPage() {
               const board = jobBoards.find((item) => item.slug === selection.platformSlug);
               if (!board) return null;
               return (
-                <a key={selection.id} href={board.url} target="_blank" rel="noreferrer" className="group flex flex-col rounded-3xl border border-border bg-white p-5 transition hover:-translate-y-1 hover:border-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                <a key={selection.id} href={board.url} target="_blank" rel="noreferrer" className="card-surface card-surface--interactive group flex flex-col p-5">
                   <div className="flex items-start justify-between gap-3">
                     <p className="text-xs font-bold uppercase tracking-[0.14em] text-blue-700">{selection.recommendationLabel}</p>
                     <ArrowUpRight className="h-5 w-5 text-blue-700" aria-hidden="true" />
@@ -155,14 +155,14 @@ export default function JobBoardsPage() {
         {/* 7. Safety checklist */}
         <Card className="p-5 sm:p-6">
           <div className="flex gap-4">
-            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-blue-600 text-white" aria-hidden="true">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-amber-500 text-white" aria-hidden="true">
               <ShieldAlert className="h-6 w-6" />
             </span>
             <div>
               <h2 className="text-xl font-extrabold text-ink">Job-safety checklist</h2>
               <ul className="mt-4 grid gap-2 sm:grid-cols-2">
                 {safety.map((item) => (
-                  <li key={item} className="rounded-2xl border border-blue-100 bg-soft px-4 py-3 text-sm font-bold leading-5 text-ink">{item}</li>
+                  <li key={item} className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-bold leading-5 text-amber-900">{item}</li>
                 ))}
               </ul>
             </div>

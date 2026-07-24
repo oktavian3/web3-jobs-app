@@ -45,22 +45,27 @@ export default function GlossaryPage() {
               className="w-full rounded-2xl border border-border bg-soft py-3 pl-11 pr-4 text-sm font-bold text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
             />
           </label>
-          <div className="mt-4 flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Filter by category">
-            {categories.map((item) => (
-              <button
-                key={item}
-                type="button"
-                onClick={() => setCategory(item)}
-                aria-pressed={category === item}
-                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-extrabold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${category === item ? "bg-blue-600 text-white" : "bg-soft text-muted hover:text-ink"}`}
-              >
-                {item}
-              </button>
-            ))}
+          <div className="mt-4 border-t border-border pt-4">
+            <span className="mb-2 block text-xs font-bold uppercase tracking-[0.1em] text-muted">Browse by category</span>
+            <div className="flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Filter by category">
+              {categories.map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => setCategory(item)}
+                  aria-pressed={category === item}
+                  className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-extrabold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${category === item ? "bg-blue-600 text-white" : "bg-soft text-muted hover:text-ink"}`}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
           </div>
         </Card>
 
-        <p className="text-sm font-bold text-muted" aria-live="polite">{terms.length} of {glossaryTerms.length} terms</p>
+        <p className="text-sm font-bold text-muted" aria-live="polite">
+          <span className="text-lg font-extrabold text-ink">{terms.length}</span> of {glossaryTerms.length} terms
+        </p>
 
         {terms.length ? (
           <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -68,7 +73,7 @@ export default function GlossaryPage() {
               <Link
                 key={term.slug}
                 href={`/glossary/${term.slug}`}
-                className="group flex h-full flex-col rounded-2xl border border-border bg-white p-5 transition hover:-translate-y-0.5 hover:border-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                className="card-surface card-surface--interactive group flex h-full flex-col p-5"
               >
                 <span className="tag w-fit">{term.category}</span>
                 <h2 className="mt-3 text-lg font-extrabold text-ink">{term.term}</h2>
