@@ -30,14 +30,17 @@ export default function InterviewPrepExplorer({
   sets,
   lanes,
   framework,
+  initialSlug,
 }: {
   sets: ExplorerSet[];
   lanes: string[];
   framework: ExplorerFramework;
+  initialSlug?: string;
 }) {
-  const [lane, setLane] = useState<string>(lanes[0] ?? "");
+  const initialSet = initialSlug ? sets.find((s) => s.slug === initialSlug) : undefined;
+  const [lane, setLane] = useState<string>(initialSet?.lane ?? lanes[0] ?? "");
   const rolesInLane = useMemo(() => sets.filter((s) => s.lane === lane), [sets, lane]);
-  const [slug, setSlug] = useState<string>(() => rolesInLane[0]?.slug ?? sets[0]?.slug ?? "");
+  const [slug, setSlug] = useState<string>(() => initialSet?.slug ?? rolesInLane[0]?.slug ?? sets[0]?.slug ?? "");
 
   // Keep the selected role valid when the lane changes.
   const activeSet = sets.find((s) => s.slug === slug) ?? rolesInLane[0] ?? sets[0];

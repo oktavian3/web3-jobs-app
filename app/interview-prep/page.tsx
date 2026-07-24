@@ -25,7 +25,14 @@ const sets: ExplorerSet[] = interviewSets.map((set) => ({
 
 const lanes = careerLanes.map((lane) => lane.lane);
 
-export default function InterviewPrepPage() {
+export default async function InterviewPrepPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ role?: string }>;
+}) {
+  const { role } = await searchParams;
+  const initialSlug = role && interviewSets.some((set) => set.slug === role) ? role : undefined;
+
   return (
     <Shell>
       <Container className="space-y-10 py-12 sm:py-16">
@@ -35,7 +42,7 @@ export default function InterviewPrepPage() {
           copy="Choose a lane and role to see its real interview questions, what each tests, and a framework for strong answers. These are practice prompts and general guidance — not memorized scripts, and not every company interviews the same way."
         />
 
-        <InterviewPrepExplorer sets={sets} lanes={lanes} framework={interviewFramework} />
+        <InterviewPrepExplorer sets={sets} lanes={lanes} framework={interviewFramework} initialSlug={initialSlug} />
 
         <CareerNext
           heading="Prepare with evidence"

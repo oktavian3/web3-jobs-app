@@ -1,4 +1,4 @@
-import type { CareerLane } from "./roles";
+import { roles, type CareerLane } from "./roles";
 
 export type GlossaryTerm = {
   slug: string;
@@ -204,3 +204,19 @@ export const glossaryTerms: GlossaryTerm[] = seeds.slice(0, 120).map((seed) => (
   usedInRoles: laneByKey[seed.roles],
   relatedTerms: seed.related,
 }));
+
+export function getGlossaryTermBySlug(slug: string) {
+  return glossaryTerms.find((term) => term.slug === slug);
+}
+
+// Related canonical roles are derived from the term's associated lanes — a
+// structured lookup against the canonical role list, never an invented mapping.
+export function getRelatedRolesForTerm(term: GlossaryTerm, count = 3) {
+  return roles.filter((role) => term.usedInRoles.includes(role.lane)).slice(0, count);
+}
+
+// Resolve a related-term label (free text in the approved data) to its own
+// glossary detail page when one exists, so "Related terms" can link out.
+export function findTermByLabel(label: string) {
+  return glossaryTerms.find((term) => term.term.toLowerCase() === label.toLowerCase());
+}

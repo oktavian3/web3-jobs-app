@@ -43,7 +43,7 @@ export const roadmaps: Roadmap[] = [
     { title: "Deploy a working testnet project", output: "Testnet demo", relatedTerms: ["Deployment", "Faucet"] },
     { title: "Publish the repository and technical write-up", output: "Technical case study", relatedTerms: ["Documentation", "Proof of Work"] },
   ] },
-  { lane: "Creative", slug: "creative-design", note: "Creative proof should show decisions, constraints, and reusable systems.", phases: [
+  { lane: "Creative", slug: "creative", note: "Creative proof should show decisions, constraints, and reusable systems.", phases: [
     { title: "Study wallet, transaction, and risk UX patterns", output: "UX pattern audit", relatedTerms: ["Token Approval", "Transaction"] },
     { title: "Redesign one real Web3 flow", output: "Wireframes", relatedTerms: ["User Journey", "Wallet"] },
     { title: "Build a small component system", output: "UI kit", relatedTerms: ["Design System", "Deliverable"] },
