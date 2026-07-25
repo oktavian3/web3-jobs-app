@@ -2,6 +2,12 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
+// The X Profile Role Matcher is a disabled experiment. This route stays deployed but must
+// not call the external provider or touch its key while the flag is off. It returns a
+// controlled "unavailable" response with no provider detail. Uses the same flag as the
+// experiment UI (/experiments/x-role-matcher).
+const experimentEnabled = process.env.NEXT_PUBLIC_ENABLE_X_MATCHER === "true";
+
 type TwitterApiUser = {
   name?: string;
   userName?: string;
@@ -44,6 +50,13 @@ async function fetchTwitterApiProfile(username: string) {
 }
 
 export async function GET(request: Request) {
+  if (!experimentEnabled) {
+    return NextResponse.json(
+      { error: "This feature is currently unavailable." },
+      { status: 503 }
+    );
+  }
+
   const { searchParams } = new URL(request.url);
   const username = cleanUsername(searchParams.get("username") ?? "");
 

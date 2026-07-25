@@ -44,7 +44,7 @@ export const selectedJobPlatforms: SelectedJobPlatform[] = [
     platformSlug: "remote3",
     recommendationLabel: "Best for remote work",
     whySelected: "Remote-first browsing makes it easier to compare timezone expectations and distributed-team roles.",
-    bestRoleCategories: ["Community & Growth", "Creative & Design", "Technical & Security"],
+    bestRoleCategories: ["Community & Growth", "Creative", "Technical & Security"],
   },
   {
     id: "best-developers",
@@ -65,7 +65,7 @@ export const selectedJobPlatforms: SelectedJobPlatform[] = [
     platformSlug: "wellfound",
     recommendationLabel: "Best for early-stage startup roles",
     whySelected: "Useful company profiles, startup context, and broader Web3-adjacent product, growth, and operations openings.",
-    bestRoleCategories: ["Product & Operations", "Community & Growth", "Creative & Design"],
+    bestRoleCategories: ["Product & Operations", "Community & Growth", "Creative"],
   },
   {
     id: "best-entry-browsing",

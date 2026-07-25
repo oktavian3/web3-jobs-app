@@ -90,3 +90,14 @@ export const jobBoards: JobBoard[] = [
   { slug: "company-career-pages", name: "Company Career Pages", url: "https://www.linkedin.com/company/", bestFor: "Openings published directly by protocols, exchanges, infrastructure companies, and foundations.", commonRoleTypes: ["All functions", "Verified company roles"], remoteSupport: "Varies", salaryVisibility: "Varies", applicationStyle: "Direct applications through official domains", lastReviewed: "2026-06", note: "Often the most reliable source; verify through official domains and social channels." },
 ];
 
+// Boards that are remote-first, freelance, or contributor/bounty oriented rather than
+// general job listings. Used to group the Job Boards page without duplicating records.
+export const remoteAdjacentBoardSlugs = ["remote3", "laborx", "gitcoin"];
+
+export function jobBoardGroup(board: JobBoard): "General" | "Remote & adjacent" {
+  return remoteAdjacentBoardSlugs.includes(board.slug) ? "Remote & adjacent" : "General";
+}
+
+export const generalJobBoards = jobBoards.filter((board) => jobBoardGroup(board) === "General");
+export const remoteAdjacentJobBoards = jobBoards.filter((board) => jobBoardGroup(board) === "Remote & adjacent");
+

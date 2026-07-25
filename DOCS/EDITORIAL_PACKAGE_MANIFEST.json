@@ -1,0 +1,45 @@
+{
+  "checks": {
+    "role_count": 42,
+    "page_count": 25,
+    "array_literals": 0,
+    "placeholder_tokens": 0,
+    "json_fragments": 0,
+    "generic_tool_boilerplate": 0,
+    "universal_deliverable_boilerplate": 0,
+    "public_confidence_hardcoded": 0,
+    "page_directive_leak": 0
+  },
+  "files": [
+    {
+      "file": "KRAFT_PUBLIC_ROLE_COPY.md",
+      "bytes": 344569,
+      "words": 47755,
+      "sha256": "3b87c79712f2ec165979966da4534e030a40b4b8de581471257b36f2a9f737bb"
+    },
+    {
+      "file": "KRAFT_PUBLIC_PAGE_COPY.md",
+      "bytes": 25444,
+      "words": 3773,
+      "sha256": "7ecdb0450668e90aae0743e036742d59441139882095218c5fba84b3090b52a4"
+    },
+    {
+      "file": "KRAFT_STRUCTURED_CONTENT_SCHEMA.md",
+      "bytes": 34919,
+      "words": 4920,
+      "sha256": "ff226dec6db3e961e5f0c955c30a443d7b07ac2bb398aeaef56a44978691cb0a"
+    },
+    {
+      "file": "KRAFT_SHARED_CONTENT_BLOCKS.md",
+      "bytes": 8213,
+      "words": 1160,
+      "sha256": "c1af5aa6bce7fb59d9f48ef319d9cbf7ce99db0999bf139bba0ba527f9f9a401"
+    },
+    {
+      "file": "KRAFT_EDITORIAL_QA_REPORT.md",
+      "bytes": 12540,
+      "words": 1762,
+      "sha256": "c7b3416662e8fe58a08fb78a3fa23c23f05bfcceca92ab2227cf939d1814b3ea"
+    }
+  ]
+}

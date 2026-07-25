@@ -82,7 +82,7 @@ export const laneResults: LaneResult[] = [
     nextTask: "Build a small transaction UI or tested smart contract.",
   },
   {
-    lane: "Creative & Design",
+    lane: "Creative",
     signals: ["creative", "product", "content"],
     fit: "You may fit work that makes Web3 products clearer, safer, and more distinctive.",
     nextTask: "Redesign a risky token approval flow and explain your decisions.",
