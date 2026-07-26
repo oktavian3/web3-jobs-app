@@ -37,7 +37,7 @@ const keywordMap = [
   { words: ["community", "mod", "ambassador", "growth", "discord", "telegram", "partnership"], lane: "Community & Growth" },
   { words: ["data", "research", "defi", "on-chain", "analyst", "token", "market", "dashboard"], lane: "Research & Data" },
   { words: ["product", "ops", "operation", "strategy", "launch", "pm", "project"], lane: "Product & Operations" },
-  { words: ["design", "brand", "nft", "artist", "motion", "visual", "ux", "ui"], lane: "Creative & Design" },
+  { words: ["design", "brand", "nft", "artist", "motion", "visual", "ux", "ui"], lane: "Creative" },
 ] as const;
 
 function hashText(value: string) {

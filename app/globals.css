@@ -2,21 +2,43 @@
 
 :root {
   --page: #dde2e7;
-  --soft: #f6f8fb;
+  /* Dominant site background. Replaces the previous pure-white .site-canvas
+     fill with a soft cool off-white so large surfaces don't read as stark. */
+  --canvas: #f5f7fa;
+  /* Recessed / secondary panels (inputs, filter bars, alternating blocks) —
+     one step darker than canvas so it reads as "set into" the page. Tuned to
+     keep --muted text at >=4.5:1 contrast on this background (WCAG AA); the
+     border on panels carries most of the visual separation from canvas. */
+  --soft: #f1f4f9;
+  /* Card / elevated-surface base — one step lighter than canvas, not pure
+     white, so raised content is still distinguishable without stark contrast. */
+  --elevated: #fbfcfe;
+  /* Reserved for small elevated components (buttons, icon chips, badges)
+     where literal white is still appropriate — not for large page areas. */
   --surface: #ffffff;
+  /* Active / selected state surface (selected filter, active TOC item,
+     selected explorer tab) — a distinct pale-blue hue, not a brightness step. */
+  --highlight: #eaf2ff;
   --ink: #111318;
   --muted: #667085;
   --blue: #146bff;
   --blue-deep: #0847d8;
   --blue-soft: #e9f2ff;
-  --border: #e5e9ef;
-  --border-strong: #c9dcf5;
+  --border: #dde3ea;
+  --border-strong: #b9d0ef;
+  /* Dark-contrast section/card variant. Use sparingly (at most one strong
+     dark section per page) — not a default surface. */
+  --navy: #0f1b2e;
+  --on-navy: #e8eef6;
 }
 
 @theme inline {
   --color-page: var(--page);
+  --color-canvas: var(--canvas);
   --color-soft: var(--soft);
+  --color-elevated: var(--elevated);
   --color-surface: var(--surface);
+  --color-highlight: var(--highlight);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-blue: var(--blue);
@@ -24,12 +46,21 @@
   --color-blue-soft: var(--blue-soft);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
+  --color-navy: var(--navy);
+  --color-on-navy: var(--on-navy);
   --shadow-soft: 0 14px 34px rgba(17, 19, 24, 0.06);
   --shadow-blue: 0 20px 55px rgba(20, 107, 255, 0.16);
 }
 
-* {
-  @apply border-border;
+/* Default border color for unstyled `border` utilities. Must live in @layer
+   base — an unlayered `* {}` rule always wins the cascade over Tailwind's own
+   `@layer utilities` regardless of specificity, which was silently overriding
+   every colored border utility (border-amber-200, border-emerald-200, the new
+   border-border-strong, etc.) across the whole app. */
+@layer base {
+  * {
+    @apply border-border;
+  }
 }
 
 html {
@@ -64,10 +95,10 @@ textarea,
 .site-canvas {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(229, 233, 239, 0.95);
+  border: 1px solid rgba(221, 227, 234, 0.95);
   border-top: 0;
   border-radius: 0 0 28px 28px;
-  background: var(--surface);
+  background: var(--canvas);
   box-shadow: 0 24px 80px rgba(17, 19, 24, 0.08);
 }
 
@@ -192,7 +223,7 @@ textarea,
 
 .btn-secondary {
   border: 1px solid var(--border-strong);
-  background: linear-gradient(180deg, #ffffff, #f4f9ff);
+  background: linear-gradient(180deg, var(--elevated), var(--highlight));
   color: var(--ink);
 }
 
@@ -215,17 +246,125 @@ textarea,
   transform: translateY(-2px);
 }
 
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-white:disabled,
+.btn-ghost-white:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-primary:disabled::before {
+  display: none;
+}
+
+/* ── Card system ──────────────────────────────────────────────────────────
+   .card-surface is the standard elevated card. Modifiers below give each
+   card a distinct, purposeful role instead of one identical style for every
+   content block. Apply variants with e.g. class="card-surface card-surface--featured".
+   Not every block needs a card — .card-flat is provided for long-form or
+   secondary content that should read as open sections with dividers instead
+   of a raised surface (see the "Flat / divider" block further down). */
+
 .card-surface {
   border-radius: 1.5rem;
   border: 1px solid var(--border-strong);
+  background: var(--elevated);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Featured: a small number of promoted blocks per page (hero panels, primary
+   CTAs inside a card grid). Pairs well with .pixel-accent in one corner. */
+.card-surface--featured {
+  border-color: var(--border-strong);
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(247,251,255,0.94)),
-    radial-gradient(circle at 12% 0%, rgba(20,107,255,0.08), transparent 34%);
-  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,0.95);
+    radial-gradient(circle at 14% 0%, rgba(20, 107, 255, 0.1), transparent 40%),
+    var(--highlight);
+  box-shadow: var(--shadow-blue);
+}
+
+/* Interactive: formalizes the existing hover-lift pattern used on clickable
+   cards (role cards, board cards, lane cards). */
+.card-surface--interactive {
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.card-surface--interactive:hover {
+  transform: translateY(-4px);
+  border-color: var(--blue-soft);
+  box-shadow: var(--shadow-blue);
+}
+
+/* Informational: quieter than the default card — context, disclaimers,
+   secondary notes that don't need to compete for attention. */
+.card-surface--informational {
+  border-color: var(--border);
+  background: var(--soft);
+  box-shadow: none;
+}
+
+/* Evidence: compensation / evidence-tier blocks that should read as
+   trust-bearing content, distinct from ordinary body cards. */
+.card-surface--evidence {
+  border-color: var(--border-strong);
+  background: var(--blue-soft);
+  box-shadow: none;
+}
+
+/* Next-step: "what's next" / contextual-link blocks. A left accent bar
+   signals direction rather than a full color change. */
+.card-surface--next-step {
+  border-color: var(--border);
+  border-left: 3px solid var(--blue);
+  background: var(--elevated);
+}
+
+/* Dark contrast: for the rare, single strong panel per page where hierarchy
+   benefits from real contrast (e.g. one closing CTA). Not a default surface —
+   use at most once per page. */
+.card-surface--dark {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--navy);
+  color: var(--on-navy);
+  box-shadow: 0 24px 60px rgba(6, 10, 20, 0.35);
+}
+
+/* Flat / divider: long-form or secondary sections that should sit directly
+   on the canvas rather than as a raised card. Use with a border-b divider
+   between stacked sections instead of wrapping each one in a card. */
+.card-flat {
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  box-shadow: none;
+}
+
+.card-flat:last-child {
+  border-bottom: 0;
 }
 
 .interactive-card {
   will-change: transform;
+}
+
+/* Restrained corner accent for featured cards only — a small low-opacity
+   dot-grid, never a full-surface pattern. Apply to a `relative overflow-hidden`
+   container; position with a utility class (e.g. top-0 right-0) if a corner
+   other than top-right is needed. */
+.pixel-accent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 44px;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: radial-gradient(rgba(20, 107, 255, 0.45) 1px, transparent 1.5px);
+  background-size: 8px 8px;
+  mask-image: radial-gradient(circle at 100% 0%, rgba(0, 0, 0, 0.9), transparent 75%);
 }
 
 .icon-button {

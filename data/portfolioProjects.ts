@@ -1,83 +1,87 @@
-import { roles, type Role } from "./roles";
+// Portfolio briefs, one per canonical role, built from the APPROVED role content
+// (DOCS/KRAFT_PUBLIC_ROLE_COPY.md via roleContent) plus the approved portfolio page
+// copy (KRAFT_PUBLIC_PAGE_COPY §13/§14) and shared block SB-06. Every brief is an
+// explicitly simulated exercise; it never claims the user worked with a real protocol.
 
-export type PortfolioProject = {
+import { roles, type CareerLane } from "./roles";
+import { getRoleContent } from "./roleContent";
+
+export type PortfolioBrief = {
   slug: string;
   targetRole: string;
-  title: string;
-  context: string;
-  task: string;
-  deliverable: string;
+  roleTitle: string;
+  lane: CareerLane;
+  simulated: true;
+  summary: string;
+  scenario: string;
+  objective: string;
+  workflow: string[];
+  deliverables: string[];
   constraints: string[];
-  executionPlan: string[];
-  tools: string[];
+  tools: { name: string; useCase: string }[];
+  strongSubmission: string[];
+  weakPatterns: string[];
   rubric: string[];
-  caseStudyPackaging: string[];
-  checklist: string[];
-  presentation: string;
+  caseStudy: string[];
+  interviewQuestions: string[];
 };
 
-function titleFor(role: Role) {
-  return `${role.title} proof-of-work brief`;
-}
+// Backwards-compatible alias for existing imports.
+export type PortfolioProject = PortfolioBrief;
 
-function deliverableFor(role: Role) {
-  return role.expectedOutputs.slice(0, 4).join(", ");
-}
+// Approved safety/ownership constraints (SB-06) applied to every simulated brief.
+const BASE_CONSTRAINTS = [
+  "Use only public sources or clearly simulated data.",
+  "Never include seed phrases, private keys, or wallet secrets.",
+  "Redact private user, company, security, legal, or compensation information.",
+  "State every assumption you make.",
+];
 
-function executionPlanFor(role: Role) {
-  return [
-    `Define the ${role.title.toLowerCase()} scenario, audience, and assumptions.`,
-    "Collect public sources, examples, constraints, and any definitions needed to avoid guesswork.",
-    `Create the core deliverable: ${deliverableFor(role)}.`,
-    "Review the work against the rubric and add caveats, decisions, and next-step notes.",
-    "Package the result as a concise case study with links, screenshots, or artifacts where useful.",
+// Approved evaluation rubric (KRAFT_PUBLIC_PAGE_COPY §14).
+const BASE_RUBRIC = [
+  "Accuracy of claims and sources",
+  "Relevance to the target role",
+  "Decision quality and trade-offs",
+  "Completeness of the deliverable",
+  "Clarity of communication",
+  "Honest limitations and next steps",
+];
+
+// Approved case-study packaging (KRAFT_PUBLIC_PAGE_COPY §14 + SB-06).
+const BASE_CASE_STUDY = [
+  "Explain the problem, sources, decisions, ownership, constraints, output, review, and what you would change.",
+  "Show the final artifact before the process notes.",
+  "State what you owned and what belonged to other people.",
+  "Label the work as simulated, and keep any real contribution clearly separate.",
+];
+
+export const portfolioProjects: PortfolioBrief[] = roles.map((role) => {
+  const content = getRoleContent(role.slug);
+  const nextSteps = content?.nextSteps ?? [];
+  const workflow = [
+    ...nextSteps,
+    "Review the result against the rubric, then package it as a case study.",
   ];
-}
-
-function rubricFor(role: Role) {
-  return Array.from(
-    new Set([
-      "Clear problem framing",
-      "Role-relevant output",
-      "Evidence and caveats",
-      "Readable presentation",
-      "Actionable next step",
-      ...role.mustHave.slice(0, 3),
-    ])
-  );
-}
-
-function checklistFor(role: Role) {
-  return [
-    "All assumptions are named.",
-    "No private data, seed phrases, or wallet secrets are included.",
-    "Sources are linked or described clearly.",
-    `The deliverable matches ${role.title} expectations.`,
-    "The case study explains what you would improve next.",
-  ];
-}
-
-export const portfolioProjects: PortfolioProject[] = roles.map((role) => ({
-  slug: role.slug,
-  targetRole: role.slug,
-  title: titleFor(role),
-  context: `Use a real or realistic ${role.lane.toLowerCase()} workflow. ${role.summary}`,
-  task: role.assignment,
-  deliverable: deliverableFor(role),
-  constraints: ["No private data", "No seed phrases or wallet secrets", "Use public sources", "Document assumptions"],
-  executionPlan: executionPlanFor(role),
-  tools: role.tools,
-  rubric: rubricFor(role),
-  caseStudyPackaging: [
-    "Start with the problem, role context, and why the work matters.",
-    "Show the final artifact before process notes.",
-    "Explain three to five decisions, trade-offs, or definitions.",
-    "Add a short limitations section and a next-iteration plan.",
-    "Close with links, screenshots, source notes, or a downloadable artifact when available.",
-  ],
-  checklist: checklistFor(role),
-  presentation: "Turn the final work into a case study with context, decisions, output, limitations, and links.",
-}));
+  return {
+    slug: role.slug,
+    targetRole: role.slug,
+    roleTitle: role.title,
+    lane: role.lane,
+    simulated: true,
+    summary: content?.summary ?? role.summary,
+    scenario: `A simulated ${role.lane.toLowerCase()} exercise for ${role.title}. Treat it as realistic practice, not real client or protocol work.`,
+    objective: nextSteps[0] ?? role.assignment,
+    workflow,
+    deliverables: content?.deliverables ?? role.expectedOutputs,
+    constraints: BASE_CONSTRAINTS,
+    tools: content?.tools ?? [],
+    strongSubmission: content?.strongExamples ?? [],
+    weakPatterns: content?.weakEvidence ?? [],
+    rubric: BASE_RUBRIC,
+    caseStudy: BASE_CASE_STUDY,
+    interviewQuestions: content?.exampleQuestions ?? [],
+  };
+});
 
 export function getPortfolioProjectBySlug(slug: string) {
   return portfolioProjects.find((project) => project.slug === slug);
