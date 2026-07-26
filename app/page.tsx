@@ -105,11 +105,11 @@ export default function Home() {
 
         <section className="reveal-card">
           <SectionHeading eyebrow="Built for different starting points" title="Start with the question you actually have." />
-          <div className="mt-10 grid items-center gap-5 lg:grid-cols-3">
+          <div className="mt-10 grid items-center justify-items-center gap-5 text-center lg:grid-cols-3">
             {startCards.map((card) => (
               <Card
                 key={card.title}
-                className={`card-surface--interactive reveal-card group relative flex flex-col p-6 focus-within:border-blue-400 ${card.featured ? "card-surface--featured lg:scale-105" : ""}`}
+                className={`card-surface--interactive reveal-card group relative flex flex-col items-center p-6 focus-within:border-blue-400 ${card.featured ? "card-surface--featured lg:scale-105" : ""}`}
               >
                 <h3 className="relative text-2xl font-extrabold tracking-tight text-ink">{card.title}</h3>
                 <p className="relative mt-3 flex-1 text-sm leading-6 text-muted">{card.copy}</p>
