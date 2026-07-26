@@ -17,7 +17,7 @@ export default function Footer() {
           <div className="grid gap-10 md:grid-cols-[1.4fr_2fr_1fr]">
             <div>
               <Link href="/" className="inline-flex" aria-label="KRAFT home">
-                <Image src="/images/kraft-logo.png" alt="KRAFT" width={150} height={35} className="h-auto w-[132px] object-contain" />
+                <Image src="/images/kraft-logo.png" alt="KRAFT" width={60} height={60} className="h-auto w-[60px] object-contain" />
               </Link>
               <p className="mt-5 max-w-sm text-sm leading-6 text-muted">
                 Know the work before you chase the title. KRAFT helps you understand roles, build proof, and apply with context.

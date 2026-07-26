@@ -26,7 +26,7 @@ export default function Navbar() {
       <Container>
         <div className="grid h-20 grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[160px_1fr_160px]">
           <Link href="/" className="inline-flex w-fit items-center" aria-label="KRAFT home">
-            <Image src="/images/kraft-logo.png" alt="KRAFT" width={150} height={35} className="h-auto w-[128px] object-contain" priority />
+            <Image src="/images/kraft-logo.png" alt="KRAFT" width={60} height={60} className="h-auto w-[60px] object-contain" priority />
           </Link>
 
           <nav className="hidden justify-self-center rounded-full border border-border bg-white p-1 shadow-soft md:flex" aria-label="Primary navigation">
