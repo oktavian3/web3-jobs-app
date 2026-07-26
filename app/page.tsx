@@ -141,13 +141,13 @@ export default function Home() {
 
         <section className="reveal-card">
           <SectionHeading title="Explore Web3 work by career lane." />
-          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-4 justify-items-center text-center md:grid-cols-2 lg:grid-cols-4">
             {careerLanes.map((lane) => {
               const Icon = laneIcons[lane.lane];
               const count = roles.filter((role) => role.lane === lane.lane).length;
               return (
-                <Card key={lane.lane} className="card-surface--interactive reveal-card group relative flex flex-col p-5">
-                  <div className="relative flex items-start justify-between gap-3">
+                <Card key={lane.lane} className="card-surface--interactive reveal-card group relative flex flex-col items-center p-5">
+                  <div className="relative flex items-center justify-between gap-3 w-full">
                     <span className="grid h-12 w-12 place-items-center rounded-2xl bg-blue-600 text-white shadow-blue">
                       <Icon className="h-5 w-5" />
                     </span>
@@ -158,7 +158,7 @@ export default function Home() {
                   <div className="relative mt-5 flex flex-wrap gap-2">
                     {lane.exampleRoles.slice(0, 3).map((role) => <span key={role} className="tag">{role}</span>)}
                   </div>
-                  <div className="relative mt-5 flex items-center justify-between gap-3">
+                  <div className="relative mt-5 flex items-center justify-center gap-3">
                     <span className="text-xs font-extrabold uppercase tracking-[0.12em] text-blue-700">{lane.difficulty}</span>
                     <Link href={`/roles?lane=${encodeURIComponent(lane.lane)}`} className="inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
                       View roles <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -226,14 +226,14 @@ export default function Home() {
             <div className="flex items-center gap-3 rounded-full border border-border bg-soft px-4 py-3 text-sm font-bold text-muted">
               <Search className="h-4 w-4" /> Search TVL, Token Unlock, Multisig
             </div>
-            <div className="mt-5 grid gap-4 md:grid-cols-3">
+            <div className="mt-5 grid gap-4 justify-items-center text-center md:grid-cols-3">
               {["TVL", "Token Unlock", "Multisig"].map((term) => {
                 const item = glossaryTerms.find((entry) => entry.term === term);
                 return item ? (
                   <Link key={term} href={`/glossary/${item.slug}`} className="card-surface card-surface--interactive block p-4">
                     <h3 className="font-extrabold text-ink">{item.term}</h3>
                     <p className="mt-2 text-sm leading-6 text-muted">{item.commonTrap}</p>
-                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-extrabold text-blue-700">
+                    <span className="mt-3 inline-flex items-center justify-center gap-1 text-xs font-extrabold text-blue-700 w-full">
                       Open term <ArrowRight className="h-3.5 w-3.5" />
                     </span>
                   </Link>
