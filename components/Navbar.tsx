@@ -25,8 +25,9 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-border bg-canvas/85 backdrop-blur-xl">
       <Container>
         <div className="grid h-20 grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[160px_1fr_160px]">
-          <Link href="/" className="inline-flex w-fit items-center" aria-label="KRAFT home">
-            <Image src="/images/kraft-logo.png" alt="KRAFT" width={150} height={35} className="h-auto w-[128px] object-contain" priority />
+          <Link href="/" className="inline-flex w-fit items-center gap-2.5" aria-label="KRAFT home">
+            <Image src="/kraft%20logo.png" alt="" width={40} height={40} className="h-9 w-9 object-contain sm:h-10 sm:w-10" priority />
+            <span className="text-lg font-black tracking-[-0.03em] text-ink sm:text-xl">KRAFT</span>
           </Link>
 
           <nav className="hidden justify-self-center rounded-full border border-border bg-elevated p-1 shadow-soft md:flex" aria-label="Primary navigation">
