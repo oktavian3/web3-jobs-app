@@ -361,10 +361,15 @@ export function SalaryEvidenceBlock({
   employmentModel,
   sourceLabel,
   sourceUrl,
+  reviewPeriod,
+  lastReviewed,
+  note,
+  rangeLabel,
   noRangeText,
   variablesText,
   legend,
   methodologyHref,
+  marketContext,
 }: {
   confidence: CompensationConfidence;
   tier: EvidenceTier;
@@ -376,10 +381,25 @@ export function SalaryEvidenceBlock({
   employmentModel?: string;
   sourceLabel?: string;
   sourceUrl?: string;
+  reviewPeriod?: string;
+  lastReviewed?: string;
+  note?: string;
+  rangeLabel?: string;
   noRangeText: string;
   variablesText: string;
   legend: { title: string; tiers: { tier: string; meaning: string }[]; note: string };
   methodologyHref: string;
+  marketContext: {
+    currency: string;
+    averagesMin: number;
+    averagesMax: number;
+    postingsMin: number;
+    postingsMax: number;
+    body: string;
+    sourceLabel: string;
+    sourceUrl: string;
+    lastReviewed: string;
+  };
 }) {
   return (
     <div className="space-y-5">
@@ -391,27 +411,43 @@ export function SalaryEvidenceBlock({
       <Prose paragraphs={intro} />
 
       {hasReliableRange && range ? (
-        <div className="card-surface card-surface--informational p-4 sm:p-5">
-          <SubHeading>Reported range (context, not a guarantee)</SubHeading>
-          <p className="mt-2 text-lg font-extrabold text-ink">
-            {range.currency}{range.min.toLocaleString()}–{range.currency}{range.max.toLocaleString()}{" "}
-            <span className="text-sm font-bold text-muted">/ {range.period}</span>
+        <div className="card-surface card-surface--evidence p-5 sm:p-6">
+          <SubHeading>{rangeLabel ?? "Advertised range (context, not a guarantee)"}</SubHeading>
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
+            {range.currency}{range.min.toLocaleString("en-US")} – {range.currency}{range.max.toLocaleString("en-US")}
+            <span className="ml-2 text-base font-bold text-muted">/ {range.period}</span>
           </p>
           {(geography || employmentModel) && (
-            <p className="mt-1 text-sm leading-6 text-muted">
+            <p className="mt-2 text-sm leading-6 text-muted">
               {[geography, employmentModel].filter(Boolean).join(" · ")}
             </p>
           )}
-          {sourceLabel && sourceUrl && (
-            <a
-              href={sourceUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-              Source: {sourceLabel}
-            </a>
-          )}
+          <p className="mt-3 text-sm leading-6 text-ink">
+            {note ?? (
+              <>
+                This is the spread of <span className="font-bold">advertised</span> pay, not verified paid
+                compensation. Where you land inside it depends on your region, seniority, employment model,
+                and the mix of cash, token, and equity on offer.
+              </>
+            )}
+          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
+            {sourceLabel &&
+              (sourceUrl ? (
+                <a
+                  href={sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 font-bold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                >
+                  Source: {sourceLabel}
+                </a>
+              ) : (
+                <span className="font-bold">Source: {sourceLabel}</span>
+              ))}
+            {reviewPeriod && <span>{reviewPeriod}</span>}
+            {lastReviewed && <span>Reviewed {lastReviewed}</span>}
+          </div>
         </div>
       ) : (
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 sm:p-5">
@@ -419,6 +455,36 @@ export function SalaryEvidenceBlock({
           <p className="mt-2 text-sm leading-6 text-amber-900">{noRangeText}</p>
         </div>
       )}
+
+      {/* Whole-market scale. Shown on every role — including those with no
+          role-specific range — so a reader always gets a sense of magnitude
+          without a number being invented for their specific role. */}
+      <div className="card-surface card-surface--informational p-4 sm:p-5">
+        <SubHeading>Wider Web3 market, for scale</SubHeading>
+        <p className="mt-2 text-base font-extrabold text-ink">
+          Typical advertised averages {marketContext.currency}
+          {marketContext.averagesMin.toLocaleString("en-US")} – {marketContext.currency}
+          {marketContext.averagesMax.toLocaleString("en-US")}
+          <span className="font-bold text-muted"> / year</span>
+        </p>
+        <p className="mt-1 text-sm leading-6 text-muted">
+          Individual postings run from about {marketContext.currency}
+          {marketContext.postingsMin.toLocaleString("en-US")} to {marketContext.currency}
+          {marketContext.postingsMax.toLocaleString("en-US")}.
+        </p>
+        <p className="mt-2 text-sm leading-6 text-muted">{marketContext.body}</p>
+        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
+          <a
+            href={marketContext.sourceUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 font-bold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          >
+            Source: {marketContext.sourceLabel}
+          </a>
+          <span>Reviewed {marketContext.lastReviewed}</span>
+        </div>
+      </div>
 
       <div>
         <SubHeading>Role risks</SubHeading>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Manrope, Instrument_Serif } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -8,6 +8,15 @@ import Footer from "@/components/Footer";
 const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-manrope",
+});
+
+// Display-only accent face for mixed-typeface headlines (.font-display).
+// Body copy and UI labels stay on Manrope.
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-instrument",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={manrope.variable}>
+    <html lang="en" className={`${manrope.variable} ${instrumentSerif.variable}`}>
       <body className="min-h-screen bg-page text-ink antialiased">
         <Navbar />
         <main>{children}</main>

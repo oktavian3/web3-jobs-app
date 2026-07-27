@@ -51,7 +51,10 @@ export default function LearnWeb3Page() {
           <p className="mt-2 max-w-3xl text-base leading-7 text-muted">Wallets, safety, and vocabulary that every lane assumes you already know.</p>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {foundationsItems.map((item, index) => (
-              <div key={item.slug} className={`card-surface card-surface--interactive relative flex h-full flex-col p-5 ${index === 0 ? "pixel-accent" : ""}`}>
+              <div key={item.slug} className="card-surface card-surface--interactive relative flex h-full flex-col overflow-hidden p-5">
+                {/* .pixel-accent is absolutely positioned and 44x44 — it must be a
+                    child element, never a class on the card itself. */}
+                {index === 0 && <span className="pixel-accent" aria-hidden="true" />}
                 <span className="tag">{item.level}</span>
                 <h3 className="mt-3 text-lg font-extrabold tracking-tight text-ink">{item.title}</h3>
                 <p className="mt-2 flex-1 text-sm leading-6 text-muted">{item.whyItMatters}</p>

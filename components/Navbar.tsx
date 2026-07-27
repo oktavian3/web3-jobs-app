@@ -22,7 +22,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-canvas/85 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-border bg-canvas/80 shadow-[0_1px_0_rgba(255,255,255,0.7)_inset,0_8px_24px_rgba(17,19,24,0.04)] backdrop-blur-xl backdrop-saturate-150">
       <Container>
         <div className="grid h-20 grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[160px_1fr_160px]">
           <Link href="/" className="inline-flex w-fit items-center" aria-label="KRAFT home">
@@ -35,8 +35,10 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 aria-current={isActive(pathname, link.href) ? "page" : undefined}
-                className={`rounded-full px-3 py-2 text-sm font-bold transition lg:px-4 ${
-                  isActive(pathname, link.href) ? "bg-ink text-white" : "text-muted hover:bg-highlight hover:text-ink"
+                className={`rounded-full px-3 py-2 text-sm font-bold transition duration-200 lg:px-4 ${
+                  isActive(pathname, link.href)
+                    ? "bg-ink text-white shadow-[0_6px_16px_rgba(17,19,24,0.22)]"
+                    : "text-muted hover:bg-highlight hover:text-ink"
                 }`}
               >
                 {link.label}

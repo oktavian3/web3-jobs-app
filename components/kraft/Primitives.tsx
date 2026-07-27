@@ -2,8 +2,19 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 
-export function Container({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`mx-auto w-full max-w-[1220px] px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>;
+export function Container({
+  children,
+  className = "",
+  width = "default",
+}: {
+  children: ReactNode;
+  className?: string;
+  /** "wide" fills the canvas edge to edge — used by the homepage. Every other
+   *  page keeps the 1220px reading measure. */
+  width?: "default" | "wide";
+}) {
+  const measure = width === "wide" ? "max-w-none" : "max-w-[1220px]";
+  return <div className={`mx-auto w-full ${measure} px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>;
 }
 
 export function Shell({ children, className = "" }: { children: ReactNode; className?: string }) {

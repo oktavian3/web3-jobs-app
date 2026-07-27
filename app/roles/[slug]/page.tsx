@@ -76,6 +76,10 @@ export default async function RoleDetailPage({ params }: { params: Promise<{ slu
             employmentModel: salaryRecord.employmentModel,
             sourceLabel: salaryRecord.sourceLabel,
             sourceUrl: salaryRecord.sourceUrl,
+            reviewPeriod: salaryRecord.reviewPeriod,
+            lastReviewed: salaryRecord.lastReviewed,
+            note: salaryRecord.note,
+            rangeLabel: salaryRecord.rangeLabel,
           }}
           relatedRoles={relatedRoles}
           proofHref={proofHref}

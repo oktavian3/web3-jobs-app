@@ -1,6 +1,7 @@
 import type { Role, CompensationConfidence, EvidenceTier } from "@/data/roles";
 import type { RoleContent } from "@/data/roleContent";
 import { compensationEvidenceLegend, compensationVariables, noReliableRange } from "@/data/sharedBlocks";
+import { marketSalaryContext } from "@/data/salaryRegister";
 import RoleTableOfContents, { type TocItem } from "./RoleTableOfContents";
 import {
   Section,
@@ -35,6 +36,10 @@ export type RoleSalaryView = {
   employmentModel?: string;
   sourceLabel?: string;
   sourceUrl?: string;
+  reviewPeriod?: string;
+  lastReviewed?: string;
+  note?: string;
+  rangeLabel?: string;
 };
 
 const TOC: TocItem[] = [
@@ -163,10 +168,15 @@ export default function RoleGuide({
             employmentModel={salary.employmentModel}
             sourceLabel={salary.sourceLabel}
             sourceUrl={salary.sourceUrl}
+            reviewPeriod={salary.reviewPeriod}
+            lastReviewed={salary.lastReviewed}
+            note={salary.note}
+            rangeLabel={salary.rangeLabel}
             noRangeText={noReliableRange.body}
             variablesText={compensationVariables.body}
             legend={compensationEvidenceLegend}
             methodologyHref="/salary-methodology"
+            marketContext={marketSalaryContext}
           />
         </Section>
 
