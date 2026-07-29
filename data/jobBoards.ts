@@ -15,7 +15,7 @@ export type EcosystemJobBoard = {
   slug: string;
   name: string;
   url: string;
-  ecosystem: "TON" | "Arbitrum" | "Optimism" | "Base";
+  ecosystem: "TON" | "Arbitrum" | "Solana" | "Base";
   sourceType: "Official ecosystem job board" | "Official core-team careers" | "Official ecosystem directory";
   bestFor: string;
   lastReviewed: string;
@@ -44,13 +44,13 @@ export const ecosystemJobBoards: EcosystemJobBoard[] = [
     note: "Good for ecosystem-focused roles; still verify each company and listing freshness before applying.",
   },
   {
-    slug: "optimism-jobs",
-    name: "Optimism Jobs",
-    url: "https://jobs.optimism.io/jobs",
-    ecosystem: "Optimism",
+    slug: "solana-jobs",
+    name: "Solana Jobs",
+    url: "https://jobs.solana.com/jobs",
+    ecosystem: "Solana",
     sourceType: "Official ecosystem job board",
-    bestFor: "Optimism Collective and ecosystem opportunities.",
-    lastReviewed: "2026-06",
+    bestFor: "Roles across companies and teams building in the Solana ecosystem.",
+    lastReviewed: "2026-07",
     note: "Treat this as an ecosystem board, not a guarantee that every role is current or suitable.",
   },
   {
