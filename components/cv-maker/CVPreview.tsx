@@ -76,7 +76,7 @@ export default function CVPreview({ data }: { data: CVData }) {
                   {(hasText(entry.start) || hasText(entry.end)) && (
                     <p className="whitespace-nowrap text-[12px] text-black/80">
                       {entry.start}
-                      {hasText(entry.start) || hasText(entry.end) ? " – " : ""}
+                      {hasText(entry.start) || hasText(entry.end) ? " - " : ""}
                       {entry.end}
                     </p>
                   )}
@@ -123,7 +123,7 @@ export default function CVPreview({ data }: { data: CVData }) {
                 {(hasText(entry.start) || hasText(entry.end)) && (
                   <p className="whitespace-nowrap text-[12px] text-black/80">
                     {entry.start}
-                    {hasText(entry.start) || hasText(entry.end) ? " – " : ""}
+                    {hasText(entry.start) || hasText(entry.end) ? " - " : ""}
                     {entry.end}
                   </p>
                 )}

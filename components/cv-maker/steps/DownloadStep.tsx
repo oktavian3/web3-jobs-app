@@ -36,6 +36,11 @@ export default function DownloadStep({ data, onDownload }: { data: CVData; onDow
         Opens your browser&apos;s print dialog - choose &quot;Save as PDF&quot; as the destination. The exported file is
         real selectable text, not an image, so it stays readable by ATS software. Checked in Chrome and Safari.
       </p>
+      <p className="mt-2 text-xs leading-5 text-muted">
+        In the dialog, open &quot;More settings&quot; and turn off <span className="font-bold text-ink">Headers and footers</span> -
+        otherwise your browser adds its own date, URL, and page number to every page. This is a browser setting, not
+        something on this page, so it has to be turned off once per browser.
+      </p>
     </div>
   );
 }

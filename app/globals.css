@@ -5,19 +5,19 @@
   /* Dominant site background. Replaces the previous pure-white .site-canvas
      fill with a soft cool off-white so large surfaces don't read as stark. */
   --canvas: #f5f7fa;
-  /* Recessed / secondary panels (inputs, filter bars, alternating blocks) —
+  /* Recessed / secondary panels (inputs, filter bars, alternating blocks) -
      one step darker than canvas so it reads as "set into" the page. Tuned to
      keep --muted text at >=4.5:1 contrast on this background (WCAG AA); the
      border on panels carries most of the visual separation from canvas. */
   --soft: #f1f4f9;
-  /* Card / elevated-surface base — one step lighter than canvas, not pure
+  /* Card / elevated-surface base - one step lighter than canvas, not pure
      white, so raised content is still distinguishable without stark contrast. */
   --elevated: #fbfcfe;
   /* Reserved for small elevated components (buttons, icon chips, badges)
-     where literal white is still appropriate — not for large page areas. */
+     where literal white is still appropriate - not for large page areas. */
   --surface: #ffffff;
   /* Active / selected state surface (selected filter, active TOC item,
-     selected explorer tab) — a distinct pale-blue hue, not a brightness step. */
+     selected explorer tab) - a distinct pale-blue hue, not a brightness step. */
   --highlight: #eaf2ff;
   --ink: #111318;
   --muted: #667085;
@@ -27,7 +27,7 @@
   --border: #dde3ea;
   --border-strong: #b9d0ef;
   /* Dark-contrast section/card variant. Use sparingly (at most one strong
-     dark section per page) — not a default surface. */
+     dark section per page) - not a default surface. */
   --navy: #0f1b2e;
   --on-navy: #e8eef6;
 }
@@ -53,7 +53,7 @@
 }
 
 /* Default border color for unstyled `border` utilities. Must live in @layer
-   base — an unlayered `* {}` rule always wins the cascade over Tailwind's own
+   base - an unlayered `* {}` rule always wins the cascade over Tailwind's own
    `@layer utilities` regardless of specificity, which was silently overriding
    every colored border utility (border-amber-200, border-emerald-200, the new
    border-border-strong, etc.) across the whole app. */
@@ -284,7 +284,7 @@ textarea,
    .card-surface is the standard elevated card. Modifiers below give each
    card a distinct, purposeful role instead of one identical style for every
    content block. Apply variants with e.g. class="card-surface card-surface--featured".
-   Not every block needs a card — .card-flat is provided for long-form or
+   Not every block needs a card - .card-flat is provided for long-form or
    secondary content that should read as open sections with dividers instead
    of a raised surface (see the "Flat / divider" block further down). */
 
@@ -317,7 +317,7 @@ textarea,
   box-shadow: var(--shadow-blue);
 }
 
-/* Informational: quieter than the default card — context, disclaimers,
+/* Informational: quieter than the default card - context, disclaimers,
    secondary notes that don't need to compete for attention. */
 .card-surface--informational {
   border-color: var(--border);
@@ -342,7 +342,7 @@ textarea,
 }
 
 /* Dark contrast: for the rare, single strong panel per page where hierarchy
-   benefits from real contrast (e.g. one closing CTA). Not a default surface —
+   benefits from real contrast (e.g. one closing CTA). Not a default surface -
    use at most once per page. */
 .card-surface--dark {
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -370,7 +370,7 @@ textarea,
   will-change: transform;
 }
 
-/* Restrained corner accent for featured cards only — a small low-opacity
+/* Restrained corner accent for featured cards only - a small low-opacity
    dot-grid, never a full-surface pattern. Apply to a `relative overflow-hidden`
    container; position with a utility class (e.g. top-0 right-0) if a corner
    other than top-right is needed. */
@@ -435,7 +435,7 @@ textarea,
 
 /* ── Display serif accent ─────────────────────────────────────────────────
    Paired with the Manrope sans for a mixed-typeface headline (sans for the
-   structural words, serif for the emphasised ones). Accent use only — body
+   structural words, serif for the emphasised ones). Accent use only - body
    copy and UI labels stay on Manrope. */
 .font-display {
   font-family: var(--font-instrument), Georgia, "Times New Roman", serif;
@@ -447,8 +447,8 @@ textarea,
 /* ── Premium card ─────────────────────────────────────────────────────────
    A richer card than .card-surface for showcase grids: larger radius, a
    two-stage shadow (contact + ambient), an optional tinted media header, and
-   a softer easing on hover. Same token palette — no new hues. */
-/* Deliberately does NOT set display:flex — as a flex column it stretched
+   a softer easing on hover. Same token palette - no new hues. */
+/* Deliberately does NOT set display:flex - as a flex column it stretched
    inline-flex children (e.g. .tag pills) to full width. Call sites that need
    a footer pinned to the bottom add `flex flex-col` themselves. */
 .card-premium {
@@ -466,7 +466,7 @@ textarea,
     border-color 280ms ease;
 }
 
-/* Hairline top highlight — reads as a lit edge, not a border. */
+/* Hairline top highlight - reads as a lit edge, not a border. */
 .card-premium::after {
   content: "";
   position: absolute;
@@ -692,7 +692,7 @@ textarea,
   }
 
   /* The hero word rotator still swaps text, but without the motion/blur
-     transition. The component also stops advancing on its own — see
+     transition. The component also stops advancing on its own - see
      HeroRotator, which checks this same query. */
   .hero-chip__swap {
     animation: none !important;
@@ -704,7 +704,7 @@ textarea,
 
 /* ── CV Maker print / PDF export ──────────────────────────────────────────
    window.print() with this stylesheet is the export mechanism (see
-   DownloadStep) — output is real selectable text, not a rasterised image, so
+   DownloadStep) - output is real selectable text, not a rasterised image, so
    it stays ATS-parseable. Isolates #cv-preview as the only visible element,
    strips the on-screen chrome around it, and prevents entries from splitting
    across a page break. */
@@ -731,7 +731,7 @@ textarea,
 
   /* #cv-preview escapes this frame via position:absolute above, but an
      overflow:auto ancestor still clips an absolutely-positioned descendant
-     that exceeds its bounds — reset both so a multi-page CV isn't cut off
+     that exceeds its bounds - reset both so a multi-page CV isn't cut off
      at the on-screen preview's scroll height. */
   .cv-preview-frame {
     overflow: visible !important;
