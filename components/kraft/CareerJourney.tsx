@@ -69,9 +69,18 @@ export default function CareerJourney() {
           aria-hidden="true"
           focusable="false"
         >
-          {/* Soft under-stroke, then the crisp blue line on top. */}
+          {/* Soft static under-stroke (the track), then a dashed blue line on
+              top whose dashes flow from step 1 toward step 6 — see
+              .journey-flow in globals.css. */}
           <path d={CURVE_PATH} fill="none" stroke="var(--border)" strokeWidth="6" strokeLinecap="round" />
-          <path d={CURVE_PATH} fill="none" stroke="var(--blue)" strokeWidth="2" strokeLinecap="round" />
+          <path
+            d={CURVE_PATH}
+            fill="none"
+            stroke="var(--blue)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            className="journey-flow"
+          />
         </svg>
 
         <ol className="absolute inset-0">

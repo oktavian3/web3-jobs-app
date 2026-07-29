@@ -560,6 +560,24 @@ textarea,
   user-select: none;
 }
 
+/* Flowing dashed line on the career-journey curve: a moving dash pattern that
+   travels from the first step toward the last, reinforcing the left-to-right
+   direction of the journey. Neutralised automatically by the
+   prefers-reduced-motion block below (animation-duration forced to ~0). */
+.journey-flow {
+  stroke-dasharray: 8 14;
+  animation: journeyFlow 6s linear infinite;
+}
+
+@keyframes journeyFlow {
+  to {
+    /* -220 = 10 full dash+gap cycles (8+14=22); a multiple of the cycle length
+       keeps the loop seamless with no visible jump. Negative offset moves the
+       pattern in the same direction the path was drawn: start -> end. */
+    stroke-dashoffset: -220;
+  }
+}
+
 .journey-node {
   box-shadow:
     0 0 0 6px var(--canvas),
@@ -618,9 +636,27 @@ textarea,
   font-weight: 800;
   line-height: 0.74;
   letter-spacing: -0.045em;
-  color: #fff;
   font-size: clamp(4.5rem, 21vw, 15rem);
   user-select: none;
+  /* Solid white through the readable upper strokes, fading to transparent
+     over the lower ~40% so the letters melt into .footer-shell's blue
+     background instead of ending in a hard-edged crop. color must be
+     transparent (not just the -webkit-* fill) for the gradient to show
+     through in Firefox, which supports the unprefixed property. */
+  color: transparent;
+  background: linear-gradient(180deg, #fff 0%, #fff 55%, rgba(255, 255, 255, 0) 96%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Engines with no text-clipping support at all (no realistic modern target,
+   but kept so the wordmark never renders invisible). */
+@supports not (background-clip: text) {
+  .footer-wordmark {
+    background: none;
+    color: #fff;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -663,5 +699,59 @@ textarea,
     filter: none !important;
     transform: none !important;
     opacity: 1 !important;
+  }
+}
+
+/* ── CV Maker print / PDF export ──────────────────────────────────────────
+   window.print() with this stylesheet is the export mechanism (see
+   DownloadStep) — output is real selectable text, not a rasterised image, so
+   it stays ATS-parseable. Isolates #cv-preview as the only visible element,
+   strips the on-screen chrome around it, and prevents entries from splitting
+   across a page break. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #cv-preview,
+  #cv-preview * {
+    visibility: visible;
+  }
+
+  #cv-preview {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    border: none;
+  }
+
+  /* #cv-preview escapes this frame via position:absolute above, but an
+     overflow:auto ancestor still clips an absolutely-positioned descendant
+     that exceeds its bounds — reset both so a multi-page CV isn't cut off
+     at the on-screen preview's scroll height. */
+  .cv-preview-frame {
+    overflow: visible !important;
+    max-height: none !important;
+    background: none !important;
+    padding: 0 !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 18mm 16mm;
+  }
+
+  .cv-section,
+  .cv-experience-entry,
+  .cv-education-entry {
+    page-break-inside: avoid;
   }
 }

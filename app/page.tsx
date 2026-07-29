@@ -1,15 +1,14 @@
 import Link from "next/link";
-import { ArrowRight, BriefcaseBusiness, Compass, Gauge, Map, Search } from "lucide-react";
+import { ArrowRight, Compass, Gauge, Map, Search } from "lucide-react";
 import { careerLanes, roles, getRoleBySlug } from "@/data/roles";
 import { glossaryTerms } from "@/data/glossary";
 import { jobBoards } from "@/data/jobBoards";
-import { getActiveCuratedJobs, selectedJobPlatforms } from "@/data/curatedJobs";
 import { laneResults } from "@/data/skillCheck";
 import { getPortfolioProjectBySlug } from "@/data/portfolioProjects";
 import { Shell, Container, BluePanel, Eyebrow, SectionHeading, PrimaryLink, SecondaryLink, FinalCTA } from "@/components/kraft/Primitives";
 import { RoleCard } from "@/components/kraft/Cards";
 import { ConfidenceBadge } from "@/components/kraft/role/badges";
-import { CountUp, ProofPipeline } from "@/components/kraft/AnimatedBits";
+import { CountUp } from "@/components/kraft/AnimatedBits";
 import LearningPreview from "@/components/kraft/LearningPreview";
 import HeroProductPreview from "@/components/kraft/HeroProductPreview";
 import CareerJourney from "@/components/kraft/CareerJourney";
@@ -37,12 +36,6 @@ const featuredRoleSlug = "community-manager";
 const featuredRole = getRoleBySlug(featuredRoleSlug) ?? roles[0];
 const featuredRelatedRole = featuredRole.relatedRoleSlugs[0] ? getRoleBySlug(featuredRole.relatedRoleSlugs[0]) : undefined;
 const featuredPortfolio = getPortfolioProjectBySlug(featuredRole.slug);
-
-const selectedPlatforms = selectedJobPlatforms
-  .slice(0, 4)
-  .map((selection) => ({ selection, board: jobBoards.find((board) => board.slug === selection.platformSlug) }))
-  .filter((item): item is { selection: (typeof selectedJobPlatforms)[number]; board: (typeof jobBoards)[number] } => Boolean(item.board));
-const latestCuratedJobs = getActiveCuratedJobs().slice(0, 3);
 
 export default function Home() {
   return (
@@ -264,88 +257,6 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-7 text-center"><SecondaryLink href="/glossary">Open Glossary</SecondaryLink></div>
-        </section>
-
-        <section className="reveal-card grid items-center gap-10 lg:grid-cols-2">
-          <div>
-            <SectionHeading align="left" title="Build proof before you send applications." />
-            <p className="mt-4 max-w-2xl text-base leading-7 text-muted">KRAFT turns role expectations into concrete proof-of-work tasks, portfolio packaging, interview preparation, and safer application habits. The goal is evidence, not certificates.</p>
-            <div className="mt-7"><PrimaryLink href="/get-hired">Open Hiring Guide</PrimaryLink></div>
-          </div>
-          <ProofPipeline />
-        </section>
-
-        <section className="reveal-card grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
-            <SectionHeading align="left" title="Find the right place to search, not another endless feed." copy="Compare curated Web3 job platforms by role type, remote coverage, seniority, and application style." />
-            <div className="mt-7"><PrimaryLink href="/job-boards">Browse Job Platforms</PrimaryLink></div>
-          </div>
-          <div className="grid gap-4">
-            <div className="card-premium reveal-card p-2.5">
-              <div className="card-premium__media px-5 py-5">
-                <div className="flex items-center gap-3">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[linear-gradient(158deg,var(--blue),var(--blue-deep))] text-white shadow-blue">
-                    <BriefcaseBusiness className="h-5 w-5" strokeWidth={2.1} aria-hidden="true" />
-                  </span>
-                  <div>
-                    <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">Selected by KRAFT</p>
-                    <h3 className="mt-1 text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Platforms worth checking first</h3>
-                  </div>
-                </div>
-              </div>
-              <div className="divide-y divide-border">
-                {selectedPlatforms.map(({ selection, board }) => (
-                  <a
-                    key={selection.id}
-                    href={board.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group flex items-center justify-between gap-4 rounded-2xl p-4 transition hover:bg-highlight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                  >
-                    <div>
-                      <h4 className="font-extrabold text-ink">{selection.recommendationLabel}: {board.name}</h4>
-                      <p className="mt-1 text-sm leading-6 text-muted">{selection.whySelected}</p>
-                    </div>
-                    <span className="tag shrink-0">{board.remoteSupport}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="card-premium reveal-card p-5 sm:p-6">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <span className="tag">Fresh picks from KRAFT</span>
-                  <h3 className="mt-3 text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Curated searches to inspect this week</h3>
-                </div>
-                <Gauge className="hidden h-10 w-10 shrink-0 text-blue-600 sm:block" aria-hidden="true" />
-              </div>
-              <div className="mt-5 grid gap-3">
-                {latestCuratedJobs.length ? latestCuratedJobs.map((pick) => (
-                  <a
-                    key={pick.id}
-                    href={pick.applyUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group rounded-2xl border border-border bg-soft p-4 transition hover:-translate-y-0.5 hover:border-border-strong hover:bg-elevated hover:shadow-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                  >
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="tag">{pick.category}</span>
-                      <span className="tag">{pick.seniority}</span>
-                      <span className="tag">Added by KRAFT</span>
-                    </div>
-                    <h4 className="mt-3 font-extrabold text-ink">{pick.title}</h4>
-                    <p className="mt-2 text-sm leading-6 text-muted">{pick.kraftNote}</p>
-                    <p className="mt-3 text-xs font-bold uppercase tracking-[0.12em] text-blue-700">{pick.location} - added {pick.addedAt}</p>
-                  </a>
-                )) : (
-                  <div className="rounded-2xl border border-dashed border-border-strong bg-soft p-4 text-sm font-bold leading-6 text-muted">
-                    No active manually curated jobs are published yet. KRAFT will show the latest three here after they are added to the data file.
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
         </section>
 
         <FinalCTA

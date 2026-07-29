@@ -12,7 +12,7 @@ const columns = [
 export default function Footer() {
   return (
     <footer className="bg-page px-3 pb-4">
-      <Container>
+      <Container width="wide">
         <div className="footer-shell">
           {/* Top padding clears the 150px fade band in .footer-shell with margin
               to spare, so white text never lands on the light part of it. */}
@@ -20,14 +20,15 @@ export default function Footer() {
             <div className="grid gap-12 lg:grid-cols-[1.15fr_2fr]">
               {/* Brand block */}
               <div>
-                <Link href="/" className="inline-flex" aria-label="KRAFT home">
+                <Link href="/" className="inline-flex items-center gap-2.5" aria-label="KRAFT home">
                   <Image
-                    src="/images/kraft-logo.png"
-                    alt="KRAFT"
-                    width={150}
-                    height={35}
-                    className="h-auto w-[136px] object-contain brightness-0 invert"
+                    src="/images/kraft-mark.png"
+                    alt=""
+                    width={330}
+                    height={358}
+                    className="h-9 w-auto object-contain brightness-0 invert"
                   />
+                  <span className="text-xl font-extrabold tracking-tight text-white">KRAFT</span>
                 </Link>
                 <p className="mt-5 max-w-sm text-sm leading-6 text-blue-50">
                   Know the work before you chase the title. KRAFT helps you understand roles, build proof, and apply with context.
@@ -71,9 +72,11 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Oversized wordmark, cropped along the bottom edge. */}
-          <div className="relative z-10 mt-6 overflow-hidden px-4 sm:px-8">
-            <span className="footer-wordmark -mb-[0.14em] block" aria-hidden="true">
+          {/* Oversized wordmark, cropped along the bottom edge. Fades into the
+              blue via .footer-wordmark's own gradient text-fill rather than a
+              hard-edged cutoff. */}
+          <div className="relative z-10 mt-10 overflow-hidden px-4 text-center sm:px-8 sm:mt-12">
+            <span className="footer-wordmark -mb-[0.05em] block" aria-hidden="true">
               KRAFT
             </span>
           </div>
