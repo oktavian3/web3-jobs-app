@@ -740,6 +740,17 @@ textarea,
     padding: 0 !important;
   }
 
+  /* The real containing block for #cv-preview's position:absolute is
+     .site-canvas (the nearest position:relative ancestor - see Primitives'
+     Shell), not .cv-preview-frame. .site-canvas also has overflow:hidden for
+     its on-screen aurora background, which silently clipped the CV at
+     .site-canvas's own (short, non-preview-content) height instead of
+     letting it paginate - this, not a missing break-inside rule, was what
+     sliced the header and entries mid-line. */
+  .site-canvas {
+    overflow: visible !important;
+  }
+
   .no-print {
     display: none !important;
   }
