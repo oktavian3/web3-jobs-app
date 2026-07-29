@@ -63,8 +63,8 @@ export default function Navbar() {
       <Container>
         <div className="grid h-20 grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[160px_1fr_160px]">
           <Link href="/" className="inline-flex w-fit items-center gap-2.5" aria-label="KRAFT home">
-            <Image src="/images/kraft-mark.png" alt="" width={330} height={358} className="h-9 w-auto object-contain" priority />
-            <span className="text-xl font-extrabold tracking-tight text-ink">KRAFT</span>
+            <Image src="/kraft%20logo%20trans.png" alt="" width={40} height={40} className="h-9 w-9 object-contain sm:h-10 sm:w-10" priority />
+            <span className="text-lg font-black tracking-[-0.03em] text-ink sm:text-xl">KRAFT</span>
           </Link>
 
           <nav className="hidden justify-self-center items-center gap-1 rounded-full border border-border bg-elevated p-1 shadow-soft md:flex" aria-label="Primary navigation">

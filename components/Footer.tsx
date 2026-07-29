@@ -22,11 +22,11 @@ export default function Footer() {
               <div>
                 <Link href="/" className="inline-flex items-center gap-2.5" aria-label="KRAFT home">
                   <Image
-                    src="/images/kraft-mark.png"
+                    src="/kraft%20logo%20trans.png"
                     alt=""
-                    width={330}
-                    height={358}
-                    className="h-9 w-auto object-contain brightness-0 invert"
+                    width={44}
+                    height={44}
+                    className="h-9 w-9 object-contain brightness-0 invert"
                   />
                   <span className="text-xl font-extrabold tracking-tight text-white">KRAFT</span>
                 </Link>
