@@ -18,7 +18,7 @@ import type { CVData } from "@/lib/cv-maker/types";
 const ATS_FONT = { fontFamily: "Arial, Helvetica, sans-serif" };
 
 function Heading({ children }: { children: string }) {
-  return <h2 className="border-b border-black/25 pb-1 text-[13px] font-bold tracking-[0.08em] text-black">{children}</h2>;
+  return <h2 className="border-b border-black/25 pb-1 text-[13px] font-bold tracking-[0.08em] text-blue-800">{children}</h2>;
 }
 
 function hasText(value: string | undefined): boolean {
@@ -48,10 +48,12 @@ export default function CVPreview({ data }: { data: CVData }) {
       style={ATS_FONT}
     >
       {/* Contact header */}
-      <header className="cv-section text-center">
+      <header className="cv-section border-b border-black/15 pb-3">
         <p className="text-[22px] font-bold leading-tight">{hasText(contact.name) ? contact.name : "Your Name"}</p>
-        {hasText(contact.title) && <p className="mt-0.5 text-[15px]">{contact.title}</p>}
-        {contactLine && <p className="mt-2 text-[11px] text-black/80">{contactLine}</p>}
+        {hasText(contact.title) && (
+          <p className="mt-0.5 text-[13px] font-bold uppercase tracking-[0.04em] text-blue-800">{contact.title}</p>
+        )}
+        {contactLine && <p className="mt-1.5 text-[11px] text-black/80">{contactLine}</p>}
       </header>
 
       {hasText(summary) && (
