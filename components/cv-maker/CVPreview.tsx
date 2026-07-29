@@ -101,7 +101,7 @@ export default function CVPreview({ data }: { data: CVData }) {
         <section className="cv-section mt-6">
           <Heading>PROJECTS</Heading>
           {visibleProjects.map((entry) => (
-            <div key={entry.id} className="mt-3">
+            <div key={entry.id} className="cv-project-entry mt-3">
               <p className="font-bold">
                 {entry.name}
                 {hasText(entry.link) ? ` - ${entry.link}` : ""}

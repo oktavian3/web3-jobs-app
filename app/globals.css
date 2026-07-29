@@ -749,9 +749,22 @@ textarea,
     margin: 18mm 16mm;
   }
 
+  /* Each individual entry (not just the section as a whole) must refuse to
+     split - a section-level rule alone still lets Chrome slice a single
+     entry in half if the section itself is taller than the remaining page. */
   .cv-section,
   .cv-experience-entry,
-  .cv-education-entry {
+  .cv-education-entry,
+  .cv-project-entry,
+  #cv-preview li {
+    break-inside: avoid;
     page-break-inside: avoid;
+  }
+
+  /* Never leave a heading stranded alone at the bottom of a page with its
+     first entry pushed to the next one. */
+  #cv-preview h2 {
+    break-after: avoid;
+    page-break-after: avoid;
   }
 }
