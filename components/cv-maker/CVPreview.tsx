@@ -44,7 +44,7 @@ export default function CVPreview({ data }: { data: CVData }) {
   return (
     <div
       id="cv-preview"
-      className="mx-auto w-full max-w-[720px] bg-white p-8 text-[13px] leading-6 text-black shadow-soft sm:p-10"
+      className="mx-auto w-full max-w-[720px] break-words bg-white p-8 text-[13px] leading-6 text-black shadow-soft sm:p-10 [overflow-wrap:anywhere]"
       style={ATS_FONT}
     >
       {/* Contact header */}
