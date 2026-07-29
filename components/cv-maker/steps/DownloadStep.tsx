@@ -4,7 +4,7 @@ import { Download } from "lucide-react";
 import type { CVData } from "@/lib/cv-maker/types";
 
 export default function DownloadStep({ data, onDownload }: { data: CVData; onDownload: () => void }) {
-  // Real, derived counts — never a fabricated "resume score."
+  // Real, derived counts - never a fabricated "resume score."
   const checks = [
     { label: "Contact info", done: Boolean(data.contact.name.trim() && data.contact.email.trim()) },
     { label: "Summary", done: Boolean(data.summary.trim()) },
@@ -33,7 +33,7 @@ export default function DownloadStep({ data, onDownload }: { data: CVData; onDow
       </button>
 
       <p className="mt-3 text-xs leading-5 text-muted">
-        Opens your browser&apos;s print dialog — choose &quot;Save as PDF&quot; as the destination. The exported file is
+        Opens your browser&apos;s print dialog - choose &quot;Save as PDF&quot; as the destination. The exported file is
         real selectable text, not an image, so it stays readable by ATS software. Checked in Chrome and Safari.
       </p>
     </div>

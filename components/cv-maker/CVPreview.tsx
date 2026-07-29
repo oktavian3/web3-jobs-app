@@ -1,17 +1,17 @@
 import type { CVData } from "@/lib/cv-maker/types";
 
-// The single ATS-safe render target — also what gets printed to PDF via
+// The single ATS-safe render target - also what gets printed to PDF via
 // window.print() (see #cv-preview targeting in app/globals.css's @media
 // print block). Rules that matter here, per the build spec:
 //
 // - Single column only. No tables, no CSS multi-column, no floated boxes.
 // - Exact uppercase section headings (parsers pattern-match on these).
-// - No photo, no icons — ever, in this file. Icons belong in the editor
+// - No photo, no icons - ever, in this file. Icons belong in the editor
 //   chrome (the step forms), never in the exported document.
 // - Arial/Helvetica/sans-serif via inline style, not a Tailwind class, so it
 //   cannot be silently overridden by the site's own Manrope font rules.
 // - A section heading never renders unless at least one field in that
-//   section has real content — an empty heading confuses ATS parsers.
+//   section has real content - an empty heading confuses ATS parsers.
 // - Section order: Contact → Summary → Experience → Projects → Education →
 //   Certifications → Skills → Languages → Awards.
 
@@ -71,7 +71,7 @@ export default function CVPreview({ data }: { data: CVData }) {
                 <div className="flex flex-wrap items-baseline justify-between gap-x-3">
                   <p className="font-bold">
                     {entry.title}
-                    {hasText(entry.company) ? ` — ${entry.company}` : ""}
+                    {hasText(entry.company) ? ` - ${entry.company}` : ""}
                   </p>
                   {(hasText(entry.start) || hasText(entry.end)) && (
                     <p className="whitespace-nowrap text-[12px] text-black/80">
@@ -102,7 +102,7 @@ export default function CVPreview({ data }: { data: CVData }) {
             <div key={entry.id} className="mt-3">
               <p className="font-bold">
                 {entry.name}
-                {hasText(entry.link) ? ` — ${entry.link}` : ""}
+                {hasText(entry.link) ? ` - ${entry.link}` : ""}
               </p>
               {hasText(entry.description) && <p className="mt-0.5">{entry.description}</p>}
             </div>
@@ -118,7 +118,7 @@ export default function CVPreview({ data }: { data: CVData }) {
               <div className="flex flex-wrap items-baseline justify-between gap-x-3">
                 <p className="font-bold">
                   {entry.degree}
-                  {hasText(entry.school) ? ` — ${entry.school}` : ""}
+                  {hasText(entry.school) ? ` - ${entry.school}` : ""}
                 </p>
                 {(hasText(entry.start) || hasText(entry.end)) && (
                   <p className="whitespace-nowrap text-[12px] text-black/80">
@@ -141,9 +141,9 @@ export default function CVPreview({ data }: { data: CVData }) {
             {visibleCertifications.map((entry) => (
               <li key={entry.id}>
                 {entry.name}
-                {hasText(entry.issuer) ? ` — ${entry.issuer}` : ""}
+                {hasText(entry.issuer) ? ` - ${entry.issuer}` : ""}
                 {hasText(entry.date) ? ` (${entry.date})` : ""}
-                {hasText(entry.credentialUrl) ? ` — ${entry.credentialUrl}` : ""}
+                {hasText(entry.credentialUrl) ? ` - ${entry.credentialUrl}` : ""}
               </li>
             ))}
           </ul>
@@ -164,7 +164,7 @@ export default function CVPreview({ data }: { data: CVData }) {
             {visibleLanguages.map((entry) => (
               <li key={entry.id}>
                 {entry.language}
-                {hasText(entry.proficiency) ? ` — ${entry.proficiency}` : ""}
+                {hasText(entry.proficiency) ? ` - ${entry.proficiency}` : ""}
               </li>
             ))}
           </ul>
@@ -178,7 +178,7 @@ export default function CVPreview({ data }: { data: CVData }) {
             {visibleAwards.map((entry) => (
               <li key={entry.id}>
                 {entry.title}
-                {hasText(entry.issuer) ? ` — ${entry.issuer}` : ""}
+                {hasText(entry.issuer) ? ` - ${entry.issuer}` : ""}
                 {hasText(entry.date) ? ` (${entry.date})` : ""}
               </li>
             ))}

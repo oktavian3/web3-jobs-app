@@ -4,7 +4,7 @@
 // The approved content package (DOCS/*) does NOT contain the referenced
 // KRAFT_SALARY_AND_EVIDENCE_REGISTER.md, so no numeric ranges shipped with it.
 // The ranges below were researched in July 2026 from public, citable sources and
-// are attached as evidence records — the rendering layer still derives every
+// are attached as evidence records - the rendering layer still derives every
 // number from this register, never from role copy (per KRAFT_IMPLEMENTATION_SPEC
 // §"Salary evidence fields").
 //
@@ -16,7 +16,7 @@
 //
 // 1 role (community-moderator) carries an OPERATOR-SUPPLIED figure instead: a
 // monthly contributor stipend reported by KRAFT. It is a deliberate exception to
-// (a) and (b) — the role is Low confidence and has no published source — so it
+// (a) and (b) - the role is Low confidence and has no published source - so it
 // is labelled "Reported stipend", attributed to an unverified operator
 // observation with no source URL, and left monthly rather than annualised. The
 // "Unverified" evidence badge beside it is therefore accurate, not contradictory.
@@ -38,7 +38,7 @@
 // to neighbouring occupations; "Broad market" where it relies on broad category
 // evidence; "Unverified" otherwise. Two roles (backend-engineer,
 // zk-engineer-cryptography-researcher) were raised from "Unverified" to
-// "Broad market" because a broad-category source now exists for them — showing a
+// "Broad market" because a broad-category source now exists for them - showing a
 // number beside an "Unverified" badge would contradict itself.
 
 import type { EvidenceTier } from "./roles";
@@ -86,7 +86,7 @@ export const marketSalaryContext = {
   sourceUrl: "https://web3.career/web3-salaries",
   lastReviewed: "July 2026",
   body:
-    "Across the role categories this index tracks, advertised averages sit between roughly $65,000 and $200,000 per year, with individual postings from about $40,000 to $350,000. This is whole-market scale from advertised roles — not a figure for this specific role, and not verified paid compensation.",
+    "Across the role categories this index tracks, advertised averages sit between roughly $65,000 and $200,000 per year, with individual postings from about $40,000 to $350,000. This is whole-market scale from advertised roles - not a figure for this specific role, and not verified paid compensation.",
 };
 
 const GLOBAL_POSTINGS = "Global, remote-inclusive job postings";
@@ -112,7 +112,7 @@ type SourcedRange = {
 // source category whose scope genuinely matches that role's work.
 const sourcedRanges: Record<string, SourcedRange> = {
   // Contributor-tier stipend supplied by the KRAFT operator, not a published
-  // index — labelled as an unverified observation and kept monthly, because
+  // index - labelled as an unverified observation and kept monthly, because
   // annualising a part-time stipend would imply a full-time salary.
   "community-moderator": {
     min: 300, max: 400,
@@ -123,36 +123,36 @@ const sourcedRanges: Record<string, SourcedRange> = {
     reviewPeriod: "Observed July 2026",
     rangeLabel: "Reported stipend (context, not a guarantee)",
     note:
-      "This is a part-time contributor stipend reported by KRAFT, not a published index and not a full-time salary. It is shown monthly on purpose — moderator work is usually paid per shift, per rota, or as a flat monthly stipend, and rates move sharply with hours, timezone coverage, and region.",
+      "This is a part-time contributor stipend reported by KRAFT, not a published index and not a full-time salary. It is shown monthly on purpose - moderator work is usually paid per shift, per rota, or as a flat monthly stipend, and rates move sharply with hours, timezone coverage, and region.",
   },
   "community-manager": {
     min: 50000, max: 180000,
-    sourceLabel: "web3.career — Community Manager",
+    sourceLabel: "web3.career - Community Manager",
     sourceUrl: "https://web3.career/web3-salaries/community-manager",
   },
   "social-media-manager": {
     min: 46000, max: 200000,
-    sourceLabel: "web3.career — Social Media",
+    sourceLabel: "web3.career - Social Media",
     sourceUrl: "https://web3.career/web3-salaries/social-media",
   },
   "product-manager": {
     min: 115000, max: 260000,
-    sourceLabel: "web3.career — Product Manager",
+    sourceLabel: "web3.career - Product Manager",
     sourceUrl: "https://web3.career/web3-salaries/product-manager",
   },
   "smart-contract-developer": {
     min: 60000, max: 250000,
-    sourceLabel: "web3.career — Smart Contract Developer",
+    sourceLabel: "web3.career - Smart Contract Developer",
     sourceUrl: "https://web3.career/web3-salaries/smart-contract-developer",
   },
   "frontend-web3-developer": {
     min: 70000, max: 240000,
-    sourceLabel: "web3.career — Front-end Developer",
+    sourceLabel: "web3.career - Front-end Developer",
     sourceUrl: "https://web3.career/web3-salaries/front-end-developer",
   },
   "backend-engineer": {
     min: 70000, max: 260000,
-    sourceLabel: "web3.career — Backend Developer",
+    sourceLabel: "web3.career - Backend Developer",
     sourceUrl: "https://web3.career/web3-salaries/backend-developer",
   },
   // NOTE: zk-engineer-cryptography-researcher is deliberately NOT given a range.
@@ -162,17 +162,17 @@ const sourcedRanges: Record<string, SourcedRange> = {
   // also a weak match for this specific role.
   "web3-legal-compliance": {
     min: 95000, max: 280000,
-    sourceLabel: "web3.career — Legal",
+    sourceLabel: "web3.career - Legal",
     sourceUrl: "https://web3.career/web3-salaries/legal",
   },
   "web3-hr-talent-acquisition": {
     min: 75000, max: 231000,
-    sourceLabel: "web3.career — HR",
+    sourceLabel: "web3.career - HR",
     sourceUrl: "https://web3.career/web3-salaries/hr",
   },
   "web3-product-designer": {
     min: 80000, max: 254000,
-    sourceLabel: "web3.career — Design",
+    sourceLabel: "web3.career - Design",
     sourceUrl: "https://web3.career/web3-salaries/design",
   },
   // Not tracked as its own category on the posting index; these two use a

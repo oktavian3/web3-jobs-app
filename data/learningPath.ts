@@ -37,7 +37,7 @@ function slugify(title: string) {
 type RawItem = Omit<LearningItem, "slug" | "isExternal" | "relatedRoleSlugs"> & { relatedRoleSlugs?: string[] };
 
 const raw: RawItem[] = [
-  // Foundations — applies before choosing a lane.
+  // Foundations - applies before choosing a lane.
   {
     title: "Ethereum Learn",
     type: "Guide",

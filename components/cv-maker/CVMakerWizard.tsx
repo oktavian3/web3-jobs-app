@@ -56,11 +56,11 @@ const STEPS: { id: StepId; label: string }[] = [
 ];
 
 export default function CVMakerWizard() {
-  // Lazy initial state — loadDraft() touches window/localStorage, which must
+  // Lazy initial state - loadDraft() touches window/localStorage, which must
   // not run during server render. useState's initializer function runs once
   // on the client after mount-time hydration reconciles, so this is safe.
   // Read once and derive both `data` and `justRestored` from that single
-  // read — each initializer below still only runs once, on mount.
+  // read - each initializer below still only runs once, on mount.
   const [initialDraft] = useState(() => loadDraft());
   const [data, setData] = useState<CVData>(() => initialDraft ?? createEmptyCVData());
   const [jobDescription, setJobDescription] = useState("");
@@ -68,7 +68,7 @@ export default function CVMakerWizard() {
   const [justRestored, setJustRestored] = useState(() => Boolean(initialDraft));
 
   // Skip the effect run that fires on mount (and the one right after "Start
-  // over" resets `data`) — otherwise an untouched visit writes an empty draft
+  // over" resets `data`) - otherwise an untouched visit writes an empty draft
   // to localStorage, and the next visit shows "Restored your draft" for a
   // draft that has nothing in it.
   const skipNextSave = useRef(true);
@@ -205,7 +205,7 @@ export default function CVMakerWizard() {
         <div className="lg:sticky lg:top-24">
           <p className="no-print mb-3 text-xs font-extrabold uppercase tracking-[0.1em] text-muted">Live preview</p>
           {/* cv-preview-frame's own overflow/height must be reset in the print
-              stylesheet — #cv-preview becomes position:absolute when printing
+              stylesheet - #cv-preview becomes position:absolute when printing
               (see globals.css), and an overflow:auto ancestor would otherwise
               still clip it if the document is taller than this on-screen box. */}
           <div className="cv-preview-frame max-h-[calc(100vh-8rem)] overflow-y-auto rounded-[28px] bg-soft p-3 sm:p-5 lg:max-h-[calc(100vh-10rem)]">

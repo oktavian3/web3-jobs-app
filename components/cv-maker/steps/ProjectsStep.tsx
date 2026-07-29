@@ -14,12 +14,12 @@ export default function ProjectsStep({
   return (
     <RepeatableSection
       title="Projects"
-      description="Optional, but for Web3 roles a real project often carries more signal than a degree — printed right after Experience."
+      description="Optional, but for Web3 roles a real project often carries more signal than a degree - printed right after Experience."
       entries={entries}
       onChange={onChange}
       createEntry={createProjectEntry}
       addLabel="Add project"
-      emptyLabel="No projects added — this section won't print unless you add one."
+      emptyLabel="No projects added - this section won't print unless you add one."
       renderFields={(entry, update) => (
         <>
           <div className="grid gap-3 sm:grid-cols-2">

@@ -1,7 +1,7 @@
 // Skill Check result computation.
 //
 // Non-deterministic, guidance-only, self-reported. Raw scores exist only to rank
-// lanes/roles internally and are never exposed publicly — results render as
+// lanes/roles internally and are never exposed publicly - results render as
 // qualitative labels (Low/Medium/High confidence), per SB-18's approved phrases.
 // No aptitude, personality, employability, or hiring-suitability claim is made.
 
@@ -42,7 +42,7 @@ export type SkillCheckResult = {
 };
 
 // Plain-language description of what each signal reflects, grounded in the
-// question text — used for "why this appeared," never as a trait label about the person.
+// question text - used for "why this appeared," never as a trait label about the person.
 const signalDescriptions: Record<SkillSignal, string> = {
   community: "public communication and calm judgment under pressure",
   growth: "outreach, networking, and finding partnership opportunities",
@@ -128,10 +128,10 @@ export function computeSkillCheckResult(answers: SkillCheckAnswers): SkillCheckR
     "This result is based only on the answers you gave and may miss real experience the assessment did not ask about.",
   ];
   if (signalScores.readiness < 6) {
-    missingEvidence.push("No current work sample was confirmed — treat this as a starting point, not proof of fit.");
+    missingEvidence.push("No current work sample was confirmed - treat this as a starting point, not proof of fit.");
   }
   if (signalScores.foundation < 3) {
-    missingEvidence.push("Basic wallet-safety knowledge was not confirmed — review Web3 foundations before assuming lane fit.");
+    missingEvidence.push("Basic wallet-safety knowledge was not confirmed - review Web3 foundations before assuming lane fit.");
   }
 
   const possibleMatch: LaneMatch = {

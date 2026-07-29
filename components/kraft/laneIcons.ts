@@ -14,7 +14,7 @@ import type { CareerLane } from "@/data/roles";
 /**
  * Icon per canonical career lane. Shared by the server-rendered lane grid and
  * the client-side hero rotator: icon components are functions, so they cannot
- * cross the server/client boundary as props — both sides import this map
+ * cross the server/client boundary as props - both sides import this map
  * directly instead.
  *
  * Presentation only. These icons carry no data meaning and deliberately use one

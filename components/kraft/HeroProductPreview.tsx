@@ -5,7 +5,7 @@ import { getGlossaryTermBySlug } from "@/data/glossary";
 import { getRoadmapDetail } from "@/data/roadmapDetail";
 import { getPortfolioProjectBySlug } from "@/data/portfolioProjects";
 
-// Static preview of real product content — no auto-cycling, no invented
+// Static preview of real product content - no auto-cycling, no invented
 // percentages or progress. Every card links to a real route, and every value in
 // the two-column footer is a real field or a real derived count.
 const featuredRoleSlug = "community-manager";
@@ -50,7 +50,7 @@ function Card({ card }: { card: PreviewCard }) {
         </span>
       </div>
 
-      {/* Blue panel — square top-right corner so it reads as one stepped shape
+      {/* Blue panel - square top-right corner so it reads as one stepped shape
           with the icon tile above. */}
       <div className="rounded-[18px] rounded-tr-none bg-[var(--blue)] p-4">
         <p className="text-sm leading-6 text-white">{card.blurb}</p>

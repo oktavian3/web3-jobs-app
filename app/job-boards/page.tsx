@@ -11,7 +11,7 @@ import CareerNext from "@/components/kraft/career/CareerNext";
 export const metadata: Metadata = {
   title: "Job Boards",
   description:
-    "Curated Web3 job sources with honest limitations. Job boards are directories that aggregate listings — verify every opening on the employer's official domain.",
+    "Curated Web3 job sources with honest limitations. Job boards are directories that aggregate listings - verify every opening on the employer's official domain.",
 };
 
 const safety = [
@@ -81,7 +81,7 @@ export default function JobBoardsPage() {
           <SectionHeading
             eyebrow="Selected by KRAFT"
             title="Where to start for a specific search."
-            copy="Platform picks for common search styles — remote-first, developer-focused, non-technical, and early-stage."
+            copy="Platform picks for common search styles - remote-first, developer-focused, non-technical, and early-stage."
           />
           <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {selectedJobPlatforms.map((selection) => {
@@ -145,7 +145,7 @@ export default function JobBoardsPage() {
           <SectionHeading
             eyebrow="Remote & adjacent"
             title="Remote, freelance, and contributor sources."
-            copy="Remote-first, freelance, and contributor or bounty platforms. These often include freelance, contributor, and internship work rather than only full-time roles — review scope and payment terms carefully."
+            copy="Remote-first, freelance, and contributor or bounty platforms. These often include freelance, contributor, and internship work rather than only full-time roles - review scope and payment terms carefully."
           />
           <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {remoteAdjacentJobBoards.map((board) => <JobBoardCard key={board.slug} board={board} />)}
@@ -193,7 +193,7 @@ export default function JobBoardsPage() {
         <CareerNext
           heading="Before you apply"
           items={[
-            { title: "Know the role", href: "/roles", why: "Match boards to a specific target role, level, and evidence — not a broad search." },
+            { title: "Know the role", href: "/roles", why: "Match boards to a specific target role, level, and evidence - not a broad search." },
             { title: "Build proof first", href: "/portfolio", why: "A role-matched portfolio brief gives you something to attach to applications." },
             { title: "Get Hired journey", href: "/get-hired", why: "Boards are stages 6 and 9: finding contributor work and building a verified target list." },
           ]}

@@ -1,6 +1,6 @@
 // Shared editor-chrome input styling, matching the selectClass pattern used
 // across RolesDirectory / LearnWeb3Explorer / InterviewPrepExplorer. None of
-// this reaches the exported document — CVPreview never imports these.
+// this reaches the exported document - CVPreview never imports these.
 export const inputClass =
   "w-full rounded-2xl border border-border bg-soft px-4 py-3 text-sm font-bold text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600";
 

@@ -1,6 +1,6 @@
 // JD-match checker: literal keyword overlap between the CV and a pasted job
 // description. Known limitation (surfaced in the UI, not hidden): this is
-// literal token overlap, not semantic — it will not catch "CM" vs "Community
+// literal token overlap, not semantic - it will not catch "CM" vs "Community
 // Manager" as equivalent. Fine for v1; revisit with embeddings only if this
 // becomes a core feature people rely on.
 

@@ -11,7 +11,7 @@ import CareerNext from "@/components/kraft/career/CareerNext";
 export const metadata: Metadata = {
   title: "Get Hired",
   description:
-    "A practical, thirteen-stage career journey from understanding Web3 teams to onboarding into a first role — with three starting paths. Educational guidance, not an employment guarantee.",
+    "A practical, thirteen-stage career journey from understanding Web3 teams to onboarding into a first role - with three starting paths. Educational guidance, not an employment guarantee.",
 };
 
 // Playbook sections whose ids the timeline links to (#profile, #applications, ...).
@@ -46,7 +46,7 @@ export default function GetHiredPage() {
         <section>
           <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Application playbook</h2>
           <p className="mt-2 max-w-3xl text-base leading-7 text-muted">
-            Reference guidance for the application stages — profile, CV, outreach, trials, interviews, compensation, and safety.
+            Reference guidance for the application stages - profile, CV, outreach, trials, interviews, compensation, and safety.
           </p>
           <div className="mt-6 grid gap-4">
             {playbook.map((guide) => (

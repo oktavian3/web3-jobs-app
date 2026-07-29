@@ -5,7 +5,7 @@ import { Plus, Trash2 } from "lucide-react";
 
 /**
  * Generic add/remove/update list editor, shared by Education, Certifications,
- * Projects, Languages, and Awards — the five sections that are structurally
+ * Projects, Languages, and Awards - the five sections that are structurally
  * identical (a repeatable card of fields) and differ only in which fields they
  * collect. Experience uses it too, with a custom bullets textarea passed via
  * renderFields.

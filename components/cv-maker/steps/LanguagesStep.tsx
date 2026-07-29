@@ -21,7 +21,7 @@ export default function LanguagesStep({
       onChange={onChange}
       createEntry={createLanguageEntry}
       addLabel="Add language"
-      emptyLabel="No languages added — this section won't print unless you add one."
+      emptyLabel="No languages added - this section won't print unless you add one."
       renderFields={(entry, update) => (
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="block">

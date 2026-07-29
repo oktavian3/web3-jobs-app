@@ -3,7 +3,7 @@
 // plus the approved general answer framework (KRAFT_PUBLIC_PAGE_COPY §15).
 //
 // No fabricated "perfect answers". Frameworks and follow-ups are general practice
-// scaffolding, clearly labelled — never presented as a memorizable script or as a
+// scaffolding, clearly labelled - never presented as a memorizable script or as a
 // universal interview process. Each role carries only its approved questions; roles
 // with thin coverage are reported rather than padded with invented question banks.
 

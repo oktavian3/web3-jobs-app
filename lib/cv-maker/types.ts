@@ -67,7 +67,7 @@ export interface CVData {
   awards: AwardEntry[];
 }
 
-// Every list section in CVData, keyed by field name — used to build one
+// Every list section in CVData, keyed by field name - used to build one
 // generic add/remove/update updater instead of six near-identical ones.
 export type ListSectionKey = "experience" | "education" | "certifications" | "projects" | "languages" | "awards";
 

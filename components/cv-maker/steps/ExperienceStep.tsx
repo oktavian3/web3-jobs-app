@@ -14,7 +14,7 @@ export default function ExperienceStep({
   return (
     <RepeatableSection
       title="Experience"
-      description="Add your most recent role first — the preview and PDF print entries in the order you list them here."
+      description="Add your most recent role first - the preview and PDF print entries in the order you list them here."
       entries={entries}
       onChange={onChange}
       createEntry={createExperienceEntry}
@@ -47,7 +47,7 @@ export default function ExperienceStep({
             </label>
           </div>
           <label className="block">
-            <span className={labelClass}>Achievements — one per line</span>
+            <span className={labelClass}>Achievements - one per line</span>
             <textarea
               value={entry.bullets.join("\n")}
               onChange={(event) => update({ bullets: event.target.value.split("\n") })}

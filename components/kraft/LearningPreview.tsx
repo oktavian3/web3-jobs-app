@@ -12,7 +12,7 @@ const previews = [
   {
     label: "Skill Check",
     title: "Possible fit result",
-    body: "Possible fit: Community & Growth. Confidence is shown as Low, Medium, or High — never a percentage.",
+    body: "Possible fit: Community & Growth. Confidence is shown as Low, Medium, or High - never a percentage.",
     meta: ["Community & Growth", "Confidence: Medium", "Next role"],
   },
   {

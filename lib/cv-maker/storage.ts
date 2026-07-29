@@ -11,7 +11,7 @@ export function loadDraft(): CVData | null {
     if (!raw) return null;
     return JSON.parse(raw) as CVData;
   } catch {
-    // Corrupt or pre-schema-change draft — fail quiet and start fresh rather
+    // Corrupt or pre-schema-change draft - fail quiet and start fresh rather
     // than throwing during render.
     return null;
   }
@@ -22,7 +22,7 @@ export function saveDraft(data: CVData): void {
   try {
     window.localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
   } catch {
-    // Storage full or disabled (private browsing) — the draft simply won't
+    // Storage full or disabled (private browsing) - the draft simply won't
     // persist; nothing in the editing flow depends on the write succeeding.
   }
 }

@@ -42,17 +42,17 @@ export default function LearnWeb3Page() {
         <PageHeader
           eyebrow="Learn Web3"
           title="Learn what the role actually needs."
-          copy="Start with the foundations everyone needs, then move into one career lane and one target role. External resources are curated, not authored or maintained by KRAFT — they are clearly marked."
+          copy="Start with the foundations everyone needs, then move into one career lane and one target role. External resources are curated, not authored or maintained by KRAFT - they are clearly marked."
         />
 
         <section className="card-surface card-surface--featured p-5 sm:p-8">
           <span className="tag">Start here</span>
-          <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Step 1 — Web3 foundations</h2>
+          <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Step 1 - Web3 foundations</h2>
           <p className="mt-2 max-w-3xl text-base leading-7 text-muted">Wallets, safety, and vocabulary that every lane assumes you already know.</p>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {foundationsItems.map((item, index) => (
               <div key={item.slug} className="card-surface card-surface--interactive relative flex h-full flex-col overflow-hidden p-5">
-                {/* .pixel-accent is absolutely positioned and 44x44 — it must be a
+                {/* .pixel-accent is absolutely positioned and 44x44 - it must be a
                     child element, never a class on the card itself. */}
                 {index === 0 && <span className="pixel-accent" aria-hidden="true" />}
                 <span className="tag">{item.level}</span>
@@ -73,7 +73,7 @@ export default function LearnWeb3Page() {
         </section>
 
         <section className="border-t border-border pt-14">
-          <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Step 2 — Choose a lane and a role</h2>
+          <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Step 2 - Choose a lane and a role</h2>
           <p className="mt-2 max-w-3xl text-base leading-7 text-muted">
             Learning without a target role tends to stay abstract. Pick a lane, then a role, to see resources matched to it.
           </p>

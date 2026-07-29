@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const detail = getRoadmapDetail(slug);
   return {
     title: detail ? `${detail.lane} Roadmap` : "Roadmap",
-    description: detail ? `A planning guide for ${detail.lane.toLowerCase()} — not a guaranteed job path.` : undefined,
+    description: detail ? `A planning guide for ${detail.lane.toLowerCase()} - not a guaranteed job path.` : undefined,
   };
 }
 

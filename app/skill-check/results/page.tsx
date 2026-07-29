@@ -22,7 +22,7 @@ function ConfidencePill({ label, level }: { label: string; level: ConfidenceLabe
 }
 
 // sessionStorage never fires an event for writes made in the same tab, so this
-// store only needs a snapshot, not live updates — subscribe is a no-op.
+// store only needs a snapshot, not live updates - subscribe is a no-op.
 const subscribeNoop = () => () => {};
 
 export default function SkillCheckResultsPage() {
@@ -96,7 +96,7 @@ export default function SkillCheckResultsPage() {
                   <li key={i} className="text-sm leading-6 text-ink">• {item}</li>
                 ))}
                 {result.gaps.map((gap, i) => (
-                  <li key={`gap-${i}`} className="text-sm leading-6 text-ink">• Lower signal for {gap} — worth exploring before committing.</li>
+                  <li key={`gap-${i}`} className="text-sm leading-6 text-ink">• Lower signal for {gap} - worth exploring before committing.</li>
                 ))}
               </ul>
             </div>

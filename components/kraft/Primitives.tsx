@@ -9,7 +9,7 @@ export function Container({
 }: {
   children: ReactNode;
   className?: string;
-  /** "wide" fills the canvas edge to edge — used by the homepage. Every other
+  /** "wide" fills the canvas edge to edge - used by the homepage. Every other
    *  page keeps the 1220px reading measure. */
   width?: "default" | "wide";
 }) {

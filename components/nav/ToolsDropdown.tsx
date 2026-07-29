@@ -14,7 +14,7 @@ function isToolRoute(pathname: string) {
   return TOOLS.some((tool) => pathname === tool.href || pathname.startsWith(`${tool.href}/`));
 }
 
-/** Desktop "Tools" nav dropdown — Skill Check + CV Maker. Opens on click or
+/** Desktop "Tools" nav dropdown - Skill Check + CV Maker. Opens on click or
  *  hover, closes on outside click, Escape, or route change. */
 export default function ToolsDropdown() {
   const pathname = usePathname();
@@ -25,7 +25,7 @@ export default function ToolsDropdown() {
   const active = isToolRoute(pathname);
 
   // Close on route change. This adjusts state during render rather than in an
-  // effect — the React-recommended way to reset state when a value changes,
+  // effect - the React-recommended way to reset state when a value changes,
   // since setState-in-an-effect causes an extra render pass for no benefit.
   const [lastPathname, setLastPathname] = useState(pathname);
   if (pathname !== lastPathname) {
@@ -61,7 +61,7 @@ export default function ToolsDropdown() {
     <div ref={rootRef} className="relative" onMouseEnter={openNow} onMouseLeave={closeSoon}>
       <button
         type="button"
-        // Opens on click, same as hover — never toggles closed here. A mouse
+        // Opens on click, same as hover - never toggles closed here. A mouse
         // click is always preceded by a mouseenter on the wrapper, so a
         // toggle would immediately re-close what hover just opened. Closing
         // happens via outside click, Escape, route change, or mouse-leave.

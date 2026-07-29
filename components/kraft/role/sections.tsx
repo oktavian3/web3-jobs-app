@@ -456,8 +456,8 @@ export function SalaryEvidenceBlock({
         </div>
       )}
 
-      {/* Whole-market scale. Shown on every role — including those with no
-          role-specific range — so a reader always gets a sense of magnitude
+      {/* Whole-market scale. Shown on every role - including those with no
+          role-specific range - so a reader always gets a sense of magnitude
           without a number being invented for their specific role. */}
       <div className="card-surface card-surface--informational p-4 sm:p-5">
         <SubHeading>Wider Web3 market, for scale</SubHeading>

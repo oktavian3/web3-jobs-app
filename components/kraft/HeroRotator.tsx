@@ -8,7 +8,7 @@ import { laneIcons } from "@/components/kraft/laneIcons";
  * The highlighted, rotating word slot in the homepage headline.
  *
  * Content note: the rotating labels are the real canonical career lanes passed
- * in from the page — no invented marketing words. The animation is presentation
+ * in from the page - no invented marketing words. The animation is presentation
  * only, so the full list is always exposed to assistive tech as static text and
  * the visual chip is hidden from it. Nothing here is readable *only* while
  * animating.
@@ -16,7 +16,7 @@ import { laneIcons } from "@/components/kraft/laneIcons";
  * Layout note: an invisible sizer holds the width of the longest label, so
  * swapping words never reflows the headline.
  *
- * Only the lane names cross the server/client boundary — the icon components
+ * Only the lane names cross the server/client boundary - the icon components
  * are resolved here from the shared laneIcons map, since functions are not
  * serializable as props.
  */
@@ -71,7 +71,7 @@ export default function HeroRotator({
         </span>
         <span className="hero-chip__label">
           <span className="grid">
-            {/* Invisible width reservation — prevents headline reflow on swap. */}
+            {/* Invisible width reservation - prevents headline reflow on swap. */}
             <span className="invisible col-start-1 row-start-1">{longest}</span>
             <span
               key={animate ? index : "static"}

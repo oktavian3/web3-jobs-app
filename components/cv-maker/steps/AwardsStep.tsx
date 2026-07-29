@@ -19,7 +19,7 @@ export default function AwardsStep({
       onChange={onChange}
       createEntry={createAwardEntry}
       addLabel="Add award"
-      emptyLabel="No awards added — this section won't print unless you add one."
+      emptyLabel="No awards added - this section won't print unless you add one."
       renderFields={(entry, update) => (
         <div className="grid gap-3 sm:grid-cols-3">
           <label className="block sm:col-span-2">

@@ -16,7 +16,7 @@ export default function CVMakerPage() {
         <PageHeader
           eyebrow="Tools"
           title="Build a CV that clears the ATS filter, not just the eye test."
-          copy="Single-column, plain-text-parseable formatting, section headings that pattern-match against applicant tracking systems, and a live preview so you always see what actually gets exported. Your draft stays in this browser only — there's no account and nothing is uploaded anywhere."
+          copy="Single-column, plain-text-parseable formatting, section headings that pattern-match against applicant tracking systems, and a live preview so you always see what actually gets exported. Your draft stays in this browser only - there's no account and nothing is uploaded anywhere."
         />
         <CVMakerWizard />
       </Container>

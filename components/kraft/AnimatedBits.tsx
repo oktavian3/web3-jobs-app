@@ -34,7 +34,7 @@ export function CountUp({ value }: { value: number }) {
 
 // The proof-building pipeline: Knowledge -> Task -> Deliverable -> Review ->
 // Case Study. This illustrates KRAFT's model of evidence, not tracked user
-// progress — there is no completion state, count, or percentage.
+// progress - there is no completion state, count, or percentage.
 const pipelineStages = [
   { stage: "Knowledge", detail: "Learn the role's real prerequisites, not generic courses." },
   { stage: "Task", detail: "Work from a role-specific, clearly simulated brief." },

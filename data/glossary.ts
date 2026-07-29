@@ -209,7 +209,7 @@ export function getGlossaryTermBySlug(slug: string) {
   return glossaryTerms.find((term) => term.slug === slug);
 }
 
-// Related canonical roles are derived from the term's associated lanes — a
+// Related canonical roles are derived from the term's associated lanes - a
 // structured lookup against the canonical role list, never an invented mapping.
 export function getRelatedRolesForTerm(term: GlossaryTerm, count = 3) {
   return roles.filter((role) => term.usedInRoles.includes(role.lane)).slice(0, count);

@@ -49,7 +49,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
 
-  // Route change closes the mobile Tools accordion too — adjusted during
+  // Route change closes the mobile Tools accordion too - adjusted during
   // render (not in an effect) per React's guidance for resetting state when a
   // value changes. The desktop dropdown applies the same pattern internally.
   const [lastPathname, setLastPathname] = useState(pathname);
@@ -128,7 +128,7 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Accordion reveal for the two Tools items — this navbar has no
+          {/* Accordion reveal for the two Tools items - this navbar has no
               hamburger menu (mobile nav is the horizontal pill strip above),
               so "Tools" expands inline beneath it instead of inside a drawer. */}
           {mobileToolsOpen && (

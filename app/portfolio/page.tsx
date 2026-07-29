@@ -19,7 +19,7 @@ export default function PortfolioPage() {
         <PageHeader
           eyebrow="Portfolio briefs"
           title="Build evidence that resembles the work."
-          copy="Each brief is a simulated exercise tied to one canonical role. It uses the role's real deliverables, proof standards, and rubric — clearly labelled as practice, not real client or protocol work."
+          copy="Each brief is a simulated exercise tied to one canonical role. It uses the role's real deliverables, proof standards, and rubric - clearly labelled as practice, not real client or protocol work."
         />
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -50,7 +50,7 @@ export default function PortfolioPage() {
         <CareerNext
           heading="Where a portfolio brief fits"
           items={[
-            { title: "Start from a role", href: "/roles", why: "Each brief mirrors one role's deliverables and proof standards — pick your target role first." },
+            { title: "Start from a role", href: "/roles", why: "Each brief mirrors one role's deliverables and proof standards - pick your target role first." },
             { title: "Practice interviews", href: "/interview-prep", why: "Every brief lists the interview questions the project helps you answer." },
             { title: "Get Hired journey", href: "/get-hired", why: "The brief is stage 5 of the journey: your first simulated proof-of-work project." },
           ]}

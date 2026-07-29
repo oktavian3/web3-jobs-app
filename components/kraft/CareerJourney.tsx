@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, Compass, FileCheck2, Hammer, MessagesSquare, Send } from "lucide-react";
 
 // The macro career journey shown on the homepage. This is a product model,
-// not tracked user progress — there is no completion state, checkmark, or
+// not tracked user progress - there is no completion state, checkmark, or
 // percentage. Each step links to the real page that covers it.
 const steps = [
   { stage: "Discover", detail: "Compare real roles by the actual work, not the title.", href: "/roles", Icon: Compass },
@@ -70,7 +70,7 @@ export default function CareerJourney() {
           focusable="false"
         >
           {/* Soft static under-stroke (the track), then a dashed blue line on
-              top whose dashes flow from step 1 toward step 6 — see
+              top whose dashes flow from step 1 toward step 6 - see
               .journey-flow in globals.css. */}
           <path d={CURVE_PATH} fill="none" stroke="var(--border)" strokeWidth="6" strokeLinecap="round" />
           <path

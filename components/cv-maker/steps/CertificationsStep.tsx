@@ -19,7 +19,7 @@ export default function CertificationsStep({
       onChange={onChange}
       createEntry={createCertificationEntry}
       addLabel="Add certification"
-      emptyLabel="No certifications added — this section won't print unless you add one."
+      emptyLabel="No certifications added - this section won't print unless you add one."
       renderFields={(entry, update) => (
         <>
           <div className="grid gap-3 sm:grid-cols-2">

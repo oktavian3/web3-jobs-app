@@ -44,7 +44,7 @@ export default function JDMatchStep({
             </p>
           </div>
           <p className="mt-1 text-xs leading-5 text-muted">
-            Literal keyword overlap, not semantic — it won&apos;t catch &quot;CM&quot; and &quot;Community Manager&quot; as
+            Literal keyword overlap, not semantic - it won&apos;t catch &quot;CM&quot; and &quot;Community Manager&quot; as
             the same thing. Use it as a rough check, not a verdict.
           </p>
 

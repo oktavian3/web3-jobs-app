@@ -52,10 +52,10 @@ export default function Home() {
               before you chase the <span className="font-display font-normal tracking-normal">title.</span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-blue-50 sm:text-lg">
-              Discover a real role, learn what it needs, build proof, and prepare to apply — with context instead of guesswork.
+              Discover a real role, learn what it needs, build proof, and prepare to apply - with context instead of guesswork.
             </p>
 
-            {/* Rotating lane accent — real canonical lanes, presentation only. */}
+            {/* Rotating lane accent - real canonical lanes, presentation only. */}
             <div className="mt-8 flex justify-center text-xl font-extrabold tracking-tight sm:text-2xl">
               <HeroRotator items={laneRotatorItems} />
             </div>
@@ -132,7 +132,7 @@ export default function Home() {
         </section>
 
         <section className="reveal-card">
-          <SectionHeading eyebrow="Everything connects" title="Learn one thing, then know what to do next." copy="Role guides, terminology, practical tasks, interview preparation, and job platforms — connected, not isolated." />
+          <SectionHeading eyebrow="Everything connects" title="Learn one thing, then know what to do next." copy="Role guides, terminology, practical tasks, interview preparation, and job platforms - connected, not isolated." />
           <div className="mt-10">
             <LearningPreview />
           </div>
@@ -175,7 +175,7 @@ export default function Home() {
           <div>
             <Eyebrow>Guidance, not a score</Eyebrow>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-5xl">A possible fit, not a personality label.</h2>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-muted">Answer focused questions about how you work. Results are self-reported guidance — a possible lane, a confidence label, and one next proof-of-work task, never a percentage score.</p>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-muted">Answer focused questions about how you work. Results are self-reported guidance - a possible lane, a confidence label, and one next proof-of-work task, never a percentage score.</p>
             <div className="mt-7"><PrimaryLink href="/skill-check">Start Skill Check</PrimaryLink></div>
           </div>
           <div className="card-premium p-2.5">
@@ -204,7 +204,7 @@ export default function Home() {
 
         <section className="reveal-card grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <SectionHeading align="left" title="See what the role actually expects." copy="Role pages explain daily work, expected outputs, tools, portfolio evidence, interview prompts, and salary evidence — without vague job-description language." />
+            <SectionHeading align="left" title="See what the role actually expects." copy="Role pages explain daily work, expected outputs, tools, portfolio evidence, interview prompts, and salary evidence - without vague job-description language." />
             <div className="mt-6 flex flex-wrap gap-2">
               {["Daily Work", "Skills", "Tools", "Portfolio", "Interview", "Salary Evidence"].map((chip) => <span key={chip} className="tag">{chip}</span>)}
             </div>
@@ -228,7 +228,7 @@ export default function Home() {
         <section className="reveal-card">
           <SectionHeading title="Learn terms in the context of work." copy="Definitions include why the term matters, common misunderstandings, related roles, and the next useful concept." />
           <div className="card-premium mx-auto mt-10 max-w-4xl p-2.5">
-            {/* A real link into the glossary — not a decorative input mock-up. */}
+            {/* A real link into the glossary - not a decorative input mock-up. */}
             <Link
               href="/glossary"
               className="group flex items-center gap-3 rounded-2xl border border-border bg-soft px-4 py-3.5 text-sm font-bold text-muted transition hover:border-border-strong hover:bg-highlight hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"

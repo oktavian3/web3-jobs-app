@@ -9,7 +9,7 @@ import InterviewPrepExplorer, { type ExplorerSet } from "@/components/kraft/Inte
 export const metadata: Metadata = {
   title: "Interview Prep",
   description:
-    "Practice role-specific Web3 interview questions with a framework to reason with — not scripts to memorize. Choose a lane, a role, and a question category.",
+    "Practice role-specific Web3 interview questions with a framework to reason with - not scripts to memorize. Choose a lane, a role, and a question category.",
 };
 
 // Compact, client-safe records (keeps the large role-content JSON on the server).
@@ -39,7 +39,7 @@ export default async function InterviewPrepPage({
         <PageHeader
           eyebrow="Interview prep"
           title="Practice the work behind the question."
-          copy="Choose a lane and role to see its real interview questions, what each tests, and a framework for strong answers. These are practice prompts and general guidance — not memorized scripts, and not every company interviews the same way."
+          copy="Choose a lane and role to see its real interview questions, what each tests, and a framework for strong answers. These are practice prompts and general guidance - not memorized scripts, and not every company interviews the same way."
         />
 
         <InterviewPrepExplorer sets={sets} lanes={lanes} framework={interviewFramework} initialSlug={initialSlug} />
@@ -47,9 +47,9 @@ export default async function InterviewPrepPage({
         <CareerNext
           heading="Prepare with evidence"
           items={[
-            { title: "Build proof-of-work", href: "/portfolio", why: "Answers land better when backed by a real artifact — each role has a matching portfolio brief." },
+            { title: "Build proof-of-work", href: "/portfolio", why: "Answers land better when backed by a real artifact - each role has a matching portfolio brief." },
             { title: "Re-read the role guide", href: "/roles", why: "The role guide's boundaries and proof standards are exactly what these questions test." },
-            { title: "Get Hired journey", href: "/get-hired", why: "Interview practice is stage 11 — see how it fits before and after applications." },
+            { title: "Get Hired journey", href: "/get-hired", why: "Interview practice is stage 11 - see how it fits before and after applications." },
           ]}
         />
       </Container>

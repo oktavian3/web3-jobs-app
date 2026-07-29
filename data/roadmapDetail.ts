@@ -1,5 +1,5 @@
 // Roadmap detail records. KRAFT's roadmaps are lane-level planning guides, not
-// role-level or guaranteed job paths — this file preserves that model explicitly
+// role-level or guaranteed job paths - this file preserves that model explicitly
 // and enriches each lane's existing phases with review/decision structure derived
 // from the phase's own task and output, plus canonical role and portfolio links.
 // No arbitrary duration is invented; the source roadmap carries no day/week counts
