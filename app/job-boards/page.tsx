@@ -56,7 +56,7 @@ export default function JobBoardsPage() {
                   <a key={job.id} href={job.applyUrl} target="_blank" rel="noreferrer" className="card-surface card-surface--interactive group p-5">
                     <div className="flex flex-wrap gap-2">
                       <span className="tag">{job.category}</span>
-                      <span className="tag">{job.remote ? "Remote" : "On-site / hybrid"}</span>
+                      <span className="tag">{job.remote ? "Remote-friendly" : "On-site / hybrid"}</span>
                       <span className="tag">{job.seniority}</span>
                     </div>
                     <h3 className="mt-4 text-xl font-extrabold tracking-tight text-ink">{job.title}</h3>
