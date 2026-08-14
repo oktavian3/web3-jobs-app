@@ -27,6 +27,11 @@ export const metadata: Metadata = {
   },
   description: "Explore real Web3 roles, test your fit, learn the language, build proof-of-work, and apply with context.",
   keywords: ["web3 careers", "web3 jobs", "proof of work", "career learning", "crypto jobs"],
+  icons: {
+    icon: "/kraft%20logo%20trans.png",
+    shortcut: "/kraft%20logo%20trans.png",
+    apple: "/kraft%20logo%20trans.png",
+  },
 };
 
 export default function RootLayout({
