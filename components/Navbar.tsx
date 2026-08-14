@@ -128,7 +128,7 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Accordion reveal for the two Tools items - this navbar has no
+          {/* Accordion reveal for the Tools items - this navbar has no
               hamburger menu (mobile nav is the horizontal pill strip above),
               so "Tools" expands inline beneath it instead of inside a drawer. */}
           {mobileToolsOpen && (
@@ -145,6 +145,11 @@ export default function Navbar() {
                   {tool.label}
                 </Link>
               ))}
+
+              <div role="menuitem" aria-disabled="true" className="cursor-not-allowed rounded-2xl border border-border bg-elevated px-3 py-2.5 text-center">
+                <span className="block text-xs font-extrabold text-ink">Paygate</span>
+                <span className="mt-0.5 block text-[10px] font-bold text-muted">Coming soon</span>
+              </div>
             </div>
           )}
         </div>
