@@ -14,8 +14,8 @@ function isToolRoute(pathname: string) {
   return TOOLS.some((tool) => pathname === tool.href || pathname.startsWith(`${tool.href}/`));
 }
 
-/** Desktop "Tools" nav dropdown - Skill Check + CV Maker. Opens on click or
- *  hover, closes on outside click, Escape, or route change. */
+/** Desktop "Tools" nav dropdown. Opens on click or hover, closes on outside
+ *  click, Escape, or route change. */
 export default function ToolsDropdown() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -94,6 +94,11 @@ export default function ToolsDropdown() {
               <span className="mt-0.5 block text-xs leading-5 text-muted">{tool.description}</span>
             </Link>
           ))}
+
+          <div role="menuitem" aria-disabled="true" className="flex cursor-not-allowed items-center justify-between gap-3 rounded-xl px-3 py-2.5">
+            <span className="text-sm font-extrabold text-ink">Paygate</span>
+            <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.08em] text-muted">Coming soon</span>
+          </div>
         </div>
       )}
     </div>
