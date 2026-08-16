@@ -185,25 +185,9 @@ textarea,
   filter: blur(2px);
 }
 
-/* Homepage hero only. The shared .blue-panel stacks two radial highlights, a
-   linear ramp, a grid overlay and a blurred ellipse, which reads as busy at
-   hero scale. This variant calms it to a single directional ramp plus one
-   corner glow, and softens the grid. Scoped so FinalCTA on other pages keeps
-   the existing treatment. */
-.blue-panel--hero {
-  background:
-    radial-gradient(ellipse at 78% -10%, rgba(150, 214, 255, 0.55), transparent 58%),
-    linear-gradient(168deg, #2f8dff 0%, var(--blue) 42%, var(--blue-deep) 100%);
-}
-
-.blue-panel--hero::before {
-  background-size: 88px 88px;
-  opacity: 0.5;
-}
-
-.blue-panel--hero::after {
-  display: none;
-}
+/* The homepage hero no longer uses .blue-panel - it has its own dark treatment
+   in the KRAFT workbench hero block further down. Everything above stays as the
+   shared panel used by FinalCTA on /, /faq, /disclaimers and /roles/[slug]. */
 
 .btn-primary,
 .btn-secondary,
@@ -511,44 +495,833 @@ textarea,
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 
-/* ── Hero rotating chip ───────────────────────────────────────────────────
-   The highlighted word slot in the hero headline: a light plate with a solid
-   blue icon tile, matching the surrounding headline metrics. */
-.hero-chip {
-  display: inline-flex;
-  align-items: stretch;
-  gap: 0;
+/* ── KRAFT workbench hero ─────────────────────────────────────────────────
+   Homepage first viewport only. A dark, pixel-art-inspired late-night desk
+   where the laptop screen is the KRAFT product surface.
+
+   Layer order, and why the split matters:
+     .kraft-hero            section shell, night ambience, horizon fade
+     .kraft-stage           fixed-ratio coordinate space + container-query root
+     .kraft-workbench-art   ALL scenery. pointer-events:none and aria-hidden.
+                            Every piece is placed in % of the stage, so the
+                            scene scales as one unit at any width. Deliberately
+                            self-contained: swapping this block for a single
+                            transparent WebP needs no other change, because
+                            nothing outside it references a .wb-* class.
+     .kraft-screen          real HTML inside the laptop bezel (cqw-scaled, so
+                            screen type tracks the scene instead of the page)
+     .kraft-orbit           real HTML lane chips floating around the laptop
+
+   Pixel-art discipline: hard-stop gradients, no border radius, whole-pixel
+   steps, and blur reserved for the two light sources. No shared class is
+   touched - .blue-panel, .card-*, .site-canvas and the print styles are all
+   untouched by this block. */
+
+.kraft-hero {
+  /* Scene palette, scoped so it cannot leak into the light UI below. */
+  --wb-night: #070c18;
+  --wb-wall: #101a2e;
+  --wb-lit: #33486f;
+  --wb-metal: #2a3a5a;
+  --wb-glass: #14243f;
+  --wb-cyan: #4ad9ff;
+  --wb-lamp: #ffb361;
+
+  position: relative;
+  isolation: isolate;
   overflow: hidden;
-  border-radius: 0.75rem;
-  box-shadow: 0 10px 30px rgba(6, 25, 65, 0.22);
-  vertical-align: baseline;
+  border-radius: 28px;
+  background:
+    radial-gradient(ellipse 70% 50% at 62% 4%, #17253f 0%, transparent 62%),
+    radial-gradient(ellipse 60% 45% at 10% 94%, #0d1830 0%, transparent 70%),
+    linear-gradient(180deg, #0b1222 0%, var(--wb-night) 58%, #05080f 100%);
+  color: #e8eef6;
 }
 
-.hero-chip__icon {
+/* Faint room grid, masked to the lit part of the scene. */
+.kraft-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(122, 170, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(122, 170, 255, 0.055) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 78% 66% at 56% 26%, #000 0%, transparent 76%);
+}
+
+/* Lighting fade that resolves the dark hero into the light page canvas, so the
+   next section needs no decorative divider. Sits behind the content, and
+   .kraft-hero__inner reserves enough bottom padding to clear it. */
+.kraft-hero__horizon {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  height: 160px;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 8, 15, 0) 0%,
+    rgba(11, 18, 34, 0.62) 38%,
+    rgba(120, 152, 200, 0.5) 82%,
+    var(--canvas) 100%
+  );
+}
+
+.kraft-hero__inner {
+  position: relative;
+  z-index: 2;
+  padding: 3.25rem 1.25rem 3.5rem;
+}
+
+@media (min-width: 640px) {
+  .kraft-hero__inner { padding: 4rem 2.5rem 4rem; }
+}
+
+@media (min-width: 1024px) {
+  .kraft-hero__inner { padding: 4.5rem 3.5rem 4.5rem; }
+}
+
+.kraft-hero__grid {
   display: grid;
+  gap: 2.75rem;
+  align-items: center;
+  /* Mobile order: copy first, workstation below it. */
+  grid-template-areas:
+    "copy"
+    "stage";
+}
+
+@media (min-width: 1024px) {
+  .kraft-hero__grid {
+    /* ~40/60 split. minmax(0, …) lets the stage shrink below its intrinsic
+       width instead of forcing the page to scroll horizontally. */
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    grid-template-areas: "copy stage";
+    gap: 3rem;
+  }
+}
+
+.kraft-hero__copy { grid-area: copy; }
+.kraft-hero__stage-wrap { grid-area: stage; min-width: 0; }
+
+.kraft-hero__title {
+  font-size: clamp(2.5rem, 5.6vw, 4.1rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.032em;
+  color: #fff;
+}
+
+/* The two emphasised words keep the editorial accent used across the site; the
+   rest of the headline stays on Manrope. */
+.kraft-hero__title .font-display {
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: #9fd4ff;
+}
+
+.kraft-hero__lede {
+  margin-top: 1.4rem;
+  max-width: 34rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #a9bbd4;
+}
+
+.kraft-hero__actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .kraft-hero__lede { font-size: 1.0625rem; }
+  .kraft-hero__actions { flex-direction: row; }
+}
+
+/* Brighter focus ring than the global blue one, which is low-contrast against
+   the near-black hero. */
+.kraft-hero a:focus-visible {
+  outline: 3px solid rgba(124, 220, 255, 0.8);
+  outline-offset: 3px;
+}
+
+/* ── Stage ──────────────────────────────────────────────────────────────── */
+
+.kraft-stage {
+  position: relative;
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: 720 / 500;
+}
+
+.kraft-workbench-art {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* No `display` here on purpose. position:absolute already blockifies these
+   spans, and a `display: block` in this rule would outrank the single-class
+   `.wb-* { display: none }` hides in the responsive block below. */
+.kraft-workbench-art > span {
+  position: absolute;
+}
+
+/* Night window, back left. Clear of the laptop lid so it reads as a window
+   rather than a floating grid. */
+.wb-window {
+  left: 3%;
+  top: 8%;
+  width: 22%;
+  height: 26%;
+  background-color: var(--wb-glass);
+  background-image:
+    linear-gradient(180deg, rgba(105, 165, 245, 0.34) 0%, transparent 66%),
+    linear-gradient(#070d1a 4px, transparent 4px),
+    linear-gradient(90deg, #070d1a 4px, transparent 4px);
+  background-size: 100% 100%, 50% 50%, 50% 50%;
+  background-position: 0 0, -2px -2px, -2px -2px;
+  box-shadow:
+    inset 0 0 0 4px #070d1a,
+    0 0 46px rgba(74, 140, 235, 0.2);
+}
+
+/* Distant city lights, as single pixels stepped out with box-shadow. */
+.wb-window::after {
+  content: "";
+  position: absolute;
+  left: 16%;
+  top: 64%;
+  width: 2px;
+  height: 2px;
+  background: rgba(160, 205, 255, 0.75);
+  box-shadow:
+    10px -6px 0 rgba(160, 205, 255, 0.5),
+    22px 3px 0 rgba(160, 205, 255, 0.65),
+    34px -10px 0 rgba(160, 205, 255, 0.4),
+    46px 1px 0 rgba(160, 205, 255, 0.55),
+    58px -5px 0 rgba(160, 205, 255, 0.3);
+}
+
+/* Pinned notes on the wall. */
+.wb-poster {
+  left: 4%;
+  top: 37%;
+  width: 11%;
+  height: 11%;
+  background:
+    linear-gradient(180deg, rgba(70, 110, 175, 0.4) 0 32%, transparent 32% 100%),
+    var(--wb-wall);
+  box-shadow: inset 0 0 0 2px rgba(122, 170, 255, 0.16);
+}
+
+.wb-poster::after {
+  content: "";
+  position: absolute;
+  inset: 44% 18% 18% 18%;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(150, 190, 250, 0.26) 0 2px,
+    transparent 2px 7px
+  );
+}
+
+/* Shelf, back right, with pixel books standing on it. */
+.wb-shelf {
+  left: 62%;
+  top: 11%;
+  width: 30%;
+  height: 2.4%;
+  background: linear-gradient(180deg, var(--wb-lit) 0 40%, #16223a 40% 100%);
+}
+
+.wb-shelf::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  bottom: 100%;
+  width: 58%;
+  height: 460%;
+  background: linear-gradient(
+    90deg,
+    #274268 0 13%,
+    transparent 13% 18%,
+    #31578c 18% 29%,
+    transparent 29% 34%,
+    #1f3557 34% 45%,
+    transparent 45% 50%,
+    #2c4a76 50% 60%,
+    transparent 60% 100%
+  );
+}
+
+.wb-shelf::after {
+  content: "";
+  position: absolute;
+  right: 8%;
+  bottom: 100%;
+  width: 20%;
+  height: 300%;
+  background: linear-gradient(90deg, #24406b 0 42%, transparent 42% 56%, #2f5183 56% 100%);
+}
+
+/* Desk lamp, right. Built thick enough to read at a glance: a pedestal on the
+   desk, a pole, an arm reaching back over the desk, and a shade with a wider
+   lit opening stepped out beneath it. */
+.wb-lamp-arm {
+  left: 78%;
+  top: 32.6%;
+  width: 14.3%;
+  height: 2%;
+  background: linear-gradient(
+    180deg,
+    rgba(160, 200, 255, 0.3) 0 16%,
+    var(--wb-lit) 16% 54%,
+    var(--wb-metal) 54% 100%
+  );
+}
+
+.wb-lamp-pole {
+  left: 90.5%;
+  top: 34%;
+  width: 1.8%;
+  height: 31%;
+  background: linear-gradient(90deg, var(--wb-lit) 0 38%, var(--wb-metal) 38% 100%);
+}
+
+/* Pedestal, sitting on the desk surface. */
+.wb-lamp-pole::after {
+  content: "";
+  position: absolute;
+  left: -190%;
+  bottom: 0;
+  width: 480%;
+  height: 9%;
+  background: linear-gradient(
+    180deg,
+    rgba(160, 200, 255, 0.36) 0 14%,
+    var(--wb-lit) 14% 52%,
+    #131e33 52% 100%
+  );
+}
+
+.wb-lamp-head {
+  left: 73.5%;
+  top: 32.6%;
+  width: 8.5%;
+  height: 6.4%;
+  background: linear-gradient(
+    180deg,
+    rgba(160, 200, 255, 0.3) 0 8%,
+    var(--wb-lit) 8% 40%,
+    var(--wb-metal) 40% 74%,
+    var(--wb-lamp) 74% 100%
+  );
+}
+
+/* The lit opening: wider than the shade, so the silhouette steps outward and
+   reads as a lamp rather than a floating block. */
+.wb-lamp-head::after {
+  content: "";
+  position: absolute;
+  left: -14%;
+  top: 100%;
+  width: 128%;
+  height: 22%;
+  background: linear-gradient(180deg, #ffd9a3 0 55%, rgba(255, 179, 97, 0.55) 55% 100%);
+}
+
+/* Warm cone falling onto the desk - the counterweight to the cyan screen. */
+.wb-lamp-glow {
+  left: 64%;
+  top: 37%;
+  width: 30%;
+  height: 32%;
+  background: radial-gradient(ellipse 52% 100% at 44% 0%, rgba(255, 179, 97, 0.34), transparent 70%);
+  animation: wbLampBreathe 7s ease-in-out infinite alternate;
+}
+
+@keyframes wbLampBreathe {
+  from { opacity: 0.72; }
+  to { opacity: 1; }
+}
+
+/* Cold screen light spilling onto the desk. */
+.wb-screen-spill {
+  left: 18%;
+  top: 46%;
+  width: 64%;
+  height: 26%;
+  background: radial-gradient(ellipse 54% 100% at 50% 0%, rgba(74, 217, 255, 0.2), transparent 66%);
+  animation: wbScreenFlicker 5.5s ease-in-out infinite alternate;
+}
+
+@keyframes wbScreenFlicker {
+  from { opacity: 0.75; }
+  to { opacity: 1; }
+}
+
+/* Ground plane, as one element so the whole desk stays consistent: lit front
+   lip, top surface, hard shadow line, front apron, then the dark under-desk.
+   Everything that "sits on the desk" has its bottom edge inside the 64-70%
+   surface band. */
+.wb-desk {
+  left: -2%;
+  top: 63.6%;
+  width: 104%;
+  height: 36.4%;
+  background: linear-gradient(
+    180deg,
+    rgba(170, 210, 255, 0.5) 0 1.2%,
+    #2c4066 1.2% 17%,
+    #0d1524 17% 19.5%,
+    #1a2740 19.5% 38%,
+    rgba(10, 17, 32, 0.75) 38% 55%,
+    rgba(6, 10, 20, 0) 78%
+  );
+  /* Fade both ends into darkness, so the ground plane reads as a room
+     receding rather than a hard-edged panel sitting inside the stage box. */
+  mask-image: linear-gradient(90deg, transparent 0%, #000 9%, #000 91%, transparent 100%);
+}
+
+/* Laptop lid. The bezel is drawn with inset shadows so the screen overlay can
+   sit inside it without any wrapper element. */
+.wb-laptop {
+  left: 29%;
+  top: 20%;
+  width: 42%;
+  height: 37%;
+  background: #060d1a;
+  box-shadow:
+    inset 0 0 0 3px var(--wb-lit),
+    inset 0 0 0 10px #14203a,
+    0 0 70px rgba(30, 130, 255, 0.2);
+}
+
+/* Hinge strip bridging lid and base. */
+.wb-laptop::after {
+  content: "";
+  position: absolute;
+  left: -4.8%;
+  top: 100%;
+  width: 109.6%;
+  height: 3.8%;
+  background: linear-gradient(180deg, #22334f 0 45%, #131e33 45% 100%);
+}
+
+/* The base is deliberately wider than the lid. That outward step is what reads
+   as perspective and stops the lid looking like a desktop monitor. */
+.wb-laptop-base {
+  left: 24%;
+  top: 58.4%;
+  width: 52%;
+  height: 5.2%;
+  background: linear-gradient(
+    180deg,
+    rgba(170, 210, 255, 0.45) 0 5%,
+    #33486f 5% 34%,
+    #26375a 34% 72%,
+    #131e33 72% 100%
+  );
+}
+
+/* Trackpad. */
+.wb-laptop-base::after {
+  content: "";
+  position: absolute;
+  left: 43%;
+  top: 72%;
+  width: 14%;
+  height: 20%;
+  background: rgba(10, 18, 32, 0.55);
+}
+
+/* Keyboard: the key field on the laptop base. Kept as its own named piece, but
+   drawn on the base rather than as a second slab in front of it - two stacked
+   slabs read as a monitor plus an external keyboard, not as a laptop. */
+.wb-keyboard {
+  left: 29%;
+  top: 59.3%;
+  width: 42%;
+  height: 2.4%;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(180, 215, 255, 0.4) 0 3px, transparent 3px 9px),
+    repeating-linear-gradient(180deg, rgba(180, 215, 255, 0.22) 0 2px, transparent 2px 6px);
+}
+
+/* Mug, front left on the desk. */
+.wb-mug {
+  left: 11%;
+  top: 58.5%;
+  width: 7.5%;
+  height: 10%;
+  background: linear-gradient(
+    180deg,
+    #cfe0f7 0 10%,
+    #7d97c0 10% 18%,
+    #46618f 18% 30%,
+    #34496f 30% 100%
+  );
+}
+
+/* Handle: a hollow pixel square stepped off the right side. */
+.wb-mug::before {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 26%;
+  width: 38%;
+  height: 42%;
+  box-shadow: inset 0 0 0 4px #3c5680;
+}
+
+.wb-steam {
+  left: 13.6%;
+  top: 51%;
+  width: 3.4%;
+  height: 9%;
+  background: linear-gradient(
+    180deg,
+    transparent 0 20%,
+    rgba(190, 220, 255, 0.4) 20% 34%,
+    transparent 34% 54%,
+    rgba(190, 220, 255, 0.28) 54% 70%,
+    transparent 70% 100%
+  );
+  animation: wbSteam 4.2s ease-in-out infinite;
+}
+
+@keyframes wbSteam {
+  0% { opacity: 0; transform: translateY(4px); }
+  35% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-9px); }
+}
+
+/* Notebook, front right, lying in the lamp's warm light. */
+.wb-notebook {
+  left: 75%;
+  top: 64.6%;
+  width: 13%;
+  height: 4.2%;
+  background: linear-gradient(180deg, #dce7f8 0 24%, #93aed4 24% 40%, #46608c 40% 100%);
+}
+
+.wb-notebook::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  top: 7%;
+  width: 62%;
+  height: 13%;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(70, 96, 140, 0.55) 0 8px,
+    transparent 8px 12px
+  );
+}
+
+/* ── Laptop screen: real HTML, scaled in cqw against the stage ──────────── */
+
+.kraft-screen {
+  position: absolute;
+  /* Inset from .wb-laptop by its 10px bezel. */
+  left: 30.4%;
+  top: 22%;
+  width: 39.2%;
+  height: 31%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0a1b33 0%, #071324 100%);
+  box-shadow: inset 0 0 34px rgba(20, 107, 255, 0.22);
+}
+
+.kraft-screen__bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  height: 3.1cqw;
+  padding: 0 1.6cqw;
+  border-bottom: 1px solid rgba(122, 170, 255, 0.18);
+  background: rgba(8, 20, 38, 0.9);
+}
+
+.kraft-screen__dots {
+  width: 1cqw;
+  height: 1cqw;
+  background: rgba(122, 170, 255, 0.5);
+  box-shadow:
+    1.7cqw 0 0 rgba(122, 170, 255, 0.32),
+    3.4cqw 0 0 rgba(122, 170, 255, 0.2);
+}
+
+.kraft-screen__title {
+  margin-left: 5cqw;
+  font-size: 1.25cqw;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: rgba(190, 220, 255, 0.75);
+}
+
+.kraft-screen__body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  padding: 1.7cqw 1.9cqw;
+}
+
+.kraft-screen__view {
+  animation: wbViewIn 420ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@keyframes wbViewIn {
+  from { opacity: 0; transform: translateY(0.6cqw); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.kraft-screen__wordmark {
+  font-size: 3.8cqw;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  color: #fff;
+}
+
+.kraft-screen__prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.8cqw;
+  margin-top: 1.6cqw;
+  font-size: 1.5cqw;
+  font-weight: 700;
+  color: rgba(150, 190, 240, 0.85);
+}
+
+.kraft-screen__caret {
+  width: 0.75cqw;
+  height: 1.9cqw;
+  background: var(--wb-cyan);
+  animation: wbCaret 1.05s steps(1, end) infinite;
+}
+
+@keyframes wbCaret {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+.kraft-screen__label {
+  font-size: 1.2cqw;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(122, 170, 255, 0.8);
+}
+
+.kraft-screen__list {
+  display: grid;
+  gap: 0.85cqw;
+  margin-top: 1.4cqw;
+}
+
+.kraft-screen__list li {
+  padding: 0.9cqw 1.2cqw;
+  border-left: 2px solid rgba(74, 217, 255, 0.55);
+  background: rgba(20, 107, 255, 0.14);
+  font-size: 1.6cqw;
+  font-weight: 700;
+  color: #dbe8fb;
+  animation: wbRowIn 460ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@keyframes wbRowIn {
+  from { opacity: 0; transform: translateX(-1.2cqw); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.kraft-screen__lane {
+  margin-top: 1.2cqw;
+  font-size: 2.7cqw;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.kraft-screen__meta {
+  margin-top: 0.9cqw;
+  font-size: 1.5cqw;
+  font-weight: 700;
+  color: var(--wb-cyan);
+}
+
+.kraft-screen__role {
+  margin-top: 1.5cqw;
+  padding-top: 1.2cqw;
+  border-top: 1px solid rgba(122, 170, 255, 0.2);
+  font-size: 1.6cqw;
+  font-weight: 600;
+  color: rgba(190, 214, 245, 0.9);
+}
+
+.kraft-screen__flow {
+  display: grid;
+  gap: 0.7cqw;
+  margin-top: 1.3cqw;
+}
+
+.kraft-screen__flow li {
+  display: flex;
+  align-items: center;
+  gap: 1.1cqw;
+  font-size: 1.45cqw;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #dbe8fb;
+  animation: wbRowIn 460ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+.kraft-screen__flowIndex {
+  display: grid;
+  flex: none;
   place-items: center;
-  padding: 0 0.5em;
+  width: 2cqw;
+  height: 2cqw;
+  background: var(--blue);
+  font-size: 1.05cqw;
+  color: #fff;
+}
+
+/* ── Floating lane chips ────────────────────────────────────────────────── */
+
+.kraft-orbit {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.kraft-chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 40%;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid rgba(122, 170, 255, 0.28);
+  background: rgba(11, 22, 42, 0.88);
+  box-shadow: 0 10px 30px rgba(3, 8, 20, 0.6);
+  backdrop-filter: blur(6px);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: #d6e6fb;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 520ms ease,
+    transform 520ms cubic-bezier(0.2, 0.7, 0.3, 1),
+    border-color 320ms ease,
+    box-shadow 320ms ease;
+}
+
+.kraft-chip.is-out {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.kraft-chip.is-active {
+  border-color: rgba(74, 217, 255, 0.75);
+  box-shadow: 0 12px 34px rgba(20, 107, 255, 0.4);
+}
+
+.kraft-chip__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.1rem;
+  height: 1.1rem;
   background: var(--blue);
   color: #fff;
 }
 
-.hero-chip__label {
-  display: grid;
-  align-items: center;
-  padding: 0.04em 0.42em 0.14em;
-  background: #fff;
-  color: var(--ink);
-  white-space: nowrap;
+.kraft-chip.is-active .kraft-chip__icon {
+  background: var(--wb-cyan);
+  color: #062033;
 }
 
-/* One-shot swap animation for the rotating word. */
-.hero-chip__swap {
-  animation: chipSwap 520ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+.kraft-chip__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-@keyframes chipSwap {
-  from { opacity: 0; transform: translateY(0.32em); filter: blur(3px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+/* Placed in the gaps either side of the laptop (which spans 24-76%), so a chip
+   never covers the screen. */
+.kraft-chip--0 { left: 0.5%; top: 24%; transition-delay: 0ms; }
+.kraft-chip--1 { right: 0.5%; top: 19%; transition-delay: 110ms; }
+.kraft-chip--2 { left: 1.5%; top: 51%; transition-delay: 220ms; }
+
+/* ── Hero responsive ────────────────────────────────────────────────────── */
+
+/* Tablet: one less floating card so the scene stays calm in a single column. */
+@media (max-width: 1023px) {
+  .kraft-chip--2 { display: none; }
+}
+
+/* Mobile: fewer environment details and a much larger product surface, since
+   the whole scene is only ~340px wide here. The scene keeps its proportions
+   because every piece is positioned in % of the stage. */
+@media (max-width: 639px) {
+  .kraft-stage { aspect-ratio: 5 / 4; }
+
+  /* Only the desk and the laptop survive at this width. Everything else is too
+     small to read here and would only add noise around the product surface. */
+  .wb-window,
+  .wb-poster,
+  .wb-shelf,
+  .wb-lamp-arm,
+  .wb-lamp-pole,
+  .wb-lamp-head,
+  .wb-lamp-glow,
+  .wb-mug,
+  .wb-steam,
+  .wb-notebook { display: none; }
+
+  .wb-desk { top: 63%; height: 37%; }
+  .wb-laptop { left: 13%; top: 13%; width: 74%; height: 43%; }
+  .wb-laptop-base { left: 8%; top: 57.6%; width: 84%; height: 5.4%; }
+  .wb-keyboard { left: 13%; top: 58.5%; width: 74%; height: 2.5%; }
+  .wb-screen-spill { left: 6%; top: 46%; width: 88%; height: 24%; }
+  .kraft-screen { left: 15.5%; top: 15.5%; width: 69%; height: 38%; }
+
+  .kraft-screen__bar { height: 5.5cqw; }
+  .kraft-screen__title { font-size: 2.2cqw; }
+  .kraft-screen__label { font-size: 2.1cqw; }
+  .kraft-screen__wordmark { font-size: 6.4cqw; }
+  .kraft-screen__prompt { font-size: 2.5cqw; }
+  .kraft-screen__caret { width: 1.2cqw; height: 3cqw; }
+  .kraft-screen__lane { font-size: 4.4cqw; }
+  .kraft-screen__list li { font-size: 2.6cqw; }
+  .kraft-screen__flow li { font-size: 2.4cqw; }
+  .kraft-screen__flowIndex { width: 3.2cqw; height: 3.2cqw; font-size: 1.8cqw; }
+
+  /* These two lines cannot stay legible at this scale. */
+  .kraft-screen__meta,
+  .kraft-screen__role { display: none; }
+
+  .kraft-chip--1 { display: none; }
+  .kraft-chip { max-width: 66%; font-size: 0.625rem; }
+
+  /* The laptop spans almost the full stage here, so there is no side gutter
+     left for a chip - the remaining one sits on the desk in front of it
+     instead of covering the screen. */
+  .kraft-chip--0 { left: 8%; top: 70%; }
 }
 
 /* ── Journey curve ────────────────────────────────────────────────────────
@@ -691,14 +1464,31 @@ textarea,
     animation: none !important;
   }
 
-  /* The hero word rotator still swaps text, but without the motion/blur
-     transition. The component also stops advancing on its own - see
-     HeroRotator, which checks this same query. */
-  .hero-chip__swap {
+  /* Workbench hero. The blanket rule above already collapses durations, but
+     the sequence's entrance animations carry staggered delays set inline by
+     the component - without clearing those, rows would hold their hidden
+     `from` state for up to a second before snapping in. Everything here is
+     decorative; the hero still reads correctly frozen, because
+     KraftWorkbenchMotion checks this same query and settles on its most
+     complete frame (lane focused, full Role -> Jobs model on screen) instead
+     of advancing. */
+  .kraft-screen__view,
+  .kraft-screen__list li,
+  .kraft-screen__flow li,
+  .kraft-chip {
     animation: none !important;
-    filter: none !important;
-    transform: none !important;
+    animation-delay: 0ms !important;
+    transition-delay: 0ms !important;
     opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Ambient scene loops: steam, lamp breathe, screen flicker. */
+  .wb-steam,
+  .wb-lamp-glow,
+  .wb-screen-spill,
+  .kraft-screen__caret {
+    animation: none !important;
   }
 }
 

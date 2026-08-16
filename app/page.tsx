@@ -5,14 +5,13 @@ import { glossaryTerms } from "@/data/glossary";
 import { jobBoards } from "@/data/jobBoards";
 import { laneResults } from "@/data/skillCheck";
 import { getPortfolioProjectBySlug } from "@/data/portfolioProjects";
-import { Shell, Container, BluePanel, Eyebrow, SectionHeading, PrimaryLink, SecondaryLink, FinalCTA } from "@/components/kraft/Primitives";
+import { Shell, Container, Eyebrow, SectionHeading, PrimaryLink, SecondaryLink, FinalCTA } from "@/components/kraft/Primitives";
 import { RoleCard } from "@/components/kraft/Cards";
 import { ConfidenceBadge } from "@/components/kraft/role/badges";
 import { CountUp } from "@/components/kraft/AnimatedBits";
 import LearningPreview from "@/components/kraft/LearningPreview";
-import HeroProductPreview from "@/components/kraft/HeroProductPreview";
+import KraftWorkbenchHero from "@/components/kraft/KraftWorkbenchHero";
 import CareerJourney from "@/components/kraft/CareerJourney";
-import HeroRotator from "@/components/kraft/HeroRotator";
 import { laneIcons } from "@/components/kraft/laneIcons";
 
 const startCards = [
@@ -28,9 +27,17 @@ const productMetrics = [
   { value: jobBoards.length, label: "curated job platforms" },
 ];
 
-// Hero word rotator source: the real canonical career lanes. Only the names are
-// passed to the client component; it resolves icons from the shared map.
-const laneRotatorItems = careerLanes.map((lane) => lane.lane);
+// The homepage previews the lane taxonomy rather than listing it - the full set
+// of 8, with filters and every role, lives on /roles. Selection is by name so it
+// survives data reordering; the rendered order still follows the canonical
+// taxonomy in data/roles.ts.
+const featuredLaneNames = new Set<string>([
+  "Community & Growth",
+  "Content & Marketing",
+  "Product & Operations",
+  "Research & Data",
+]);
+const featuredLanes = careerLanes.filter((lane) => featuredLaneNames.has(lane.lane));
 
 const featuredRoleSlug = "community-manager";
 const featuredRole = getRoleBySlug(featuredRoleSlug) ?? roles[0];
@@ -41,33 +48,7 @@ export default function Home() {
   return (
     <Shell>
       <Container width="wide" className="space-y-24 py-6 sm:space-y-28 sm:py-8">
-        <BluePanel className="blue-panel--hero px-5 pb-8 pt-16 text-center sm:px-10 sm:pb-12 sm:pt-20 lg:px-16">
-          <div className="relative z-10 mx-auto max-w-4xl">
-            <span className="inline-flex rounded-full border border-white/35 bg-white/15 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white backdrop-blur">
-              Web3 Career Learning Centre
-            </span>
-            <h1 className="mt-7 text-[2.6rem] font-extrabold leading-[1.04] tracking-[-0.03em] text-white sm:text-6xl lg:text-[4.4rem]">
-              Know the <span className="font-display font-normal tracking-normal">work</span>
-              <br className="hidden sm:block" />{" "}
-              before you chase the <span className="font-display font-normal tracking-normal">title.</span>
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-blue-50 sm:text-lg">
-              Discover a real role, learn what it needs, build proof, and prepare to apply - with context instead of guesswork.
-            </p>
-
-            {/* Rotating lane accent - real canonical lanes, presentation only. */}
-            <div className="mt-8 flex justify-center text-xl font-extrabold tracking-tight sm:text-2xl">
-              <HeroRotator items={laneRotatorItems} />
-            </div>
-
-            <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link href="/skill-check" className="btn-white">Find My Role <ArrowRight className="h-4 w-4" /></Link>
-              <Link href="/roles" className="btn-ghost-white">Explore Roles</Link>
-            </div>
-          </div>
-
-          <HeroProductPreview />
-        </BluePanel>
+        <KraftWorkbenchHero />
 
         <section className="card-premium card-premium--featured reveal-card p-6 text-center sm:p-10">
           <span className="tag">KRAFT overview</span>
@@ -139,35 +120,43 @@ export default function Home() {
         </section>
 
         <section className="reveal-card">
-          <SectionHeading title="Explore Web3 work by career lane." />
-          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {careerLanes.map((lane) => {
+          <SectionHeading
+            title="Explore Web3 work by career lane."
+            copy={`${careerLanes.length} lanes group all ${roles.length} canonical roles by the kind of work they involve.`}
+          />
+          <div className="mx-auto mt-10 grid max-w-[1500px] gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {featuredLanes.map((lane) => {
               const Icon = laneIcons[lane.lane];
               const count = roles.filter((role) => role.lane === lane.lane).length;
               return (
-                <div key={lane.lane} className="card-premium card-premium--interactive reveal-card group flex flex-col p-2.5">
-                  <div className="card-premium__media flex items-center justify-between gap-3 px-4 py-4">
-                    <span className="grid h-11 w-11 place-items-center rounded-xl bg-[linear-gradient(158deg,var(--blue),var(--blue-deep))] text-white shadow-blue transition-transform duration-300 group-hover:scale-110">
+                <Link
+                  key={lane.lane}
+                  href={`/roles?lane=${encodeURIComponent(lane.lane)}`}
+                  className="card-premium card-premium--interactive reveal-card group flex flex-col p-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="grid h-10 w-10 place-items-center rounded-xl bg-[linear-gradient(158deg,var(--blue),var(--blue-deep))] text-white transition-transform duration-300 group-hover:scale-110">
                       <Icon className="h-5 w-5" strokeWidth={2.1} aria-hidden="true" />
                     </span>
-                    <span className="text-xs font-extrabold uppercase tracking-[0.1em] text-blue-700">{count} roles</span>
+                    <span className="text-xs font-extrabold uppercase tracking-[0.1em] text-muted">{count} roles</span>
                   </div>
-                  <div className="flex flex-1 flex-col p-4 pt-5">
-                    <h3 className="text-lg font-extrabold leading-snug tracking-tight text-ink">{lane.lane}</h3>
-                    <p className="mt-2.5 flex-1 text-sm leading-6 text-muted">{lane.description}</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {lane.exampleRoles.slice(0, 3).map((role) => <span key={role} className="tag">{role}</span>)}
-                    </div>
-                    <div className="mt-5 flex items-center justify-between gap-3 border-t border-border pt-4">
-                      <span className="text-xs font-extrabold uppercase tracking-[0.12em] text-muted">{lane.difficulty}</span>
-                      <Link href={`/roles?lane=${encodeURIComponent(lane.lane)}`} className="inline-flex items-center gap-1.5 text-sm font-extrabold text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
-                        View roles <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+                  <h3 className="mt-5 text-lg font-extrabold leading-snug tracking-tight text-ink">{lane.lane}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-muted">{lane.description}</p>
+                  {/* Inline sample roles instead of bordered pills - same real
+                      data, far less visual noise at preview scale. */}
+                  <p className="mt-4 text-[13px] font-bold leading-5 text-ink">
+                    {lane.exampleRoles.slice(0, 2).join(" · ")}
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-extrabold text-blue-700">
+                    View roles
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
               );
             })}
+          </div>
+          <div className="mt-8 text-center">
+            <SecondaryLink href="/roles">View all {careerLanes.length} career lanes</SecondaryLink>
           </div>
         </section>
 
