@@ -34,34 +34,37 @@ export default function LearningPreview() {
   const preview = previews[active];
 
   return (
-    <div className="card-surface p-3">
-      <div className="flex gap-2 overflow-x-auto rounded-2xl bg-soft p-2">
+    <div className="card-surface overflow-hidden">
+      <div role="tablist" aria-label="KRAFT preview" className="flex gap-1 overflow-x-auto border-b border-border bg-elevated p-2">
         {previews.map((item, index) => (
           <button
             type="button"
+            role="tab"
             key={item.label}
+            id={`lp-tab-${index}`}
+            aria-selected={active === index}
+            aria-controls="lp-panel"
             onClick={() => setActive(index)}
-            aria-pressed={active === index}
-            className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-extrabold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
-              active === index ? "bg-blue-600 text-white shadow-soft" : "text-muted hover:bg-elevated hover:text-ink"
+            className={`h-9 whitespace-nowrap rounded-full px-4 text-[13.5px] transition-colors ${
+              active === index ? "bg-ink text-white" : "text-muted hover:bg-soft hover:text-ink"
             }`}
           >
             {item.label}
           </button>
         ))}
       </div>
-      <div className="mt-3 rounded-3xl bg-highlight p-6 sm:p-8">
-        <span className="rounded-full bg-elevated px-3 py-1 text-xs font-extrabold text-blue-700 shadow-soft">{preview.label}</span>
-        <h3 className="mt-5 text-2xl font-extrabold tracking-tight text-ink">{preview.title}</h3>
-        <p className="mt-3 max-w-xl text-sm leading-6 text-muted sm:text-base">{preview.body}</p>
-        <div className="mt-8 grid gap-3 sm:grid-cols-3">
+      <div id="lp-panel" role="tabpanel" aria-labelledby={`lp-tab-${active}`} className="p-6 sm:p-8">
+        <p className="eyebrow">{preview.label}</p>
+        <h3 className="mt-3 text-[26px] font-medium tracking-[-0.03em] text-ink">{preview.title}</h3>
+        <p className="mt-2 max-w-xl text-[15px] leading-[1.6] text-muted">{preview.body}</p>
+        <ul className="mt-7 grid gap-px overflow-hidden rounded-[14px] border border-border bg-border sm:grid-cols-3">
           {preview.meta.map((item) => (
-            <div key={item} className="rounded-2xl border border-border-strong bg-elevated/80 p-4 shadow-soft">
-              <span className="text-xs font-extrabold uppercase tracking-[0.12em] text-muted">KRAFT</span>
-              <p className="mt-2 text-sm font-extrabold text-ink">{item}</p>
-            </div>
+            <li key={item} className="bg-surface p-4">
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.08em] text-muted">KRAFT</span>
+              <p className="mt-1.5 text-[14px] font-medium text-ink">{item}</p>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );

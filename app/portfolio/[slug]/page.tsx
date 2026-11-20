@@ -25,7 +25,7 @@ function Bullets({ items }: { items: string[] }) {
     <ul className="space-y-2">
       {items.map((item, i) => (
         <li key={i} className="flex gap-2.5 text-sm leading-6 text-ink">
-          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" aria-hidden="true" />
+          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue" aria-hidden="true" />
           <span>{item}</span>
         </li>
       ))}
@@ -36,7 +36,7 @@ function Bullets({ items }: { items: string[] }) {
 function Block({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
     <section id={id} className="scroll-mt-28">
-      <h2 className="text-xl font-extrabold tracking-tight text-ink sm:text-2xl">{title}</h2>
+      <h2 className="text-xl font-semibold tracking-tight text-ink sm:text-2xl">{title}</h2>
       <div className="mt-4">{children}</div>
     </section>
   );
@@ -56,16 +56,16 @@ export default async function PortfolioDetailPage({ params }: { params: Promise<
   return (
     <Shell>
       <Container className="space-y-12 py-12 sm:py-16">
-        <Link href="/portfolio" className="inline-flex items-center gap-2 text-sm font-extrabold text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+        <Link href="/portfolio" className="inline-flex items-center gap-2 text-sm font-semibold text-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue">
           <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Back to portfolio
         </Link>
 
         <header className="max-w-3xl">
           <div className="flex flex-wrap items-center gap-2">
             <span className="tag">{project.lane}</span>
-            <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-amber-900">Simulated project</span>
+            <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-amber-900">Simulated project</span>
           </div>
-          <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">{project.roleTitle} portfolio brief</h1>
+          <h1 className="mt-5 text-4xl font-semibold tracking-tight text-ink sm:text-5xl">{project.roleTitle} portfolio brief</h1>
           <p className="mt-5 text-lg leading-8 text-muted">{project.scenario}</p>
         </header>
 
@@ -93,7 +93,7 @@ export default async function PortfolioDetailPage({ params }: { params: Promise<
           <Block id="deliverables" title="Expected deliverables">
             <div className="flex flex-wrap gap-2">
               {project.deliverables.map((item) => (
-                <span key={item} className="rounded-xl border border-border bg-soft px-3 py-2 text-sm font-bold text-ink">{item}</span>
+                <span key={item} className="rounded-xl border border-border bg-soft px-3 py-2 text-sm font-medium text-ink">{item}</span>
               ))}
             </div>
           </Block>
@@ -105,7 +105,7 @@ export default async function PortfolioDetailPage({ params }: { params: Promise<
               <ol className="space-y-2">
                 {project.workflow.map((step, i) => (
                   <li key={i} className="flex gap-3 text-sm leading-6 text-ink">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white" aria-hidden="true">{i + 1}</span>
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue text-xs font-semibold text-white" aria-hidden="true">{i + 1}</span>
                     <span>{step}</span>
                   </li>
                 ))}
@@ -123,7 +123,7 @@ export default async function PortfolioDetailPage({ params }: { params: Promise<
               <dl className="divide-y divide-border overflow-hidden rounded-2xl border border-border">
                 {project.tools.map((tool) => (
                   <div key={tool.name} className="grid gap-1 p-4 sm:grid-cols-[minmax(9rem,12rem)_1fr] sm:gap-4">
-                    <dt className="text-sm font-extrabold text-ink">{tool.name}</dt>
+                    <dt className="text-sm font-semibold text-ink">{tool.name}</dt>
                     <dd className="text-sm leading-6 text-muted">{tool.useCase}.</dd>
                   </div>
                 ))}
@@ -135,7 +135,7 @@ export default async function PortfolioDetailPage({ params }: { params: Promise<
         <Divider>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-4 sm:p-5">
-              <h2 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">What a strong submission shows</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">What a strong submission shows</h2>
               <ul className="mt-3 space-y-2.5">
                 {project.strongSubmission.map((item, i) => (
                   <li key={i} className="flex gap-2.5 text-sm leading-6 text-ink">
@@ -146,7 +146,7 @@ export default async function PortfolioDetailPage({ params }: { params: Promise<
               </ul>
             </div>
             <div className="card-surface card-surface--informational p-4 sm:p-5">
-              <h2 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">Weak submission patterns</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">Weak submission patterns</h2>
               <ul className="mt-3 space-y-2.5">
                 {project.weakPatterns.map((item, i) => (
                   <li key={i} className="flex gap-2.5 text-sm leading-6 text-ink">
@@ -163,7 +163,7 @@ export default async function PortfolioDetailPage({ params }: { params: Promise<
           <div className="grid gap-10 lg:grid-cols-2">
             <section id="rubric" className="scroll-mt-28">
               <div className="card-surface card-surface--evidence p-5 sm:p-6">
-                <h2 className="text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Review rubric</h2>
+                <h2 className="text-xl font-semibold tracking-tight text-ink sm:text-2xl">Review rubric</h2>
                 <div className="mt-4"><Bullets items={project.rubric} /></div>
               </div>
             </section>
@@ -179,7 +179,7 @@ export default async function PortfolioDetailPage({ params }: { params: Promise<
               <ol className="divide-y divide-border border-y border-border">
                 {project.interviewQuestions.map((q, i) => (
                   <li key={i} className="flex gap-3 py-4">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white" aria-hidden="true">{i + 1}</span>
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue text-xs font-semibold text-white" aria-hidden="true">{i + 1}</span>
                     <p className="text-base leading-7 text-ink">{q}</p>
                   </li>
                 ))}

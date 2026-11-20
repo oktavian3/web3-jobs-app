@@ -18,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/glossary",
     "/learn-web3",
     "/get-hired",
-    "/job-boards",
+    "/jobs",
     "/portfolio",
     "/interview-prep",
     "/faq",

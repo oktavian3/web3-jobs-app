@@ -112,7 +112,7 @@ export const journeyStages: JourneyStage[] = [
     expectedOutput: "At least one piece of real, attributable work with clear ownership.",
     commonMistake: "Treating volunteering as mandatory, or accepting unpaid production disguised as a trial.",
     completionSignal: "You have real work you can describe honestly, kept distinct from simulated projects.",
-    link: { label: "Find contributor sources", href: "/job-boards" },
+    link: { label: "Find contributor sources", href: "/jobs" },
   },
   {
     id: 7,
@@ -157,7 +157,7 @@ export const journeyStages: JourneyStage[] = [
     expectedOutput: "A short, qualified list of teams and roles worth pursuing.",
     commonMistake: "Mass-listing companies with no fit check or verification.",
     completionSignal: "Each target has a clear reason and a verified official source.",
-    link: { label: "Discover teams and boards", href: "/job-boards" },
+    link: { label: "Discover teams and boards", href: "/jobs" },
   },
   {
     id: 10,

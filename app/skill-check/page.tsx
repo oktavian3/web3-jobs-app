@@ -46,16 +46,16 @@ export default function SkillCheckPage() {
 
         <div className="mx-auto max-w-3xl">
           <Card className="card-surface--featured relative overflow-hidden p-5 sm:p-8">
-            <div className="flex items-center justify-between gap-4 text-sm font-extrabold text-muted">
+            <div className="flex items-center justify-between gap-4 text-sm font-semibold text-muted">
               <span>Question {current + 1} of {skillQuestions.length}</span>
               <span aria-live="polite">{progress}% of questions answered</span>
             </div>
             <div className="mt-4 h-3 overflow-hidden rounded-full bg-soft">
-              <div className="h-full rounded-full bg-blue-600 transition-all duration-300" style={{ width: `${progress}%` }} />
+              <div className="h-full rounded-full bg-blue transition-all duration-300" style={{ width: `${progress}%` }} />
             </div>
 
             <div className="mt-10 rounded-3xl border border-border-strong bg-elevated p-6 text-center sm:p-8">
-              <h2 className="text-2xl font-extrabold leading-tight tracking-tight text-ink sm:text-3xl">{question.question}</h2>
+              <h2 className="text-2xl font-semibold leading-tight tracking-tight text-ink sm:text-3xl">{question.question}</h2>
               <div className="mt-8 grid gap-3" role="group" aria-label={`Answer: ${question.question}`}>
                 {[1, 2, 3, 4, 5].map((value) => {
                   const selected = answers[question.id] === value;
@@ -65,15 +65,15 @@ export default function SkillCheckPage() {
                       type="button"
                       onClick={() => answerQuestion(value)}
                       aria-pressed={selected}
-                      className={`group flex items-center justify-between rounded-2xl border px-4 py-4 text-left text-sm font-extrabold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
-                        selected ? "border-blue-600 bg-blue-600 text-white" : "border-border bg-canvas text-ink hover:border-blue-300 hover:bg-highlight"
+                      className={`group flex items-center justify-between rounded-2xl border px-4 py-4 text-left text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue ${
+                        selected ? "border-blue bg-blue text-white" : "border-border bg-canvas text-ink hover:border-border-strong hover:bg-highlight"
                       }`}
                     >
                       <span className="inline-flex items-center gap-2">
                         {selected && <Check className="h-4 w-4 shrink-0" aria-hidden="true" />}
                         {labels[value - 1]}
                       </span>
-                      <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-sm font-extrabold ${selected ? "bg-white text-blue-700" : "bg-highlight text-blue-700"}`}>{value}</span>
+                      <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-sm font-semibold ${selected ? "bg-white text-blue-deep" : "bg-highlight text-blue-deep"}`}>{value}</span>
                     </button>
                   );
                 })}
@@ -89,7 +89,7 @@ export default function SkillCheckPage() {
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Previous
               </button>
-              <Link href="/roles" className="inline-flex items-center gap-1 text-sm font-extrabold text-muted hover:text-ink">
+              <Link href="/roles" className="inline-flex items-center gap-1 text-sm font-semibold text-muted hover:text-ink">
                 Browse roles instead <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>

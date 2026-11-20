@@ -20,7 +20,7 @@ export function Section({
 }) {
   return (
     <section id={id} className={`scroll-mt-28 ${first ? "" : "mt-12 border-t border-border pt-12"}`}>
-      <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">{title}</h2>
+      <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">{title}</h2>
       <div className="mt-5">{children}</div>
     </section>
   );
@@ -41,7 +41,7 @@ function Bullets({ items }: { items: string[] }) {
     <ul className="space-y-2.5">
       {items.map((item, i) => (
         <li key={i} className="flex gap-3 text-base leading-7 text-ink">
-          <span className="mt-[0.6rem] h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" aria-hidden="true" />
+          <span className="mt-[0.6rem] h-1.5 w-1.5 shrink-0 rounded-full bg-blue" aria-hidden="true" />
           <span>{item}</span>
         </li>
       ))}
@@ -50,7 +50,7 @@ function Bullets({ items }: { items: string[] }) {
 }
 
 function SubHeading({ children }: { children: ReactNode }) {
-  return <h3 className="text-sm font-extrabold uppercase tracking-[0.12em] text-muted">{children}</h3>;
+  return <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{children}</h3>;
 }
 
 // ── role snapshot ───────────────────────────────────────────────────────────
@@ -74,6 +74,7 @@ export function RoleSnapshot({
 }) {
   return (
     <div className="card-surface p-5 sm:p-6">
+      <h2 className="sr-only">Role snapshot</h2>
       <div className="flex flex-wrap items-center gap-2">
         <span className="tag">{lane}</span>
         <span className="tag">{level}</span>
@@ -119,8 +120,8 @@ export function WorkCadenceTimeline({ cadence }: { cadence: RoleCadence }) {
     <ol className="space-y-4 border-l border-border pl-5">
       {rows.map((row) => (
         <li key={row.label} className="relative">
-          <span className="absolute -left-[1.42rem] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-blue-500" aria-hidden="true" />
-          <p className="text-sm font-extrabold text-ink">{row.label}</p>
+          <span className="absolute -left-[1.42rem] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-blue" aria-hidden="true" />
+          <p className="text-sm font-semibold text-ink">{row.label}</p>
           <p className="mt-1 text-base leading-7 text-muted">{row.text}</p>
         </li>
       ))}
@@ -134,7 +135,7 @@ export function OutputAndDeliverables({ items }: { items: string[] }) {
   return (
     <div className="flex flex-wrap gap-2">
       {items.map((item, i) => (
-        <span key={i} className="rounded-xl border border-border bg-soft px-3 py-2 text-sm font-bold text-ink">
+        <span key={i} className="rounded-xl border border-border bg-soft px-3 py-2 text-sm font-medium text-ink">
           {item}
         </span>
       ))}
@@ -150,7 +151,7 @@ export function SuccessSignals({ signals, caveat }: { signals: string[]; caveat:
       <Bullets items={signals} />
       <div className="flex gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4">
         <Info className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" aria-hidden="true" />
-        <p className="text-sm leading-6 text-amber-900"><span className="font-extrabold">Read signals in context. </span>{caveat}</p>
+        <p className="text-sm leading-6 text-amber-900"><span className="font-semibold">Read signals in context. </span>{caveat}</p>
       </div>
     </div>
   );
@@ -163,7 +164,7 @@ export function ToolWorkflowTable({ tools }: { tools: RoleTool[] }) {
     <dl className="divide-y divide-border overflow-hidden rounded-2xl border border-border">
       {tools.map((tool) => (
         <div key={tool.name} className="grid gap-1 p-4 sm:grid-cols-[minmax(9rem,12rem)_1fr] sm:gap-4">
-          <dt className="text-sm font-extrabold text-ink">{tool.name}</dt>
+          <dt className="text-sm font-semibold text-ink">{tool.name}</dt>
           <dd className="text-sm leading-6 text-muted">{tool.useCase}.</dd>
         </div>
       ))}
@@ -194,7 +195,7 @@ export function SkillRequirements({
           <div className="mt-3"><Bullets items={workingSkills} /></div>
         </div>
       </div>
-      <div className="border-l-2 border-blue-200 pl-4">
+      <div className="border-l-2 border-border-strong pl-4">
         <SubHeading>Prerequisite knowledge</SubHeading>
         <p className="mt-2 text-base leading-7 text-ink">{prerequisite}</p>
       </div>
@@ -214,7 +215,7 @@ export function LevelExpectationsTable({ levels }: { levels: RoleLevels }) {
     <div className="divide-y divide-border border-y border-border">
       {rows.map((row) => (
         <div key={row.label} className="py-4 sm:py-5">
-          <p className="text-sm font-extrabold uppercase tracking-[0.1em] text-blue-700">{row.label}</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.1em] text-blue-deep">{row.label}</p>
           <p className="mt-2 text-base leading-7 text-muted">{row.text}</p>
         </div>
       ))}
@@ -325,7 +326,7 @@ export function InterviewPreparation({ intro, questions }: { intro: string[]; qu
       <ol className="divide-y divide-border border-y border-border">
         {questions.map((q, i) => (
           <li key={i} className="flex gap-3 py-4">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white" aria-hidden="true">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue text-xs font-semibold text-white" aria-hidden="true">
               {i + 1}
             </span>
             <p className="text-base leading-7 text-ink">{q}</p>
@@ -413,9 +414,9 @@ export function SalaryEvidenceBlock({
       {hasReliableRange && range ? (
         <div className="card-surface card-surface--evidence p-5 sm:p-6">
           <SubHeading>{rangeLabel ?? "Advertised range (context, not a guarantee)"}</SubHeading>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
+          <p className="mt-2 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
             {range.currency}{range.min.toLocaleString("en-US")} – {range.currency}{range.max.toLocaleString("en-US")}
-            <span className="ml-2 text-base font-bold text-muted">/ {range.period}</span>
+            <span className="ml-2 text-base font-medium text-muted">/ {range.period}</span>
           </p>
           {(geography || employmentModel) && (
             <p className="mt-2 text-sm leading-6 text-muted">
@@ -425,7 +426,7 @@ export function SalaryEvidenceBlock({
           <p className="mt-3 text-sm leading-6 text-ink">
             {note ?? (
               <>
-                This is the spread of <span className="font-bold">advertised</span> pay, not verified paid
+                This is the spread of <span className="font-medium">advertised</span> pay, not verified paid
                 compensation. Where you land inside it depends on your region, seniority, employment model,
                 and the mix of cash, token, and equity on offer.
               </>
@@ -438,12 +439,12 @@ export function SalaryEvidenceBlock({
                   href={sourceUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1 font-bold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                  className="inline-flex items-center gap-1 font-medium text-blue-deep underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
                 >
                   Source: {sourceLabel}
                 </a>
               ) : (
-                <span className="font-bold">Source: {sourceLabel}</span>
+                <span className="font-medium">Source: {sourceLabel}</span>
               ))}
             {reviewPeriod && <span>{reviewPeriod}</span>}
             {lastReviewed && <span>Reviewed {lastReviewed}</span>}
@@ -461,11 +462,11 @@ export function SalaryEvidenceBlock({
           without a number being invented for their specific role. */}
       <div className="card-surface card-surface--informational p-4 sm:p-5">
         <SubHeading>Wider Web3 market, for scale</SubHeading>
-        <p className="mt-2 text-base font-extrabold text-ink">
+        <p className="mt-2 text-base font-semibold text-ink">
           Typical advertised averages {marketContext.currency}
           {marketContext.averagesMin.toLocaleString("en-US")} – {marketContext.currency}
           {marketContext.averagesMax.toLocaleString("en-US")}
-          <span className="font-bold text-muted"> / year</span>
+          <span className="font-medium text-muted"> / year</span>
         </p>
         <p className="mt-1 text-sm leading-6 text-muted">
           Individual postings run from about {marketContext.currency}
@@ -478,7 +479,7 @@ export function SalaryEvidenceBlock({
             href={marketContext.sourceUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1 font-bold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            className="inline-flex items-center gap-1 font-medium text-blue-deep underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
           >
             Source: {marketContext.sourceLabel}
           </a>
@@ -496,20 +497,20 @@ export function SalaryEvidenceBlock({
       <div className="flex flex-wrap items-center gap-4">
         <Link
           href={methodologyHref}
-          className="inline-flex items-center gap-1 text-sm font-extrabold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          className="inline-flex items-center gap-1 text-sm font-semibold text-blue-deep underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
         >
           Read the salary methodology
         </Link>
       </div>
 
       <details className="rounded-2xl border border-border bg-elevated p-4">
-        <summary className="cursor-pointer text-sm font-extrabold text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+        <summary className="cursor-pointer text-sm font-semibold text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue">
           {legend.title}
         </summary>
         <dl className="mt-3 space-y-2">
           {legend.tiers.map((row) => (
             <div key={row.tier} className="grid gap-1 sm:grid-cols-[8rem_1fr]">
-              <dt className="text-sm font-bold text-ink">{row.tier}</dt>
+              <dt className="text-sm font-medium text-ink">{row.tier}</dt>
               <dd className="text-sm leading-6 text-muted">{row.meaning}</dd>
             </div>
           ))}
@@ -538,7 +539,7 @@ export function CareerProgression({
         <div className="mt-3 flex flex-wrap items-center gap-2">
           {progression.map((step, i) => (
             <span key={i} className="inline-flex items-center gap-2">
-              <span className="rounded-xl border border-border bg-elevated px-3 py-2 text-sm font-bold text-ink">{step}</span>
+              <span className="rounded-xl border border-border bg-elevated px-3 py-2 text-sm font-medium text-ink">{step}</span>
               {i < progression.length - 1 && <ArrowRight className="h-4 w-4 text-muted" aria-hidden="true" />}
             </span>
           ))}
@@ -587,10 +588,10 @@ export function RelatedRoles({ roles }: { roles: RelatedRole[] }) {
           className="card-surface card-surface--interactive group flex items-center justify-between p-4"
         >
           <span>
-            <span className="block text-xs font-bold uppercase tracking-[0.1em] text-muted">{role.lane}</span>
-            <span className="mt-1 block font-extrabold text-ink">{role.title}</span>
+            <span className="block text-xs font-medium uppercase tracking-[0.1em] text-muted">{role.lane}</span>
+            <span className="mt-1 block font-semibold text-ink">{role.title}</span>
           </span>
-          <ArrowRight className="h-4 w-4 text-blue-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+          <ArrowRight className="h-4 w-4 text-blue-deep transition-transform group-hover:translate-x-1" aria-hidden="true" />
         </Link>
       ))}
     </div>
@@ -604,20 +605,20 @@ export function SourceAndReviewStatus() {
     <div className="mt-12 border-t border-border pt-12">
       <div className="card-surface card-surface--informational p-4 text-sm leading-6 text-muted">
       <p>
-        <span className="font-bold text-ink">How this guide is built.</span> Role content is drawn from current
+        <span className="font-medium text-ink">How this guide is built.</span> Role content is drawn from current
         first-party hiring material and reputable industry evidence, with compensation labelled by confidence and
         evidence tier rather than a single number.
       </p>
       <div className="mt-2 flex flex-wrap gap-4">
         <Link
           href="/methodology"
-          className="inline-flex items-center gap-1 font-bold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          className="inline-flex items-center gap-1 font-medium text-blue-deep underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
         >
           Read the methodology
         </Link>
         <Link
           href="/disclaimers"
-          className="inline-flex items-center gap-1 font-bold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          className="inline-flex items-center gap-1 font-medium text-blue-deep underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
         >
           Read the disclaimers
         </Link>

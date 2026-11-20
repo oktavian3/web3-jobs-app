@@ -1,21 +1,21 @@
 import Link from "next/link";
-import { ArrowUpRight, CheckCircle2, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import type { Role } from "@/data/roles";
 import type { JobBoard } from "@/data/jobBoards";
 
 export function RoleCard({ role }: { role: Role }) {
   return (
-    <Link href={`/roles/${role.slug}`} className="card-surface card-surface--interactive group relative flex h-full flex-col overflow-hidden p-5">
-      <div className="pointer-events-none absolute -right-12 -top-16 h-32 w-32 rounded-full bg-blue-200/35 blur-2xl transition group-hover:bg-blue-300/50" />
-      <div className="relative flex items-start justify-between gap-3">
-        <span className="rounded-full border border-blue-100 bg-highlight px-3 py-1 text-xs font-extrabold text-blue-700">{role.lane}</span>
-        <span className="grid h-9 w-9 place-items-center rounded-full border border-blue-100 bg-elevated text-blue-700 shadow-soft transition group-hover:translate-x-1 group-hover:-translate-y-1">
-          <ArrowUpRight className="h-4 w-4" />
-        </span>
+    <Link
+      href={`/roles/${role.slug}`}
+      className="card-surface card-surface--interactive group relative flex h-full flex-col p-5 sm:p-6"
+    >
+      <div className="flex items-start justify-between gap-3">
+        <span className="eyebrow">{role.lane}</span>
+        <ArrowUpRight className="h-4 w-4 shrink-0 text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue" aria-hidden="true" />
       </div>
-      <h3 className="relative mt-5 text-xl font-extrabold tracking-tight text-ink">{role.title}</h3>
-      <p className="relative mt-2 flex-1 text-sm leading-6 text-muted">{role.summary}</p>
-      <div className="relative mt-5 flex flex-wrap gap-2">
+      <h3 className="mt-6 text-[20px] font-medium tracking-[-0.025em] text-ink">{role.title}</h3>
+      <p className="mt-2 flex-1 text-[14px] leading-[1.6] text-muted">{role.summary}</p>
+      <div className="mt-5 flex flex-wrap gap-1.5 border-t border-border pt-4">
         <span className="tag">{role.level}</span>
         <span className="tag">{role.mode}</span>
         {role.tags.slice(0, 2).map((tag) => (
@@ -24,43 +24,43 @@ export function RoleCard({ role }: { role: Role }) {
           </span>
         ))}
       </div>
-      <span className="relative mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-        View Role <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-      </span>
+      <span className="sr-only">View Role</span>
     </Link>
   );
 }
 
 export function Checklist({ items }: { items: string[] }) {
   return (
-    <div className="space-y-3">
-      {items.map((item, index) => (
-        <div key={item} className="flex gap-3 rounded-xl border border-blue-100 bg-elevated p-3 transition hover:border-blue-200 hover:bg-highlight">
-          <CheckCircle2 className={`mt-0.5 h-5 w-5 ${index < 3 ? "text-blue-600" : "text-muted"}`} />
-          <span className="text-sm leading-6 text-ink">{item}</span>
-        </div>
+    <ul className="divide-y divide-border overflow-hidden rounded-[16px] border border-border bg-surface">
+      {items.map((item) => (
+        <li key={item} className="flex gap-3 px-4 py-3">
+          <Check className="mt-0.5 h-4 w-4 shrink-0 text-blue" strokeWidth={2.4} aria-hidden="true" />
+          <span className="text-[14px] leading-[1.6] text-ink">{item}</span>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 
 export function JobBoardCard({ board }: { board: JobBoard }) {
   return (
-    <article className="card-surface card-surface--interactive group relative flex h-full flex-col overflow-hidden p-5">
-      <div className="pointer-events-none absolute -right-10 -top-12 h-28 w-28 rounded-full bg-blue-200/40 blur-2xl transition group-hover:bg-blue-300/55" />
-      <div className="relative flex items-start justify-between gap-4">
-        <div>
-          <span className="mb-4 inline-grid h-11 w-11 place-items-center rounded-2xl bg-blue-600 text-sm font-extrabold text-white shadow-blue">
-            {board.name.slice(0, 1)}
-          </span>
-          <h3 className="text-xl font-extrabold tracking-tight text-ink">{board.name}</h3>
-          <p className="mt-2 text-sm leading-6 text-muted">{board.bestFor}</p>
+    <article className="card-surface card-surface--interactive group relative flex h-full flex-col p-5 sm:p-6">
+      <div className="flex items-start gap-4">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[12px] border border-border bg-soft text-[15px] font-semibold text-ink" aria-hidden="true">
+          {board.name.slice(0, 1)}
+        </span>
+        <div className="min-w-0 flex-1">
+          <h3 className="text-[18px] font-medium tracking-[-0.02em] text-ink">
+            <a href={board.url} target="_blank" rel="noreferrer" className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:rounded-[20px] focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:outline-blue">
+              {board.name}
+              <span className="sr-only"> (opens external site)</span>
+            </a>
+          </h3>
+          <p className="mt-1 text-[14px] leading-[1.55] text-muted">{board.bestFor}</p>
         </div>
-        <a href={board.url} target="_blank" rel="noreferrer" className="icon-button transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:border-blue-300 group-hover:text-blue-700" aria-label={`Visit ${board.name}`}>
-          <ExternalLink className="h-4 w-4" />
-        </a>
+        <ArrowUpRight className="h-4 w-4 shrink-0 text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue" aria-hidden="true" />
       </div>
-      <dl className="relative mt-5 grid gap-3 text-sm sm:grid-cols-2">
+      <dl className="mt-5 grid grid-cols-2 gap-2 text-sm">
         <div className="mini-stat">
           <dt>Remote</dt>
           <dd>{board.remoteSupport}</dd>
@@ -69,22 +69,22 @@ export function JobBoardCard({ board }: { board: JobBoard }) {
           <dt>Salary</dt>
           <dd>{board.salaryVisibility}</dd>
         </div>
-        <div className="mini-stat sm:col-span-2">
+        <div className="mini-stat col-span-2">
           <dt>Application style</dt>
           <dd>{board.applicationStyle}</dd>
         </div>
       </dl>
-      <div className="relative mt-5 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-wrap gap-1.5">
         {board.commonRoleTypes.slice(0, 4).map((roleType) => (
           <span className="tag" key={roleType}>
             {roleType}
           </span>
         ))}
       </div>
-      <p className="relative mt-5 flex-1 text-sm leading-6 text-muted">{board.note}</p>
-      <a href={board.url} target="_blank" rel="noreferrer" className="relative mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-        Visit Platform <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-      </a>
+      <p className="mt-4 flex-1 text-[13.5px] leading-[1.6] text-muted">{board.note}</p>
+      <span className="mt-4 inline-flex items-center gap-1.5 text-[13.5px] font-medium text-blue-deep" aria-hidden="true">
+        Visit Platform <ArrowUpRight className="h-4 w-4" />
+      </span>
     </article>
   );
 }

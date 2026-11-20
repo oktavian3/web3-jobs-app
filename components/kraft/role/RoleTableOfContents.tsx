@@ -36,9 +36,9 @@ export default function RoleTableOfContents({ items }: { items: TocItem[] }) {
           <a
             href={`#${item.id}`}
             aria-current={active === item.id ? "true" : undefined}
-            className={`block rounded-lg border-l-2 px-3 py-1.5 text-sm font-bold transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+            className={`block rounded-lg border-l-2 px-3 py-1.5 text-sm font-medium transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue ${
               active === item.id
-                ? "border-blue-600 bg-highlight text-blue-700"
+                ? "border-blue bg-highlight text-blue-deep"
                 : "border-transparent text-muted hover:bg-soft hover:text-ink"
             }`}
           >
@@ -53,7 +53,7 @@ export default function RoleTableOfContents({ items }: { items: TocItem[] }) {
     <>
       {/* Desktop: sticky vertical navigation. */}
       <nav aria-label="On this page" className="hidden lg:block sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-2">
-        <p className="px-3 pb-2 text-xs font-extrabold uppercase tracking-[0.14em] text-muted">On this page</p>
+        <p className="px-3 pb-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted">On this page</p>
         {list}
       </nav>
 
@@ -62,7 +62,7 @@ export default function RoleTableOfContents({ items }: { items: TocItem[] }) {
         className="lg:hidden rounded-2xl border border-border bg-elevated p-2"
         onToggle={(event) => setMobileOpen(event.currentTarget.open)}
       >
-        <summary className="flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-sm font-extrabold text-ink [&::-webkit-details-marker]:hidden [&::marker]:content-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+        <summary className="flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-sm font-semibold text-ink [&::-webkit-details-marker]:hidden [&::marker]:content-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue">
           On this page
           <ChevronDown
             className={`h-4 w-4 text-muted transition-transform duration-200 ${mobileOpen ? "rotate-180" : ""}`}

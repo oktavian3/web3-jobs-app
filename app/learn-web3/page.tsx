@@ -47,7 +47,7 @@ export default function LearnWeb3Page() {
 
         <section className="card-surface card-surface--featured p-5 sm:p-8">
           <span className="tag">Start here</span>
-          <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Step 1 - Web3 foundations</h2>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Step 1 - Web3 foundations</h2>
           <p className="mt-2 max-w-3xl text-base leading-7 text-muted">Wallets, safety, and vocabulary that every lane assumes you already know.</p>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {foundationsItems.map((item, index) => (
@@ -56,13 +56,13 @@ export default function LearnWeb3Page() {
                     child element, never a class on the card itself. */}
                 {index === 0 && <span className="pixel-accent" aria-hidden="true" />}
                 <span className="tag">{item.level}</span>
-                <h3 className="mt-3 text-lg font-extrabold tracking-tight text-ink">{item.title}</h3>
+                <h3 className="mt-3 text-lg font-semibold tracking-tight text-ink">{item.title}</h3>
                 <p className="mt-2 flex-1 text-sm leading-6 text-muted">{item.whyItMatters}</p>
                 <a
                   href={item.url}
                   target={item.isExternal ? "_blank" : undefined}
                   rel={item.isExternal ? "noreferrer" : undefined}
-                  className="mt-4 inline-flex items-center gap-1 text-sm font-extrabold text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                  className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
                 >
                   {item.isExternal ? "Open external resource" : "Open"}
                   {item.isExternal ? <ArrowUpRight className="h-4 w-4" aria-hidden="true" /> : <ArrowRight className="h-4 w-4" aria-hidden="true" />}
@@ -73,7 +73,7 @@ export default function LearnWeb3Page() {
         </section>
 
         <section className="border-t border-border pt-14">
-          <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Step 2 - Choose a lane and a role</h2>
+          <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Step 2 - Choose a lane and a role</h2>
           <p className="mt-2 max-w-3xl text-base leading-7 text-muted">
             Learning without a target role tends to stay abstract. Pick a lane, then a role, to see resources matched to it.
           </p>

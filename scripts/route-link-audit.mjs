@@ -102,7 +102,7 @@ const seedRoutes = [
   "/portfolio",
   "/get-hired",
   "/learn-web3",
-  "/job-boards",
+  "/jobs",
   "/disclaimers",
   "/faq",
 ];

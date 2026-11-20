@@ -27,19 +27,19 @@ export default function PortfolioPage() {
             <article key={project.slug} className="card-surface flex h-full flex-col p-5">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="tag">{project.lane}</span>
-                <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-amber-900">Simulated</span>
+                <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-amber-900">Simulated</span>
               </div>
-              <h2 className="mt-4 text-xl font-extrabold tracking-tight text-ink">{project.roleTitle}</h2>
+              <h2 className="mt-4 text-xl font-semibold tracking-tight text-ink">{project.roleTitle}</h2>
               <p className="mt-2 flex-1 text-sm leading-6 text-muted">{project.objective}</p>
               <div className="mt-4 rounded-2xl bg-soft p-3">
-                <p className="text-xs font-extrabold uppercase tracking-[0.1em] text-muted">Key deliverables</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Key deliverables</p>
                 <p className="mt-1 text-sm leading-6 text-ink">{project.deliverables.slice(0, 3).join(", ")}</p>
               </div>
               <div className="mt-4 flex flex-wrap gap-4">
-                <Link href={`/portfolio/${project.slug}`} className="inline-flex items-center gap-1 text-sm font-extrabold text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                <Link href={`/portfolio/${project.slug}`} className="inline-flex items-center gap-1 text-sm font-semibold text-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue">
                   Open brief <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
-                <Link href={`/roles/${project.targetRole}`} className="inline-flex items-center gap-1 text-sm font-bold text-muted hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                <Link href={`/roles/${project.targetRole}`} className="inline-flex items-center gap-1 text-sm font-medium text-muted hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue">
                   Related role <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </div>

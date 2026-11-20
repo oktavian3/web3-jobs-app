@@ -141,9 +141,9 @@ export default function CVMakerWizard() {
   return (
     <div>
       {justRestored && (
-        <div className="no-print mb-6 flex items-center justify-between gap-3 rounded-2xl border border-blue-100 bg-highlight px-4 py-3 text-sm font-bold text-blue-900">
+        <div className="no-print mb-6 flex items-center justify-between gap-3 rounded-2xl border border-border bg-highlight px-4 py-3 text-sm font-medium text-blue-deep">
           <span>Restored your last draft from this browser.</span>
-          <button type="button" onClick={() => setJustRestored(false)} className="text-blue-700 underline underline-offset-2">
+          <button type="button" onClick={() => setJustRestored(false)} className="text-blue-deep underline underline-offset-2">
             Dismiss
           </button>
         </div>
@@ -158,7 +158,7 @@ export default function CVMakerWizard() {
             role="tab"
             aria-selected={step.id === activeStepId}
             onClick={() => setActiveStepId(step.id)}
-            className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-extrabold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+            className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue ${
               step.id === activeStepId
                 ? "bg-ink text-white"
                 : "border border-border bg-elevated text-muted hover:bg-highlight hover:text-ink"
@@ -186,7 +186,7 @@ export default function CVMakerWizard() {
             <button
               type="button"
               onClick={resetDraft}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-muted hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-muted hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
             >
               <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" /> Start over
             </button>
@@ -203,7 +203,7 @@ export default function CVMakerWizard() {
 
         {/* Live preview column */}
         <div className="lg:sticky lg:top-24">
-          <p className="no-print mb-3 text-xs font-extrabold uppercase tracking-[0.1em] text-muted">Live preview</p>
+          <p className="no-print mb-3 text-xs font-semibold uppercase tracking-[0.1em] text-muted">Live preview</p>
           {/* cv-preview-frame's own overflow/height must be reset in the print
               stylesheet - #cv-preview becomes position:absolute when printing
               (see globals.css), and an overflow:auto ancestor would otherwise
