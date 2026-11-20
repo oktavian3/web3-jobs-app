@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>
             <Link href="/" className="inline-flex items-center gap-2.5" aria-label="KRAFT home">
-              <Image src="/kraft%20logo%20trans.png" alt="" width={32} height={32} className="h-8 w-8 object-contain brightness-0 invert" />
+              <Image src="/kraft%20logo%20trans.png" alt="" width={32} height={32} className="h-8 w-8 object-contain invert" />
               <span className="text-[18px] font-semibold tracking-[-0.03em] text-white">KRAFT</span>
             </Link>
             <p className="mt-5 max-w-[300px] text-[14.5px] leading-[1.6] text-on-navy/75">

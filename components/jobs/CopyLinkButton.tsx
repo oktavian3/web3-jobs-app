@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check, Link2 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function CopyLinkButton() {
   const [copied, setCopied] = useState(false);
@@ -12,9 +13,10 @@ export default function CopyLinkButton() {
         try {
           await navigator.clipboard.writeText(window.location.href);
           setCopied(true);
+          toast.success("Link copied");
           setTimeout(() => setCopied(false), 1800);
         } catch {
-          /* clipboard blocked: no-op */
+          toast.error("Couldn't copy - copy the address bar instead.");
         }
       }}
       className="btn-secondary !h-10 w-full !rounded-[12px] !text-[13.5px]"

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
+import { Drawer } from "vaul";
 import Fuse from "fuse.js";
 import { parseAsArrayOf, parseAsBoolean, parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs";
 import { Check, Search, SlidersHorizontal, X } from "lucide-react";
@@ -12,9 +13,9 @@ const SORTS = ["newest", "oldest", "company"] as const;
 
 const filterParsers = {
   q: parseAsString.withDefault(""),
-  lane: parseAsArrayOf(parseAsString).withDefault([]),
-  work: parseAsArrayOf(parseAsString).withDefault([]),
-  level: parseAsArrayOf(parseAsString).withDefault([]),
+  lane: parseAsArrayOf(parseAsString, "|").withDefault([]),
+  work: parseAsArrayOf(parseAsString, "|").withDefault([]),
+  level: parseAsArrayOf(parseAsString, "|").withDefault([]),
   saved: parseAsBoolean.withDefault(false),
   sort: parseAsStringLiteral(SORTS).withDefault("newest"),
 };
@@ -45,14 +46,6 @@ export default function JobBoard({ jobs, roleTitles }: { jobs: PublicJob[]; role
   const [f, setF] = useQueryStates(filterParsers, { history: "replace", shallow: true, throttleMs: 150 });
   const { saved } = useSavedJobs();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const drawerRef = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    const d = drawerRef.current;
-    if (!d) return;
-    if (drawerOpen && !d.open) d.showModal();
-    if (!drawerOpen && d.open) d.close();
-  }, [drawerOpen]);
 
   const fuse = useMemo(
     () =>
@@ -216,33 +209,33 @@ export default function JobBoard({ jobs, roleTitles }: { jobs: PublicJob[]; role
         )}
       </div>
 
-      <dialog
-        ref={drawerRef}
-        onClose={() => setDrawerOpen(false)}
-        onClick={(e) => {
-          if (e.target === drawerRef.current) setDrawerOpen(false);
-        }}
-        aria-label="Filters"
-        className="m-0 mt-auto max-h-[88dvh] w-full max-w-none rounded-t-[24px] bg-transparent p-0 backdrop:bg-ink/40"
-      >
-        <div className="sheet-panel--bottom flex max-h-[88dvh] flex-col rounded-t-[24px] bg-canvas">
-          <div className="flex items-center justify-between border-b border-border px-5 py-3">
-            <span className="text-[17px] font-medium">Filters</span>
-            <button type="button" onClick={() => setDrawerOpen(false)} className="grid h-11 w-11 place-items-center rounded-full" aria-label="Close filters">
-              <X className="h-5 w-5" aria-hidden="true" />
-            </button>
-          </div>
-          <div className="overflow-y-auto px-3 py-5">{filters}</div>
-          <div className="flex gap-2 border-t border-border p-4">
-            <button type="button" onClick={clearAll} className="btn-secondary flex-1">
-              Clear all
-            </button>
-            <button type="button" onClick={() => setDrawerOpen(false)} className="btn-primary flex-[2]">
-              Show {results.length} results
-            </button>
-          </div>
-        </div>
-      </dialog>
+      {/* Mobile filters: vaul bottom sheet (drag to dismiss, focus-trapped, Esc closes). */}
+      <Drawer.Root open={drawerOpen} onOpenChange={setDrawerOpen}>
+        <Drawer.Portal>
+          <Drawer.Overlay className="fixed inset-0 z-[60] bg-ink/40" />
+          <Drawer.Content
+            aria-describedby={undefined}
+            className="fixed inset-x-0 bottom-0 z-[61] flex max-h-[88dvh] flex-col rounded-t-[24px] bg-canvas outline-none"
+          >
+            <div className="mx-auto mt-2.5 h-1.5 w-10 shrink-0 rounded-full bg-border-strong" aria-hidden="true" />
+            <div className="flex items-center justify-between border-b border-border px-5 py-2">
+              <Drawer.Title className="text-[17px] font-medium">Filters</Drawer.Title>
+              <Drawer.Close className="grid h-11 w-11 place-items-center rounded-full" aria-label="Close filters">
+                <X className="h-5 w-5" aria-hidden="true" />
+              </Drawer.Close>
+            </div>
+            <div className="overflow-y-auto px-3 py-5" data-vaul-no-drag>{filters}</div>
+            <div className="flex gap-2 border-t border-border p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+              <button type="button" onClick={clearAll} className="btn-secondary flex-1">
+                Clear all
+              </button>
+              <button type="button" onClick={() => setDrawerOpen(false)} className="btn-primary flex-[2]">
+                Show {results.length} {results.length === 1 ? "result" : "results"}
+              </button>
+            </div>
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.Root>
     </div>
   );
 }

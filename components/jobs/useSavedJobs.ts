@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useSyncExternalStore } from "react";
+import { toast } from "sonner";
 
 const KEY = "kraft:saved-jobs";
 const EVENT = "kraft:saved-jobs-change";
@@ -9,7 +10,12 @@ let cache: { raw: string | null; ids: string[] } = { raw: null, ids: EMPTY };
 
 function read(): string[] {
   if (typeof window === "undefined") return EMPTY;
-  const raw = window.localStorage.getItem(KEY);
+  let raw: string | null = null;
+  try {
+    raw = window.localStorage.getItem(KEY);
+  } catch {
+    return cache.ids;
+  }
   if (raw === cache.raw) return cache.ids;
   let ids: string[] = EMPTY;
   try {
@@ -37,8 +43,15 @@ export function useSavedJobs() {
   const toggle = useCallback((id: string) => {
     const current = read();
     const next = current.includes(id) ? current.filter((x) => x !== id) : [id, ...current];
-    window.localStorage.setItem(KEY, JSON.stringify(next));
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify(next));
+    } catch {
+      toast.error("Couldn't save - browser storage is blocked.");
+      return;
+    }
     window.dispatchEvent(new Event(EVENT));
+    if (next.includes(id)) toast.success("Saved to this browser", { description: "Find it under Saved only on /jobs." });
+    else toast("Removed from saved");
   }, []);
   return { saved, isSaved: (id: string) => saved.includes(id), toggle };
 }

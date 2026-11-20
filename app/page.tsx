@@ -11,6 +11,8 @@ import LearningPreview from "@/components/kraft/LearningPreview";
 import CompanyMark from "@/components/jobs/CompanyMark";
 import { formatShortDate } from "@/components/jobs/format";
 import { getPublicJobs } from "@/lib/jobs/repository";
+import LandingJobs from "@/components/jobs/LandingJobs";
+import { Picks, SafetyCard } from "@/components/jobs/JobsAside";
 
 // Static page, refreshed every 5 minutes so newly published jobs show up in the hero card.
 export const revalidate = 300;
@@ -44,10 +46,12 @@ const featuredRole = getRoleBySlug("community-manager") ?? roles[0];
 const featuredRelatedRole = featuredRole.relatedRoleSlugs[0] ? getRoleBySlug(featuredRole.relatedRoleSlugs[0]) : undefined;
 const featuredPortfolio = getPortfolioProjectBySlug(featuredRole.slug);
 const heroRole = getRoleBySlug("growth-manager") ?? roles[0];
+const roleTitles = Object.fromEntries(roles.map((r) => [r.slug, r.title]));
 const flowLabels = ["Role", "Skills", "Proof of Work", "Jobs"];
 
 export default async function Home() {
-  const heroJobs = (await getPublicJobs()).slice(0, 3);
+  const allJobs = await getPublicJobs();
+  const heroJobs = allJobs.slice(0, 3);
 
   return (
     <div className="bg-canvas">
@@ -170,6 +174,29 @@ export default async function Home() {
               </div>
             ))}
           </dl>
+        </Container>
+      </section>
+
+      {/* ── Jobs (section 2: right under hero + metrics) ───────────────── */}
+      <section id="jobs" className="scroll-mt-24 pt-20 md:pt-28" aria-labelledby="jobs-h">
+        <Container width="wide">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <h2 id="jobs-h" className="max-w-[860px] text-[34px] font-medium leading-[1.02] tracking-[-0.045em] sm:text-[44px] md:text-[52px]">
+              New opportunities <span className="accent">curated by KRAFT</span>
+            </h2>
+            <Link href="/jobs" className="btn-secondary shrink-0 self-start md:self-auto">
+              Browse Job Boards <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+            <LandingJobs jobs={allJobs} roleTitles={roleTitles} />
+            <aside className="space-y-5" aria-label="Before you apply">
+              <SafetyCard />
+              <div className="hidden sm:block">
+                <Picks limit={5} />
+              </div>
+            </aside>
+          </div>
         </Container>
       </section>
 

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Newsreader } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Toaster } from "sonner";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -53,6 +54,7 @@ export default function RootLayout({
             <Footer />
           </HideOnAdmin>
         </NuqsAdapter>
+        <Toaster position="bottom-center" toastOptions={{ className: "!rounded-[14px] !border-border !font-sans" }} />
         <GoogleAnalytics gaId="G-58F9FBFVMS" />
       </body>
     </html>

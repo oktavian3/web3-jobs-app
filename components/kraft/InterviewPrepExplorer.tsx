@@ -160,7 +160,7 @@ export default function InterviewPrepExplorer({
               </ul>
             </div>
             <div className="card-surface card-surface--next-step p-4 sm:p-5">
-              <h3 className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">Self-review after practicing</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.1em] text-blue-deep">Self-review after practicing</h3>
               <div className="mt-3 flex flex-wrap gap-2">
                 {framework.selfReview.map((item) => (
                   <span key={item} className="tag">{item}</span>

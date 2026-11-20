@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, ArrowUpRight, Check, ShieldCheck } from "lucide-react";
+import { ArrowRight, Check, ShieldCheck } from "lucide-react";
 import { getRoleBySlug } from "@/data/roles";
 import CompanyMark from "@/components/jobs/CompanyMark";
 import JobRow from "@/components/jobs/JobRow";
 import SaveJobButton from "@/components/jobs/SaveJobButton";
 import CopyLinkButton from "@/components/jobs/CopyLinkButton";
+import ApplyButton from "@/components/jobs/ApplyButton";
 import { formatLongDate } from "@/components/jobs/format";
 import { getPublicJob, getPublicJobs } from "@/lib/jobs/repository";
 import { safety, trackingAdvice } from "@/lib/jobs/content";
@@ -64,10 +65,7 @@ export default async function JobDetailPage({ params }: Props) {
           <p className="text-[13px] text-muted">{job.company}</p>
         </div>
       </div>
-      <a href={job.applyUrl} target="_blank" rel="noopener noreferrer" className="btn-primary mt-6 !h-12 w-full !rounded-[14px] !text-[15px]">
-        Apply on official site <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-        <span className="sr-only">(opens external site)</span>
-      </a>
+      <ApplyButton applyUrl={job.applyUrl} company={job.company} />
       <p className="eyebrow mt-2.5 text-center !text-[10.5px]">Opens external site</p>
       <div className="mt-5 grid grid-cols-2 gap-2">
         <SaveJobButton id={job.id} title={job.title} variant="button" />
@@ -200,7 +198,7 @@ export default async function JobDetailPage({ params }: Props) {
             <section aria-labelledby="more-h">
               <div className="flex items-end justify-between gap-4">
                 <h2 id="more-h" className="text-[22px] font-medium tracking-[-0.025em]">More in {job.lane}</h2>
-                <Link href={`/jobs?lane=${encodeURIComponent(job.lane)}`} className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-blue-deep">
+                <Link href={`/jobs?lane=${encodeURIComponent(job.lane)}`} className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[13.5px] font-medium text-blue-deep">
                   View all <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </div>

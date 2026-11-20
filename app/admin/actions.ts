@@ -57,7 +57,9 @@ function parseForm(formData: FormData) {
 }
 
 function revalidatePublic(id?: string) {
+  revalidatePath("/");
   revalidatePath("/jobs");
+  revalidatePath("/api/search-index");
   revalidatePath("/admin");
   if (id) revalidatePath(`/jobs/${id}`);
 }

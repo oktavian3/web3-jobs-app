@@ -309,3 +309,21 @@ textarea.admin-input { height: auto; padding: .7rem .85rem; line-height: 1.6; }
 .admin-input::placeholder { color: #8a93a6; }
 .admin-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(20, 107, 255, .18); }
 .admin-input[aria-invalid="true"] { border-color: #b42318; }
+
+/* ── cmdk command palette ─────────────────────────────────────────────── */
+.cmdk-group [cmdk-group-heading] {
+  padding: 10px 12px 6px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cmdk-overlay { animation: fadeIn .16s ease both; }
+.cmdk-content { animation: paletteIn .18s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes paletteIn { from { opacity: 0; transform: translate(-50%, 6px) scale(.985); } to { opacity: 1; transform: translate(-50%, 0) scale(1); } }
+
+/* ── sonner toasts ────────────────────────────────────────────────────── */
+[data-sonner-toaster] { --font: var(--font-geist), system-ui, sans-serif; }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
