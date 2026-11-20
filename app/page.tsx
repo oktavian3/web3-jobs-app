@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Search, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Search } from "lucide-react";
 import { careerLanes, roles, getRoleBySlug } from "@/data/roles";
 import { glossaryTerms } from "@/data/glossary";
 import { jobBoards } from "@/data/jobBoards";
@@ -8,11 +8,9 @@ import { getPortfolioProjectBySlug } from "@/data/portfolioProjects";
 import { Container, SectionHeading, PrimaryLink, SecondaryLink, FinalCTA } from "@/components/kraft/Primitives";
 import { RoleCard } from "@/components/kraft/Cards";
 import LearningPreview from "@/components/kraft/LearningPreview";
-import CompanyMark from "@/components/jobs/CompanyMark";
 import { formatShortDate } from "@/components/jobs/format";
 import { getPublicJobs } from "@/lib/jobs/repository";
-import LandingJobs from "@/components/jobs/LandingJobs";
-import { Picks, SafetyCard } from "@/components/jobs/JobsAside";
+import HeroLaptop from "@/components/landing/HeroLaptop";
 
 // Static page, refreshed every 5 minutes so newly published jobs show up in the hero card.
 export const revalidate = 300;
@@ -45,13 +43,21 @@ const featuredLanes = careerLanes.filter((lane) => featuredLaneNames.has(lane.la
 const featuredRole = getRoleBySlug("community-manager") ?? roles[0];
 const featuredRelatedRole = featuredRole.relatedRoleSlugs[0] ? getRoleBySlug(featuredRole.relatedRoleSlugs[0]) : undefined;
 const featuredPortfolio = getPortfolioProjectBySlug(featuredRole.slug);
-const heroRole = getRoleBySlug("growth-manager") ?? roles[0];
 const roleTitles = Object.fromEntries(roles.map((r) => [r.slug, r.title]));
-const flowLabels = ["Role", "Skills", "Proof of Work", "Jobs"];
 
 export default async function Home() {
   const allJobs = await getPublicJobs();
-  const heroJobs = allJobs.slice(0, 3);
+  // Lead with a job that has a role guide, so the "role guide" scene has content.
+  const lead = allJobs.find((j) => j.roleSlug === "growth-manager") ?? allJobs.find((j) => j.roleSlug) ?? allJobs[0];
+  const laptopJobs = [lead, ...allJobs.filter((j) => j !== lead)].filter(Boolean).slice(0, 3).map((j) => ({
+    id: j.id,
+    title: j.title,
+    company: j.company,
+    workType: j.workType,
+    date: formatShortDate(j.postedAt),
+    roleTitle: j.roleSlug ? roleTitles[j.roleSlug] : undefined,
+  }));
+  const laptopQuery = lead?.roleSlug ? roleTitles[lead.roleSlug] ?? "Growth" : "Community";
 
   return (
     <div className="bg-canvas">
@@ -90,66 +96,10 @@ export default async function Home() {
             </div>
           </div>
 
-          {/* Product card: a real role guide + the latest curated jobs */}
+          {/* Product visual: 3D laptop looping the KRAFT apply flow on real jobs */}
           <div className="relative hidden min-w-0 sm:block">
-            <div className="absolute -inset-6 hidden rounded-[36px] border border-border bg-gradient-to-b from-white/60 to-transparent lg:block" aria-hidden="true" />
-            <div className="relative overflow-hidden rounded-[24px] bg-navy text-on-navy shadow-lift">
-              <div className="flex h-11 items-center gap-2 border-b border-white/10 px-5" aria-hidden="true">
-                <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                <span className="ml-3 truncate font-mono text-[11.5px] text-on-navy/60">usekraft.xyz/roles/{heroRole.slug}</span>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center justify-between gap-3">
-                  <span className="eyebrow !text-on-navy/60">{heroRole.lane}</span>
-                  <span className="rounded-full border border-white/15 px-2 py-0.5 font-mono text-[11px] text-on-navy/80">Confidence: {heroRole.compensationConfidence}</span>
-                </div>
-                <p className="mt-3 text-[28px] font-medium tracking-[-0.03em]">{heroRole.title}</p>
-                <p className="mt-2 text-[14px] leading-[1.55] text-on-navy/75">{heroRole.summary}</p>
-                <ol className="mt-6 grid grid-cols-4 gap-1.5" aria-label="KRAFT flow">
-                  {flowLabels.map((s, i) => (
-                    <li key={s} className={`rounded-[10px] px-2.5 py-2 ${i === 3 ? "bg-blue text-white" : "bg-white/[.06] text-on-navy/80"}`}>
-                      <span className={`block font-mono text-[10px] ${i === 3 ? "text-white" : ""}`}>0{i + 1}</span>
-                      <span className="mt-0.5 block text-[11.5px] leading-tight lg:text-[12.5px]">{s}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-              <div className="mx-3 mb-3 rounded-[16px] bg-surface text-ink">
-                <div className="flex items-center justify-between gap-3 px-4 pb-2 pt-4">
-                  <span className="eyebrow">New opportunities curated by KRAFT</span>
-                </div>
-                <ul>
-                  {heroJobs.map((j) => (
-                    <li key={j.id} className="relative flex items-center gap-3 border-t border-border px-4 py-3">
-                      <CompanyMark company={j.company} logo={j.companyLogo} size="sm" />
-                      <span className="min-w-0 flex-1">
-                        <Link href={`/jobs/${j.id}`} className="block truncate text-[14px] font-medium after:absolute after:inset-0">
-                          {j.title}
-                        </Link>
-                        <span className="block truncate text-[12.5px] text-muted">
-                          {j.company} · {j.workType}
-                        </span>
-                      </span>
-                      <time dateTime={j.postedAt} className="font-mono text-[11px] text-muted">{formatShortDate(j.postedAt)}</time>
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/jobs" className="flex items-center justify-center gap-1.5 border-t border-border py-3 text-[13px] font-medium text-blue-deep">
-                  Browse Job Boards <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                </Link>
-              </div>
-            </div>
-            <div className="absolute -bottom-7 -left-10 hidden items-center gap-2.5 rounded-2xl border border-border bg-surface px-3.5 py-2.5 shadow-card lg:flex">
-              <span className="grid h-7 w-7 place-items-center rounded-full bg-blue-soft text-blue" aria-hidden="true">
-                <ShieldCheck className="h-4 w-4" />
-              </span>
-              <span className="text-[12.5px] leading-tight">
-                <span className="block font-medium">Verify the company domain</span>
-                <span className="text-muted">before applying.</span>
-              </span>
-            </div>
+            <HeroLaptop jobs={laptopJobs} query={laptopQuery} />
+            <p className="sr-only">Illustration: searching KRAFT jobs, opening a role guide, checking the employer domain, then applying.</p>
           </div>
         </Container>
       </section>
@@ -174,29 +124,6 @@ export default async function Home() {
               </div>
             ))}
           </dl>
-        </Container>
-      </section>
-
-      {/* ── Jobs (section 2: right under hero + metrics) ───────────────── */}
-      <section id="jobs" className="scroll-mt-24 pt-20 md:pt-28" aria-labelledby="jobs-h">
-        <Container width="wide">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <h2 id="jobs-h" className="max-w-[860px] text-[34px] font-medium leading-[1.02] tracking-[-0.045em] sm:text-[44px] md:text-[52px]">
-              New opportunities <span className="accent">curated by KRAFT</span>
-            </h2>
-            <Link href="/jobs" className="btn-secondary shrink-0 self-start md:self-auto">
-              Browse Job Boards <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </div>
-          <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-            <LandingJobs jobs={allJobs} roleTitles={roleTitles} />
-            <aside className="space-y-5" aria-label="Before you apply">
-              <SafetyCard />
-              <div className="hidden sm:block">
-                <Picks limit={5} />
-              </div>
-            </aside>
-          </div>
         </Container>
       </section>
 

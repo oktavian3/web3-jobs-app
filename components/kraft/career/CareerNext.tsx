@@ -9,7 +9,7 @@ export default function CareerNext({ heading, items }: { heading: string; items:
   return (
     <section aria-label={heading}>
       <h2 className="text-xl font-semibold tracking-tight text-ink sm:text-2xl">{heading}</h2>
-      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className={`mt-4 grid gap-3 sm:grid-cols-2 ${items.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
         {items.map((item) => (
           <Link
             key={item.href + item.title}
