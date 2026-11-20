@@ -1,188 +1,136 @@
-'use client';
+import type { Metadata } from "next";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { Pencil, Plus } from "lucide-react";
+import AdminShell from "@/components/admin/AdminShell";
+import RowActions from "@/components/admin/RowActions";
+import CompanyMark from "@/components/jobs/CompanyMark";
+import { formatLongDate } from "@/components/jobs/format";
+import { getAdminUser, getSupabaseServer } from "@/lib/supabase-auth/server";
+import { getActiveCuratedJobs } from "@/data/curatedJobs";
+import type { JobRecord } from "@/lib/jobs/schema";
 
-import { useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
+export const metadata: Metadata = { title: "Jobs" };
+export const dynamic = "force-dynamic";
 
-type JobUpdate = {
-  id: string;
-  title: string;
-  company: string;
-  description: string;
-  url: string;
-  tags: string[];
-  is_featured: boolean;
-  created_at: string;
-};
+type Search = { status?: string; q?: string; saved?: string; deleted?: string };
 
-type DraftPost = {
-  title: string;
-  company: string;
-  description: string;
-  url: string;
-  tags: string;
-  is_featured: boolean;
-};
+export default async function AdminJobsPage({ searchParams }: { searchParams: Promise<Search> }) {
+  const user = await getAdminUser();
+  if (!user) redirect("/admin/login");
+  const supabase = (await getSupabaseServer())!;
+  const sp = await searchParams;
+  const status = sp.status === "published" || sp.status === "draft" ? sp.status : "all";
+  const q = (sp.q ?? "").trim().toLowerCase();
 
-const emptyForm: DraftPost = {
-  title: '',
-  company: '',
-  description: '',
-  url: '',
-  tags: '',
-  is_featured: false,
-};
-
-const draftStorageKey = 'kraft-admin-draft-post';
-
-export default function AdminDashboard() {
-  const router = useRouter();
-  const [jobs, setJobs] = useState<JobUpdate[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [savedDraft, setSavedDraft] = useState(false);
-  const [formData, setFormData] = useState<DraftPost>(emptyForm);
-
-  const previewTags = useMemo(() => formData.tags.split(',').map((t) => t.trim()).filter(Boolean), [formData.tags]);
-
-  useEffect(() => {
-    void fetchJobs();
-    const raw = localStorage.getItem(draftStorageKey);
-    if (raw) {
-      try {
-        setFormData({ ...emptyForm, ...JSON.parse(raw) });
-      } catch {
-        localStorage.removeItem(draftStorageKey);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    const timeout = window.setTimeout(() => {
-      localStorage.setItem(draftStorageKey, JSON.stringify(formData));
-      setSavedDraft(true);
-      window.setTimeout(() => setSavedDraft(false), 1200);
-    }, 250);
-    return () => window.clearTimeout(timeout);
-  }, [formData]);
-
-  const fetchJobs = async () => {
-    const res = await fetch('/api/admin/jobs');
-    if (res.ok) setJobs(await res.json());
-  };
-
-  const clearDraft = () => {
-    localStorage.removeItem(draftStorageKey);
-    setFormData(emptyForm);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await fetch('/api/admin/jobs', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, tags: previewTags }),
-      });
-      if (res.ok) {
-        clearDraft();
-        await fetchJobs();
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDelete = async (id: string) => {
-    if (!confirm('Delete this post?')) return;
-    const res = await fetch(`/api/admin/jobs/${id}`, { method: 'DELETE' });
-    if (res.ok) await fetchJobs();
-  };
-
-  const handleLogout = async () => {
-    await fetch('/api/admin/logout', { method: 'POST' });
-    router.push('/admin/login');
-  };
+  const { data, error } = await supabase.from("jobs").select("*").order("posted_at", { ascending: false }).order("created_at", { ascending: false });
+  const all = (data ?? []) as JobRecord[];
+  const counts = { all: all.length, published: all.filter((j) => j.is_published).length, draft: all.filter((j) => !j.is_published).length };
+  const jobs = all.filter(
+    (j) =>
+      (status === "all" || (status === "published" ? j.is_published : !j.is_published)) &&
+      (!q || `${j.title} ${j.company} ${j.lane}`.toLowerCase().includes(q)),
+  );
+  const curatedCount = getActiveCuratedJobs().length;
 
   return (
-    <div className="min-h-screen bg-[#f6f1ea] text-slate-900">
-      <div className="absolute inset-x-0 top-0 h-72 bg-[radial-gradient(circle_at_top,rgba(247,168,0,0.22),transparent_55%),linear-gradient(180deg,rgba(18,24,38,0.08),transparent)] pointer-events-none" />
-      <header className="sticky top-0 z-10 border-b border-black/10 bg-white/85 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-amber-700">Admin</p>
-            <h1 className="text-xl font-black tracking-tight">Content Studio</h1>
-          </div>
-          <div className="flex items-center gap-3">
-            {savedDraft ? <span className="text-sm font-semibold text-emerald-700">Draft saved</span> : null}
-            <button onClick={handleLogout} className="rounded-full border border-black/10 px-4 py-2 text-sm font-semibold hover:bg-black hover:text-white">Logout</button>
-          </div>
+    <AdminShell email={user.email ?? ""}>
+      <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div>
+          <p className="eyebrow">Dashboard</p>
+          <h1 className="mt-2 text-[34px] font-medium leading-[1.05] tracking-[-0.04em] sm:text-[40px]">Jobs</h1>
+          <p className="mt-2 text-[14.5px] text-muted">
+            Jobs you post here appear on <Link href="/jobs" className="text-blue-deep underline underline-offset-4">/jobs</Link> once published, alongside {curatedCount} jobs synced from the KRAFT Job Bot (managed in Notion).
+          </p>
         </div>
-      </header>
+        <Link href="/admin/jobs/new" className="btn-primary shrink-0">
+          <Plus className="h-4 w-4" aria-hidden="true" /> Post a job
+        </Link>
+      </div>
 
-      <main className="relative mx-auto grid max-w-6xl gap-8 px-6 py-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <section className="rounded-[28px] border border-black/10 bg-white p-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
-          <div className="mb-6">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-700">Draft editor</p>
-            <h2 className="mt-2 text-3xl font-black tracking-tight">Write once, publish when ready.</h2>
-            <p className="mt-2 text-sm text-slate-600">Your draft autosaves locally first, then publishes into the shared posts feed when you hit publish.</p>
-          </div>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input className="w-full rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 outline-none placeholder:text-slate-400 focus:border-amber-500" placeholder="Post title" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} required />
-            <input className="w-full rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 outline-none placeholder:text-slate-400 focus:border-amber-500" placeholder="Company / source" value={formData.company} onChange={(e) => setFormData({ ...formData, company: e.target.value })} required />
-            <textarea className="w-full rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 outline-none placeholder:text-slate-400 focus:border-amber-500" rows={5} placeholder="Post description" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} required />
-            <input className="w-full rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 outline-none placeholder:text-slate-400 focus:border-amber-500" placeholder="Target URL" type="url" value={formData.url} onChange={(e) => setFormData({ ...formData, url: e.target.value })} required />
-            <input className="w-full rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 outline-none placeholder:text-slate-400 focus:border-amber-500" placeholder="Tags, comma-separated" value={formData.tags} onChange={(e) => setFormData({ ...formData, tags: e.target.value })} />
-            <label className="flex items-center gap-3 rounded-2xl border border-black/10 bg-[#fbfaf7] px-4 py-3 text-sm font-medium"><input type="checkbox" checked={formData.is_featured} onChange={(e) => setFormData({ ...formData, is_featured: e.target.checked })} /> Feature this post</label>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <button type="submit" disabled={loading} className="w-full rounded-2xl bg-slate-900 px-4 py-3 font-bold text-white transition hover:bg-slate-800 disabled:opacity-50">{loading ? 'Publishing...' : 'Publish post'}</button>
-              <button type="button" onClick={clearDraft} className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 font-bold text-slate-700 transition hover:bg-slate-50">Clear draft</button>
-            </div>
-          </form>
-        </section>
+      {sp.saved ? <p role="status" className="mt-6 rounded-[12px] border border-border-strong bg-highlight px-4 py-3 text-[14px] text-blue-deep">Job saved.</p> : null}
+      {sp.deleted ? <p role="status" className="mt-6 rounded-[12px] border border-border bg-surface px-4 py-3 text-[14px] text-ink">Job deleted.</p> : null}
+      {error ? <p role="alert" className="mt-6 rounded-[12px] border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-700">Could not load jobs: {error.message}. Did you run the SQL migration?</p> : null}
 
-        <aside className="space-y-8">
-          <section className="rounded-[28px] border border-black/10 bg-slate-950 p-6 text-white shadow-[0_20px_60px_rgba(15,23,42,0.16)]">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-300">Preview</p>
-            <div className="mt-4 rounded-[24px] border border-white/10 bg-white/5 p-5">
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <p className="text-sm font-semibold text-white/70">{formData.company || 'Source name'}</p>
-                  <h3 className="mt-1 text-2xl font-black tracking-tight">{formData.title || 'Your post title here'}</h3>
-                </div>
-                {formData.is_featured ? <span className="rounded-full bg-amber-300 px-3 py-1 text-xs font-black text-slate-950">Featured</span> : null}
-              </div>
-              <p className="mt-4 line-clamp-4 text-sm leading-6 text-white/75">{formData.description || 'Write a short, scannable update.'}</p>
-              <div className="mt-5 flex flex-wrap gap-2">{previewTags.map((tag) => <span key={tag} className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold">{tag}</span>)}</div>
-            </div>
-          </section>
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <nav aria-label="Filter by status" className="flex gap-1 rounded-full border border-border bg-surface p-1">
+          {(["all", "published", "draft"] as const).map((s) => (
+            <Link
+              key={s}
+              href={s === "all" ? "/admin" : `/admin?status=${s}`}
+              aria-current={status === s ? "page" : undefined}
+              className={`inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[13.5px] capitalize ${status === s ? "bg-ink text-white" : "text-muted hover:text-ink"}`}
+            >
+              {s === "draft" ? "Drafts" : s}
+              <span className={`font-mono text-[11px] ${status === s ? "text-white/70" : "text-muted"}`}>{counts[s]}</span>
+            </Link>
+          ))}
+        </nav>
+        <form className="sm:ml-auto" role="search">
+          {status !== "all" ? <input type="hidden" name="status" value={status} /> : null}
+          <label className="sr-only" htmlFor="admin-q">Search jobs</label>
+          <input id="admin-q" name="q" defaultValue={sp.q} placeholder="Search title, company, lane" className="admin-input !h-10 sm:w-[280px]" />
+        </form>
+      </div>
 
-          <section>
-            <div className="mb-4 flex items-end justify-between">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-700">Posts</p>
-                <h2 className="mt-2 text-2xl font-black tracking-tight">Live content</h2>
-              </div>
-              <span className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-slate-600 shadow-sm">{jobs.length} items</span>
-            </div>
-            <div className="space-y-4 max-h-[620px] overflow-y-auto pr-1">
-              {jobs.map((job) => (
-                <article key={job.id} className="rounded-[24px] border border-black/10 bg-white p-5 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-500">{job.company}</p>
-                      <h3 className="mt-1 text-lg font-black tracking-tight">{job.title}</h3>
+      <div className="mt-5 overflow-hidden rounded-[20px] border border-border bg-surface shadow-card">
+        {jobs.length ? (
+          <table className="w-full text-left text-[14px]">
+            <caption className="sr-only">Admin-posted jobs</caption>
+            <thead className="hidden border-b border-border bg-elevated md:table-header-group">
+              <tr className="eyebrow !text-[10.5px]">
+                <th scope="col" className="px-5 py-3 font-normal">Job</th>
+                <th scope="col" className="px-3 py-3 font-normal">Lane</th>
+                <th scope="col" className="px-3 py-3 font-normal">Status</th>
+                <th scope="col" className="px-3 py-3 font-normal">Posted</th>
+                <th scope="col" className="px-5 py-3 text-right font-normal">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {jobs.map((j) => (
+                <tr key={j.id} className="job-row grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 border-t border-border px-4 py-4 first:border-t-0 md:table-row md:p-0">
+                  <td className="col-span-2 md:px-5 md:py-4">
+                    <div className="flex items-center gap-3">
+                      <CompanyMark company={j.company} logo={j.company_logo_url || undefined} />
+                      <div className="min-w-0">
+                        <Link href={`/admin/jobs/${j.id}`} className="block truncate font-medium text-ink hover:underline">{j.title}</Link>
+                        <p className="truncate text-[13px] text-muted">{j.company} · {j.work_type}{j.location ? ` · ${j.location}` : ""}</p>
+                      </div>
                     </div>
-                    <button onClick={() => handleDelete(job.id)} className="rounded-full border border-red-200 px-3 py-1 text-xs font-bold text-red-700 hover:bg-red-50">Delete</button>
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-slate-600 line-clamp-3">{job.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">{job.tags?.map((tag) => <span key={tag} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">{tag}</span>)}</div>
-                </article>
+                  </td>
+                  <td className="hidden px-3 py-4 text-[13.5px] text-muted md:table-cell">{j.lane}</td>
+                  <td className="mt-3 md:mt-0 md:px-3 md:py-4">
+                    <span className={`inline-flex h-6 items-center gap-1.5 rounded-full px-2.5 text-[12px] font-medium ${j.is_published ? "bg-blue-soft text-blue-deep" : "bg-soft text-muted"}`}>
+                      <span className={`h-1.5 w-1.5 rounded-full ${j.is_published ? "bg-blue" : "bg-muted"}`} aria-hidden="true" />
+                      {j.is_published ? "Published" : "Draft"}
+                    </span>
+                    <span className="ml-2 font-mono text-[12px] text-muted md:hidden">{formatLongDate(j.posted_at)}</span>
+                  </td>
+                  <td className="hidden px-3 py-4 font-mono text-[12.5px] text-muted md:table-cell">{formatLongDate(j.posted_at)}</td>
+                  <td className="mt-3 md:mt-0 md:px-5 md:py-4">
+                    <div className="flex items-center justify-end gap-1">
+                      <Link href={`/admin/jobs/${j.id}`} className="icon-button" aria-label={`Edit ${j.title}`}>
+                        <Pencil className="h-4 w-4" aria-hidden="true" />
+                      </Link>
+                      <RowActions id={j.id} title={j.title} published={j.is_published} />
+                    </div>
+                  </td>
+                </tr>
               ))}
-              {jobs.length === 0 ? <p className="rounded-[24px] border border-dashed border-black/10 bg-white p-8 text-center text-sm text-slate-500">No posts yet.</p> : null}
-            </div>
-          </section>
-        </aside>
-      </main>
-    </div>
+            </tbody>
+          </table>
+        ) : (
+          <div className="px-6 py-16 text-center">
+            <h2 className="text-[19px] font-medium tracking-[-0.02em]">{all.length ? "No jobs match this view." : "No jobs posted yet."}</h2>
+            <p className="mx-auto mt-2 max-w-sm text-[14px] text-muted">
+              {all.length ? "Try another filter or search." : "Post your first job. Save it as a draft until it is ready to go live."}
+            </p>
+            <Link href="/admin/jobs/new" className="btn-primary mt-6">
+              <Plus className="h-4 w-4" aria-hidden="true" /> Post a job
+            </Link>
+          </div>
+        )}
+      </div>
+    </AdminShell>
   );
 }

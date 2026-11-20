@@ -1,159 +1,186 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, ChevronDown } from "lucide-react";
-import { Container } from "@/components/kraft/Primitives";
-import ToolsDropdown from "@/components/nav/ToolsDropdown";
+import { Menu, Search, X } from "lucide-react";
+import NavDropdown from "@/components/nav/NavDropdown";
+import SearchDialog from "@/components/nav/SearchDialog";
+import { LEARN, PRIMARY, SECONDARY, TOOLS, isActive, type NavItem } from "@/components/nav/links";
 
-const primaryLinks = [
-  { href: "/roles", label: "Roles" },
-] as const;
-
-const secondaryLinks = [
-  { href: "/glossary", label: "Glossary" },
-  { href: "/learn-web3", label: "Learn Web3" },
-  { href: "/get-hired", label: "Get Hired" },
-] as const;
-
-const TOOLS = [
-  { href: "/skill-check", label: "Skill Check" },
-  { href: "/cv-maker", label: "CV Maker" },
-] as const;
-
-function isActive(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
-
-function isToolRoute(pathname: string) {
-  return TOOLS.some((tool) => isActive(pathname, tool.href));
-}
-
-function NavLink({ href, label, pathname }: { href: string; label: string; pathname: string }) {
+function NavLink({ item, pathname }: { item: NavItem; pathname: string }) {
+  const active = isActive(pathname, item.href);
   return (
     <Link
-      href={href}
-      aria-current={isActive(pathname, href) ? "page" : undefined}
-      className={`rounded-full px-3 py-2 text-sm font-bold transition duration-200 lg:px-4 ${
-        isActive(pathname, href) ? "bg-ink text-white shadow-[0_6px_16px_rgba(17,19,24,0.22)]" : "text-muted hover:bg-highlight hover:text-ink"
+      href={item.href}
+      aria-current={active ? "page" : undefined}
+      className={`inline-flex h-9 items-center rounded-full px-3 text-[14px] transition-colors ${
+        active ? "border border-border bg-surface text-ink shadow-[0_1px_2px_rgba(17,19,24,0.06)]" : "text-muted hover:text-ink"
       }`}
     >
-      {label}
+      {item.label}
     </Link>
   );
 }
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDialogElement>(null);
 
-  // Route change closes the mobile Tools accordion too - adjusted during
-  // render (not in an effect) per React's guidance for resetting state when a
-  // value changes. The desktop dropdown applies the same pattern internally.
   const [lastPathname, setLastPathname] = useState(pathname);
   if (pathname !== lastPathname) {
     setLastPathname(pathname);
-    setMobileToolsOpen(false);
+    setMenuOpen(false);
+    setSearchOpen(false);
   }
 
+  // ⌘K / Ctrl+K and "/" open search.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      const typing = target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable);
+      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || (e.key === "/" && !typing)) {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  useEffect(() => {
+    const d = menuRef.current;
+    if (!d) return;
+    if (menuOpen && !d.open) d.showModal();
+    if (!menuOpen && d.open) d.close();
+  }, [menuOpen]);
+
+  if (pathname.startsWith("/admin")) return null;
+
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-canvas/80 shadow-[0_1px_0_rgba(255,255,255,0.7)_inset,0_8px_24px_rgba(17,19,24,0.04)] backdrop-blur-xl backdrop-saturate-150">
-      <Container>
-        <div className="grid h-20 grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[160px_1fr_160px]">
-          <Link href="/" className="inline-flex w-fit items-center gap-2.5" aria-label="KRAFT home">
-            <Image src="/kraft%20logo%20trans.png" alt="" width={40} height={40} className="h-9 w-9 object-contain sm:h-10 sm:w-10" priority />
-            <span className="text-lg font-black tracking-[-0.03em] text-ink sm:text-xl">KRAFT</span>
-          </Link>
+    <header className="sticky top-0 z-40 border-b border-border bg-canvas/85 backdrop-blur-xl backdrop-saturate-150">
+      <div className="mx-auto flex h-[64px] w-full max-w-[1280px] items-center gap-4 px-5 sm:px-6 lg:px-10">
+        <Link href="/" className="inline-flex shrink-0 items-center gap-2.5" aria-label="KRAFT home">
+          <Image src="/kraft%20logo%20trans.png" alt="" width={32} height={32} className="h-7 w-7 object-contain" priority />
+          <span className="text-[17px] font-semibold tracking-[-0.03em] text-ink">KRAFT</span>
+        </Link>
 
-          <nav className="hidden justify-self-center items-center gap-1 rounded-full border border-border bg-elevated p-1 shadow-soft md:flex" aria-label="Primary navigation">
-            {primaryLinks.map((link) => (
-              <NavLink key={link.href} href={link.href} label={link.label} pathname={pathname} />
-            ))}
-            <ToolsDropdown />
-            {secondaryLinks.map((link) => (
-              <NavLink key={link.href} href={link.href} label={link.label} pathname={pathname} />
-            ))}
-          </nav>
+        <nav className="ml-4 hidden items-center gap-0.5 md:flex" aria-label="Primary">
+          {PRIMARY.map((item) => (
+            <NavLink key={item.href} item={item} pathname={pathname} />
+          ))}
+          <NavDropdown label="Learn" items={LEARN} />
+          <NavDropdown label="Tools" items={TOOLS} />
+          {SECONDARY.map((item) => (
+            <NavLink key={item.href} item={item} pathname={pathname} />
+          ))}
+        </nav>
 
-          <Link href="/job-boards" className="hidden justify-self-end rounded-full bg-ink px-5 py-3 text-sm font-bold text-white shadow-soft transition hover:-translate-y-0.5 md:inline-flex md:items-center md:gap-2">
-            Job Boards
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
-
-          <Link href="/job-boards" className="inline-flex justify-self-end rounded-full bg-ink px-4 py-2.5 text-xs font-bold text-white shadow-soft md:hidden">
-            Jobs
+        <div className="ml-auto hidden items-center gap-2 md:flex">
+          <button
+            type="button"
+            onClick={() => setSearchOpen(true)}
+            className="flex h-9 w-[230px] items-center gap-2 rounded-full border border-border bg-surface pl-3 pr-2 text-[13.5px] text-muted transition-colors hover:border-border-strong lg:w-[260px]"
+            aria-keyshortcuts="Control+K Meta+K"
+          >
+            <Search className="h-4 w-4" aria-hidden="true" />
+            <span>Search roles, terms, jobs</span>
+            <span className="kbd ml-auto" aria-hidden="true">⌘K</span>
+          </button>
+          <Link href="/skill-check" className="btn-ink !h-9 !px-4 !text-[13.5px]">
+            Find My Role
           </Link>
         </div>
 
-        <div className="md:hidden">
-          <nav className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2" aria-label="Small-screen navigation">
-            {primaryLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                aria-current={isActive(pathname, link.href) ? "page" : undefined}
-                className={`shrink-0 rounded-full px-3 py-2 text-xs font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
-                  isActive(pathname, link.href) ? "bg-ink text-white" : "border border-border bg-elevated text-muted shadow-soft hover:bg-highlight hover:text-ink"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+        <div className="ml-auto flex items-center gap-1 md:hidden">
+          <button type="button" onClick={() => setSearchOpen(true)} className="grid h-11 w-11 place-items-center rounded-full text-ink" aria-label="Search">
+            <Search className="h-5 w-5" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            className="grid h-11 w-11 place-items-center rounded-full text-ink"
+            aria-label="Open menu"
+            aria-haspopup="dialog"
+            aria-expanded={menuOpen}
+          >
+            <Menu className="h-5 w-5" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
 
-            <button
-              type="button"
-              onClick={() => setMobileToolsOpen((v) => !v)}
-              aria-expanded={mobileToolsOpen}
-              className={`inline-flex shrink-0 items-center gap-1 rounded-full px-3 py-2 text-xs font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
-                isToolRoute(pathname) ? "bg-ink text-white" : "border border-border bg-elevated text-muted shadow-soft hover:bg-highlight hover:text-ink"
-              }`}
-            >
-              Tools
-              <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${mobileToolsOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+      {/* Mobile menu sheet (native <dialog> = focus trap + Escape for free) */}
+      <dialog
+        ref={menuRef}
+        onClose={() => setMenuOpen(false)}
+        onClick={(e) => {
+          if (e.target === menuRef.current) setMenuOpen(false);
+        }}
+        aria-label="Menu"
+        className="m-0 ml-auto h-dvh max-h-none w-[min(88vw,380px)] max-w-none bg-transparent p-0 backdrop:bg-ink/40 backdrop:backdrop-blur-[2px]"
+      >
+        <div className="sheet-panel flex h-full flex-col overflow-y-auto bg-canvas">
+          <div className="flex h-[64px] items-center justify-between border-b border-border px-5">
+            <span className="text-[17px] font-semibold tracking-[-0.03em]">KRAFT</span>
+            <button type="button" onClick={() => setMenuOpen(false)} className="grid h-11 w-11 place-items-center rounded-full" aria-label="Close menu">
+              <X className="h-5 w-5" aria-hidden="true" />
             </button>
-
-            {secondaryLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                aria-current={isActive(pathname, link.href) ? "page" : undefined}
-                className={`shrink-0 rounded-full px-3 py-2 text-xs font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
-                  isActive(pathname, link.href) ? "bg-ink text-white" : "border border-border bg-elevated text-muted shadow-soft hover:bg-highlight hover:text-ink"
-                }`}
-              >
-                {link.label}
-              </Link>
+          </div>
+          <nav aria-label="Mobile" className="flex-1 px-5 py-6">
+            <ul className="space-y-1">
+              {[...PRIMARY, ...SECONDARY].map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={isActive(pathname, item.href) ? "page" : undefined}
+                    className="flex h-12 items-center rounded-[12px] px-3 text-[20px] font-medium tracking-[-0.02em] aria-[current=page]:bg-surface"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            {[
+              ["Learn", LEARN],
+              ["Tools", TOOLS],
+            ].map(([title, items]) => (
+              <div key={title as string} className="mt-7">
+                <div className="eyebrow px-3">{title as string}</div>
+                <ul className="mt-2 grid grid-cols-2 gap-1">
+                  {(items as NavItem[]).map((item) =>
+                    item.soon ? (
+                      <li key={item.label} className="flex min-h-11 flex-col justify-center rounded-[12px] px-3 py-2 text-muted">
+                        <span className="text-[15px]">{item.label}</span>
+                        <span className="text-[11px]">{item.description}</span>
+                      </li>
+                    ) : (
+                      <li key={item.label}>
+                        <Link
+                          href={item.href}
+                          aria-current={isActive(pathname, item.href) ? "page" : undefined}
+                          className="flex min-h-11 items-center rounded-[12px] px-3 py-2 text-[15px] text-ink aria-[current=page]:bg-highlight"
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    ),
+                  )}
+                </ul>
+              </div>
             ))}
           </nav>
-
-          {/* Accordion reveal for the Tools items - this navbar has no
-              hamburger menu (mobile nav is the horizontal pill strip above),
-              so "Tools" expands inline beneath it instead of inside a drawer. */}
-          {mobileToolsOpen && (
-            <div className="-mx-4 grid grid-cols-2 gap-2 px-4 pb-4" role="menu" aria-label="Tools">
-              {TOOLS.map((tool) => (
-                <Link
-                  key={tool.href}
-                  href={tool.href}
-                  role="menuitem"
-                  className={`rounded-2xl border px-3 py-2.5 text-center text-xs font-extrabold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
-                    isActive(pathname, tool.href) ? "border-blue-600 bg-highlight text-blue-700" : "border-border bg-elevated text-ink hover:bg-highlight"
-                  }`}
-                >
-                  {tool.label}
-                </Link>
-              ))}
-
-              <div role="menuitem" aria-disabled="true" className="cursor-not-allowed rounded-2xl border border-border bg-elevated px-3 py-2.5 text-center">
-                <span className="block text-xs font-extrabold text-ink">Paygate</span>
-                <span className="mt-0.5 block text-[10px] font-bold text-muted">Coming soon</span>
-              </div>
-            </div>
-          )}
+          <div className="border-t border-border p-5">
+            <Link href="/skill-check" className="btn-primary w-full">
+              Find My Role
+            </Link>
+          </div>
         </div>
-      </Container>
+      </dialog>
+
+      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }

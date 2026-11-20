@@ -36,7 +36,7 @@ export default function RepeatableSection<T extends { id: string }>({
 
   return (
     <div>
-      <h2 className="text-lg font-extrabold tracking-tight text-ink">{title}</h2>
+      <h2 className="text-lg font-semibold tracking-tight text-ink">{title}</h2>
       {description && <p className="mt-1 text-sm leading-6 text-muted">{description}</p>}
 
       <div className="mt-5 space-y-4">
@@ -46,11 +46,11 @@ export default function RepeatableSection<T extends { id: string }>({
         {entries.map((entry, index) => (
           <div key={entry.id} className="card-surface p-4 sm:p-5">
             <div className="flex items-center justify-between gap-3">
-              <span className="text-xs font-extrabold uppercase tracking-[0.1em] text-muted">Entry {index + 1}</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Entry {index + 1}</span>
               <button
                 type="button"
                 onClick={() => removeEntry(entry.id)}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-elevated text-muted transition hover:border-blue-300 hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-elevated text-muted transition hover:border-border-strong hover:text-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
                 aria-label={`Remove entry ${index + 1}`}
               >
                 <Trash2 className="h-3.5 w-3.5" />

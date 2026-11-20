@@ -11,8 +11,9 @@ const root = dirname(fileURLToPath(import.meta.url));
 const legacyRedirects: { source: string; destination: string; permanent: true }[] = [
   // Section / page routes.
   { source: "/bridge", destination: "/get-hired", permanent: true },
-  { source: "/resources", destination: "/job-boards", permanent: true },
-  { source: "/jobs", destination: "/job-boards", permanent: true },
+  { source: "/resources", destination: "/jobs", permanent: true },
+  // /job-boards merged into /jobs (curated opportunities + boards as tabs).
+  { source: "/job-boards", destination: "/jobs", permanent: true },
   // /learn/creator retired; Indonesian creator guide folded into Learn Web3.
   { source: "/learn/creator", destination: "/learn-web3", permanent: true },
 

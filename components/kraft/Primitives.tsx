@@ -9,46 +9,41 @@ export function Container({
 }: {
   children: ReactNode;
   className?: string;
-  /** "wide" fills the canvas edge to edge - used by the homepage. Every other
-   *  page keeps the 1220px reading measure. */
+  /** "wide" = 1280px marketing measure; default = 1180px reading measure. */
   width?: "default" | "wide";
 }) {
-  const measure = width === "wide" ? "max-w-none" : "max-w-[1220px]";
-  return <div className={`mx-auto w-full ${measure} px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>;
+  const measure = width === "wide" ? "max-w-[1280px]" : "max-w-[1180px]";
+  return <div className={`mx-auto w-full ${measure} px-5 sm:px-6 lg:px-10 ${className}`}>{children}</div>;
 }
 
 export function Shell({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
     <div className="site-frame">
-      <div className={`site-canvas aurora-surface ${className}`}>{children}</div>
+      <div className={`site-canvas ${className}`}>{children}</div>
     </div>
   );
 }
 
-export function Eyebrow({ children }: { children: ReactNode }) {
-  return (
-    <span className="inline-flex w-fit items-center rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-blue-700">
-      {children}
-    </span>
-  );
+export function Eyebrow({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return <span className={`eyebrow inline-flex w-fit items-center ${className}`}>{children}</span>;
 }
 
 export function SectionHeading({
   eyebrow,
   title,
   copy,
-  align = "center",
+  align = "left",
 }: {
   eyebrow?: string;
-  title: string;
+  title: ReactNode;
   copy?: string;
   align?: "left" | "center";
 }) {
   return (
-    <div className={align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-2xl"}>
+    <div className={align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-[760px]"}>
       {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
-      <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">{title}</h2>
-      {copy ? <p className="mt-4 text-base leading-7 text-muted sm:text-lg">{copy}</p> : null}
+      <h2 className={`${eyebrow ? "mt-4" : ""} text-[32px] font-medium leading-[1.04] tracking-[-0.04em] text-ink sm:text-[40px] lg:text-[48px]`}>{title}</h2>
+      {copy ? <p className={`mt-4 text-[16px] leading-[1.6] text-muted ${align === "center" ? "mx-auto max-w-2xl" : "max-w-[620px]"}`}>{copy}</p> : null}
     </div>
   );
 }
@@ -57,7 +52,7 @@ export function PrimaryLink({ href, children }: { href: string; children: ReactN
   return (
     <Link href={href} className="btn-primary group">
       {children}
-      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
     </Link>
   );
 }
@@ -66,6 +61,7 @@ export function SecondaryLink({ href, children }: { href: string; children: Reac
   return (
     <Link href={href} className="btn-secondary group">
       {children}
+      <ArrowRight className="h-4 w-4 text-muted transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
     </Link>
   );
 }
@@ -78,6 +74,7 @@ export function BluePanel({ children, className = "" }: { children: ReactNode; c
   return <section className={`blue-panel ${className}`}>{children}</section>;
 }
 
+/** Closing call to action used at the bottom of most pages. */
 export function FinalCTA({
   title,
   copy,
@@ -90,18 +87,20 @@ export function FinalCTA({
   secondary: { href: string; label: string };
 }) {
   return (
-    <BluePanel className="px-5 py-14 text-center sm:px-10 sm:py-16">
-      <div className="relative z-10 mx-auto max-w-3xl">
-        <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl">{title}</h2>
-        <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-blue-50">{copy}</p>
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Link href={primary.href} className="btn-white group">
-            {primary.label}
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-          <Link href={secondary.href} className="btn-ghost-white">
-            {secondary.label}
-          </Link>
+    <BluePanel>
+      <div className="relative grid items-end gap-8 px-7 py-14 sm:px-12 md:grid-cols-[1.25fr_1fr] md:py-20 lg:px-16">
+        <h2 className="text-[40px] font-medium leading-[0.98] tracking-[-0.045em] text-white sm:text-[56px] lg:text-[68px]">{title}</h2>
+        <div>
+          <p className="max-w-md text-[16px] leading-[1.6] text-white/85">{copy}</p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Link href={primary.href} className="btn-white group">
+              {primary.label}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+            </Link>
+            <Link href={secondary.href} className="btn-ghost-white">
+              {secondary.label}
+            </Link>
+          </div>
         </div>
       </div>
     </BluePanel>

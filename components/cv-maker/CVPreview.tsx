@@ -18,7 +18,7 @@ import type { CVData } from "@/lib/cv-maker/types";
 const ATS_FONT = { fontFamily: "Arial, Helvetica, sans-serif" };
 
 function Heading({ children }: { children: string }) {
-  return <h2 className="border-b border-black/25 pb-1 text-[13px] font-bold tracking-[0.08em] text-blue-800">{children}</h2>;
+  return <h2 className="border-b border-black/25 pb-1 text-[13px] font-medium tracking-[0.08em] text-blue-deep">{children}</h2>;
 }
 
 function hasText(value: string | undefined): boolean {
@@ -49,9 +49,9 @@ export default function CVPreview({ data }: { data: CVData }) {
     >
       {/* Contact header */}
       <header className="cv-section border-b border-black/15 pb-3">
-        <p className="text-[22px] font-bold leading-tight">{hasText(contact.name) ? contact.name : "Your Name"}</p>
+        <p className="text-[22px] font-medium leading-tight">{hasText(contact.name) ? contact.name : "Your Name"}</p>
         {hasText(contact.title) && (
-          <p className="mt-0.5 text-[13px] font-bold uppercase tracking-[0.04em] text-blue-800">{contact.title}</p>
+          <p className="mt-0.5 text-[13px] font-medium uppercase tracking-[0.04em] text-blue-deep">{contact.title}</p>
         )}
         {contactLine && <p className="mt-1.5 text-[11px] text-black/80">{contactLine}</p>}
       </header>
@@ -71,7 +71,7 @@ export default function CVPreview({ data }: { data: CVData }) {
             return (
               <div key={entry.id} className="cv-experience-entry mt-3">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-                  <p className="font-bold">
+                  <p className="font-medium">
                     {entry.title}
                     {hasText(entry.company) ? ` - ${entry.company}` : ""}
                   </p>
@@ -102,7 +102,7 @@ export default function CVPreview({ data }: { data: CVData }) {
           <Heading>PROJECTS</Heading>
           {visibleProjects.map((entry) => (
             <div key={entry.id} className="cv-project-entry mt-3">
-              <p className="font-bold">
+              <p className="font-medium">
                 {entry.name}
                 {hasText(entry.link) ? ` - ${entry.link}` : ""}
               </p>
@@ -118,7 +118,7 @@ export default function CVPreview({ data }: { data: CVData }) {
           {visibleEducation.map((entry) => (
             <div key={entry.id} className="cv-education-entry mt-3">
               <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-                <p className="font-bold">
+                <p className="font-medium">
                   {entry.degree}
                   {hasText(entry.school) ? ` - ${entry.school}` : ""}
                 </p>

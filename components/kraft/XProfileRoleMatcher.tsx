@@ -115,10 +115,10 @@ export default function XProfileRoleMatcher() {
     <section id="x-profile-role-matcher" className="scroll-mt-28 overflow-hidden rounded-[2rem] border border-amber-200 bg-[radial-gradient(circle_at_top_left,#fff7d6,transparent_34%),linear-gradient(135deg,#fffdf6,#eaf6ff_52%,#fff)] p-5 shadow-soft sm:p-8">
       <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
         <div>
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-amber-300 bg-white/80 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.14em] text-amber-700">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-amber-300 bg-white/80 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-700">
             <Sparkles className="h-3.5 w-3.5" /> Social signal scan
           </span>
-          <h2 className="mt-4 text-3xl font-black tracking-tight text-ink sm:text-5xl">X Profile Role Matcher.</h2>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink sm:text-5xl">X Profile Role Matcher.</h2>
           <p className="mt-4 text-base leading-7 text-muted">
             Drop your X username and KRAFT will turn your public profile signals into a Web3 role match, using your bio, audience, and posting footprint as career clues.
           </p>
@@ -131,10 +131,10 @@ export default function XProfileRoleMatcher() {
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
                 placeholder="satyaXBT"
-                className="w-full rounded-full border border-border bg-white px-12 py-4 text-sm font-bold text-ink outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                className="w-full rounded-full border border-border bg-white px-12 py-4 text-sm font-medium text-ink outline-none transition focus:border-border-strong focus:ring-4 focus:ring-border-strong"
               />
             </label>
-            <button type="submit" disabled={isLoading || !cleanedUsername} className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 text-sm font-extrabold text-white shadow-soft transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70">
+            <button type="submit" disabled={isLoading || !cleanedUsername} className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70">
               <Wand2 className="h-4 w-4" /> Analyze profile
             </button>
           </form>
@@ -146,11 +146,11 @@ export default function XProfileRoleMatcher() {
               <div className="flex items-center gap-3">
                 {profile.avatarUrl ? <Image src={profile.avatarUrl} alt="" width={48} height={48} unoptimized className="h-12 w-12 rounded-full border border-white/20 object-cover" /> : null}
                 <div>
-                  <p className="text-sm font-extrabold">{profile.name}</p>
+                  <p className="text-sm font-semibold">{profile.name}</p>
                   <p className="mt-1 text-xs text-white/65">@{profile.handle} profile snapshot</p>
                 </div>
               </div>
-              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-bold">public data</span>
+              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium">public data</span>
             </div>
             <p className="mt-5 text-sm leading-6 text-white/80">{profile.bio}</p>
             <div className="mt-5 grid grid-cols-3 gap-2 text-center text-xs">
@@ -163,20 +163,20 @@ export default function XProfileRoleMatcher() {
           {isLoading ? (
             <div className="mt-5 rounded-3xl border border-dashed border-amber-300 bg-amber-50 p-5 text-center">
               <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-amber-200 border-t-amber-600" />
-              <p className="mt-4 text-sm font-extrabold text-amber-800">{loadingLines[loadingIndex]}</p>
+              <p className="mt-4 text-sm font-semibold text-amber-800">{loadingLines[loadingIndex]}</p>
             </div>
           ) : showResult ? (
-            <div className="mt-5 rounded-3xl border border-blue-100 bg-soft p-5">
-              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">Based on your X profile, your strongest match is</p>
-              <h3 className="mt-2 text-2xl font-black tracking-tight text-ink">{role.title}</h3>
-              <p className="mt-2 text-sm font-bold text-blue-700">{role.lane} - {role.level}</p>
+            <div className="mt-5 rounded-3xl border border-border bg-soft p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-deep">Based on your X profile, your strongest match is</p>
+              <h3 className="mt-2 text-2xl font-semibold tracking-tight text-ink">{role.title}</h3>
+              <p className="mt-2 text-sm font-medium text-blue-deep">{role.lane} - {role.level}</p>
               <p className="mt-3 text-sm leading-6 text-muted">{role.summary}</p>
-              <Link href={`/roles/${role.slug}`} className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-extrabold text-ink shadow-soft transition hover:-translate-y-0.5">
+              <Link href={`/roles/${role.slug}`} className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-ink shadow-soft transition hover:-translate-y-0.5">
                 View this role <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           ) : (
-            <div className="mt-5 rounded-3xl border border-dashed border-blue-200 bg-soft p-5 text-center text-sm font-bold text-muted">
+            <div className="mt-5 rounded-3xl border border-dashed border-border-strong bg-soft p-5 text-center text-sm font-medium text-muted">
               Your result will appear here after KRAFT reads the profile signal.
             </div>
           )}

@@ -27,7 +27,7 @@ function normalizeLane(value: string | null) {
 }
 
 const selectClass =
-  "w-full rounded-2xl border border-border bg-soft px-4 py-3 text-sm font-bold text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600";
+  "w-full rounded-2xl border border-border bg-soft px-4 py-3 text-sm font-medium text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue";
 
 export default function RolesDirectory({ roles }: { roles: DirectoryRole[] }) {
   const lanes = useMemo(() => Array.from(new Set(roles.map((r) => r.lane))), [roles]);
@@ -88,7 +88,7 @@ export default function RolesDirectory({ roles }: { roles: DirectoryRole[] }) {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search titles and alternative titles"
-            className="w-full rounded-2xl border border-border bg-soft py-3 pl-11 pr-4 text-sm font-bold text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            className="w-full rounded-2xl border border-border bg-soft py-3 pl-11 pr-4 text-sm font-medium text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
           />
         </label>
 
@@ -96,7 +96,7 @@ export default function RolesDirectory({ roles }: { roles: DirectoryRole[] }) {
           type="button"
           onClick={() => setFiltersOpen((open) => !open)}
           aria-expanded={filtersOpen}
-          className="mt-3 flex w-full items-center justify-between rounded-2xl border border-border bg-elevated px-4 py-2.5 text-sm font-extrabold text-ink sm:hidden"
+          className="mt-3 flex w-full items-center justify-between rounded-2xl border border-border bg-elevated px-4 py-2.5 text-sm font-semibold text-ink sm:hidden"
         >
           <span className="inline-flex items-center gap-2">
             <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
@@ -107,7 +107,7 @@ export default function RolesDirectory({ roles }: { roles: DirectoryRole[] }) {
 
         <div className={`${filtersOpen ? "grid" : "hidden"} mt-3 gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-4`}>
           <label className="block">
-            <span className="mb-1 block text-xs font-bold uppercase tracking-[0.1em] text-muted">Career lane</span>
+            <span className="mb-1 block text-xs font-medium uppercase tracking-[0.1em] text-muted">Career lane</span>
             <select value={lane} onChange={(event) => setLane(event.target.value)} className={selectClass}>
               <option value="All">All lanes</option>
               {lanes.map((item) => (
@@ -116,7 +116,7 @@ export default function RolesDirectory({ roles }: { roles: DirectoryRole[] }) {
             </select>
           </label>
           <label className="block">
-            <span className="mb-1 block text-xs font-bold uppercase tracking-[0.1em] text-muted">Work style</span>
+            <span className="mb-1 block text-xs font-medium uppercase tracking-[0.1em] text-muted">Work style</span>
             <select value={workStyle} onChange={(event) => setWorkStyle(event.target.value)} className={selectClass}>
               {WORK_STYLES.map((item) => (
                 <option key={item} value={item}>{item === "All" ? "All work styles" : item}</option>
@@ -124,7 +124,7 @@ export default function RolesDirectory({ roles }: { roles: DirectoryRole[] }) {
             </select>
           </label>
           <label className="block">
-            <span className="mb-1 block text-xs font-bold uppercase tracking-[0.1em] text-muted">Entry level</span>
+            <span className="mb-1 block text-xs font-medium uppercase tracking-[0.1em] text-muted">Entry level</span>
             <select value={entryLevel} onChange={(event) => setEntryLevel(event.target.value)} className={selectClass}>
               {ENTRY_LEVELS.map((item) => (
                 <option key={item} value={item}>{item === "All" ? "All entry levels" : item}</option>
@@ -132,7 +132,7 @@ export default function RolesDirectory({ roles }: { roles: DirectoryRole[] }) {
             </select>
           </label>
           <label className="block">
-            <span className="mb-1 block text-xs font-bold uppercase tracking-[0.1em] text-muted">Employment model</span>
+            <span className="mb-1 block text-xs font-medium uppercase tracking-[0.1em] text-muted">Employment model</span>
             <select value={employment} onChange={(event) => setEmployment(event.target.value)} className={selectClass}>
               <option value="All">All models</option>
               {employmentModels.map((item) => (
@@ -144,13 +144,13 @@ export default function RolesDirectory({ roles }: { roles: DirectoryRole[] }) {
 
         {activeFilterChips.length > 0 && (
           <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-border pt-3">
-            <span className="text-xs font-bold uppercase tracking-[0.1em] text-muted">Active:</span>
+            <span className="text-xs font-medium uppercase tracking-[0.1em] text-muted">Active:</span>
             {activeFilterChips.map((chip) => (
               <button
                 key={chip.key}
                 type="button"
                 onClick={chip.clear}
-                className="inline-flex items-center gap-1.5 rounded-full bg-highlight px-3 py-1 text-xs font-extrabold text-blue-700 transition hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                className="inline-flex items-center gap-1.5 rounded-full bg-highlight px-3 py-1 text-xs font-semibold text-blue-deep transition hover:bg-highlight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
               >
                 {chip.label}
                 <X className="h-3 w-3" aria-hidden="true" />
@@ -161,14 +161,14 @@ export default function RolesDirectory({ roles }: { roles: DirectoryRole[] }) {
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <p className="text-sm font-bold text-muted" aria-live="polite">
-          <span className="text-lg font-extrabold text-ink">{filtered.length}</span> of {roles.length} roles
+        <p className="text-sm font-medium text-muted" aria-live="polite">
+          <span className="text-lg font-semibold text-ink">{filtered.length}</span> of {roles.length} roles
         </p>
         <button
           type="button"
           onClick={resetFilters}
           disabled={!hasActiveFilters}
-          className="rounded-full border border-border-strong bg-elevated px-4 py-2 text-sm font-extrabold text-ink transition hover:border-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-full border border-border-strong bg-elevated px-4 py-2 text-sm font-semibold text-ink transition hover:border-border-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue disabled:cursor-not-allowed disabled:opacity-50"
         >
           Reset filters
         </button>
@@ -183,10 +183,10 @@ export default function RolesDirectory({ roles }: { roles: DirectoryRole[] }) {
               className="card-surface card-surface--interactive group flex h-full flex-col p-5"
             >
               <div className="flex items-start justify-between gap-3">
-                <span className="rounded-full border border-blue-100 bg-highlight px-3 py-1 text-xs font-extrabold text-blue-700">{role.lane}</span>
-                <ArrowUpRight className="h-5 w-5 shrink-0 text-blue-600 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
+                <span className="rounded-full border border-border bg-highlight px-3 py-1 text-xs font-semibold text-blue-deep">{role.lane}</span>
+                <ArrowUpRight className="h-5 w-5 shrink-0 text-blue-deep transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
               </div>
-              <h3 className="mt-4 text-xl font-extrabold tracking-tight text-ink">{role.title}</h3>
+              <h3 className="mt-4 text-xl font-semibold tracking-tight text-ink">{role.title}</h3>
               {role.altTitles.length > 0 && (
                 <p className="mt-0.5 text-xs leading-5 text-muted">Also: {role.altTitles.slice(0, 2).join(", ")}</p>
               )}
@@ -200,7 +200,7 @@ export default function RolesDirectory({ roles }: { roles: DirectoryRole[] }) {
         </div>
       ) : (
         <div className="card-surface p-10 text-center">
-          <h2 className="text-2xl font-extrabold text-ink">Nothing matches these filters yet.</h2>
+          <h2 className="text-2xl font-semibold text-ink">Nothing matches these filters yet.</h2>
           <p className="mt-3 text-muted">Try removing one filter, browse the full directory, or open a related role.</p>
           <button type="button" onClick={resetFilters} className="btn-primary mt-6">
             Clear filters

@@ -45,19 +45,19 @@ export default async function RoleDetailPage({ params }: { params: Promise<{ slu
   return (
     <Shell>
       <Container className="space-y-10 py-12 sm:py-16">
-        <Link href="/roles" className="inline-flex items-center gap-2 text-sm font-extrabold text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+        <Link href="/roles" className="inline-flex items-center gap-2 text-sm font-semibold text-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue">
           <ArrowLeft className="h-4 w-4" /> Back to roles
         </Link>
 
         <header className="max-w-3xl">
-          <span className="rounded-full bg-highlight px-3 py-1 text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">
+          <span className="rounded-full bg-highlight px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-blue-deep">
             {role.lane}
           </span>
-          <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">{role.title}</h1>
+          <h1 className="mt-5 text-4xl font-semibold tracking-tight text-ink sm:text-5xl">{role.title}</h1>
           <p className="mt-5 text-lg leading-8 text-muted">{content.summary}</p>
           <p className="mt-4 text-sm leading-6 text-muted">
             New to this area?{" "}
-            <Link href="/learn-web3" className="font-extrabold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+            <Link href="/learn-web3" className="font-semibold text-blue-deep underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue">
               Learn the foundations
             </Link>{" "}
             before building proof.

@@ -30,9 +30,9 @@ export default function RoadmapsPage() {
               className="card-surface card-surface--interactive group flex h-full flex-col p-6"
             >
               <span className="tag">{detail.difficulty}</span>
-              <h2 className="mt-5 text-2xl font-extrabold tracking-tight text-ink">{detail.lane}</h2>
+              <h2 className="mt-5 text-2xl font-semibold tracking-tight text-ink">{detail.lane}</h2>
               <p className="mt-3 flex-1 text-sm leading-6 text-muted">{detail.startingAssumptions}</p>
-              <span className="mt-6 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
+              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
                 View roadmap <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </span>
             </Link>

@@ -52,7 +52,7 @@ export const hiringGuides: HiringGuide[] = [
     guidance: "Apply selectively to roles where level, work type, timezone, compensation model, and proof requirements match your current evidence.",
     checklist: ["Check role level", "Check timezone and employment type", "Verify company domain", "Attach the most relevant proof link"],
     example: "Skip senior protocol economist roles if your current proof is entry-level community work.",
-    relatedTool: { label: "Browse job platforms", href: "/job-boards" },
+    relatedTool: { label: "Browse job platforms", href: "/jobs" },
   },
   {
     id: 5,
@@ -99,7 +99,7 @@ export const hiringGuides: HiringGuide[] = [
     guidance: "Verify domains, team identities, contracts, files, and wallet-related requests before sharing information or starting work.",
     checklist: ["Never share a seed phrase or private key", "Never pay to apply", "Verify official domains and socials", "Avoid unknown downloads and wallet approvals"],
     example: "If a recruiter asks you to install unknown software before an offer, stop and verify through official channels.",
-    relatedTool: { label: "Open job safety checklist", href: "/job-boards" },
+    relatedTool: { label: "Open job safety checklist", href: "/jobs" },
   },
   {
     id: 10,

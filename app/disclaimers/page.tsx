@@ -34,12 +34,12 @@ export default function DisclaimersPage() {
           {warnings.map((warning) => (
             <div key={warning.title} className="rounded-3xl border border-amber-200 bg-amber-50 p-6">
               <ShieldAlert className="h-7 w-7 text-amber-600" aria-hidden="true" />
-              <h2 className="mt-4 text-xl font-extrabold text-ink">{warning.title}</h2>
+              <h2 className="mt-4 text-xl font-semibold text-ink">{warning.title}</h2>
               <p className="mt-3 text-sm leading-6 text-amber-900">{warning.copy}</p>
             </div>
           ))}
         </div>
-        <FinalCTA title="Apply with safety checks." copy="Use the job-board safety checklist before following external links or accepting trial tasks." primary={{ href: "/job-boards", label: "Open Job Boards" }} secondary={{ href: "/get-hired", label: "Get Hired Guide" }} />
+        <FinalCTA title="Apply with safety checks." copy="Use the job-board safety checklist before following external links or accepting trial tasks." primary={{ href: "/jobs", label: "Open Job Boards" }} secondary={{ href: "/get-hired", label: "Get Hired Guide" }} />
       </Container>
     </Shell>
   );

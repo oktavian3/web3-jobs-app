@@ -15,12 +15,12 @@ export default function DownloadStep({ data, onDownload }: { data: CVData; onDow
 
   return (
     <div>
-      <h2 className="text-lg font-extrabold tracking-tight text-ink">Download</h2>
+      <h2 className="text-lg font-semibold tracking-tight text-ink">Download</h2>
       <p className="mt-1 text-sm leading-6 text-muted">A quick check before you export:</p>
 
       <ul className="mt-5 space-y-2">
         {checks.map((check) => (
-          <li key={check.label} className={`flex items-center gap-2.5 text-sm font-bold ${check.done ? "text-ink" : "text-muted"}`}>
+          <li key={check.label} className={`flex items-center gap-2.5 text-sm font-medium ${check.done ? "text-ink" : "text-muted"}`}>
             <span className={`h-2 w-2 shrink-0 rounded-full ${check.done ? "bg-emerald-500" : "bg-border-strong"}`} aria-hidden="true" />
             {check.label}
           </li>
@@ -37,7 +37,7 @@ export default function DownloadStep({ data, onDownload }: { data: CVData; onDow
         real selectable text, not an image, so it stays readable by ATS software. Checked in Chrome and Safari.
       </p>
       <p className="mt-2 text-xs leading-5 text-muted">
-        In the dialog, open &quot;More settings&quot; and turn off <span className="font-bold text-ink">Headers and footers</span> -
+        In the dialog, open &quot;More settings&quot; and turn off <span className="font-medium text-ink">Headers and footers</span> -
         otherwise your browser adds its own date, URL, and page number to every page. This is a browser setting, not
         something on this page, so it has to be turned off once per browser.
       </p>
