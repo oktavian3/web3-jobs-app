@@ -24,7 +24,7 @@ export type ExplorerFramework = {
 };
 
 const selectClass =
-  "w-full rounded-2xl border border-border bg-soft px-4 py-3 text-sm font-bold text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600";
+  "w-full rounded-2xl border border-border bg-soft px-4 py-3 text-sm font-medium text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue";
 
 export default function InterviewPrepExplorer({
   sets,
@@ -67,7 +67,7 @@ export default function InterviewPrepExplorer({
       <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
         <div className="card-surface p-4 sm:p-5">
           <label className="block">
-            <span className="mb-1 block text-xs font-bold uppercase tracking-[0.1em] text-muted">Career lane</span>
+            <span className="mb-1 block text-xs font-medium uppercase tracking-[0.1em] text-muted">Career lane</span>
             <select value={lane} onChange={(e) => onLaneChange(e.target.value)} className={selectClass}>
               {lanes.map((l) => (
                 <option key={l} value={l}>{l}</option>
@@ -75,7 +75,7 @@ export default function InterviewPrepExplorer({
             </select>
           </label>
           <label className="mt-3 block">
-            <span className="mb-1 block text-xs font-bold uppercase tracking-[0.1em] text-muted">Role</span>
+            <span className="mb-1 block text-xs font-medium uppercase tracking-[0.1em] text-muted">Role</span>
             <select value={effectiveSlug} onChange={(e) => { setSlug(e.target.value); setCategory("All"); }} className={selectClass}>
               {rolesInLane.map((s) => (
                 <option key={s.slug} value={s.slug}>{s.roleTitle}</option>
@@ -85,7 +85,7 @@ export default function InterviewPrepExplorer({
         </div>
 
         <div className="card-surface p-4 sm:p-5">
-          <h2 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">How a strong answer works</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">How a strong answer works</h2>
           <ul className="mt-3 space-y-2">
             {framework.strongAnswer.map((item, i) => (
               <li key={i} className="flex gap-2 text-sm leading-6 text-ink">
@@ -101,7 +101,7 @@ export default function InterviewPrepExplorer({
       {activeSet && (
         <div className="min-w-0 space-y-8">
           <section>
-            <h2 className="text-2xl font-extrabold tracking-tight text-ink">{activeSet.roleTitle}</h2>
+            <h2 className="text-2xl font-semibold tracking-tight text-ink">{activeSet.roleTitle}</h2>
             <div className="mt-3 space-y-3">
               {activeSet.whatItTests.map((p, i) => (
                 <p key={i} className="text-base leading-7 text-muted">{p}</p>
@@ -109,7 +109,7 @@ export default function InterviewPrepExplorer({
             </div>
             <Link
               href={`/roles/${activeSet.slug}`}
-              className="mt-3 inline-flex items-center gap-1 text-sm font-extrabold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-blue-deep underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
             >
               Open the {activeSet.roleTitle} role guide <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
@@ -122,8 +122,8 @@ export default function InterviewPrepExplorer({
                 type="button"
                 onClick={() => setCategory(c)}
                 aria-pressed={category === c}
-                className={`rounded-full px-4 py-2 text-sm font-extrabold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
-                  category === c ? "bg-blue-600 text-white" : "bg-soft text-muted hover:text-ink"
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue ${
+                  category === c ? "bg-blue text-white" : "bg-soft text-muted hover:text-ink"
                 }`}
               >
                 {c}
@@ -135,11 +135,11 @@ export default function InterviewPrepExplorer({
             {visibleQuestions.map((q, i) => (
               <li key={i} className="card-surface p-4 sm:p-5">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-blue-700">{q.category}</span>
+                  <span className="rounded-full border border-border bg-blue-soft px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-blue-deep">{q.category}</span>
                 </div>
-                <p className="mt-3 text-base font-bold leading-7 text-ink">{q.question}</p>
+                <p className="mt-3 text-base font-medium leading-7 text-ink">{q.question}</p>
                 <div className="mt-3 border-t border-border pt-3">
-                  <p className="text-xs font-extrabold uppercase tracking-[0.1em] text-muted">Common follow-ups</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Common follow-ups</p>
                   <ul className="mt-2 space-y-1">
                     {framework.commonFollowUps.map((f, j) => (
                       <li key={j} className="text-sm leading-6 text-muted">{f}</li>
@@ -152,7 +152,7 @@ export default function InterviewPrepExplorer({
 
           <div className="grid gap-4 md:grid-cols-2">
             <div className="card-surface card-surface--informational p-4 sm:p-5">
-              <h3 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">Weak-answer patterns</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">Weak-answer patterns</h3>
               <ul className="mt-3 space-y-2">
                 {[...framework.weakAnswer, ...activeSet.weakPatterns].map((item, i) => (
                   <li key={i} className="text-sm leading-6 text-ink">• {item}</li>
@@ -160,7 +160,7 @@ export default function InterviewPrepExplorer({
               </ul>
             </div>
             <div className="card-surface card-surface--next-step p-4 sm:p-5">
-              <h3 className="text-sm font-extrabold uppercase tracking-[0.1em] text-muted">Self-review after practicing</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.1em] text-blue-deep">Self-review after practicing</h3>
               <div className="mt-3 flex flex-wrap gap-2">
                 {framework.selfReview.map((item) => (
                   <span key={item} className="tag">{item}</span>
@@ -168,7 +168,7 @@ export default function InterviewPrepExplorer({
               </div>
               <Link
                 href={`/portfolio/${activeSet.slug}`}
-                className="mt-4 inline-flex items-center gap-1 text-sm font-extrabold text-blue-700 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-blue-deep underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
               >
                 Build proof for these answers <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>

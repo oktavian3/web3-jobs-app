@@ -25,14 +25,14 @@ export default function TrustPage({
         <div className="mx-auto max-w-3xl">
           <header>
             <Eyebrow>{eyebrow}</Eyebrow>
-            <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">{headline}</h1>
+            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-ink sm:text-4xl lg:text-5xl">{headline}</h1>
             <p className="mt-4 text-lg leading-8 text-muted">{supporting}</p>
           </header>
 
           <div className="mt-10">
             {sections.map((section, index) => (
               <section key={section.title} className={index > 0 ? "mt-8 border-t border-border pt-8 sm:mt-10 sm:pt-10" : ""}>
-                <h2 className="text-xl font-extrabold tracking-tight text-ink sm:text-2xl">{section.title}</h2>
+                <h2 className="text-xl font-semibold tracking-tight text-ink sm:text-2xl">{section.title}</h2>
                 <div className="mt-3 space-y-4">
                   {section.paragraphs.map((p, i) => (
                     <p key={i} className="text-base leading-7 text-muted">{p}</p>

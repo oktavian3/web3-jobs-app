@@ -11,11 +11,19 @@
   },
   "dependencies": {
     "@next/third-parties": "^16.2.0",
+    "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.49.4",
     "@vercel/analytics": "^2.0.1",
+    "cmdk": "^1.1.1",
+    "fuse.js": "^7.5.0",
     "next": "16.1.6",
+    "nuqs": "^2.10.3",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "server-only": "^0.0.1",
+    "sonner": "^2.0.8",
+    "vaul": "^1.1.2",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@shadcn/ui": "^0.0.4",

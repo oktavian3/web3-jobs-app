@@ -6,7 +6,7 @@ export default function PageHeader({
   eyebrow,
   title,
   copy,
-  align = "center",
+  align = "left",
 }: {
   eyebrow: string;
   title: string;
@@ -14,10 +14,10 @@ export default function PageHeader({
   align?: "left" | "center";
 }) {
   return (
-    <div className={align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
+    <div className={align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-[860px]"}>
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">{title}</h1>
-      {copy ? <p className="mt-4 text-base leading-7 text-muted sm:text-lg">{copy}</p> : null}
+      <h1 className="mt-4 text-[38px] font-medium leading-[1.02] tracking-[-0.045em] text-ink sm:text-[52px] lg:text-[60px]">{title}</h1>
+      {copy ? <p className={`mt-5 text-[16.5px] leading-[1.6] text-muted ${align === "center" ? "mx-auto max-w-2xl" : "max-w-[700px]"}`}>{copy}</p> : null}
     </div>
   );
 }

@@ -24,7 +24,7 @@ export default function ContactStep({
 }) {
   return (
     <div>
-      <h2 className="text-lg font-extrabold tracking-tight text-ink">Contact</h2>
+      <h2 className="text-lg font-semibold tracking-tight text-ink">Contact</h2>
       <p className="mt-1 text-sm leading-6 text-muted">
         This is the only section that always prints, even if everything else is still a draft.
       </p>

@@ -5,7 +5,7 @@ import { labelClass, textareaClass } from "../formStyles";
 export default function SummaryStep({ summary, onChange }: { summary: string; onChange: (value: string) => void }) {
   return (
     <div>
-      <h2 className="text-lg font-extrabold tracking-tight text-ink">Summary</h2>
+      <h2 className="text-lg font-semibold tracking-tight text-ink">Summary</h2>
       <p className="mt-1 text-sm leading-6 text-muted">
         Two to three sentences: the role you&apos;re targeting, your strongest evidence, and what you actually do well.
       </p>
