@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import { supabaseUrl } from "@/lib/supabase-auth/url";
 
 /**
  * Protects /admin and /api/admin server-side.
@@ -13,7 +14,7 @@ export async function proxy(request: NextRequest) {
   const isLogin = pathname === "/admin/login" || pathname.startsWith("/admin/auth");
   const isApi = pathname.startsWith("/api/admin");
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const url = supabaseUrl();
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) {
     if (isLogin) return NextResponse.next();

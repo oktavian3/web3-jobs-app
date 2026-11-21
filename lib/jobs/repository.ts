@@ -1,12 +1,13 @@
 import "server-only";
 import { createClient } from "@supabase/supabase-js";
 import { getActiveCuratedJobs } from "@/data/curatedJobs";
+import { supabaseUrl } from "@/lib/supabase-auth/url";
 import { curatedJobRoleMap } from "@/data/curatedJobRoleMap";
 import type { PublicJob } from "./types";
 import type { JobRecord } from "./schema";
 
 function anonClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const url = supabaseUrl();
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) return null;
   return createClient(url, key, { auth: { persistSession: false } });

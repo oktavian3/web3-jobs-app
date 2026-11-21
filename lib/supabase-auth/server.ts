@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
 import { createServerClient as createSsrClient } from "@supabase/ssr";
+import { supabaseUrl } from "./url";
 
 export function supabaseConfigured() {
-  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  return Boolean(supabaseUrl() && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 }
 
 /** Cookie-bound Supabase client for Server Components, Server Actions and
@@ -11,7 +12,7 @@ export function supabaseConfigured() {
 export async function getSupabaseServer() {
   if (!supabaseConfigured()) return null;
   const cookieStore = await cookies();
-  return createSsrClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
+  return createSsrClient(supabaseUrl()!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
     cookies: {
       getAll() {
         return cookieStore.getAll();

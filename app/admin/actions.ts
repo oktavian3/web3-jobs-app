@@ -7,6 +7,27 @@ import { jobInputSchema } from "@/lib/jobs/schema";
 
 export type ActionState = { ok: boolean; message?: string; fieldErrors?: Record<string, string[]> };
 
+function signInErrorMessage(error: { code?: string; status?: number; message: string }) {
+  switch (error.code) {
+    case "invalid_credentials":
+      return "Email or password is incorrect.";
+    case "email_not_confirmed":
+      return "This user isn't confirmed in Supabase. In Authentication → Users, delete it and add it again with Auto Confirm User ticked.";
+    case "user_banned":
+      return "This user is banned in Supabase.";
+    case "over_request_rate_limit":
+    case "over_email_send_rate_limit":
+      return "Too many attempts. Wait a minute and try again.";
+  }
+  if (error.status === 401 || error.status === 403 || /api key/i.test(error.message)) {
+    return "Supabase rejected the API key. Check NEXT_PUBLIC_SUPABASE_ANON_KEY (use the anon / publishable key).";
+  }
+  if (error.status === 404 || !error.status) {
+    return "Couldn't reach Supabase auth. Check NEXT_PUBLIC_SUPABASE_URL (it should look like https://xxxx.supabase.co).";
+  }
+  return `Sign-in failed: ${error.message}`;
+}
+
 export async function signInAction(_: ActionState, formData: FormData): Promise<ActionState> {
   const supabase = await getSupabaseServer();
   if (!supabase) return { ok: false, message: "Supabase is not configured on this deployment." };
@@ -14,8 +35,17 @@ export async function signInAction(_: ActionState, formData: FormData): Promise<
   const password = String(formData.get("password") ?? "");
   if (!email || !password) return { ok: false, message: "Enter your email and password." };
   if (!isAllowedAdmin(email)) return { ok: false, message: "This email is not on the admin allowlist." };
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) return { ok: false, message: "Email or password is incorrect." };
+  let error;
+  try {
+    ({ error } = await supabase.auth.signInWithPassword({ email, password }));
+  } catch (e) {
+    console.error("[admin] sign-in threw:", e);
+    return { ok: false, message: "Couldn't reach Supabase. Check NEXT_PUBLIC_SUPABASE_URL in the Vercel environment variables." };
+  }
+  if (error) {
+    console.error("[admin] sign-in failed:", error.code, error.status, error.message);
+    return { ok: false, message: signInErrorMessage(error) };
+  }
   redirect("/admin");
 }
 
